@@ -1,0 +1,52 @@
+#!/bin/bash
+
+godot=$1
+if [[ ! $1 ]]; then
+	godot=~/Desktop/Godot_v4.4.1-stable_linux.x86_64
+fi
+
+config=export_presets.cfg
+
+export_paths=()
+while IFS= read -r path; do
+    export_paths+=("$path")
+done < <(grep -oP 'export_path="\K[^"]+' $config)
+
+export_names=()
+while IFS= read -r name; do
+    export_names+=("$name")
+done < <(grep -oP 'name="\K[^"]+' $config)
+
+start_dir="$(pwd)"
+
+echo "${export_paths[@]}"
+echo "${export_names[@]}"
+
+if [[ ! ${#export_paths[@]} == ${#export_names[@]} ]]; then
+	echo "ERROR: Invalid .cfg file!"
+	exit
+fi
+
+echo "${#export_names[@]} Presets found."
+
+for i in $(seq 0 $((${#export_paths[@]}-1))); do
+	path=${export_paths[$i]}
+	name=${export_names[$i]}
+	export_name=$(echo $path | grep -oP '\/[^\/]*$')
+	export_path=${path/$export_name/$e}
+
+	mkdir -p $export_path
+	
+	echo "Exporting using '$name' preset..."
+	$godot -q --headless --export-release "$name"
+done
+
+mkdir -p Zipped
+cd Exports
+
+for build in */; do
+	echo "Zipping contents of $build..."
+	name=${build/\//$e}
+	zip -r "../Zipped/$name.zip" $build	
+done
+

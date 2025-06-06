@@ -1,0 +1,11 @@
+#!/bin/bash
+# Description: Runs GUT Tests using the gutconfig file and a passed godot binary.
+
+echo $1
+if [[ ! $1 ]]; then
+	echo "Usage: $0 [godot binary]"
+	exit
+fi
+
+godot=$1
+$godot -d --headless --path "$PWD/.." -s addons/gut/gut_cmdln.gd

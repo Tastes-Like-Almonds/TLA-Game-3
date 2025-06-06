@@ -1,0 +1,198 @@
+{
+  "main": {
+    "id": "c64058cc0dd31cb7",
+    "type": "split",
+    "children": [
+      {
+        "id": "989ea579cbbc60ff",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b49ec612cb31193f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Meetings/Meeting Notes/Meeting Notes - 6.4.26.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Meeting Notes - 6.4.26"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c980f7553d71c21f",
+    "type": "split",
+    "children": [
+      {
+        "id": "a762e3f501f312b0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "36a31f2c7c4030f6",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "cf94464be7d6d5c2",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "7d6d24b04ba40f61",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "aa47fca9a9a0dca4",
+    "type": "split",
+    "children": [
+      {
+        "id": "eb0db2b72edf0699",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f37ba3690efc5b13",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Welcome.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Welcome"
+            }
+          },
+          {
+            "id": "1fb401c034381a17",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Welcome.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Welcome"
+            }
+          },
+          {
+            "id": "7b4c336c4d1e879a",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "8eaa96af9374db8a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Welcome.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Welcome"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "templater-obsidian:Templater": false,
+      "markdown-importer:Open format converter": false
+    }
+  },
+  "active": "b49ec612cb31193f",
+  "lastOpenFiles": [
+    "Meetings/Meeting Notes/Meeting Notes - 6.4.26.md",
+    "Members/John Doe.md",
+    "Planning/Story/Overview - Story.md",
+    "Planning/Art/Overview - Art.md",
+    "Planning/Research/Overview - Research.md",
+    "Planning/Programming/Overview - Programming.md",
+    "Planning/Research",
+    "Planning/Programming",
+    "Planning/Art",
+    "Planning/Story",
+    "Planning",
+    "Templates/Meeting Notes.md",
+    "Mee.md",
+    "Ray M. Members/John Doe.md",
+    "Ray M. Members",
+    "Members",
+    "2025-06-05.md",
+    "Welcome.md",
+    "Templates/Meeting Notes 1.md",
+    "Templates",
+    "Meetings/Meeting Notes",
+    "Meetings"
+  ]
+}

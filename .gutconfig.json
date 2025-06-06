@@ -1,0 +1,4 @@
+{
+	"dirs":["res://Test/unit","res://Test/integration"],
+	"should_exit":true
+}

@@ -1,0 +1,23 @@
+name: Run GUT Tests
+
+on:
+  push:
+
+jobs:
+  test:
+    name: Run Tests
+    permissions: write-all
+    runs-on: "ubuntu-22.04"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: SolarLabyrinth/Action-Setup-Godot@v2
+        with:
+          version: ${{ vars.GODOT_VERSION }}
+          csharp: ${{ vars.USE_MONO }}
+          name: godot
+      - name: Run GUT Tests
+        env:
+          godot: godot
+        run: |
+          $godot --editor --headless --quit # Done to ensure imports are present
+          $godot -d --headless --path "$PWD" -s addons/gut/gut_cmdln.gd

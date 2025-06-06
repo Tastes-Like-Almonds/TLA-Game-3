@@ -1,0 +1,61 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+      inputs:
+        version:
+          description: 'Version of build (vx.x.x-ver format)'
+          required: true
+          type: string
+
+jobs:
+  build:
+    name: "Building current version"
+    permissions: write-all
+    runs-on: "ubuntu-22.04"
+    steps:
+      # Download Godot and build all versions
+      - uses: actions/checkout@v4
+      - uses: SolarLabyrinth/Action-Setup-Godot@v2
+        with:
+          version: ${{ vars.GODOT_VERSION }}
+          csharp: ${{ vars.USE_MONO }}
+      - name: "Build"
+        run: gh_scripts/export godot
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zipped-builds
+          path: Zipped
+  release:
+    name: "Create Version Release"
+    permissions: write-all
+    runs-on: "ubuntu-22.04"
+    needs: build
+    steps:
+      # Create a release
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: zipped-builds
+          path: Zipped
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ inputs.version }} 
+        run: |
+          gh release create "$tag" \
+          --repo="$GITHUB_REPOSITORY" \
+          --title="${tag#v}" \
+          --generate-notes \
+          --draft \
+          Zipped/*
+  itch:
+    name: "Upload to Itch.io"
+    runs-on: "ubuntu-22.04"
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: zipped-builds
+          path: Zipped
