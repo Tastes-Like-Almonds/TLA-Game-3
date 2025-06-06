@@ -45,4 +45,4 @@ jobs:
 
           curl -sSX POST ${{ secrets.DISCORD_ANNOUNCE_URL }}     \
           -H 'Content-Type: application/json'                    \
-          -d "{\"content\":\"$msg\","allowed_mentions": {\"parse\": [\"Game Announcements\"]}}"
+          -d "{\"content\":\"$msg\",\"allowed_mentions\": {\"parse\": [\"Game Announcements\"]}}"
