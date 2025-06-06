@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: "Send discord announcement"
         env:
-          webhook_id: '1379964159801819186'
-          webhook_token: YntSFyTdXqo0NkV1eW7Lne-wv3cXPFw_86rnxXHX4amImLVSHHuuP2ap7gUBnnD2VeN3
           repo_name: ${{ github.repository }} # Includes both owner name and repo name - requred for first curl
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
@@ -41,8 +39,8 @@ jobs:
           url="${url%\"}"
           url="${url#\"}"
           
-          msg="# New Release - ${GITHUB_REPOSITORY#*/}\n-# $tag\n-----------\n$body\n-----------\nGithub link: $url\n||@Game Announcements||"
+          msg="# New Release - ${GITHUB_REPOSITORY#*/}\n-# $tag\n-----------\n$body\n-----------\nGithub link: $url\n||<@Game Announcements>||"
 
           curl -sSX POST ${{ secrets.DISCORD_ANNOUNCE_URL }}     \
           -H 'Content-Type: application/json'                    \
-          -d "{\"content\":\"$msg\",\"allowed_mentions\": {\"parse\": [\"Game Announcements\"]}}"
+          -d "{\"content\":\"$msg\"}"
