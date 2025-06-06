@@ -2,8 +2,7 @@ name: Publicize Release
 
 on:
   release:
-    types: [published, edited]
-  workflow_dispatch:
+    types: [published]
 
 jobs:
   discord:
@@ -32,6 +31,7 @@ jobs:
           tag=$(jq ".tag_name" <<< "$release_data")
           url=$(jq ".html_url" <<< "$release_data")
 
+          # Remove " from variable ends
           body="${body%\"}"
           body="${body#\"}"
 
@@ -43,6 +43,6 @@ jobs:
           
           msg="# New Release - ${GITHUB_REPOSITORY#*/}\n-# $tag\n-----------\n$body\n-----------\nGithub link: $url\n||@Game Announcements||"
 
-          curl -sSX POST https://discord.com/api/v10/webhooks/$webhook_id/$webhook_token     \
-          -H 'Content-Type: application/json'                                                \
-          -d "{\"content\":\"$msg\"}"
+          curl -sSX POST $ {{ secrets.DISCORD_ANNOUNCE_URL}}     \
+          -H 'Content-Type: application/json'                    \
+          -d "{\"content\":\"$msg\","allowed_mentions": {\"parse\": [\"Game Announcements\"]}}"
