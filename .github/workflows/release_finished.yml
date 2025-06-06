@@ -39,7 +39,7 @@ jobs:
           url="${url%\"}"
           url="${url#\"}"
           
-          msg="# New Release - ${GITHUB_REPOSITORY#*/}\n-# $tag\n-----------\n$body\n-----------\nGithub link: $url\n||<@Game Announcements>||"
+          msg="# New Release - ${GITHUB_REPOSITORY#*/}\n-# $tag\n-----------\n$body\n\n-----------\nGithub link: $url\n||<@&1379694913586728991>||"
 
           curl -sSX POST ${{ secrets.DISCORD_ANNOUNCE_URL }}     \
           -H 'Content-Type: application/json'                    \
