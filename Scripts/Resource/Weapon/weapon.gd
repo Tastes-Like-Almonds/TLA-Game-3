@@ -16,10 +16,22 @@ func _has_wielder() -> bool:
 func _valid():
 	return (_initialized and _has_wielder())
 
+## Gets the position of the pointer (mouse)
+func get_pointer_pos() -> Vector2:
+	if _has_wielder(): return _wielder.get_global_mouse_position()
+	return Vector2.ZERO
+
 ## Should be called on weapon creation
 func init_weapon(player: Player) -> void:
 	_wielder = player
 	_initialized = true
+
+## Returns true if the weapon was successfully initialized and ready to use.
+func is_ready():
+	return _valid()
+
+func reset():
+	current_use_cooldown = get_cooldown()
 
 ## Should be called each frame
 func process_weapon(delta:float):
@@ -32,15 +44,22 @@ func can_use() -> bool:
 	return current_use_cooldown <= 0.0
 
 ## Activates the weapon's ability
-func use():
+func use(charge_time : float):
 	if !can_use(): return
 	if !_valid(): return
 	current_use_cooldown = get_cooldown()
-	on_use()
+	on_use(charge_time)
 	used.emit()
+
+## Gets the cooldown the weapon is reset to upon reseting
+func get_reset_cooldown() -> float: 
+	return get_cooldown()
+
+## Returns a number which modifies the player's max sword distance.
+func get_max_distance_increase() -> float: return 0.0
 
 ## Gets the cooldown time of the weapon.
 @abstract func get_cooldown() -> float
 
 ## Calls when the weapon is used
-@abstract func on_use()
+@abstract func on_use(charge_time : float)

@@ -37,3 +37,6 @@ func _physics_process(delta: float) -> void:
 	#body.constant_linear_velocity = target_pos
 	#body.apply_central_force(body.global_position.direction_to(target_pos)*200.0*body.global_position.distance_to(target_pos))
 	#body.global_position = _limit_distance(max_distance, _get_player().get_player_position(), body.global_position)
+
+func get_tip_global_position() -> Vector2:
+	return body.global_position

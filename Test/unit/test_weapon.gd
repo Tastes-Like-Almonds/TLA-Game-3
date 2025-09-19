@@ -9,7 +9,10 @@ class TestWeapon extends Weapon:
 	func get_cooldown() -> float:
 		return cooldown
 	
-	func on_use():
+	func get_reset_cooldown() -> float:
+		return cooldown
+	
+	func on_use(_charge_time : float):
 		return
 
 class MockPlayer extends Player:
@@ -33,7 +36,7 @@ func test_use_sets_cooldown():
 	var player = MockPlayer.new()
 	add_child_autoqfree(player)
 	weapon.init_weapon(player)
-	weapon.use()
+	weapon.use(1)
 	assert_false(weapon.can_use(), "Weapon should be on cooldown after use")
 	assert_eq(weapon.current_use_cooldown, 2.5, "Cooldown not set correctly after use")
 
@@ -42,6 +45,6 @@ func test_process_reduces_cooldown():
 	var player = MockPlayer.new()
 	add_child_autoqfree(player)
 	weapon.init_weapon(player)
-	weapon.use()
+	weapon.use(1)
 	weapon.process_weapon(0.5)
 	assert_almost_eq(weapon.current_use_cooldown, 1.0, 0.01, "Cooldown should decrease after processing")

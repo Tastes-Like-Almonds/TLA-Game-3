@@ -31,4 +31,11 @@ func _physics_process(delta: float) -> void:
 	velocity.x *= pow(drag.x, delta)
 	velocity.y *= pow(drag.y, delta)
 	
-	move_and_slide()
+	var current_vel : Vector2 = velocity
+	
+	if move_and_slide():
+		if is_on_floor():
+			velocity.y = (-current_vel.y - get_last_slide_collision().get_remainder().y) * player.get_bounciness()
+
+func get_sprite():
+	return $Sprite2D

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx05lwlejhqqc"]
+
+[ext_resource type="Script" uid="uid://dxnf3hgwxytok" path="res://Scripts/Visual/Weapons/Sword/sword_basic_visual.gd" id="1_wwsnl"]
+[ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Placeholder/sword.png" id="2_47q6j"]
+
+[node name="SwordBasicVisual" type="Node2D"]
+script = ExtResource("1_wwsnl")
+
+[node name="TargetPos" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(3, 3)
+texture = ExtResource("2_47q6j")
+centered = false
+offset = Vector2(-16, 0)
