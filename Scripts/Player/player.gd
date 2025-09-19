@@ -8,7 +8,7 @@ var last_collision : KinematicCollision2D = null
 # --- #
 @export_group("Sword")
 ## The maximum distance from the sword tip to the player (Soft limit)
-@export var max_distance : float = 100.0
+@export var max_distance : float = 140.0
 
 ## Minimum distance between the sword tip and player
 @export var min_distance : float = 10.0
@@ -16,13 +16,16 @@ var last_collision : KinematicCollision2D = null
 ## The strength of the player; the sword flings more when higher.
 @export_range(0,5, 0.1) var strength : float = 2.5
 
+## How much the sword sticks to ground. Higher = lower friction
+@export_range(0,1) var sword_slide : float = 0.2
+
 # --- #
 @export_group("Physics")
 ## Speed of gravity.
-@export_range(0,3000, 1.0) var gravity : float = 1500.0
+@export_range(0,3000, 1.0) var gravity : float = 3000.0
 
-@export var air_drag : Vector2 = Vector2(0.2,0.2)
-@export var ground_drag : Vector2 = Vector2(0.2,0.2)
+@export var air_drag : Vector2 = Vector2(0.4,0.8)
+@export var ground_drag : Vector2 = Vector2(0.01,1.0)
 
 ## The drag applied to the player when being soft-limited (From the sword distance).
 ## This is applied to the previous drag multiplicatively.
@@ -72,6 +75,9 @@ func get_gravity() -> float:
 
 func get_strength() -> float:
 	return strength
+
+func get_sword_slide() -> float:
+	return sword_slide
 
 func get_air_drag() -> Vector2:
 	return air_drag
@@ -132,6 +138,8 @@ func _visual_process():
 
 	# Update weapon visual
 	if weapon_visual:
+		if current_weapon:
+			weapon_visual.update_charge_prog(current_weapon.get_charge_prog(get_ability_charge()))
 		weapon_visual.update_visual(get_player_position(), get_player_sword().get_tip_global_position())
 
 #endregion
@@ -163,9 +171,12 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_released("use"):
 		charging_ability = false
 		if current_weapon:
-			print(ability_charge)
 			current_weapon.use(ability_charge)
 		ability_charge = 0.0
+	
+	elif event.is_action_pressed("quit"):
+		get_tree().quit()
+
 
 func apply_velocity(vel : Vector2) -> void:
 	get_player_body().velocity += vel
@@ -187,6 +198,7 @@ func _process(delta: float) -> void:
 
 func _ready() -> void:
 	equip_weapon(starting_weapon)
+	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.
 func set_last_collision(collision:KinematicCollision2D):

@@ -32,7 +32,13 @@ func _get_target_pos() -> Vector2:
 func _physics_process(delta: float) -> void:
 	var target_pos = _get_target_pos()
 	var movement = body.global_position.direction_to(target_pos)*30*delta*body.global_position.distance_to(target_pos)
-	var collision : KinematicCollision2D = body.move_and_collide(movement)
+	
+	var collision = body.move_and_collide(movement)
+	
+	if collision:
+		body.move_and_collide(movement.slide(collision.get_normal()) * _get_player().get_sword_slide())
+	
+	#var collision : KinematicCollision2D = body.get_last_slide_collision()
 	_get_player().set_last_collision(collision)
 	#body.constant_linear_velocity = target_pos
 	#body.apply_central_force(body.global_position.direction_to(target_pos)*200.0*body.global_position.distance_to(target_pos))

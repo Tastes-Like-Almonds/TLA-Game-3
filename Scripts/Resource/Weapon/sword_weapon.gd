@@ -12,3 +12,6 @@ func on_use(charge_time : float) -> void:
 
 func get_max_distance_increase() -> float:
 	return min(_wielder.get_ability_charge()/MAX_CHARGE, 1)*-20
+
+func get_charge_prog(prog : float):
+	return clampf(prog/MAX_CHARGE, 0, 1)

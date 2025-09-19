@@ -20,7 +20,8 @@ func _physics_process(delta: float) -> void:
 	
 	
 	if collision:
-		velocity += collision.get_remainder() * player.get_strength() * -1 # Reverse velocity of sword
+		var slide_vel = (collision.get_remainder() + collision.get_travel()).slide(collision.get_normal()) * player.get_sword_slide()
+		velocity += (collision.get_remainder() + collision.get_travel() + slide_vel) * player.get_strength() * -1 # Reverse velocity of sword
 		
 		# Slow the player rapidly if beyond the sword's reach
 		if (global_position + velocity*delta).distance_to(sword.body.global_position) > player.max_distance*player.get_soft_limit_distance_coef():

@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ootw7g72v0ku" path="res://Assets/Placeholder/knight.png" id="3_mtuoh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tugb3"]
-size = Vector2(32, 32)
+size = Vector2(48, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvnfx"]
 size = Vector2(4, 4)
@@ -31,7 +31,7 @@ script = ExtResource("1_uvnfx")
 shape = SubResource("RectangleShape2D_tugb3")
 
 [node name="Sprite2D" type="Sprite2D" parent="playerBody"]
-scale = Vector2(2, 2)
+scale = Vector2(3, 3)
 texture = ExtResource("3_mtuoh")
 
 [node name="Camera2D" type="Camera2D" parent="playerBody"]

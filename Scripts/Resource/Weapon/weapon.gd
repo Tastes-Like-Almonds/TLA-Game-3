@@ -63,3 +63,6 @@ func get_max_distance_increase() -> float: return 0.0
 
 ## Calls when the weapon is used
 @abstract func on_use(charge_time : float)
+
+## Gets the percentage to fully charged of the weapon
+@abstract func get_charge_prog(prog : float)
