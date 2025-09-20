@@ -8,6 +8,7 @@ var last_sword_velocity : Vector2
 var last_result
 var velocity : Vector2 = Vector2.ZERO # Only used for specific movement mode(s)
 var on_cable : Cable = null
+var cable_speed : float = 0.0
 
 func _get_player() -> Player:
 	if get_parent() is Player:
@@ -66,14 +67,15 @@ func _physics_process(delta: float) -> void:
 			var target_pos = _get_target_pos()
 			var movement = body.global_position.direction_to(target_pos)*30*delta*body.global_position.distance_to(target_pos)
 			
-			var collision = body.move_and_collide(movement)
-			
 			last_sword_velocity = movement * (1/delta) # Get velocity per second as opposed to the frame
 			
-			if collision:
-				body.move_and_collide(movement.slide(collision.get_normal()) * _get_player().get_sword_slide())
-			
-			_get_player().set_last_collision(collision)
+			if not on_cable:
+				var collision = body.move_and_collide(movement)
+				
+				if collision:
+					body.move_and_collide(movement.slide(collision.get_normal()) * _get_player().get_sword_slide())
+				
+				_get_player().set_last_collision(collision)
 		
 		player.MovementMode.PLAYER_ORBIT:
 			

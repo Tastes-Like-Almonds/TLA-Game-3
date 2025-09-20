@@ -13,3 +13,7 @@ func get_closest_player(origin:Vector2, distance_limit : float = 10000000) -> Pl
 		if origin.distance_to(node.get_player_position()) <= distance_limit:
 			return node
 	return null
+
+## Returns true if the passed angle is vertical.
+func is_angle_roughly_vertical(ang : float, max_offset : float = PI/4) -> bool:
+	return (absf(ang - PI/2)<max_offset or absf(ang - -PI/2)<max_offset)

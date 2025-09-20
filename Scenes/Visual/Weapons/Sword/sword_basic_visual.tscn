@@ -55,7 +55,7 @@ curve = SubResource("Curve_sdpqg")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l3mnx"]
 particle_flag_disable_z = true
-spread = 1.0
+spread = 35.215
 initial_velocity_min = 489.71
 initial_velocity_max = 489.71
 gravity = Vector3(0, 200, 0)

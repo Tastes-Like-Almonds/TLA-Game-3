@@ -40,7 +40,6 @@ texture = ExtResource("3_mtuoh")
 
 [node name="Camera2D" type="Camera2D" parent="playerBody"]
 visible = false
-enabled = false
 process_callback = 0
 position_smoothing_enabled = true
 

@@ -2,6 +2,7 @@ extends Path2D
 class_name Cable
 
 @onready var line = $Line2D
+@export var cable_drag : float = 0.5
 
 func _render_line() -> void:
 	line.clear_points()
@@ -11,6 +12,10 @@ func _render_line() -> void:
 func _ready() -> void:
 	_render_line()
 
+## Returns true if the passed offset is out of the cable's range.
+func _offset_out_of_range(offset : float) -> bool:
+	return offset > curve.get_baked_length()
+
 func _physics_process(delta: float) -> void:
 	for player : Player in get_tree().get_nodes_in_group("Player"):
 		if player is not Player: continue
@@ -18,14 +23,57 @@ func _physics_process(delta: float) -> void:
 		var sword := player.get_player_sword()
 		var sword_loc := player.get_player_sword().get_tip_global_position()
 		var closest := to_global(curve.get_closest_point(to_local(sword_loc)))
+		var offset : float = curve.get_closest_offset(sword.get_tip_global_position())
 		var last_vel = sword.get_last_sword_velocity()
 		var old_sword_pos = sword.get_tip_global_position() - last_vel*delta
 		var grip_threshold : float = max(curve.bake_interval, last_vel.length()*delta)
 
-		if (old_sword_pos.y < closest.y and sword.get_tip_global_position().y >= closest.y) or sword.is_on_cable():
-			if absf(old_sword_pos.x - closest.x) < grip_threshold:
+		if sword.on_cable == self:
+				
+				var dir := Vector2.ZERO
+				
+				var current_offset_pos : Vector2 = curve.sample_baked(offset)
+				var next_offset_pos : Vector2 = curve.sample_baked(offset + sword.cable_speed*delta)
+				var og_pos : Vector2 = sword.get_tip_global_position()
+				
+				dir = current_offset_pos.direction_to(next_offset_pos)
+				
+				if sword.cable_speed > 0:
+					sword.cable_speed += dir.y*player.get_gravity()
+					sword.body.global_position = to_global(curve.get_closest_point(to_local(closest + dir*sword.cable_speed*delta)))
+					
+				elif sword.cable_speed < 0:
+					sword.cable_speed -= dir.y*player.get_gravity()
+					sword.body.global_position = to_global(curve.get_closest_point(to_local(closest - dir*sword.cable_speed*delta)))
+				
+				sword.last_sword_velocity = (sword.body.global_position - og_pos) * 1/delta
+				
+				sword.cable_speed *= pow(cable_drag, delta)
+
+		elif (old_sword_pos.y < closest.y and sword.get_tip_global_position().y >= closest.y):
+			if absf(old_sword_pos.x - closest.x) < grip_threshold and not _offset_out_of_range(offset):
 				sword.body.global_position = closest
+				
+				var real_vel = player.get_player_body().get_real_velocity()
+				var is_vertical := Helper.is_angle_roughly_vertical(real_vel.angle())
+				
+				if real_vel.x < 0 or (is_vertical and sword.get_tip_global_position().x < player.get_player_position().x):
+					sword.cable_speed = player.get_player_body().get_real_velocity().length()
+				
+				elif real_vel.x > 0 or (is_vertical and sword.get_tip_global_position().x > player.get_player_position().x):
+					sword.cable_speed = -player.get_player_body().get_real_velocity().length()
+					
 				sword.enter_cable(self)
 		
-		if player.get_player_position().y < closest.y:
+		if player.get_player_position().y < closest.y or _offset_out_of_range(offset + sword.cable_speed*delta) and sword.on_cable == self:
+			sword.cable_speed = 0.0
 			sword.exit_cable()
+			
+			var dir := Vector2.ZERO
+				
+			var current_offset_pos : Vector2 = curve.sample_baked(offset)
+			var next_offset_pos : Vector2 = curve.sample_baked(offset + sword.cable_speed*delta)
+			
+			dir = current_offset_pos.direction_to(next_offset_pos)
+			
+			player.apply_velocity(dir*sword.cable_speed)

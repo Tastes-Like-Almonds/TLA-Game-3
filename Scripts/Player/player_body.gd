@@ -27,7 +27,6 @@ func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 
 func _physics_process(delta: float) -> void:
 	var player : Player = _get_player()
-	var collision = player.get_last_collision()
 	var sword = player.get_player_sword()
 	
 	match player.get_movement_mode():
@@ -50,7 +49,7 @@ func _physics_process(delta: float) -> void:
 				
 				if sword.is_on_cable():
 					var dir = global_position.direction_to(sword.get_tip_global_position())
-					velocity.y += dir.y*global_position.distance_squared_to(sword.get_tip_global_position())*0.005
+					velocity += dir*global_position.distance_squared_to(sword.get_tip_global_position())*0.005
 			
 			# Apply drag
 			velocity = _apply_drag(velocity, delta)
