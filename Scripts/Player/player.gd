@@ -3,6 +3,14 @@ class_name Player
 
 var last_collision : KinematicCollision2D = null
 
+enum MovementMode {
+	SWORD_ORBIT, # The sword orbits the player
+	PLAYER_ORBIT, # TODO The player orbits the sword
+	NOCLIP # TODO The player flies toward the sword when charging. Collisions disabled in this mode.
+}
+
+# TODO Cache sword and body ref until child structure is altered
+
 #region Exports
 
 # --- #
@@ -16,8 +24,14 @@ var last_collision : KinematicCollision2D = null
 ## The strength of the player; the sword flings more when higher.
 @export_range(0,5, 0.1) var strength : float = 2.5
 
+## The strength of the player when in player orbit mode.
+@export var player_orbit_strength : float = 10.0
+
 ## How much the sword sticks to ground. Higher = lower friction
 @export_range(0,1) var sword_slide : float = 0.2
+
+## The multipler of knockback dealt to the player
+@export var self_knockback_multi : float = 1
 
 # --- #
 @export_group("Physics")
@@ -34,7 +48,7 @@ var last_collision : KinematicCollision2D = null
 ## The distance beyond max_distance which the player will be limited
 @export_range(0,1) var soft_limit_distance_coef : float = 1.1
 
-@export_range(0,1) var bounciness : float = 0.5
+@export_range(0,1) var bounciness : float = 0.25
 
 # --- #
 @export_group("Startup")
@@ -56,6 +70,13 @@ var current_weapon : Weapon
 
 ## The current weapon visual
 var weapon_visual : WeaponVisual
+
+## The current movement mode
+var movement_mode : MovementMode = MovementMode.SWORD_ORBIT
+
+## If the player is currently hooked on a cable.
+## No getter/setter methods as this is managed in cable.gd
+var on_cable : bool = false
 #endregion
 
 #region Getters
@@ -75,6 +96,9 @@ func get_gravity() -> float:
 
 func get_strength() -> float:
 	return strength
+
+func get_player_orbit_strength() -> float:
+	return player_orbit_strength
 
 func get_sword_slide() -> float:
 	return sword_slide
@@ -96,6 +120,9 @@ func get_soft_limit_distance_coef() -> float:
 
 func get_ability_charge() -> float:
 	return ability_charge
+
+func is_charging_ability() -> bool:
+	return charging_ability
 
 ## Get the last kinematic collision of the sword tip
 func get_last_collision() -> KinematicCollision2D:
@@ -122,6 +149,27 @@ func get_player_sword() -> Sword:
 			sword = child
 			
 	return sword
+
+## Gets the currently equipped weapon
+func get_current_weapon() -> Weapon:
+	return current_weapon
+
+## Gets the current movement mode
+func get_movement_mode() -> MovementMode:
+	return movement_mode
+
+## Gets the current damage of the blade (Value changes based on speed, charge, etc.)
+func get_blade_damage() -> float:
+	var damage := 0.0
+	var sword = get_player_sword()
+	
+	damage += sword.get_last_sword_velocity().length()
+	
+	return damage
+
+func get_knockback_multi() -> float:
+	return self_knockback_multi
+
 #endregion
 
 #region Visual
@@ -154,32 +202,64 @@ func equip_weapon(weapon : Weapon) -> void:
 	weapon.reset()
 	current_weapon = weapon
 	
+	_clear_visuals()
+	
 	var scn : PackedScene = CosmeticLoader.get_weapon_visual(weapon)
 	if scn:
 		weapon_visual = scn.instantiate()
+		weapon_visual.set_player(self)
 		add_child(weapon_visual)
 
 #endregion
 
 #region Actions
 
+func start_charging() -> void:
+	charging_ability = true
+
+func stop_charging() -> void:
+	charging_ability = false
+	if current_weapon:
+		current_weapon.use(ability_charge)
+	ability_charge = 0.0
+
 func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("use"):
-		charging_ability = true
+		start_charging()
 	
 	elif event.is_action_released("use"):
-		charging_ability = false
-		if current_weapon:
-			current_weapon.use(ability_charge)
-		ability_charge = 0.0
+		stop_charging()
 	
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()
+	
+	elif event.is_action_pressed("ui_accept"):
+		set_movement_mode(MovementMode.NOCLIP)
 
 
 func apply_velocity(vel : Vector2) -> void:
 	get_player_body().velocity += vel
+
+func deal_knockback(vel : Vector2) -> void:
+	apply_velocity(vel)
+
+func set_collisions(state : bool) -> void:
+	for child in Helper.get_all_descendants(self):
+		if child is CollisionShape2D:
+			child.disabled = not state
+
+func set_movement_mode(mode : MovementMode) -> void:
+	movement_mode = mode
+	
+	# Load defaults
+	set_collisions(true)
+	
+	# Load movement mode settings
+	match movement_mode:
+		MovementMode.NOCLIP:
+			set_collisions(false)
+	
 
 #endregion
 

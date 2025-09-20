@@ -1,20 +1,5 @@
 extends GutTest
 
-class TestWeapon extends Weapon:
-	var cooldown: float
-
-	func _init(_cooldown: float = 1.0):
-		cooldown = _cooldown
-
-	func get_cooldown() -> float:
-		return cooldown
-	
-	func get_reset_cooldown() -> float:
-		return cooldown
-	
-	func on_use(_charge_time : float):
-		return
-
 class MockPlayer extends Player:
 	pass
 

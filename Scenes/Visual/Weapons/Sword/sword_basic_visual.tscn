@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx05lwlejhqqc"]
+[gd_scene load_steps=15 format=3 uid="uid://bx05lwlejhqqc"]
 
 [ext_resource type="Script" uid="uid://dxnf3hgwxytok" path="res://Scripts/Visual/Weapons/Sword/sword_basic_visual.gd" id="1_wwsnl"]
 [ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Placeholder/sword.png" id="2_47q6j"]
@@ -37,6 +37,30 @@ scale_max = 12.0
 scale_curve = SubResource("CurveTexture_l3mnx")
 alpha_curve = SubResource("CurveTexture_sdpqg")
 
+[sub_resource type="Gradient" id="Gradient_dod1f"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.95000005, 1, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_58q71"]
+gradient = SubResource("Gradient_dod1f")
+width = 8
+height = 16
+
+[sub_resource type="Curve" id="Curve_sdpqg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.6802031, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_cpx17"]
+curve = SubResource("Curve_sdpqg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l3mnx"]
+particle_flag_disable_z = true
+spread = 1.0
+initial_velocity_min = 489.71
+initial_velocity_max = 489.71
+gravity = Vector3(0, 200, 0)
+alpha_curve = SubResource("CurveTexture_cpx17")
+
 [node name="SwordBasicVisual" type="Node2D"]
 script = ExtResource("1_wwsnl")
 
@@ -55,3 +79,13 @@ amount = 4
 texture = SubResource("GradientTexture2D_dod1f")
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_32eie")
+
+[node name="Sparks" type="GPUParticles2D" parent="Sprite2D"]
+show_behind_parent = true
+scale = Vector2(0.25, 0.25)
+amount = 30
+texture = SubResource("GradientTexture2D_58q71")
+lifetime = 0.6
+explosiveness = 0.21
+randomness = 0.16
+process_material = SubResource("ParticleProcessMaterial_l3mnx")

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3n0ld0lgrg4q"]
+
+[ext_resource type="Script" uid="uid://ko4prto8gjvb" path="res://Scripts/Object/Enemy/bat.gd" id="1_t36nw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6sep"]
+size = Vector2(48, 48)
+
+[node name="Bat" type="AnimatableBody2D" groups=["BladeHitable"]]
+collision_layer = 8
+sync_to_physics = false
+script = ExtResource("1_t36nw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_o6sep")

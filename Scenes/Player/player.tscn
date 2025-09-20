@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene load_steps=11 format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
 [ext_resource type="Script" uid="uid://bu2b4pqlln3ot" path="res://Scripts/Player/sword.gd" id="3_htcer"]
 [ext_resource type="Texture2D" uid="uid://ootw7g72v0ku" path="res://Assets/Placeholder/knight.png" id="3_mtuoh"]
+[ext_resource type="Script" uid="uid://bmumt3flg26d4" path="res://Scripts/Player/blade_area.gd" id="5_htcer"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tugb3"]
 size = Vector2(48, 48)
@@ -20,7 +21,10 @@ gradient = SubResource("Gradient_htcer")
 width = 8
 height = 8
 
-[node name="Player" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
+size = Vector2(102, 20)
+
+[node name="Player" type="Node2D" groups=["Player"]]
 script = ExtResource("1_xpcdj")
 
 [node name="playerBody" type="CharacterBody2D" parent="."]
@@ -36,7 +40,6 @@ texture = ExtResource("3_mtuoh")
 
 [node name="Camera2D" type="Camera2D" parent="playerBody"]
 visible = false
-zoom = Vector2(0.5, 0.5)
 process_callback = 0
 position_smoothing_enabled = true
 
@@ -54,3 +57,12 @@ shape = SubResource("RectangleShape2D_uvnfx")
 [node name="Sprite2D" type="Sprite2D" parent="Sword/AnimatableBody2D"]
 visible = false
 texture = SubResource("GradientTexture2D_dd0ac")
+
+[node name="Area2D" type="Area2D" parent="Sword"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("5_htcer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Area2D"]
+shape = SubResource("RectangleShape2D_mtuoh")
+debug_color = Color(0.94, 0, 0.28200018, 0.5019608)
