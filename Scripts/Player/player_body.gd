@@ -36,15 +36,21 @@ func _physics_process(delta: float) -> void:
 		player.MovementMode.SWORD_ORBIT:
 			
 			# Handle sword movement
-			if collision:
-				var slide_vel = (collision.get_remainder() + collision.get_travel()).slide(collision.get_normal()) * player.get_sword_slide()
-				velocity += (collision.get_remainder() + collision.get_travel() + slide_vel) * player.get_strength() * -1 # Reverse velocity of sword
-				
-				# Slow the player rapidly if beyond the sword's reach
-				if (global_position + velocity*delta).distance_to(sword.body.global_position) > player.max_distance*player.get_soft_limit_distance_coef():
-					velocity *= pow(player.get_soft_limit_drag(),delta)
+			var push = sword.get_push()
+			if push:
+				velocity += sword.get_push()
 			else:
-				velocity.y += player.gravity * delta
+				velocity.y += player.gravity
+
+				
+			# Slow the player rapidly if beyond the sword's reach
+			if (global_position + velocity*delta).distance_to(sword.get_tip_global_position()) > player.max_distance*player.get_soft_limit_distance_coef():
+				
+				velocity *= pow(player.get_soft_limit_drag(),delta)
+				
+				if sword.is_on_cable():
+					var dir = global_position.direction_to(sword.get_tip_global_position())
+					velocity.y += dir.y*global_position.distance_squared_to(sword.get_tip_global_position())*0.005
 			
 			# Apply drag
 			velocity = _apply_drag(velocity, delta)
@@ -54,6 +60,7 @@ func _physics_process(delta: float) -> void:
 			if move_and_slide():
 				if is_on_floor():
 					velocity.y = (-current_vel.y - get_last_slide_collision().get_remainder().y) * player.get_bounciness()
+			
 		#endregion
 		
 		#region Player orbit

@@ -36,7 +36,7 @@ enum MovementMode {
 # --- #
 @export_group("Physics")
 ## Speed of gravity.
-@export_range(0,3000, 1.0) var gravity : float = 3000.0
+@export_range(0,3000, 1.0) var gravity : float = 70.0
 
 @export var air_drag : Vector2 = Vector2(0.4,0.8)
 @export var ground_drag : Vector2 = Vector2(0.01,1.0)
@@ -46,7 +46,7 @@ enum MovementMode {
 @export_range(0,1) var soft_limit_drag : float = 0.1
 
 ## The distance beyond max_distance which the player will be limited
-@export_range(0,1) var soft_limit_distance_coef : float = 1.1
+@export_range(0,3) var soft_limit_distance_coef : float = 1.3
 
 @export_range(0,1) var bounciness : float = 0.25
 

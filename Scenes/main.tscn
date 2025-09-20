@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://86ql3wpw6djb" path="res://Scripts/Resource/Weapon/sword_weapon.gd" id="2_8gbba"]
 [ext_resource type="Texture2D" uid="uid://25ly160jnq2l" path="res://Assets/tileset_test.png" id="2_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="4_jjvhh"]
-[ext_resource type="PackedScene" uid="uid://7ihhej27jvt" path="res://Scripts/Object/cable.tscn" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://2mu2oio1rsih" path="res://Scenes/Object/cablev2.tscn" id="6_21xkr"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -31,16 +31,16 @@ texture = ExtResource("2_bo1nx")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_8gbba")
 
-[sub_resource type="Curve2D" id="Curve2D_21xkr"]
+[sub_resource type="Curve2D" id="Curve2D_kry3j"]
 _data = {
-"points": PackedVector2Array(108.57805, -144.84323, -108.57805, 144.84323, 50, 333, 0, 0, 0, 0, -797, 776, 0, 0, 0, 0, -1818, 434)
+"points": PackedVector2Array(0, 0, 0, 0, 124, 337, 350.96417, -62.809917, -350.96417, 62.809917, -452, 702, 0, 0, 0, 0, -1186, 720, 81.542694, 51.23967, -81.542694, -51.23967, -1415, 624, 0, 0, 0, 0, -1687, 466)
 }
-point_count = 3
+point_count = 5
 
 [node name="main" type="Node"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(32, -1375)
+position = Vector2(73, -1374)
 scale = Vector2(201.76561, 195.35214)
 texture = SubResource("GradientTexture2D_8gbba")
 
@@ -56,5 +56,9 @@ tile_set = SubResource("TileSet_jjvhh")
 [node name="Bat" parent="." instance=ExtResource("4_jjvhh")]
 position = Vector2(814, 334)
 
-[node name="Cable" parent="." instance=ExtResource("5_kry3j")]
-curve = SubResource("Curve2D_21xkr")
+[node name="Cablev2" parent="." instance=ExtResource("6_21xkr")]
+curve = SubResource("Curve2D_kry3j")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-546, 596)
+zoom = Vector2(0.5, 0.5)

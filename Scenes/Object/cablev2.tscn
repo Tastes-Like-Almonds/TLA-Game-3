@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://2mu2oio1rsih"]
+
+[ext_resource type="Script" uid="uid://da14x8p3b1t2u" path="res://Scripts/Object/cablev2.gd" id="1_3e63e"]
+
+[sub_resource type="Gradient" id="Gradient_f2v25"]
+colors = PackedColorArray(0.48178947, 0.48178947, 0.48178947, 1, 0.601223, 0.601223, 0.60122293, 1)
+
+[node name="Cablev2" type="Path2D"]
+process_physics_priority = 1
+script = ExtResource("1_3e63e")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 300, 0)
+default_color = Color(0.55828667, 0.55828655, 0.55828655, 1)
+gradient = SubResource("Gradient_f2v25")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+build_mode = 1
+polygon = PackedVector2Array(0, 0)

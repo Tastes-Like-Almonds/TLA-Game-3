@@ -7,6 +7,7 @@ class_name Sword
 var last_sword_velocity : Vector2
 var last_result
 var velocity : Vector2 = Vector2.ZERO # Only used for specific movement mode(s)
+var on_cable : Cable = null
 
 func _get_player() -> Player:
 	if get_parent() is Player:
@@ -67,7 +68,7 @@ func _physics_process(delta: float) -> void:
 			
 			var collision = body.move_and_collide(movement)
 			
-			last_sword_velocity = movement * (1/delta) # Get velocity pre second as opposed to the frame
+			last_sword_velocity = movement * (1/delta) # Get velocity per second as opposed to the frame
 			
 			if collision:
 				body.move_and_collide(movement.slide(collision.get_normal()) * _get_player().get_sword_slide())
@@ -99,8 +100,37 @@ func _physics_process(delta: float) -> void:
 	
 	_update_blade(delta)
 
+func get_push() -> Vector2:
+	
+	var player = _get_player()
+	var collision = player.get_last_collision()
+	var vel := Vector2.ZERO
+	
+	#if on_cable:
+		#var target = _get_target_pos()
+		#vel += body.global_position.direction_to(target)*player.get_strength()* -0.1 * body.global_position.distance_to(player.get_player_position())
+		#vel += player.get_player_position().direction_to(body.global_position) * 100
+
+	if on_cable:
+		vel.y += Input.get_last_mouse_velocity().y * -0.05
+
+	elif collision:
+		var slide_vel = (collision.get_remainder() + collision.get_travel()).slide(collision.get_normal()) * player.get_sword_slide()
+		vel += (collision.get_remainder() + collision.get_travel() + slide_vel) * player.get_strength() * -1 # Reverse velocity of sword
+
+	return vel
+
 func get_tip_global_position() -> Vector2:
 	return body.global_position
 
 func get_last_sword_velocity() -> Vector2:
 	return last_sword_velocity
+
+func is_on_cable() -> bool:
+	return is_instance_valid(on_cable)
+
+func enter_cable(cable : Cable):
+	on_cable = cable
+
+func exit_cable():
+	on_cable = null
