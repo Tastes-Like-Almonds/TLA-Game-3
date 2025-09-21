@@ -1,7 +1,9 @@
-extends CharacterBody2D
-class_name PlayerBody
+## The body of the player.
 
-func _get_player() -> Player:
+class_name PlayerBody extends CharacterBody2D
+
+
+func get_player() -> Player:
 	if get_parent() is Player:
 		return get_parent()
 	return null
@@ -10,7 +12,7 @@ func _get_player() -> Player:
 ## Separated from _physics_process in case multiple movement methods need it.
 func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 	
-	var player = _get_player()
+	var player = get_player()
 	if !is_instance_valid(player): return vel
 	
 	var drag : Vector2
@@ -26,7 +28,7 @@ func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 	return vel
 
 func _physics_process(delta: float) -> void:
-	var player : Player = _get_player()
+	var player : Player = get_player()
 	var sword = player.get_player_sword()
 	
 	match player.get_movement_mode():

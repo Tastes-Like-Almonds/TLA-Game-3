@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://bx05lwlejhqqc"]
 
 [ext_resource type="Script" uid="uid://dxnf3hgwxytok" path="res://Scripts/Visual/Weapons/Sword/sword_basic_visual.gd" id="1_wwsnl"]
-[ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Placeholder/sword.png" id="2_47q6j"]
+[ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Sprites/Placeholder/sword.png" id="2_47q6j"]
 
 [sub_resource type="Gradient" id="Gradient_47q6j"]
 offsets = PackedFloat32Array(0, 0.33043477, 0.5826087, 0.67826086, 1)

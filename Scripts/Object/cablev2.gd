@@ -28,6 +28,7 @@ func _physics_process(delta: float) -> void:
 		var old_sword_pos = sword.get_tip_global_position() - last_vel*delta
 		var grip_threshold : float = max(curve.bake_interval, last_vel.length()*delta)
 
+		# Update if the player is attached
 		if sword.on_cable == self:
 				
 				var dir := Vector2.ZERO
@@ -38,11 +39,11 @@ func _physics_process(delta: float) -> void:
 				
 				dir = current_offset_pos.direction_to(next_offset_pos)
 				
-				if sword.cable_speed > 0:
+				if next_offset_pos.x-current_offset_pos.x < 0:
 					sword.cable_speed += dir.y*player.get_gravity()
 					sword.body.global_position = to_global(curve.get_closest_point(to_local(closest + dir*sword.cable_speed*delta)))
 					
-				elif sword.cable_speed < 0:
+				elif next_offset_pos.x-current_offset_pos.x > 0:
 					sword.cable_speed -= dir.y*player.get_gravity()
 					sword.body.global_position = to_global(curve.get_closest_point(to_local(closest - dir*sword.cable_speed*delta)))
 				
@@ -50,6 +51,7 @@ func _physics_process(delta: float) -> void:
 				
 				sword.cable_speed *= pow(cable_drag, delta)
 
+		# Attach to the cable if able
 		elif (old_sword_pos.y < closest.y and sword.get_tip_global_position().y >= closest.y):
 			if absf(old_sword_pos.x - closest.x) < grip_threshold and not _offset_out_of_range(offset):
 				sword.body.global_position = closest
@@ -65,7 +67,8 @@ func _physics_process(delta: float) -> void:
 					
 				sword.enter_cable(self)
 		
-		if player.get_player_position().y < closest.y or _offset_out_of_range(offset + sword.cable_speed*delta) and sword.on_cable == self:
+		# Exit the cable if able
+		if (player.get_player_position().y < closest.y - (player.get_max_distance()) or _offset_out_of_range(offset + sword.cable_speed*delta)) and sword.on_cable == self:
 			sword.cable_speed = 0.0
 			sword.exit_cable()
 			

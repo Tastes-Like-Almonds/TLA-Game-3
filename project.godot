@@ -22,6 +22,7 @@ SignalBus="*res://Scripts/Global/signal_bus.gd"
 CosmeticLoader="*res://Scripts/Global/cosmetic_loader.gd"
 DevTools="*res://Scripts/Global/dev_tools.gd"
 Helper="*res://Scripts/Global/helper.gd"
+CameraManager="*res://Scripts/Global/camera_manager.gd"
 
 [display]
 

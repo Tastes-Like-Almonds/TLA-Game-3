@@ -5,6 +5,7 @@ class_name Sword
 @onready var blade : BladeArea = $Area2D
 
 var last_sword_velocity : Vector2
+var last_frame_pos : Vector2
 var last_result
 var velocity : Vector2 = Vector2.ZERO # Only used for specific movement mode(s)
 var on_cable : Cable = null
@@ -68,6 +69,7 @@ func _physics_process(delta: float) -> void:
 			var movement = body.global_position.direction_to(target_pos)*30*delta*body.global_position.distance_to(target_pos)
 			
 			last_sword_velocity = movement * (1/delta) # Get velocity per second as opposed to the frame
+			last_frame_pos = body.global_position
 			
 			if not on_cable:
 				var collision = body.move_and_collide(movement)

@@ -1,12 +1,13 @@
-extends Node2D
-class_name Player
+## The player character.
+
+class_name Player extends Node2D
 
 var last_collision : KinematicCollision2D = null
 
 enum MovementMode {
 	SWORD_ORBIT, # The sword orbits the player
-	PLAYER_ORBIT, # TODO The player orbits the sword
-	NOCLIP # TODO The player flies toward the sword when charging. Collisions disabled in this mode.
+	PLAYER_ORBIT, # TODO The player orbits the sword (Not needed currently; alternative used)
+	NOCLIP # The player flies toward the sword when charging. Collisions disabled in this mode.
 }
 
 # TODO Cache sword and body ref until child structure is altered
@@ -174,11 +175,13 @@ func get_knockback_multi() -> float:
 
 #region Visual
 
+## Clears all weapon visuals from the player (Should only be one at most)
 func _clear_visuals():
 	for child in get_children():
 		if child is WeaponVisual:
 			child.queue_free()
 
+## Update any player-related visuals
 func _visual_process():
 	
 	# Update player rotation
@@ -194,10 +197,11 @@ func _visual_process():
 
 #region Item
 
+## Equip the passed weapon
 func equip_weapon(weapon : Weapon) -> void:
 	
-	if !weapon: return
-	if !weapon.can_use(): weapon.init_weapon(self)
+	if not weapon: return
+	if not weapon.can_use(): weapon.init_weapon(self)
 	
 	weapon.reset()
 	current_weapon = weapon
@@ -214,16 +218,18 @@ func equip_weapon(weapon : Weapon) -> void:
 
 #region Actions
 
+## Start charging the main ability of the held weapon
 func start_charging() -> void:
 	charging_ability = true
 
+## Use the main ability of the help weapon, resetting its charge.
 func stop_charging() -> void:
 	charging_ability = false
 	if current_weapon:
 		current_weapon.use(ability_charge)
 	ability_charge = 0.0
 
-func _input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void: # TODO Replace this with an input manager class.
 	
 	if event.is_action_pressed("use"):
 		start_charging()
@@ -235,20 +241,29 @@ func _input(event: InputEvent) -> void:
 		get_tree().quit()
 	
 	elif event.is_action_pressed("ui_accept"):
-		set_movement_mode(MovementMode.NOCLIP)
+		if get_movement_mode() == MovementMode.NOCLIP:
+			set_movement_mode(MovementMode.SWORD_ORBIT)
+		else:
+			set_movement_mode(MovementMode.NOCLIP)
+	
+			Engine.time_scale = 0.1
 
-
+## Apply the passed velocity to the player.
 func apply_velocity(vel : Vector2) -> void:
 	get_player_body().velocity += vel
 
+## Deal knockback to the player. Functions the same as apply_velocity, but should be used for
+## any hostile knockback (incase further features are added which deal with it.)
 func deal_knockback(vel : Vector2) -> void:
 	apply_velocity(vel)
 
+## Set the collisions of all bodies in the player to enabled/disabled.
 func set_collisions(state : bool) -> void:
 	for child in Helper.get_all_descendants(self):
 		if child is CollisionShape2D:
 			child.disabled = not state
 
+## Set the movement mode of the player, i.e. the way which the player moves.
 func set_movement_mode(mode : MovementMode) -> void:
 	movement_mode = mode
 	
@@ -259,7 +274,6 @@ func set_movement_mode(mode : MovementMode) -> void:
 	match movement_mode:
 		MovementMode.NOCLIP:
 			set_collisions(false)
-	
 
 #endregion
 
