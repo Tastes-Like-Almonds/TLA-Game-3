@@ -35,6 +35,12 @@ enum MovementMode {
 @export var self_knockback_multi : float = 1
 
 # --- #
+@export_group("Inventory")
+
+## The max number of items which the player can hold.
+@export_range(1,10, 1) var max_equip : int = 1
+
+# --- #
 @export_group("Physics")
 ## Speed of gravity.
 @export_range(0,3000, 1.0) var gravity : float = 70.0
@@ -78,6 +84,9 @@ var movement_mode : MovementMode = MovementMode.SWORD_ORBIT
 ## If the player is currently hooked on a cable.
 ## No getter/setter methods as this is managed in cable.gd
 var on_cable : bool = false
+
+## An array of currently held weapons.
+var held_weapons : Array[Weapon] = []
 #endregion
 
 #region Getters
@@ -214,6 +223,28 @@ func equip_weapon(weapon : Weapon) -> void:
 		weapon_visual.set_player(self)
 		add_child(weapon_visual)
 
+## Equip the weapon in the passed slot.
+func equip_weapon_slot(slot : int) -> void:
+	var weapon = held_weapons.get(slot)
+	if weapon:
+		equip_weapon(weapon)
+
+## Add the passed weapon to held weapons.
+func add_weapon(weapon : Weapon):
+	
+	
+	
+	if held_weapons.size() > max_equip:
+		drop_weapon(held_weapons.find(current_weapon))
+
+## Drops the current weapon into the world.
+func drop_weapon(slot : int) -> void:
+	
+	if slot < 0: return # If weapon not found from array.find()
+	if slot >= held_weapons.size(): return
+	
+	held_weapons.remove_at(slot) # TODO Add item drop
+
 #endregion
 
 #region Actions
@@ -246,8 +277,6 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 		else:
 			set_movement_mode(MovementMode.NOCLIP)
 	
-			Engine.time_scale = 0.1
-
 ## Apply the passed velocity to the player.
 func apply_velocity(vel : Vector2) -> void:
 	get_player_body().velocity += vel

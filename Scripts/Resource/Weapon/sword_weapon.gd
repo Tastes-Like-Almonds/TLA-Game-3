@@ -7,7 +7,7 @@ func get_cooldown() -> float:
 	return 1.0
 
 func on_use(charge_time : float) -> void:
-	_wielder.apply_velocity(_wielder.get_player_position().direction_to(get_pointer_pos())*min(MAX_CHARGE,charge_time)*4000)
+	_wielder.apply_velocity(_wielder.get_player_position().direction_to(get_pointer_pos())*min(MAX_CHARGE,charge_time)*3000)
 	pass
 
 func get_max_distance_increase() -> float:

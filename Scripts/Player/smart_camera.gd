@@ -8,7 +8,7 @@ enum TargetMode {
 @export var smooth_zoom : bool = true
 @export var smooth_follow : bool = true
 @export var smooth_follow_speed : float = 10
-@export_range(0,3, 0.1) var zoom_speed : float = 1
+@export_range(0,3, 0.1) var zoom_speed : float = 8
 
 var target_mode : TargetMode = TargetMode.TARGET_POSITION
 var target_zoom : Vector2 = Vector2(1,1)
@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 	
 	if target_mode == TargetMode.TARGET_NODE_2D:
 		target_pos = target_node.global_position
-	global_position = global_position.move_toward(target_pos, smooth_follow_speed*global_position.distance_to(target_pos)*0.01)
+	global_position = global_position.move_toward(target_pos, smooth_follow_speed*global_position.distance_to(target_pos)*delta)
 	
 	if smooth_zoom:
-		zoom = zoom.move_toward(target_zoom, zoom_speed*zoom.distance_to(target_zoom)*0.1)
+		zoom = zoom.move_toward(target_zoom, zoom_speed*zoom.distance_to(target_zoom)*delta)

@@ -21,10 +21,14 @@ func _physics_process(delta: float) -> void:
 		if player is not Player: continue
 		
 		var sword := player.get_player_sword()
-		var sword_loc := player.get_player_sword().get_tip_global_position()
+		var sword_loc := sword.get_tip_global_position()
 		var closest := to_global(curve.get_closest_point(to_local(sword_loc)))
-		var offset : float = curve.get_closest_offset(sword.get_tip_global_position())
 		var last_vel = sword.get_last_sword_velocity()
+		
+		# Dont do calculations if too far to be relevant
+		if closest.distance_to(sword_loc) > last_vel.length()*delta: continue
+		
+		var offset : float = curve.get_closest_offset(sword.get_tip_global_position())
 		var old_sword_pos = sword.get_tip_global_position() - last_vel*delta
 		var grip_threshold : float = max(curve.bake_interval, last_vel.length()*delta)
 
