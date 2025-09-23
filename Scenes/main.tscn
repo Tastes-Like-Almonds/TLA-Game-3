@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://birc57pmi5hwh"]
+[gd_scene load_steps=17 format=4 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="PackedScene" uid="uid://bgq53i1bdpjo4" path="res://Scenes/Player/player.tscn" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://wul51g5t37db" path="res://Scripts/Resource/Weapon/staff_weapon.gd" id="2_6bp64"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dl285kt1lkvcb" path="res://Scenes/Player/game_camera.tscn" id="6_6bp64"]
 [ext_resource type="PackedScene" uid="uid://2mu2oio1rsih" path="res://Scenes/Object/cablev2.tscn" id="6_21xkr"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/camera_setter.tscn" id="7_344ge"]
+[ext_resource type="PackedScene" uid="uid://c6v3xg31w6tg1" path="res://Scenes/Object/ItemPickup.tscn" id="8_344ge"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -126,3 +127,6 @@ track_player = true
 
 [node name="CamPosNode" type="Node2D" parent="."]
 position = Vector2(1364, -1857)
+
+[node name="ItemPickup" parent="." instance=ExtResource("8_344ge")]
+position = Vector2(1159, 368)

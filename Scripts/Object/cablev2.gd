@@ -44,11 +44,11 @@ func _physics_process(delta: float) -> void:
 				dir = current_offset_pos.direction_to(next_offset_pos)
 				
 				if next_offset_pos.x-current_offset_pos.x < 0:
-					sword.cable_speed += dir.y*player.get_gravity()
+					sword.cable_speed += dir.y*player.get_cable_gravity()
 					sword.body.global_position = to_global(curve.get_closest_point(to_local(closest + dir*sword.cable_speed*delta)))
 					
 				elif next_offset_pos.x-current_offset_pos.x > 0:
-					sword.cable_speed -= dir.y*player.get_gravity()
+					sword.cable_speed -= dir.y*player.get_cable_gravity()
 					sword.body.global_position = to_global(curve.get_closest_point(to_local(closest - dir*sword.cable_speed*delta)))
 				
 				sword.last_sword_velocity = (sword.body.global_position - og_pos) * 1/delta

@@ -41,11 +41,18 @@ enum MovementMode {
 ## The max number of items which the player can hold.
 @export_range(1,10, 1) var max_equip : int = 1
 
+## If true, the player will automatically equip picked up items. This happens by default
+## if the player's max weapons value is reached.
+@export var equip_on_pickup : bool = true
+
 # --- #
 @export_group("Physics")
 
-## The speed which the player falls. Also affects cable physics.
-@export_range(0,3000, 1.0) var gravity : float = 70.0
+## The speed which the player falls.
+@export_range(0,3000, 1.0) var gravity : float = 3000.0
+
+## Gravity used for cable speed only.
+@export_range(0,200) var cable_gravity : float = 70.0
 
 ## The coefficient of velocity applied each second while in mid-air.
 @export var air_drag : Vector2 = Vector2(0.4,0.8)
@@ -113,6 +120,10 @@ func get_min_distance() -> float:
 ## Gets the speed of gravity of the player
 func get_gravity() -> float:
 	return gravity
+
+## Gets the cable gravity of the player
+func get_cable_gravity() -> float:
+	return cable_gravity
 
 ## Gets the stregth of the player, i.e. how much the player can fling themselves
 ## with their weapon.
@@ -262,28 +273,34 @@ func equip_weapon_slot(slot : int) -> void:
 	if weapon:
 		equip_weapon(weapon)
 
-## Add the passed weapon to held weapons.
-func add_weapon(weapon : Weapon):
+## Add the passed weapon to held weapons. Returns the weapon that was dropped as a result, if any.
+func add_weapon(weapon : Weapon) -> Weapon:
 	
 	held_weapons.append(weapon)
 	
 	if held_weapons.size() > max_equip:
 		var target_index = held_weapons.find(current_weapon)
 		
-		if held_weapons.size() == 0:
+		if held_weapons.size() == 0 or held_weapons.size() == 1:
 			pass
-		elif target_index == -1:
-			drop_weapon(held_weapons.size()-1)
 		else:
-			drop_weapon(target_index)
+			return drop_weapon(target_index)
+	return null
 
 ## Drops the current weapon into the world.
-func drop_weapon(slot : int) -> void:
+func drop_weapon(slot : int) -> Weapon:
 	
-	if slot < 0: return # If weapon not found from array.find()
-	if slot >= held_weapons.size(): return
+	if slot >= held_weapons.size(): return null
 	
-	held_weapons.remove_at(slot) # TODO Add item drop
+	return held_weapons.pop_at(slot) # TODO Add item drop
+
+## Pickup the weapon. Should be called by ItemPickup or any item source giving a weapon.
+## Returns the weapon that was dropped as a result, if any.
+func pickup_weapon(weapon : Weapon) -> Weapon:
+	var dropped = add_weapon(weapon)
+	if equip_on_pickup:
+		equip_weapon_slot(held_weapons.size()-1)
+	return dropped
 
 #endregion
 
@@ -351,7 +368,7 @@ func _process(delta: float) -> void:
 	if current_weapon:
 		current_weapon.process_weapon(delta)
 	
-	if charging_ability:
+	if charging_ability and is_instance_valid(current_weapon):
 		if current_weapon.can_use():
 			ability_charge += delta
 		else:
@@ -360,7 +377,8 @@ func _process(delta: float) -> void:
 	_visual_process()
 
 func _ready() -> void:
-	equip_weapon(starting_weapon)
+	add_weapon(starting_weapon)
+	equip_weapon_slot(0)
 	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.

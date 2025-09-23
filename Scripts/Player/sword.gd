@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 			var target_pos = _get_target_pos()
 			var movement = body.global_position.direction_to(target_pos)*30*delta*body.global_position.distance_to(target_pos)
 			
-			last_sword_velocity = movement * (1/delta) # Get velocity per second as opposed to the frame
+			last_sword_velocity = movement / delta # Get velocity per second as opposed to the frame
 			last_frame_pos = body.global_position
 			
 			if not on_cable:
@@ -105,16 +105,14 @@ func _physics_process(delta: float) -> void:
 	
 	_update_blade(delta)
 
+
+## Gets the velocity which should be applied to the player each frame 
+## in respect to the sword's movement.
 func get_push() -> Vector2:
 	
 	var player = _get_player()
 	var collision = player.get_last_collision()
 	var vel := Vector2.ZERO
-	
-	#if on_cable:
-		#var target = _get_target_pos()
-		#vel += body.global_position.direction_to(target)*player.get_strength()* -0.1 * body.global_position.distance_to(player.get_player_position())
-		#vel += player.get_player_position().direction_to(body.global_position) * 100
 
 	if on_cable:
 		vel.y += Input.get_last_mouse_velocity().y * -0.05
