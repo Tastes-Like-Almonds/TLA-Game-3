@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=4 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="PackedScene" uid="uid://bgq53i1bdpjo4" path="res://Scenes/Player/player.tscn" id="1_jjgbg"]
-[ext_resource type="Script" uid="uid://86ql3wpw6djb" path="res://Scripts/Resource/Weapon/sword_weapon.gd" id="2_8gbba"]
+[ext_resource type="Script" uid="uid://wul51g5t37db" path="res://Scripts/Resource/Weapon/staff_weapon.gd" id="2_6bp64"]
 [ext_resource type="Texture2D" uid="uid://25ly160jnq2l" path="res://Assets/Sprites/Placeholder/tileset_test.png" id="2_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="4_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://dl285kt1lkvcb" path="res://Scenes/Player/game_camera.tscn" id="6_6bp64"]
@@ -15,9 +15,9 @@ colors = PackedColorArray(0.8217887, 0.82178867, 0.82178867, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_8gbba"]
 gradient = SubResource("Gradient_bo1nx")
 
-[sub_resource type="Resource" id="Resource_jjvhh"]
-script = ExtResource("2_8gbba")
-metadata/_custom_type_script = "uid://86ql3wpw6djb"
+[sub_resource type="Resource" id="Resource_344ge"]
+script = ExtResource("2_6bp64")
+metadata/_custom_type_script = "uid://wul51g5t37db"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gbba"]
 texture = ExtResource("2_bo1nx")
@@ -60,7 +60,7 @@ texture = SubResource("GradientTexture2D_8gbba")
 
 [node name="Player" parent="." instance=ExtResource("1_jjgbg")]
 position = Vector2(537, 273)
-starting_weapon = SubResource("Resource_jjvhh")
+starting_weapon = SubResource("Resource_344ge")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(3, 3)

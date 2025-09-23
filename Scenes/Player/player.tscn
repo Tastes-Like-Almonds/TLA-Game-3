@@ -1,10 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene load_steps=13 format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
+[ext_resource type="Script" uid="uid://86ql3wpw6djb" path="res://Scripts/Resource/Weapon/sword_weapon.gd" id="2_dd0ac"]
 [ext_resource type="Script" uid="uid://bu2b4pqlln3ot" path="res://Scripts/Player/sword.gd" id="3_htcer"]
 [ext_resource type="Texture2D" uid="uid://ootw7g72v0ku" path="res://Assets/Sprites/Placeholder/knight.png" id="3_mtuoh"]
 [ext_resource type="Script" uid="uid://bmumt3flg26d4" path="res://Scripts/Player/blade_area.gd" id="5_htcer"]
+
+[sub_resource type="Resource" id="Resource_0u5uq"]
+script = ExtResource("2_dd0ac")
+metadata/_custom_type_script = "uid://86ql3wpw6djb"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tugb3"]
 size = Vector2(48, 48)
@@ -26,6 +31,7 @@ size = Vector2(102, 20)
 
 [node name="Player" type="Node2D" groups=["Player"]]
 script = ExtResource("1_xpcdj")
+starting_weapon = SubResource("Resource_0u5uq")
 
 [node name="playerBody" type="CharacterBody2D" parent="."]
 collision_layer = 2

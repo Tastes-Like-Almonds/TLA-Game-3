@@ -2,6 +2,7 @@ extends Node2D
 class_name Sword
 
 @onready var body : AnimatableBody2D = $AnimatableBody2D
+@onready var body_shape : CollisionShape2D = $AnimatableBody2D/CollisionShape2D
 @onready var blade : BladeArea = $Area2D
 
 var last_sword_velocity : Vector2
@@ -79,7 +80,7 @@ func _physics_process(delta: float) -> void:
 				
 				_get_player().set_last_collision(collision)
 		
-		player.MovementMode.PLAYER_ORBIT:
+		player.MovementMode.PLAYER_ORBIT: # No use as of now.
 			
 			velocity.y += player.gravity * delta
 			
@@ -124,17 +125,38 @@ func get_push() -> Vector2:
 
 	return vel
 
+## Gets the global position of the sword's tip.
 func get_tip_global_position() -> Vector2:
 	return body.global_position
 
+## Returns the last sword velocity calculated on _physics_process. May not always be set correctly
+## depending on movement mode.
 func get_last_sword_velocity() -> Vector2:
 	return last_sword_velocity
 
+## Returns true if the sword is on a cable.
 func is_on_cable() -> bool:
 	return is_instance_valid(on_cable)
 
+## Determines if the sword body is on the ground via raycasting. Only collides with collision layer 1.
+func is_on_floor() -> bool:
+	var space_state = get_world_2d().direct_space_state
+	
+	var parameters = PhysicsRayQueryParameters2D.new()
+	parameters.from = body.global_position
+	
+	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
+	parameters.to = parameters.from + Vector2.DOWN * body_shape.shape.get_rect().size.y
+	
+	parameters.collision_mask = 1
+	var result = space_state.intersect_ray(parameters)
+	
+	return result.size() > 0
+
+## Enter the passed cable.
 func enter_cable(cable : Cable):
 	on_cable = cable
 
+## Exit the passed cable.
 func exit_cable():
 	on_cable = null

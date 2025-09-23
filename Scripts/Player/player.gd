@@ -16,6 +16,7 @@ enum MovementMode {
 
 # --- #
 @export_group("Sword")
+
 ## The maximum distance from the sword tip to the player (Soft limit)
 @export var max_distance : float = 140.0
 
@@ -42,10 +43,14 @@ enum MovementMode {
 
 # --- #
 @export_group("Physics")
-## Speed of gravity.
+
+## The speed which the player falls. Also affects cable physics.
 @export_range(0,3000, 1.0) var gravity : float = 70.0
 
+## The coefficient of velocity applied each second while in mid-air.
 @export var air_drag : Vector2 = Vector2(0.4,0.8)
+
+## The coefficient of velocity applied each second while on the ground.
 @export var ground_drag : Vector2 = Vector2(0.01,1.0)
 
 ## The drag applied to the player when being soft-limited (From the sword distance).
@@ -55,6 +60,7 @@ enum MovementMode {
 ## The distance beyond max_distance which the player will be limited
 @export_range(0,3) var soft_limit_distance_coef : float = 1.3
 
+## The amount of velocity that is converted into bounce upon the player landing.
 @export_range(0,1) var bounciness : float = 0.25
 
 # --- #
@@ -90,6 +96,8 @@ var held_weapons : Array[Weapon] = []
 #endregion
 
 #region Getters
+## Gets the max distance that the sword should be from the player.
+## This is not a hard limit.
 func get_max_distance() -> float:
 	var dist : float = max_distance
 	
@@ -98,39 +106,65 @@ func get_max_distance() -> float:
 	
 	return dist
 
+## Gets the minimum distance the sword should be from the player.
 func get_min_distance() -> float:
 	return min_distance
 
+## Gets the speed of gravity of the player
 func get_gravity() -> float:
 	return gravity
 
+## Gets the stregth of the player, i.e. how much the player can fling themselves
+## with their weapon.
 func get_strength() -> float:
 	return strength
 
+## Gets the strength which the player uses in player_orbit mode.
+## Currently unimplemented, and may never be.
 func get_player_orbit_strength() -> float:
 	return player_orbit_strength
 
+## Gets the slipperiness of the weapon across the ground [0-1].
 func get_sword_slide() -> float:
 	return sword_slide
 
+## Gets the drag applied each second to the player's velocity while in mid-air.
 func get_air_drag() -> Vector2:
 	return air_drag
 
+## Gets the drag applied each second to the player's velocity while on the ground.
 func get_ground_drag() -> Vector2:
 	return ground_drag
 
+## Gets the drag applied to the player per second (In addition to normal drag) when the
+## player is beyond max_distance of the hammer.
 func get_soft_limit_drag() -> float:
 	return soft_limit_drag
 
+## Gets the percentage of the players velocity [0-1] that is applied in reverse upon landing. 
+## Due to drag, setting the bounce to 1 will not mean that the player fully recovers to their 
+## origin height. If you wish  to do this, you must control the player manually.
 func get_bounciness() -> float:
 	return bounciness
 
+## Gets the coefficient of max_distance which determines when the player's velocity is soft-limited.
+## E.g. if the coef is 1.1, that means that the player must be father than 1.1 * max_distance to
+## be slowed down.
+##
+## This feature exists as without it the player may slow greatly when making basic movements.
 func get_soft_limit_distance_coef() -> float:
 	return soft_limit_distance_coef
 
+## Gets the number of seconds which the weapon ability has been charging.
 func get_ability_charge() -> float:
 	return ability_charge
 
+## Gets the current charge of the weapon as a percentage [0-1].
+func get_weapon_charge_perc() -> float:
+	if not is_instance_valid(current_weapon): return 0.0
+	return current_weapon.get_charge_prog(get_ability_charge())
+
+## Return true if the player is currently charging their weapon.
 func is_charging_ability() -> bool:
 	return charging_ability
 
@@ -149,7 +183,7 @@ func get_player_body() -> PlayerBody:
 			
 	return body
 
-## Gets the player's sword
+## Gets the player's sword object.
 func get_player_sword() -> Sword:
 	
 	var sword : Sword
@@ -177,6 +211,7 @@ func get_blade_damage() -> float:
 	
 	return damage
 
+## Gets the multiplier of knockback applied to the player when they are dealt it.
 func get_knockback_multi() -> float:
 	return self_knockback_multi
 
@@ -198,8 +233,6 @@ func _visual_process():
 
 	# Update weapon visual
 	if weapon_visual:
-		if current_weapon:
-			weapon_visual.update_charge_prog(current_weapon.get_charge_prog(get_ability_charge()))
 		weapon_visual.update_visual(get_player_position(), get_player_sword().get_tip_global_position())
 
 #endregion
@@ -232,10 +265,17 @@ func equip_weapon_slot(slot : int) -> void:
 ## Add the passed weapon to held weapons.
 func add_weapon(weapon : Weapon):
 	
-	
+	held_weapons.append(weapon)
 	
 	if held_weapons.size() > max_equip:
-		drop_weapon(held_weapons.find(current_weapon))
+		var target_index = held_weapons.find(current_weapon)
+		
+		if held_weapons.size() == 0:
+			pass
+		elif target_index == -1:
+			drop_weapon(held_weapons.size()-1)
+		else:
+			drop_weapon(target_index)
 
 ## Drops the current weapon into the world.
 func drop_weapon(slot : int) -> void:
@@ -281,10 +321,10 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 func apply_velocity(vel : Vector2) -> void:
 	get_player_body().velocity += vel
 
-## Deal knockback to the player. Functions the same as apply_velocity, but should be used for
+## Deal knockback to the player. Functions similarly to apply_velocity, but should be used for
 ## any hostile knockback (incase further features are added which deal with it.)
 func deal_knockback(vel : Vector2) -> void:
-	apply_velocity(vel)
+	apply_velocity(vel*get_knockback_multi())
 
 ## Set the collisions of all bodies in the player to enabled/disabled.
 func set_collisions(state : bool) -> void:

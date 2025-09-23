@@ -39,10 +39,11 @@ func _physics_process(delta: float) -> void:
 			# Handle sword movement
 			var push = sword.get_push()
 			if push:
+				if velocity.y > 0 and sword.is_on_floor():
+					velocity.y = 0
 				velocity += sword.get_push()
 			else:
 				velocity.y += player.gravity
-
 				
 			# Slow the player rapidly if beyond the sword's reach
 			if (global_position + velocity*delta).distance_to(sword.get_tip_global_position()) > player.max_distance*player.get_soft_limit_distance_coef():
