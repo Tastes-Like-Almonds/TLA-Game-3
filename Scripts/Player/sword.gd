@@ -1,9 +1,20 @@
 extends Node2D
 class_name Sword
 
+enum ControlMode {
+	
+	## Follows the actual mouse position in game space
+	GLOBAL_MOUSE,
+	
+	## Follows the mouse relative to the center of the screen
+	LOCAL_MOUSE
+}
+
 @onready var body : AnimatableBody2D = $AnimatableBody2D
 @onready var body_shape : CollisionShape2D = $AnimatableBody2D/CollisionShape2D
 @onready var blade : BladeArea = $Area2D
+
+@export var control_mode : ControlMode = ControlMode.GLOBAL_MOUSE
 
 var last_sword_velocity : Vector2
 var last_frame_pos : Vector2
@@ -31,11 +42,17 @@ func _get_target_pos() -> Vector2:
 	
 	var distance = player.get_max_distance()
 	
-	# Limit the sword distance
-	if player_pos.distance_to(get_global_mouse_position()) < player.get_max_distance():
-		distance = max(player.get_min_distance(), player_pos.distance_to(get_global_mouse_position()))
+	var mouse_vec : Vector2 = Vector2.ZERO
+	if control_mode == ControlMode.LOCAL_MOUSE:
+		mouse_vec = Helper.get_mouse_vec_from_center()
+	elif control_mode == ControlMode.GLOBAL_MOUSE:
+		mouse_vec = get_global_mouse_position() - player_pos
 	
-	var pos = player_pos + player_pos.direction_to(get_global_mouse_position())*distance
+	# Limit the sword distance
+	if mouse_vec.length() < player.get_max_distance():
+		distance = max(player.get_min_distance(), mouse_vec.length())
+	
+	var pos = player_pos + mouse_vec.normalized()*distance
 	return pos
 
 func _update_blade(_delta) -> void:

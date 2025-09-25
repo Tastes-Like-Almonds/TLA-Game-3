@@ -46,6 +46,7 @@ texture = ExtResource("3_mtuoh")
 
 [node name="Sword" type="Node2D" parent="."]
 script = ExtResource("3_htcer")
+control_mode = 1
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="Sword"]
 position = Vector2(0, 50)
