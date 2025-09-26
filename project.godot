@@ -23,6 +23,7 @@ CosmeticLoader="*res://Scripts/Global/cosmetic_loader.gd"
 DevTools="*res://Scripts/Global/dev_tools.gd"
 Helper="*res://Scripts/Global/helper.gd"
 CameraManager="*res://Scripts/Global/camera_manager.gd"
+Globals="*res://Scripts/Global/globals.gd"
 
 [display]
 
@@ -38,6 +39,7 @@ enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
 folder_colors={
 "res://Assets/": "green",
+"res://Resource/": "teal",
 "res://Scenes/": "blue",
 "res://Scripts/": "orange",
 "res://Test/": "purple",

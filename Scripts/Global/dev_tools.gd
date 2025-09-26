@@ -9,3 +9,7 @@ func _input(event: InputEvent) -> void:
 						Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 					else:
 						Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+				KEY_F2:
+					var panel = Globals.main.get_dev_panel()
+					if is_instance_valid(panel):
+						panel.toggle_visibility()
