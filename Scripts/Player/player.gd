@@ -332,6 +332,7 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 		if get_movement_mode() == MovementMode.NOCLIP:
 			set_movement_mode(MovementMode.SWORD_ORBIT)
 		else:
+			get_player_sword().on_cable = null       
 			set_movement_mode(MovementMode.NOCLIP)
 	
 ## Apply the passed velocity to the player.

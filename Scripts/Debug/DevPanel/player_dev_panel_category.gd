@@ -89,6 +89,7 @@ func update_give_item_dropdown() -> void:
 
 func confirm_give_item() -> void:
 	var clazz = select_item_dropdwon.get_selected_metadata()
+	if not clazz : return
 	if clazz.class == "Weapon" or clazz.class == "TestWeapon": return
 	if not is_instance_valid(target_player) : return
 	target_player.pickup_weapon(load(clazz.path).new())
