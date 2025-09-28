@@ -1,9 +1,12 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://1q4kixjfk3u0"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://1q4kixjfk3u0"]
 
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="1_tbnkc"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbnkc"]
+bg_color = Color(0.16924527, 0.16924533, 0.16924518, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h21y2"]
-bg_color = Color(0.4236506, 0.42365065, 0.42365053, 1)
+bg_color = Color(0.13319641, 0.13319641, 0.13319638, 1)
 border_width_left = 6
 border_width_top = 6
 border_width_right = 6
@@ -18,6 +21,7 @@ corner_radius_bottom_left = 10
 [resource]
 default_font = ExtResource("1_tbnkc")
 default_font_size = 32
+FoldableContainer/styles/panel = SubResource("StyleBoxFlat_tbnkc")
 HBoxContainer/constants/separation = 12
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_h21y2")
 VBoxContainer/constants/separation = 12

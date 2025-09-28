@@ -13,7 +13,9 @@ func toggle_visibility() -> void:
 
 func get_all_players() -> Array[Player]:
 	var players : Array[Player] = []
-	for player in get_tree().get_nodes_in_group("Player"):
+	var tree := get_tree()
+	if not tree: return []
+	for player in tree.get_nodes_in_group("Player"):
 		if player is Player:
 			players.append(player)
 	return players

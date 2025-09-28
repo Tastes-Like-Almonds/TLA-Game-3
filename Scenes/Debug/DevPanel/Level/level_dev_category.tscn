@@ -64,6 +64,6 @@ alignment = 1
 layout_mode = 2
 text = "Load"
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Reload" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Reload Level"

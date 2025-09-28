@@ -12,24 +12,28 @@ enum LoadLevelStatus {
 const LEVEL_DIR : String = "res://Scenes/Level/"
 
 ## Deletes all level nodes in the passed parent.
-func clear_level(parent : Node) -> void:
+func clear_levels(parent : Node) -> void:
+	if not is_instance_valid(parent): return
 	for child in parent.get_children():
 		if child is Level:
 			child.queue_free()
 
 ## Loads a level and parents it to `parent`. 
-func load_level(path : String, parent: Node) -> LoadLevelStatus: # TODO Test this, and dynamically test levels as they are added.
+func load_level(path : String, parent: Node) -> LoadLevelStatus: # TODO Dynamically test levels as they are added.
 	
 	if not is_instance_valid(parent): return LoadLevelStatus.INVALID_PARENT
+	if not path: return LoadLevelStatus.INVALID_LEVEL
 	
 	var scn : PackedScene = load(path)
 	if not scn: return LoadLevelStatus.INVALID_LEVEL
 	
 	var loaded := scn.instantiate()
-	if loaded is not Level: return LoadLevelStatus.LEVEL_IS_NOT_LEVEL
+	if loaded is not Level: loaded.free() ; return LoadLevelStatus.LEVEL_IS_NOT_LEVEL
 	
 	parent.add_child(loaded)
 	loaded.initialize()
+	
+	print("Level '" + path + "' loaded!")
 	
 	return LoadLevelStatus.SUCCESS
 

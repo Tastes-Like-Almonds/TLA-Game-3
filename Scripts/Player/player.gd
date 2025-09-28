@@ -245,7 +245,9 @@ func _clear_visuals() -> void:
 func _visual_process() -> void:
 	
 	# Update player rotation
-	get_player_body().get_sprite().flip_h = get_player_sword().get_tip_global_position().x < get_player_position().x
+	var body : PlayerBody = get_player_body()
+	if body:
+		body.get_sprite().flip_h = get_player_sword().get_tip_global_position().x < get_player_position().x
 
 	# Update weapon visual
 	if weapon_visual:

@@ -1,6 +1,12 @@
 ## A base class for levels. 
 @abstract class_name Level extends Node2D
 
+## Gets the spawn which the player should.. well.. spawn at.
+func _get_first_spawn() -> Node2D:
+	for node in get_tree().get_nodes_in_group("PlayerSpawn"):
+		if is_ancestor_of(node): return node
+	return null
+
 ## Return the camera to be used in the level. Override to set custom camera stats.
 func _make_camera() -> GameCamera:
 	var cam : GameCamera = load("res://Scenes/Player/game_camera.tscn").instantiate()
@@ -20,14 +26,13 @@ func _setup_camera() -> void:
 ## use _make_player.
 func _setup_player() -> void:
 	var player := _make_player()
+	var spawn := _get_first_spawn()
+	if is_instance_valid(spawn): player.global_position = _get_first_spawn().global_position
 	add_child(player)
 
 func initialize() -> void:
 	_setup_player()
 	_setup_camera()
-
-func _ready() -> void:
-	initialize()
 
 static func get_level_data() -> void:
 	pass

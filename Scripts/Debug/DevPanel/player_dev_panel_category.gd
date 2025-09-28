@@ -76,6 +76,7 @@ func update_selected_player_stat(val : float) -> void:
 #region Give Item
 
 func update_give_item_dropdown() -> void:
+	select_item_dropdwon.clear()
 	var classes := ProjectSettings.get_global_class_list()
 	for clazz in classes:
 		
@@ -100,7 +101,7 @@ func _ready() -> void:
 	
 	select_player_confirm_node.pressed.connect(set_selected_player)
 	SignalBus.PlayerAdded.connect(func(_x : Player) -> void: update_select_player_dropdown())
-	SignalBus.PlayerRemoved.connect(func(_x : Player) -> void: update_select_player_dropdown())
+	SignalBus.PlayerRemoved.connect(func() -> void: update_select_player_dropdown())
 	update_select_player_dropdown()
 	
 	set_stat_stat_select.item_selected.connect(func(_x : float) -> void: update_selected_stat_desc())
