@@ -2,6 +2,7 @@
 
 class_name PlayerBody extends CharacterBody2D
 
+@onready var shape : CollisionShape2D = $CollisionShape2D
 
 func get_player() -> Player:
 	if get_parent() is Player:
@@ -12,7 +13,7 @@ func get_player() -> Player:
 ## Separated from _physics_process in case multiple movement methods need it.
 func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 	
-	var player = get_player()
+	var player : Player = get_player()
 	if !is_instance_valid(player): return vel
 	
 	var drag : Vector2
@@ -29,7 +30,7 @@ func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 
 func _physics_process(delta: float) -> void:
 	var player : Player = get_player()
-	var sword = player.get_player_sword()
+	var sword := player.get_player_sword()
 	
 	match player.get_movement_mode():
 		
@@ -37,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		player.MovementMode.SWORD_ORBIT:
 			
 			# Handle sword movement
-			var push = sword.get_push()
+			var push := sword.get_push()
 			if push:
 				if velocity.y > 0 and sword.is_on_floor():
 					velocity.y = 0
@@ -51,7 +52,7 @@ func _physics_process(delta: float) -> void:
 				velocity *= pow(player.get_soft_limit_drag(),delta)
 				
 				if sword.is_on_cable():
-					var dir = global_position.direction_to(sword.get_tip_global_position())
+					var dir := global_position.direction_to(sword.get_tip_global_position())
 					velocity += dir*global_position.distance_squared_to(sword.get_tip_global_position())*0.005
 			
 			# Apply drag
@@ -68,9 +69,9 @@ func _physics_process(delta: float) -> void:
 		#region Player orbit
 		
 		player.MovementMode.PLAYER_ORBIT:
-			var tip_pos = sword.get_tip_global_position()
+			var tip_pos := sword.get_tip_global_position()
 			var target_dir : Vector2 = tip_pos.direction_to(get_global_mouse_position())
-			var goal = tip_pos + target_dir*min(player.get_max_distance(),max(player.get_min_distance()*5, tip_pos.distance_to(get_global_mouse_position())))
+			var goal : Vector2 = tip_pos + target_dir*min(player.get_max_distance(),max(player.get_min_distance()*5, tip_pos.distance_to(get_global_mouse_position())))
 			velocity = global_position.direction_to(goal)*player.get_player_orbit_strength()*global_position.distance_to(goal)
 			move_and_slide()
 		
@@ -80,10 +81,10 @@ func _physics_process(delta: float) -> void:
 		player.MovementMode.NOCLIP:
 			velocity = Vector2.ZERO
 			if player.is_charging_ability():
-				var body_pos = player.get_player_body().global_position
+				var body_pos := player.get_player_body().global_position
 				velocity = body_pos.direction_to(get_global_mouse_position())*body_pos.distance_to(get_global_mouse_position())*10
 			move_and_slide()
 		#endregion
 
-func get_sprite():
+func get_sprite() -> Variant:
 	return $Sprite2D

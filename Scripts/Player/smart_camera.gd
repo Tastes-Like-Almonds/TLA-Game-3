@@ -33,7 +33,7 @@ func set_target_node(node : Node2D) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	var target_pos = target_position
+	var target_pos := target_position
 	
 	if target_mode == TargetMode.TARGET_NODE_2D:
 		target_pos = target_node.global_position

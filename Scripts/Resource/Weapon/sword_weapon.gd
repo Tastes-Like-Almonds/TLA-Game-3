@@ -6,8 +6,8 @@ func get_cooldown() -> float:
 	return 1.0
 
 func get_dir() -> Vector2:
-	var sword = _wielder.get_player_sword()
-	var vec = Vector2.ZERO
+	var sword := _wielder.get_player_sword()
+	var vec := Vector2.ZERO
 	if sword.control_mode == sword.ControlMode.GLOBAL_MOUSE:
 		vec = _wielder.get_player_position().direction_to(get_pointer_pos())
 	elif sword.control_mode == sword.ControlMode.LOCAL_MOUSE:
@@ -20,5 +20,5 @@ func on_use(charge_time : float) -> void:
 func get_max_distance_increase() -> float:
 	return min(_wielder.get_ability_charge()/MAX_CHARGE, 1)*-20
 
-func get_charge_prog(prog : float):
+func get_charge_prog(prog : float) -> float:
 	return clampf(prog/MAX_CHARGE, 0, 1)

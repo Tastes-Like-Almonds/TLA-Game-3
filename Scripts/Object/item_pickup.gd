@@ -27,15 +27,15 @@ func _reset_weapon_visual() -> void:
 	add_child(weapon_visual) 
 
 ## Give the weapon to the passed player
-func _give_item(player : Player):
-	var dropped = player.pickup_weapon(weapon)
+func _give_item(player : Player) -> void:
+	var dropped : Weapon = player.pickup_weapon(weapon)
 	if not is_instance_valid(dropped): queue_free()
 	replace_weapon(dropped)
 
 ## Check to see if the player is colliding, and if they do, give them the item.
-func _check_collision(body: PhysicsBody2D):
+func _check_collision(body: PhysicsBody2D) -> void:
 	if body is PlayerBody:
-		var player = body.get_player()
+		var player : Player = body.get_player()
 		if is_instance_valid(player): _give_item(player)
 
 func _ready() -> void:

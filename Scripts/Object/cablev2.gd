@@ -1,7 +1,7 @@
 extends Path2D
 class_name Cable
 
-@onready var line = $Line2D
+@onready var line := $Line2D
 @export var cable_drag : float = 0.5
 
 func _render_line() -> void:
@@ -23,13 +23,13 @@ func _physics_process(delta: float) -> void:
 		var sword := player.get_player_sword()
 		var sword_loc := sword.get_tip_global_position()
 		var closest := to_global(curve.get_closest_point(to_local(sword_loc)))
-		var last_vel = sword.get_last_sword_velocity()
+		var last_vel := sword.get_last_sword_velocity()
 		
 		# Dont do calculations if too far to be relevant
 		if closest.distance_to(sword_loc) > last_vel.length()*delta: continue
 		
 		var offset : float = curve.get_closest_offset(sword.get_tip_global_position())
-		var old_sword_pos = sword.get_tip_global_position() - last_vel*delta
+		var old_sword_pos := sword.get_tip_global_position() - last_vel*delta
 		var grip_threshold : float = max(curve.bake_interval, last_vel.length()*delta)
 
 		# Update if the player is attached
@@ -60,7 +60,7 @@ func _physics_process(delta: float) -> void:
 			if absf(old_sword_pos.x - closest.x) < grip_threshold and not _offset_out_of_range(offset):
 				sword.body.global_position = closest
 				
-				var real_vel = player.get_player_body().get_real_velocity()
+				var real_vel := player.get_player_body().get_real_velocity()
 				var is_vertical := Helper.is_angle_roughly_vertical(real_vel.angle())
 				
 				if real_vel.x < 0 or (is_vertical and sword.get_tip_global_position().x < player.get_player_position().x):

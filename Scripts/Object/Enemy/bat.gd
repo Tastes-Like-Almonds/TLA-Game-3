@@ -22,14 +22,14 @@ var target_point : Vector2
 var start_pos : Vector2
 
 var target_player : Player
-var start_health = health
+var start_health := health
 
 func on_sword_hit(player : Player) -> void:
 	
 	if respawning : return
 	
-	var damage = player.get_blade_damage()
-	var vel = player.get_player_sword().get_last_sword_velocity()
+	var damage := player.get_blade_damage()
+	var vel := player.get_player_sword().get_last_sword_velocity()
 	
 	health -= damage
 	player.apply_velocity(vel*0.5)
@@ -50,7 +50,7 @@ func _respawn() -> void:
 	health = start_health
 	global_position = start_pos
 
-func _movement(delta : float):
+func _movement(delta : float) -> void:
 	
 	movement_cooldown -= delta
 	

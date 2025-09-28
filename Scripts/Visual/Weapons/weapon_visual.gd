@@ -6,7 +6,7 @@
 @abstract class_name WeaponVisual extends Node
 
 ## Offset applied to the weapon sprite when aligning
-@export_range(0,360,0.1,"degrees") var rotation_offset = 45.0
+@export_range(0,360,0.1,"degrees") var rotation_offset : float = 45.0
 
 # --- #
 @export_group("Sparks")
@@ -26,7 +26,7 @@ var spark_particles : GPUParticles2D
 
 ## Return true if the weapon is dragging on the ground past the given threshold of speed.
 func _is_dragging(threshold : float = 1000.0) -> bool:
-	var last_sword_vel = player.get_player_sword().get_last_sword_velocity()
+	var last_sword_vel := player.get_player_sword().get_last_sword_velocity()
 	if (player.get_last_collision() != null and last_sword_vel.length() > threshold):
 		return true
 	if player.get_player_sword().is_on_cable():
@@ -46,9 +46,9 @@ func _get_sprite() -> Variant:
 ## so use mindfully. Override this function in a weapon visual if you wish to replace
 ## the particles.
 func _create_spark_particles() -> GPUParticles2D:
-	var particles = load("res://Scenes/Visual/Particles/sparks.tscn").instantiate()
+	var particles : GPUParticles2D = load("res://Scenes/Visual/Particles/sparks.tscn").instantiate()
 	
-	var sprite = _get_sprite()
+	var sprite : Variant = _get_sprite()
 	if sprite:
 		sprite.add_child(particles)
 		return particles
@@ -65,7 +65,7 @@ func _get_spark_particles() -> GPUParticles2D:
 
 ## Updates the position and rotation to match the origin and destination.
 func _update_position(origin : Vector2, dest : Vector2) -> void:
-	var sprite = _get_sprite()
+	var sprite : Variant = _get_sprite()
 	sprite.global_position = dest
 	sprite.rotation = origin.direction_to(dest).angle() + deg_to_rad(rotation_offset)
 
@@ -74,8 +74,8 @@ func _update_sparks() -> void:
 	var sparks : GPUParticles2D = _get_spark_particles()
 	sparks.emitting = _is_dragging(spark_threshold)
 	
-	var vel = player.get_player_sword().get_last_sword_velocity()
-	var speed = vel.length()
+	var vel := player.get_player_sword().get_last_sword_velocity()
+	var speed := vel.length()
 	if player.get_player_sword().is_on_cable():
 		speed *= spark_cable_multi
 	sparks.amount_ratio = (speed-spark_threshold) / spark_divisor
@@ -84,10 +84,10 @@ func _update_sparks() -> void:
 
 ## Update the weapon visual. Origin is the start position and the destination is where the focus of the weapon is.
 ## For players, the origin should be the center and destination the sword tip.
-func update_visual(origin : Vector2, dest : Vector2): # TODO Replace by pulling origin and dest from the player.
+func update_visual(origin : Vector2, dest : Vector2) -> void: # TODO Replace by pulling origin and dest from the player.
 	_update_position(origin, dest)
 	_update_sparks()
 
 ## Set the player who owns this visual. Needed for most effects.
-func set_player(p : Player):
+func set_player(p : Player) -> void:
 	player = p

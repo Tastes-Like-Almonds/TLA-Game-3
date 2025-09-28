@@ -15,12 +15,12 @@ signal PlayerRemoved(player : Player) # TODO Test emit
 #endregion
 
 func _ready() -> void:
-	var tree = get_tree()
+	var tree : SceneTree = get_tree()
 	tree.node_added.connect(
-		func(player):
+		func(player : Node) -> void:
 			if player is Player: PlayerAdded.emit(player)
 	)
 	tree.node_removed.connect(
-		func(player):
+		func(player : Node) -> void:
 			if player is Player: PlayerRemoved.emit(player)
 	)

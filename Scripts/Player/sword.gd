@@ -18,7 +18,7 @@ enum ControlMode {
 
 var last_sword_velocity : Vector2
 var last_frame_pos : Vector2
-var last_result
+var last_result : Array[Node2D]
 var velocity : Vector2 = Vector2.ZERO # Only used for specific movement mode(s)
 var on_cable : Cable = null
 var cable_speed : float = 0.0
@@ -37,10 +37,10 @@ func _limit_distance(dist:float, a:Vector2, b:Vector2) -> Vector2:
 ## Return the target position of the sword tip
 func _get_target_pos() -> Vector2:
 	
-	var player_pos = _get_player().get_player_position()
-	var player = _get_player()
+	var player_pos := _get_player().get_player_position()
+	var player := _get_player()
 	
-	var distance = player.get_max_distance()
+	var distance := player.get_max_distance()
 	
 	var mouse_vec : Vector2 = Vector2.ZERO
 	if control_mode == ControlMode.LOCAL_MOUSE:
@@ -52,18 +52,18 @@ func _get_target_pos() -> Vector2:
 	if mouse_vec.length() < player.get_max_distance():
 		distance = max(player.get_min_distance(), mouse_vec.length())
 	
-	var pos = player_pos + mouse_vec.normalized()*distance
+	var pos := player_pos + mouse_vec.normalized()*distance
 	return pos
 
-func _update_blade(_delta) -> void:
-	var player = _get_player()
-	var player_pos = player.get_player_position()
-	var size = player_pos.distance_to(body.global_position)
+func _update_blade(_delta : float) -> void:
+	var player := _get_player()
+	var player_pos := player.get_player_position()
+	var size := player_pos.distance_to(body.global_position)
 	blade.rotation = player_pos.direction_to(body.global_position).angle()
 	blade.collision_shape.shape.size.x = size
 	blade.global_position = body.global_position + body.global_position.direction_to(player_pos)*size/2
 	
-	var result = blade.get_overlapping_bodies()
+	var result := blade.get_overlapping_bodies()
 	
 	for hit in result:
 		if hit in last_result: continue; # Prevent multiple hits while colliding
@@ -83,14 +83,14 @@ func _physics_process(delta: float) -> void:
 	match player.movement_mode:
 		
 		player.MovementMode.SWORD_ORBIT:
-			var target_pos = _get_target_pos()
-			var movement = body.global_position.direction_to(target_pos)*30*delta*body.global_position.distance_to(target_pos)
+			var target_pos := _get_target_pos()
+			var movement := body.global_position.direction_to(target_pos)*30*delta*body.global_position.distance_to(target_pos)
 			
 			last_sword_velocity = movement / delta # Get velocity per second as opposed to the frame
 			last_frame_pos = body.global_position
 			
 			if not on_cable:
-				var collision = body.move_and_collide(movement)
+				var collision := body.move_and_collide(movement)
 				
 				if collision:
 					body.move_and_collide(movement.slide(collision.get_normal()) * _get_player().get_sword_slide())
@@ -111,7 +111,7 @@ func _physics_process(delta: float) -> void:
 			velocity.x *= pow(drag.x, delta)
 			velocity.y *= pow(drag.y, delta)
 			
-			var collision = body.move_and_collide(velocity*delta)
+			var collision := body.move_and_collide(velocity*delta)
 			if collision:
 				body.move_and_collide(velocity.slide(collision.get_normal()) * _get_player().get_sword_slide())
 			
@@ -127,15 +127,15 @@ func _physics_process(delta: float) -> void:
 ## in respect to the sword's movement.
 func get_push() -> Vector2:
 	
-	var player = _get_player()
-	var collision = player.get_last_collision()
+	var player := _get_player()
+	var collision := player.get_last_collision()
 	var vel := Vector2.ZERO
 
 	if on_cable:
 		vel.y += Input.get_last_mouse_velocity().y * -0.05
 
 	elif collision:
-		var slide_vel = (collision.get_remainder() + collision.get_travel()).slide(collision.get_normal()) * player.get_sword_slide()
+		var slide_vel := (collision.get_remainder() + collision.get_travel()).slide(collision.get_normal()) * player.get_sword_slide()
 		vel += (collision.get_remainder() + collision.get_travel() + slide_vel) * player.get_strength() * -1 # Reverse velocity of sword
 
 	return vel
@@ -155,23 +155,23 @@ func is_on_cable() -> bool:
 
 ## Determines if the sword body is on the ground via raycasting. Only collides with collision layer 1.
 func is_on_floor() -> bool:
-	var space_state = get_world_2d().direct_space_state
+	var space_state := get_world_2d().direct_space_state
 	
-	var parameters = PhysicsRayQueryParameters2D.new()
+	var parameters := PhysicsRayQueryParameters2D.new()
 	parameters.from = body.global_position
 	
 	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
 	parameters.to = parameters.from + Vector2.DOWN * body_shape.shape.get_rect().size.y
 	
 	parameters.collision_mask = 1
-	var result = space_state.intersect_ray(parameters)
+	var result := space_state.intersect_ray(parameters)
 	
 	return result.size() > 0
 
 ## Enter the passed cable.
-func enter_cable(cable : Cable):
+func enter_cable(cable : Cable) -> void:
 	on_cable = cable
 
 ## Exit the passed cable.
-func exit_cable():
+func exit_cable() -> void:
 	on_cable = null

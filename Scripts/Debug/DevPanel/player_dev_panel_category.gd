@@ -6,7 +6,7 @@ class_name PlayerDevPanelCategory extends DevPanelCategory
 
 @onready var set_stat_stat_select : OptionButton = $MarginContainer/VBoxContainer/SetStat/VBoxContainer/SelectStat
 @onready var set_stat_val : SpinBox = $MarginContainer/VBoxContainer/SetStat/VBoxContainer/SelectStatVal
-@onready var set_stat_confirm = $MarginContainer/VBoxContainer/SetStat/VBoxContainer/ConfirmSetStat
+@onready var set_stat_confirm : Button = $MarginContainer/VBoxContainer/SetStat/VBoxContainer/ConfirmSetStat
 @onready var set_stat_current_val : Label = $MarginContainer/VBoxContainer/SetStat/VBoxContainer/StatCurrentVal
 
 @onready var select_item_dropdwon : OptionButton = $MarginContainer/VBoxContainer/GiveWeapon/VBoxCointainer/SelectItem
@@ -27,7 +27,7 @@ func update_select_player_dropdown() -> void:
 		possible_players.append(player)
 
 func set_selected_player() -> void:
-	var selected = select_player_node.selected
+	var selected := select_player_node.selected
 	
 	if selected == -1: return
 	if possible_players.size()-1 > selected: return
@@ -51,18 +51,18 @@ func update_set_stat_dropdown() -> void:
 				set_stat_stat_select.set_item_metadata(set_stat_stat_select.item_count-1, stat)
 
 func update_selected_stat_desc() -> void:
-	var meta = set_stat_stat_select.get_selected_metadata()
+	var meta : Variant = set_stat_stat_select.get_selected_metadata()
 	
 	if not is_instance_valid(target_player) : return
 	if meta["type"] != Variant.Type.TYPE_FLOAT : return
 	if not (meta["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE) : return
 	
-	var current = target_player.get(meta["name"])
+	var current : float = target_player.get(meta["name"])
 	set_stat_current_val.text = "Current value: " + str(current)
 	set_stat_val.value = current
 
 func update_selected_player_stat(val : float) -> void:
-	var meta = set_stat_stat_select.get_selected_metadata()
+	var meta : Variant = set_stat_stat_select.get_selected_metadata()
 	
 	if not is_instance_valid(target_player) : return
 	if meta["type"] != Variant.Type.TYPE_FLOAT : return
@@ -76,7 +76,7 @@ func update_selected_player_stat(val : float) -> void:
 #region Give Item
 
 func update_give_item_dropdown() -> void:
-	var classes = ProjectSettings.get_global_class_list()
+	var classes := ProjectSettings.get_global_class_list()
 	for clazz in classes:
 		
 		# Checking by names is super ugly, but there is literally no other way to do it.
@@ -88,7 +88,7 @@ func update_give_item_dropdown() -> void:
 			select_item_dropdwon.set_item_metadata(select_item_dropdwon.item_count-1, clazz)
 
 func confirm_give_item() -> void:
-	var clazz = select_item_dropdwon.get_selected_metadata()
+	var clazz : Variant = select_item_dropdwon.get_selected_metadata()
 	if not clazz : return
 	if clazz.class == "Weapon" or clazz.class == "TestWeapon": return
 	if not is_instance_valid(target_player) : return
@@ -99,12 +99,12 @@ func confirm_give_item() -> void:
 func _ready() -> void:
 	
 	select_player_confirm_node.pressed.connect(set_selected_player)
-	SignalBus.PlayerAdded.connect(func(_x): update_select_player_dropdown())
-	SignalBus.PlayerRemoved.connect(func(_x): update_select_player_dropdown())
+	SignalBus.PlayerAdded.connect(func(_x : Player) -> void: update_select_player_dropdown())
+	SignalBus.PlayerRemoved.connect(func(_x : Player) -> void: update_select_player_dropdown())
 	update_select_player_dropdown()
 	
-	set_stat_stat_select.item_selected.connect(func(_x): update_selected_stat_desc())
-	set_stat_confirm.pressed.connect(func(): update_selected_player_stat(set_stat_val.value))
+	set_stat_stat_select.item_selected.connect(func(_x : float) -> void: update_selected_stat_desc())
+	set_stat_confirm.pressed.connect(func() -> void: update_selected_player_stat(set_stat_val.value))
 	update_selected_stat_desc()
 	
 	select_item_confirm.pressed.connect(confirm_give_item)

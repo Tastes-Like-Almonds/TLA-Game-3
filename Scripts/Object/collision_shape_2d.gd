@@ -16,9 +16,8 @@ extends Area2D
 
 func _update_camera(player : Player) -> void:
 	if track_player:
-		
 		if player:
-			var cam = get_viewport().get_camera_2d()
+			var cam := get_viewport().get_camera_2d()
 			
 			if cam is GameCamera:
 				cam.set_target_zoom(target_zoom)
@@ -28,7 +27,7 @@ func _update_camera(player : Player) -> void:
 				cam.zoom = target_zoom
 		
 	elif is_instance_valid(target_node):
-		var cam = get_viewport().get_camera_2d()
+		var cam := get_viewport().get_camera_2d()
 		if cam is GameCamera:
 				cam.set_target_zoom(target_zoom)
 				cam.set_target_node(target_node)

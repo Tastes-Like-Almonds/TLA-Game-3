@@ -216,7 +216,7 @@ func get_movement_mode() -> MovementMode:
 ## Gets the current damage of the blade (Value changes based on speed, charge, etc.)
 func get_blade_damage() -> float:
 	var damage := 0.0
-	var sword = get_player_sword()
+	var sword : Sword = get_player_sword()
 	
 	damage += sword.get_last_sword_velocity().length()
 	
@@ -226,18 +226,23 @@ func get_blade_damage() -> float:
 func get_knockback_multi() -> float:
 	return self_knockback_multi
 
+## Get the largest distance from the player's hitbox edge to the player's origin.
+func get_largest_size() -> float:
+	var shape : CollisionShape2D = get_player_body().shape
+	return (shape.shape.get_rect().size/2).length()
+
 #endregion
 
 #region Visual
 
 ## Clears all weapon visuals from the player (Should only be one at most)
-func _clear_visuals():
+func _clear_visuals() -> void:
 	for child in get_children():
 		if child is WeaponVisual:
 			child.queue_free()
 
 ## Update any player-related visuals
-func _visual_process():
+func _visual_process() -> void:
 	
 	# Update player rotation
 	get_player_body().get_sprite().flip_h = get_player_sword().get_tip_global_position().x < get_player_position().x
@@ -257,6 +262,7 @@ func equip_weapon(weapon : Weapon) -> void:
 	if not weapon.can_use(): weapon.init_weapon(self)
 	
 	weapon.reset()
+	weapon.on_equip()
 	current_weapon = weapon
 	
 	_clear_visuals()
@@ -269,7 +275,7 @@ func equip_weapon(weapon : Weapon) -> void:
 
 ## Equip the weapon in the passed slot.
 func equip_weapon_slot(slot : int) -> void:
-	var weapon = held_weapons.get(slot)
+	var weapon : Weapon = held_weapons.get(slot)
 	if weapon:
 		equip_weapon(weapon)
 
@@ -279,7 +285,7 @@ func add_weapon(weapon : Weapon) -> Weapon:
 	held_weapons.append(weapon)
 	
 	if held_weapons.size() > max_equip:
-		var target_index = held_weapons.find(current_weapon)
+		var target_index : int = held_weapons.find(current_weapon)
 		
 		if held_weapons.size() == 0 or held_weapons.size() == 1:
 			pass
@@ -292,12 +298,15 @@ func drop_weapon(slot : int) -> Weapon:
 	
 	if slot >= held_weapons.size(): return null
 	
+	if held_weapons[slot] == current_weapon:
+		current_weapon.on_unequip()
+	
 	return held_weapons.pop_at(slot) # TODO Add item drop
 
 ## Pickup the weapon. Should be called by ItemPickup or any item source giving a weapon.
 ## Returns the weapon that was dropped as a result, if any.
 func pickup_weapon(weapon : Weapon) -> Weapon:
-	var dropped = add_weapon(weapon)
+	var dropped : Weapon = add_weapon(weapon)
 	if equip_on_pickup:
 		equip_weapon_slot(held_weapons.size()-1)
 	return dropped
@@ -305,6 +314,21 @@ func pickup_weapon(weapon : Weapon) -> Weapon:
 #endregion
 
 #region Actions
+
+## Teleport toward the target location, with respect to collisions.
+func teleport_toward(vec2 : Vector2) -> void:
+	var space_state := get_world_2d().direct_space_state
+	var body_max_size := get_largest_size()
+	var origin := get_player_position()
+	var dir := origin.direction_to(vec2)
+	
+	var query := PhysicsRayQueryParameters2D.create(origin, vec2 + dir*body_max_size, 1)
+	var result := space_state.intersect_ray(query)
+	
+	if not result:
+		get_player_body().global_position = vec2
+		return
+	get_player_body().global_position = result.position - dir*body_max_size
 
 ## Start charging the main ability of the held weapon
 func start_charging() -> void:
@@ -383,10 +407,10 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.
-func set_last_collision(collision:KinematicCollision2D):
+func set_last_collision(collision:KinematicCollision2D) -> void:
 	last_collision = collision
 
 ## Returns the global position of the player.
 func get_player_position() -> Vector2:
-	var body = get_player_body()
+	var body : PlayerBody = get_player_body()
 	return body.global_position

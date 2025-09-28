@@ -24,6 +24,12 @@ DevTools="*res://Scripts/Global/dev_tools.gd"
 Helper="*res://Scripts/Global/helper.gd"
 CameraManager="*res://Scripts/Global/camera_manager.gd"
 Globals="*res://Scripts/Global/globals.gd"
+LevelRegistry="*res://Scripts/Global/level_registry.gd"
+LevelLoader="*res://Scripts/Global/level_loader.gd"
+
+[debug]
+
+gdscript/warnings/untyped_declaration=2
 
 [display]
 

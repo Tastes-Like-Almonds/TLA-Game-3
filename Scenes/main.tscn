@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://birc57pmi5hwh"]
+[gd_scene load_steps=20 format=4 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="Theme" uid="uid://1q4kixjfk3u0" path="res://Resource/Theme/dev_panel.tres" id="1_344ge"]
 [ext_resource type="Script" uid="uid://bt4l1nsa4vgma" path="res://Scripts/main.gd" id="1_d1ilt"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cf1jl21eb8oe3" path="res://Scripts/Debug/DevPanel/dev_panel.gd" id="2_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://dcwd3n7bnqbg8" path="res://Scenes/Debug/DevPanel/Player/player_dev_category.tscn" id="3_hptm8"]
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="4_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://cduiqyk45vxko" path="res://Scenes/Debug/DevPanel/Level/level_dev_category.tscn" id="5_6iyac"]
 [ext_resource type="PackedScene" uid="uid://dl285kt1lkvcb" path="res://Scenes/Player/game_camera.tscn" id="6_6bp64"]
 [ext_resource type="PackedScene" uid="uid://2mu2oio1rsih" path="res://Scenes/Object/cablev2.tscn" id="6_21xkr"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/camera_setter.tscn" id="7_344ge"]
@@ -59,7 +60,6 @@ unique_name_in_owner = true
 
 [node name="DevPanel" type="Control" parent="UI"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,6 +118,9 @@ horizontal_alignment = 1
 [node name="Player" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2" instance=ExtResource("3_hptm8")]
 layout_mode = 2
 
+[node name="Player2" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2" instance=ExtResource("5_6iyac")]
+layout_mode = 2
+
 [node name="Level" type="Node" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Level"]
@@ -155,42 +158,36 @@ cable_drag = 0.7
 [node name="CameraSetter" parent="Level" instance=ExtResource("7_344ge")]
 position = Vector2(540, 278)
 scale = Vector2(13.001965, 9.114149)
-collision_mask = 2
 track_player = true
 
 [node name="CameraSetter4" parent="Level" instance=ExtResource("7_344ge")]
 position = Vector2(-536, 617)
 rotation = -3.1415927
 scale = Vector2(11.413055, -18.527134)
-collision_mask = 2
 target_zoom = Vector2(0.75, 0.75)
 track_player = true
 
 [node name="CameraSetter2" parent="Level" node_paths=PackedStringArray("target_node") instance=ExtResource("7_344ge")]
 position = Vector2(1042.0001, -1553.0001)
 scale = Vector2(32.0593, 12.300632)
-collision_mask = 2
 target_node = NodePath("../CamPosNode")
 target_zoom = Vector2(0.5, 0.5)
 
 [node name="CameraSetter3" parent="Level" instance=ExtResource("7_344ge")]
 position = Vector2(101, -939)
 scale = Vector2(5.490191, 5.80616)
-collision_mask = 2
 track_player = true
 
 [node name="CameraSetter5" parent="Level" instance=ExtResource("7_344ge")]
 position = Vector2(683, -2451)
 rotation = -3.1415927
 scale = Vector2(6.771679, -8.281437)
-collision_mask = 2
 track_player = true
 
 [node name="CameraSetter6" parent="Level" instance=ExtResource("7_344ge")]
 position = Vector2(2075, -2624.0002)
 rotation = -3.1415927
 scale = Vector2(14.029493, -8.281437)
-collision_mask = 2
 track_player = true
 
 [node name="CamPosNode" type="Node2D" parent="Level"]
