@@ -16,6 +16,17 @@ func _ready() -> void:
 func _offset_out_of_range(offset : float) -> bool:
 	return offset > curve.get_baked_length()
 
+## True = 1, False = -1
+func _bool_to_dir(b : bool) -> int:
+	if b:
+		return 1
+	return -1
+
+func _get_normal_from_offset(offset : float, direction : bool = false) -> Vector2:
+	var current_offset_pos : Vector2 = curve.sample_baked(offset)
+	var next_offset_pos : Vector2 = curve.sample_baked(offset + _bool_to_dir(direction))
+	return current_offset_pos.direction_to(next_offset_pos).rotated(PI/2)
+
 func _physics_process(delta: float) -> void:
 	for player : Player in get_tree().get_nodes_in_group("Player"):
 		if player is not Player: continue
@@ -37,23 +48,24 @@ func _physics_process(delta: float) -> void:
 				
 				var dir := Vector2.ZERO
 				
-				var current_offset_pos : Vector2 = curve.sample_baked(offset)
-				var next_offset_pos : Vector2 = curve.sample_baked(offset + sword.cable_speed*delta)
-				var og_pos : Vector2 = sword.get_tip_global_position()
-				
-				dir = current_offset_pos.direction_to(next_offset_pos)
-				
-				if next_offset_pos.x-current_offset_pos.x < 0:
-					sword.cable_speed += dir.y*player.get_cable_gravity()
-					sword.body.global_position = to_global(curve.get_closest_point(to_local(closest + dir*sword.cable_speed*delta)))
+				if is_finite(offset):
+					var current_offset_pos : Vector2 = curve.sample_baked(offset)
+					var next_offset_pos : Vector2 = curve.sample_baked(offset + sword.cable_speed*delta)
+					var og_pos : Vector2 = sword.get_tip_global_position()
 					
-				elif next_offset_pos.x-current_offset_pos.x > 0:
-					sword.cable_speed -= dir.y*player.get_cable_gravity()
-					sword.body.global_position = to_global(curve.get_closest_point(to_local(closest - dir*sword.cable_speed*delta)))
-				
-				sword.last_sword_velocity = (sword.body.global_position - og_pos) * 1/delta
-				
-				sword.cable_speed *= pow(cable_drag, delta)
+					dir = current_offset_pos.direction_to(next_offset_pos)
+					
+					if next_offset_pos.x-current_offset_pos.x < 0:
+						sword.cable_speed += dir.y*player.get_cable_gravity()
+						sword.body.global_position = to_global(curve.get_closest_point(to_local(closest + dir*sword.cable_speed*delta)))
+						
+					elif next_offset_pos.x-current_offset_pos.x > 0:
+						sword.cable_speed -= dir.y*player.get_cable_gravity()
+						sword.body.global_position = to_global(curve.get_closest_point(to_local(closest - dir*sword.cable_speed*delta)))
+					
+					sword.last_sword_velocity = (sword.body.global_position - og_pos) * 1/delta
+					
+					sword.cable_speed *= pow(cable_drag, delta)
 
 		# Attach to the cable if able
 		elif (old_sword_pos.y < closest.y and sword.get_tip_global_position().y >= closest.y):
@@ -64,10 +76,10 @@ func _physics_process(delta: float) -> void:
 				var is_vertical := Helper.is_angle_roughly_vertical(real_vel.angle())
 				
 				if real_vel.x < 0 or (is_vertical and sword.get_tip_global_position().x < player.get_player_position().x):
-					sword.cable_speed = player.get_player_body().get_real_velocity().length()
+					sword.cable_speed = player.get_player_body().get_real_velocity().slide(_get_normal_from_offset(offset, true)).length()
 				
 				elif real_vel.x > 0 or (is_vertical and sword.get_tip_global_position().x > player.get_player_position().x):
-					sword.cable_speed = -player.get_player_body().get_real_velocity().length()
+					sword.cable_speed = -player.get_player_body().get_real_velocity().slide(_get_normal_from_offset(offset, true)).length()
 					
 				sword.enter_cable(self)
 		

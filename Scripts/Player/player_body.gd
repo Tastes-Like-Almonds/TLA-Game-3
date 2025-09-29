@@ -4,6 +4,8 @@ class_name PlayerBody extends CharacterBody2D
 
 @onready var shape : CollisionShape2D = $CollisionShape2D
 
+var last_slide : float = 1.0
+
 func get_player() -> Player:
 	if get_parent() is Player:
 		return get_parent()
@@ -19,19 +21,32 @@ func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 	var drag : Vector2
 	
 	if is_on_floor():
-		drag = player.get_ground_drag()
-		
-		# Override if friction value is present
-		#print((Helper.get_slide_from_collision(get_last_slide_collision(), drag.x))/60)
-		drag.x = (Helper.get_slide_from_collision(get_last_slide_collision(), drag.x))/60
-		
+		drag = Vector2.ONE
+		drag.x = Helper.get_slide_from_collision(get_last_slide_collision(), last_slide)
+		last_slide = drag.x
+		vel.x *= pow(drag.x, delta/player.friction_time)
 	else:
 		drag = player.get_air_drag()
+		vel.x *= pow(drag.x, delta)
 	
-	vel.x *= pow(drag.x, delta)
 	vel.y *= pow(drag.y, delta)
 	
 	return vel
+
+## Determines if the player is on the ground via raycasting. Only collides with collision layer 1.
+func ray_is_on_floor() -> Dictionary:
+	var space_state := get_world_2d().direct_space_state
+	
+	var parameters := PhysicsRayQueryParameters2D.new()
+	parameters.from = global_position
+	
+	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
+	parameters.to = parameters.from + Vector2.DOWN * shape.shape.get_rect().size.y
+	
+	parameters.collision_mask = 1
+	var result := space_state.intersect_ray(parameters)
+	
+	return result
 
 func _physics_process(delta: float) -> void:
 	var player : Player = get_player()
@@ -65,6 +80,7 @@ func _physics_process(delta: float) -> void:
 			
 			# Bounce
 			var current_vel : Vector2 = velocity
+			
 			if move_and_slide():
 				if is_on_floor():
 					velocity.y = (-current_vel.y - get_last_slide_collision().get_remainder().y) * player.get_bounciness()

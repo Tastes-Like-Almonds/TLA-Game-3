@@ -57,8 +57,10 @@ enum MovementMode {
 ## The coefficient of velocity applied each second while in mid-air.
 @export var air_drag : Vector2 = Vector2(0.4,0.8)
 
-## The coefficient of velocity applied each second while on the ground.
-@export var ground_drag : Vector2 = Vector2(0.01,1.0)
+## The amount of seconds it takes for friction to be fully applied to velocity.
+## For exampe, if equal to 0.5, and the friction of the ground is 0.5, it will take half a second for 
+## the movement to be halved.
+@export var friction_time : float = 0.5
 
 ## The drag applied to the player when being soft-limited (From the sword distance).
 ## This is applied to the previous drag multiplicatively.
@@ -142,10 +144,6 @@ func get_sword_slide() -> float:
 ## Gets the drag applied each second to the player's velocity while in mid-air.
 func get_air_drag() -> Vector2:
 	return air_drag
-
-## Gets the drag applied each second to the player's velocity while on the ground.
-func get_ground_drag() -> Vector2:
-	return ground_drag
 
 ## Gets the drag applied to the player per second (In addition to normal drag) when the
 ## player is beyond max_distance of the hammer.

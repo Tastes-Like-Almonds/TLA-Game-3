@@ -13,9 +13,3 @@ script = ExtResource("1_3e63e")
 points = PackedVector2Array(0, 0, 300, 0)
 default_color = Color(0.55828667, 0.55828655, 0.55828655, 1)
 gradient = SubResource("Gradient_f2v25")
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-build_mode = 1
-polygon = PackedVector2Array(0, 0)
