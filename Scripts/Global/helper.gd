@@ -4,6 +4,7 @@ var _debug_dots : Dictionary[String, DebugDot]
 
 var debug_dot_scn : PackedScene = preload("res://Scenes/Debug/debug_dot.tscn")
 
+## Returns all descendants of a node.
 func get_all_descendants(node: Node) -> Array[Node]:
 	var descendants: Array[Node] = []
 	for child in node.get_children():
@@ -11,6 +12,7 @@ func get_all_descendants(node: Node) -> Array[Node]:
 		descendants.append_array(get_all_descendants(child))
 	return descendants
 
+## Returns the closest player to origin.
 func get_closest_player(origin:Vector2, distance_limit : float = 10000000) -> Player:
 	for node in get_tree().get_nodes_in_group("Player"):
 		if node is not Player : continue
@@ -28,6 +30,26 @@ func get_mouse_vec_from_center() -> Vector2:
 func is_angle_roughly_vertical(ang : float, max_offset : float = PI/4) -> bool:
 	return (absf(ang - PI/2)<max_offset or absf(ang - -PI/2)<max_offset)
 
+## Returns the slide (1 - friction) based upon a collision, returning default if not applicable.
+## This is used for calculating how much friction different tiles have, though may have
+## other uses in the future.
+func get_slide_from_collision(collision : KinematicCollision2D, default : float = 0.6) -> float:
+	var collider := collision.get_collider()
+	
+	if collider is TileMapLayer:
+						
+		collider = collider as TileMapLayer
+		
+		var coords : Vector2i = collider.local_to_map(collider.to_local(collision.get_position()))
+		var tile_data : TileData = collider.get_cell_tile_data(coords)
+		
+		if tile_data:
+			return 1 - tile_data.get_custom_data("friction")
+
+	return default
+
+## Creates a visual dot at the given position. It lasts for three seconds or until overidden.
+## A debug dot is overidden if a new one is created with the same ID.
 func debug_dot(parent:Node, pos : Vector2, id : String, color : Color = Color.WHITE) -> void:
 	
 	if id in _debug_dots and is_instance_valid(_debug_dots.get(id)):

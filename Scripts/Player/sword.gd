@@ -28,6 +28,10 @@ func _get_player() -> Player:
 		return get_parent()
 	return null
 
+func _get_slide_from_last_collision() -> float:
+	var collision := _get_player().get_last_collision()
+	return Helper.get_slide_from_collision(collision, _get_player().get_sword_slide())
+
 ## Limits vector b to be, at most, dist away from vector a. Returns the modified b vector.
 func _limit_distance(dist:float, a:Vector2, b:Vector2) -> Vector2:
 	if a.distance_to(b) > dist:
@@ -90,12 +94,13 @@ func _physics_process(delta: float) -> void:
 			last_frame_pos = body.global_position
 			
 			if not on_cable:
+				
 				var collision := body.move_and_collide(movement)
+				_get_player().set_last_collision(collision)
 				
 				if collision:
-					body.move_and_collide(movement.slide(collision.get_normal()) * _get_player().get_sword_slide())
-				
-				_get_player().set_last_collision(collision)
+					var friction := _get_slide_from_last_collision()
+					body.move_and_collide(movement.slide(collision.get_normal()) * friction)
 		
 		player.MovementMode.PLAYER_ORBIT: # No use as of now.
 			
@@ -135,7 +140,9 @@ func get_push() -> Vector2:
 		vel.y += Input.get_last_mouse_velocity().y * -0.05
 
 	elif collision:
-		var slide_vel := (collision.get_remainder() + collision.get_travel()).slide(collision.get_normal()) * player.get_sword_slide()
+		
+		# Acount for slide direction in push
+		var slide_vel := (collision.get_remainder() + collision.get_travel()).slide(collision.get_normal()) * _get_slide_from_last_collision()
 		vel += (collision.get_remainder() + collision.get_travel() + slide_vel) * player.get_strength() * -1 # Reverse velocity of sword
 
 	return vel

@@ -20,6 +20,11 @@ func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 	
 	if is_on_floor():
 		drag = player.get_ground_drag()
+		
+		# Override if friction value is present
+		#print((Helper.get_slide_from_collision(get_last_slide_collision(), drag.x))/60)
+		drag.x = (Helper.get_slide_from_collision(get_last_slide_collision(), drag.x))/60
+		
 	else:
 		drag = player.get_air_drag()
 	

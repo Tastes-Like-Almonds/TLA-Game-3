@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c4osn16h15lkc"]
 
-[ext_resource type="Texture2D" uid="uid://b2knf0hv5u0sc" path="res://Scripts/Resource/Debug/debug_dot.tres" id="1_5vlli"]
+[ext_resource type="Texture2D" uid="uid://b2knf0hv5u0sc" path="res://Scenes/Debug/DevPanel/Debug/debug_dot.tres" id="1_5vlli"]
 [ext_resource type="Script" uid="uid://ddbu6u8gpn3c4" path="res://Scripts/Debug/debug_dot.gd" id="1_uwifa"]
 
 [sub_resource type="SystemFont" id="SystemFont_5vlli"]

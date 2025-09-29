@@ -74,3 +74,4 @@ layout_mode = 2
 
 [node name="Level" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2" instance=ExtResource("5_6iyac")]
 layout_mode = 2
+size_flags_vertical = 1

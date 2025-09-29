@@ -1,6 +1,8 @@
 ## A base class for levels. 
 @abstract class_name Level extends Node2D
 
+var level_config : LevelConfig
+
 ## Gets the spawn which the player should.. well.. spawn at.
 func _get_first_spawn() -> Node2D:
 	for node in get_tree().get_nodes_in_group("PlayerSpawn"):
@@ -30,7 +32,12 @@ func _setup_player() -> void:
 	if is_instance_valid(spawn): player.global_position = _get_first_spawn().global_position
 	add_child(player)
 
-func initialize() -> void:
+func initialize(config : LevelConfig = null) -> void:
+	
+	if not config:
+		config = LevelConfig.new()
+	level_config = config
+	
 	_setup_player()
 	_setup_camera()
 
