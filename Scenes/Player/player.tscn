@@ -31,6 +31,7 @@ size = Vector2(102, 20)
 
 [node name="Player" type="Node2D" groups=["Player"]]
 script = ExtResource("1_xpcdj")
+max_equip = 2
 starting_weapon = SubResource("Resource_0u5uq")
 
 [node name="playerBody" type="CharacterBody2D" parent="."]

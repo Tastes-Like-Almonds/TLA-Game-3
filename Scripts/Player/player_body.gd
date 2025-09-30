@@ -33,6 +33,21 @@ func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 	
 	return vel
 
+func _check_damage_collisions(collision : KinematicCollision2D) -> void:
+	var player := get_player()
+	
+	if not collision: return
+	if collision.get_collider() is TileMapLayer:
+		
+		var tile_data := Helper.get_tile_data_from_collision(collision)
+		
+		if tile_data:
+			var contact_damage : Variant = tile_data.get_custom_data("contact_damage")
+			if contact_damage is int and contact_damage > 0:
+				if player.deal_damage(contact_damage):
+					var kb := ((Helper.get_tile_pos_from_collision(collision).direction_to(global_position))*1000)
+					player.deal_knockback(kb)
+
 ## Determines if the player is on the ground via raycasting. Only collides with collision layer 1.
 func ray_is_on_floor() -> Dictionary:
 	var space_state := get_world_2d().direct_space_state
@@ -80,10 +95,12 @@ func _physics_process(delta: float) -> void:
 			
 			# Bounce
 			var current_vel : Vector2 = velocity
-			
+			_check_damage_collisions(get_last_slide_collision())
 			if move_and_slide():
 				if is_on_floor():
 					velocity.y = (-current_vel.y - get_last_slide_collision().get_remainder().y) * player.get_bounciness()
+			
+			
 			
 		#endregion
 		

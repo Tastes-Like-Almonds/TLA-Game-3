@@ -11,10 +11,14 @@ texture = ExtResource("1_un331")
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0/custom_data_0 = 0.015
 0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:1/0/custom_data_1 = 1
 1:1/0 = 0
 
 [resource]
 physics_layer_0/collision_layer = 1
 custom_data_layer_0/name = "friction"
 custom_data_layer_0/type = 3
+custom_data_layer_1/name = "contact_damage"
+custom_data_layer_1/type = 2
 sources/0 = SubResource("TileSetAtlasSource_3py6v")

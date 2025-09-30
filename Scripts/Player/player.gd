@@ -14,6 +14,12 @@ enum MovementMode {
 
 #region Exports
 
+## Maximum health of the player. Does not regenerate.
+@export var max_health : int = 2
+
+## The minimum amount of time required to pass betewen damage.
+@export var invincibility_time : float = 0.5
+
 # --- #
 @export_group("Sword")
 
@@ -102,6 +108,15 @@ var on_cable : bool = false
 
 ## An array of currently held weapons.
 var held_weapons : Array[Weapon] = []
+
+## The player's current health.
+var health : int = max_health
+
+## The amount of time since damage was last taken.
+var last_hit_time : float = 0.0
+
+## The amount of damage last dealt
+var last_hit_amount : int = 0
 #endregion
 
 #region Getters
@@ -388,7 +403,39 @@ func set_movement_mode(mode : MovementMode) -> void:
 
 #endregion
 
+#region Damage/Death
+
+## Handle the death of the player.
+func _death() -> void:
+	print("A player has died!")
+
+## Kill the player.
+func kill() -> void:
+	_death()
+
+## Deal amt of damage to the player, killing them if reaching zero.
+func deal_damage(amt : int) -> bool:
+	
+	# Only deal damage in excess of last amount taken if still invincible
+	if last_hit_time < invincibility_time: amt -= last_hit_amount
+	if amt <= 0: return false
+	
+	print(str(amt) + " damage dealt")
+	
+	last_hit_time = 0.0
+	last_hit_amount = amt
+	
+	health -= amt
+	if health <= 0:
+		_death()
+
+	return true
+
+#endregion
+
 func _process(delta: float) -> void:
+	
+	last_hit_time += delta
 	
 	if current_weapon:
 		current_weapon.process_weapon(delta)

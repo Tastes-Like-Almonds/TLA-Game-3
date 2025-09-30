@@ -48,6 +48,33 @@ func get_slide_from_collision(collision : KinematicCollision2D, default : float 
 
 	return default
 
+## Given a collision, returns the colliding tile's tiledata, if the collider is a tile.
+func get_tile_data_from_collision(collision : KinematicCollision2D) -> TileData:
+	if not collision: return null
+	var collider := collision.get_collider()
+	
+	if collider is TileMapLayer:
+						
+		collider = collider as TileMapLayer
+		
+		var coords : Vector2i = collider.local_to_map(collider.to_local(collision.get_position()))
+		var tile_data : TileData = collider.get_cell_tile_data(coords)
+		
+		return tile_data
+
+	return null
+
+func get_tile_pos_from_collision(collision : KinematicCollision2D) -> Vector2:
+	if not collision: return collision.get_position()
+	var collider := collision.get_collider()
+	
+	if collider is TileMapLayer:
+		var map := collider as TileMapLayer
+		var coords : Vector2i = collider.local_to_map(collider.to_local(collision.get_position()))
+		print("done")
+		return map.to_global(map.map_to_local(coords))
+	return collision.get_position()
+	
 ## Creates a visual dot at the given position. It lasts for three seconds or until overidden.
 ## A debug dot is overidden if a new one is created with the same ID.
 func debug_dot(parent:Node, pos : Vector2, id : String, color : Color = Color.WHITE) -> void:
