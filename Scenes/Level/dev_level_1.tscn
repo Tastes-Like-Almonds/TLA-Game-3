@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://buagg1qaj8yyq"]
+[gd_scene load_steps=14 format=4 uid="uid://buagg1qaj8yyq"]
 
 [ext_resource type="Script" uid="uid://cptwx6a87rlgq" path="res://Scripts/Level/testing_level.gd" id="1_2630a"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_2630a"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/camera_setter.tscn" id="5_hgx47"]
 [ext_resource type="PackedScene" uid="uid://c6v3xg31w6tg1" path="res://Scenes/Object/ItemPickup.tscn" id="6_2tbx8"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/player_spawn.tscn" id="7_qvxf0"]
+[ext_resource type="PackedScene" uid="uid://cetagv570bbem" path="res://Scenes/Object/BoostOrb/boost_orb.tscn" id="8_dwb8t"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -106,3 +107,6 @@ position = Vector2(1090, 360)
 
 [node name="PlayerSpawn" parent="." instance=ExtResource("7_qvxf0")]
 position = Vector2(541, 267)
+
+[node name="BoostOrb" parent="." instance=ExtResource("8_dwb8t")]
+position = Vector2(184, 330)
