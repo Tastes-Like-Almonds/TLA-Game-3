@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/camera_setter.tscn" id="5_hgx47"]
 [ext_resource type="PackedScene" uid="uid://c6v3xg31w6tg1" path="res://Scenes/Object/ItemPickup.tscn" id="6_2tbx8"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/player_spawn.tscn" id="7_qvxf0"]
-[ext_resource type="PackedScene" uid="uid://cetagv570bbem" path="res://Scenes/Object/BoostOrb/boost_orb.tscn" id="8_dwb8t"]
+[ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="8_dwb8t"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -108,5 +108,14 @@ position = Vector2(1090, 360)
 [node name="PlayerSpawn" parent="." instance=ExtResource("7_qvxf0")]
 position = Vector2(541, 267)
 
-[node name="BoostOrb" parent="." instance=ExtResource("8_dwb8t")]
-position = Vector2(184, 330)
+[node name="PushOrb" parent="." instance=ExtResource("8_dwb8t")]
+position = Vector2(-825, -1260)
+rotation = 5.660597
+
+[node name="PushOrb2" parent="." instance=ExtResource("8_dwb8t")]
+position = Vector2(-957, -1795)
+rotation = 5.482442
+
+[node name="PushOrb3" parent="." instance=ExtResource("8_dwb8t")]
+position = Vector2(-1196, -1519.9999)
+rotation = 6.550067

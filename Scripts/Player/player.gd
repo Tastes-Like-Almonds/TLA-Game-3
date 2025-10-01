@@ -378,6 +378,10 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 func apply_velocity(vel : Vector2) -> void:
 	get_player_body().velocity += vel
 
+## Set the passed velocity as the player's
+func set_velocity(vel : Vector2) -> void:
+	get_player_body().velocity = vel
+
 ## Deal knockback to the player. Functions similarly to apply_velocity, but should be used for
 ## any hostile knockback (incase further features are added which deal with it.)
 func deal_knockback(vel : Vector2) -> void:

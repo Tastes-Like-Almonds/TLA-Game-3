@@ -14,7 +14,7 @@ func _ready() -> void:
 
 ## Returns true if the passed offset is out of the cable's range.
 func _offset_out_of_range(offset : float) -> bool:
-	return offset > curve.get_baked_length()
+	return (offset >= curve.get_baked_length()) or offset <= 0
 
 ## True = 1, False = -1
 func _bool_to_dir(b : bool) -> int:
