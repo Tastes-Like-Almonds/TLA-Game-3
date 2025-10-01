@@ -12,6 +12,8 @@ enum MovementMode {
 
 # TODO Cache sword and body ref until child structure is altered
 
+@onready var sprite := $playerBody/Sprite2D
+
 #region Exports
 
 ## Maximum health of the player. Does not regenerate.
@@ -19,6 +21,12 @@ enum MovementMode {
 
 ## The minimum amount of time required to pass betewen damage.
 @export var invincibility_time : float = 0.5
+
+## The base damage of the sword.
+@export var sword_damage : float = 10.0
+
+## The speed of the sword required to reach max damage.
+@export var sword_speed_damage : float = 3000.0
 
 # --- #
 @export_group("Sword")
@@ -196,6 +204,15 @@ func is_charging_ability() -> bool:
 func get_last_collision() -> KinematicCollision2D:
 	return last_collision
 
+## Returns the damage of the player's sword. Should not be called directly, instead
+## use get_blade_damage().
+func get_sword_damage() -> float:
+	return sword_damage
+
+## Returns the speed the sword must travel to deal maximum damage.
+func get_sword_speed_damage() -> float:
+	return sword_speed_damage
+
 ## Gets the player's body.
 func get_player_body() -> PlayerBody:
 	
@@ -231,7 +248,10 @@ func get_blade_damage() -> float:
 	var damage := 0.0
 	var sword : Sword = get_player_sword()
 	
-	damage += sword.get_last_sword_velocity().length()
+	var perc : float = max(0.0, sword.get_last_sword_velocity().length()/get_sword_speed_damage())
+	perc = min(perc, 1.0)
+	
+	damage += get_sword_damage()*perc
 	
 	return damage
 
@@ -255,12 +275,16 @@ func _clear_visuals() -> void:
 			child.queue_free()
 
 ## Update any player-related visuals
-func _visual_process() -> void:
+func _visual_process(delta : float) -> void:
 	
 	# Update player rotation
 	var body : PlayerBody = get_player_body()
 	if body:
 		body.get_sprite().flip_h = get_player_sword().get_tip_global_position().x < get_player_position().x
+
+	# Update player damage
+	var c : Vector4 = sprite.material.get_shader_parameter("solid_color")
+	sprite.material.set_shader_parameter("solid_color", Vector4(c.x,c.y,c.z,max(0,c.w-delta/invincibility_time)))
 
 	# Update weapon visual
 	if weapon_visual:
@@ -429,6 +453,9 @@ func deal_damage(amt : int) -> bool:
 	last_hit_time = 0.0
 	last_hit_amount = amt
 	
+	var c : Vector4 = sprite.material.get_shader_parameter("solid_color")
+	sprite.material.set_shader_parameter("solid_color", Vector4(c.x,c.y,c.z,1))
+	
 	health -= amt
 	if health <= 0:
 		_death()
@@ -450,7 +477,7 @@ func _process(delta: float) -> void:
 		else:
 			ability_charge = 0
 
-	_visual_process()
+	_visual_process(delta)
 
 func _ready() -> void:
 	add_weapon(starting_weapon)

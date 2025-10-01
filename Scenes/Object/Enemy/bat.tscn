@@ -1,14 +1,111 @@
-[gd_scene load_steps=3 format=3 uid="uid://d3n0ld0lgrg4q"]
+[gd_scene load_steps=16 format=3 uid="uid://d3n0ld0lgrg4q"]
 
 [ext_resource type="Script" uid="uid://ko4prto8gjvb" path="res://Scripts/Object/Enemy/bat.gd" id="1_t36nw"]
+[ext_resource type="Texture2D" uid="uid://nbfk28dvfggy" path="res://Assets/Sprites/Placeholder/Bat_spritesheet.png" id="2_6un6e"]
+[ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="2_gnly0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o6sep"]
 size = Vector2(48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_gnly0"]
+atlas = ExtResource("2_6un6e")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuwcp"]
+atlas = ExtResource("2_6un6e")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhqts"]
+atlas = ExtResource("2_6un6e")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omse7"]
+atlas = ExtResource("2_6un6e")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22w8g"]
+atlas = ExtResource("2_6un6e")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4l3wa"]
+atlas = ExtResource("2_6un6e")
+region = Rect2(512, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t7lfu"]
+atlas = ExtResource("2_6un6e")
+region = Rect2(0, 512, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v4fcd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gnly0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuwcp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhqts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_omse7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22w8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4l3wa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t7lfu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_6un6e"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.101960786, 0.10980392, 0.17254902, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gnly0"]
+gradient = SubResource("Gradient_6un6e")
+width = 12
+height = 12
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tuwcp"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+gravity = Vector3(0, 2000, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+
 [node name="Bat" type="AnimatableBody2D" groups=["BladeHitable"]]
 collision_layer = 8
+collision_mask = 11
 sync_to_physics = false
 script = ExtResource("1_t36nw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_o6sep")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("2_gnly0")
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_v4fcd")
+frame = 2
+frame_progress = 0.5561473
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+texture = SubResource("GradientTexture2D_gnly0")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_tuwcp")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

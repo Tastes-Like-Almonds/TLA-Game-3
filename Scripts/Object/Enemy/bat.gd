@@ -1,16 +1,43 @@
 extends AnimatableBody2D
 
-@export var health : float = 10.0
+@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision_shape : CollisionShape2D = $CollisionShape2D
+@onready var notifier : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
-@export var movement_speed : float = 100.0
+## The time it takes before the bat can be hit again.
+@export var hit_time : float = 0.5
 
+## The max health of the bat. Does not regen.
+@export var health : float = 15.0
+
+## Movement speed of the bat.
+@export var movement_speed : float = 600.0
+
+## The distance which the bat will lock on to a player.
 @export var aggro_range : float = 3000.0
 
+## If true, the bat will respawn after respawn_time in seconds.
 @export var respawn : bool = true:
 	set(value):
 		respawn = value
 
+## If true, the bat will only respawn when its spawn position enters the screen.
+@export var only_respawn_on_screen : bool = true
+
+## If true, the bat will spawn dead.
+@export var spawn_dead : bool = true
+
+## The time it takes to respawn if enabled, in seconds.
 @export var respawn_time : float = 3.0
+
+## Maximum knockback dealt to the player when they hit the bat.
+@export var max_hit_kb : float = 1500.0
+
+## Knockback dealt to the player on hit.
+@export var knockback : float = 100.0
+
+## Coefficient of knockback applied.
+@export var knockback_coef : float = 0.6
 
 var movement_delay : float = 1.0
 
@@ -24,62 +51,131 @@ var start_pos : Vector2
 var target_player : Player
 var start_health := health
 
+var time_since_last_hit : float = 0.0
+
+var velocity : Vector2 = Vector2.ZERO
+
+func get_current_hit_color() -> Vector4:
+	return sprite.material.get_shader_parameter("solid_color")
+
 func on_sword_hit(player : Player) -> void:
 	
 	if respawning : return
+	if time_since_last_hit < hit_time: return
 	
 	var damage := player.get_blade_damage()
 	var vel := player.get_player_sword().get_last_sword_velocity()
+	var color := get_current_hit_color()
 	
 	health -= damage
-	player.apply_velocity(vel*0.5)
+	time_since_last_hit = 0.0
+	var player_body := player.get_player_body()
+	
+	# Apply velocity to player based on sword speed
+	if not player_body.is_on_floor():
+		# Cancel y velocity
+		if player_body.velocity.y > 0:
+			player.set_velocity(Vector2(0, player_body.velocity.x))
+		if (vel).length() > max_hit_kb:
+			player.apply_velocity(vel.normalized()*-max_hit_kb)
+		else:
+			player.apply_velocity(vel)
+	
+	# Deal knockback to bat
+	velocity = vel*knockback_coef
+	
+	# Damage display
+	sprite.material.set_shader_parameter("solid_color", color + Vector4(0,0,0,1))
 	
 	if health <= 0:
 		_kill()
 
 func _kill() -> void:
+	$GPUParticles2D.emitting = true
+	velocity = Vector2.ZERO
 	if respawn:
-		visible = false
+		sprite.visible = false
 		respawning = true
 	else:
-		queue_free()
+		$GPUParticles2D.finished.connect(queue_free)
 
 func _respawn() -> void:
-	visible = true
+	sprite.visible = true
 	respawning = false
 	health = start_health
 	global_position = start_pos
 
 func _movement(delta : float) -> void:
 	
+	velocity *= pow(0.2, delta)
+	
 	movement_cooldown -= delta
 	
 	if movement_cooldown <= 0 or not target_point:
-		movement_cooldown = movement_delay
+		movement_cooldown = movement_delay + randf_range(movement_delay*-0.1,movement_delay*0.1)
 		if target_player:
 			# Cancel and redo if player out of range
 			if target_player.get_player_position().distance_to(global_position) > aggro_range: target_player = null ; _movement(delta) ; return
 			target_point = target_player.get_player_position()
+			target_point.y -= collision_shape.shape.get_rect().size.y/2
 		else:
+			# Set to random point if no target found
 			target_point = Vector2(cos(randf()*2*PI), sin(randf()*2*PI))*100.0 + global_position
 			var nearest_player : Player = Helper.get_closest_player(global_position, aggro_range)
 			if nearest_player:
 				target_player = nearest_player
+	
+	var move_speed := movement_speed
+	if global_position.distance_to(target_point) < movement_speed*delta:
+		move_speed = global_position.distance_to(target_point)
 
 	if target_point:
-		move_and_collide(global_position.direction_to(target_point) )
+		var movement := global_position.direction_to(target_point)*move_speed*delta + velocity*delta
+		var result := move_and_collide(movement)
+		if result:
+			move_and_collide(movement.slide(result.get_normal()))
+		on_hit(result)
 
-func _process(delta: float) -> void:
-	
-	if respawning:
-		respawn_cooldown += delta
-		if respawn_cooldown >= respawn_time:
+func _check_respawn() -> void:
+	if respawn_cooldown >= respawn_time:
 			respawn_cooldown = 0
 			respawning = false
 			_respawn()
+
+func _process(delta: float) -> void:
+	
+	time_since_last_hit += delta
+	
+	var color : Vector4 = get_current_hit_color()
+	sprite.material.set_shader_parameter("solid_color", Vector4(color.x,color.y,color.z,max(0,color.w-delta/hit_time)))
+	
+	sprite.flip_h = (target_point.x < global_position.x)
+	
+	if respawning:
+		respawn_cooldown += delta
+		if not only_respawn_on_screen:
+			_check_respawn()
 		return
 	
 	_movement(delta)
 
+func on_hit(collision : KinematicCollision2D) -> void:
+	if not collision: return
+	if collision.get_collider() is PlayerBody and is_instance_valid(collision.get_collider()):
+		
+		var player_body := collision.get_collider() as PlayerBody
+		var player : Player = player_body.get_player()
+		
+		if not is_instance_valid(player): return
+		elif  time_since_last_hit > hit_time: 
+			player.deal_damage(1) 
+			player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
+
 func _ready() -> void:
+	notifier.screen_entered.connect(_check_respawn)
+	notifier.rect = collision_shape.shape.get_rect()
 	start_pos = global_position
+	sprite.play("default")
+	if spawn_dead:
+		respawning = true
+		respawn_cooldown = respawn_time
