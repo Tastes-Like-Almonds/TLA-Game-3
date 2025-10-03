@@ -6,93 +6,31 @@ var last_collision : KinematicCollision2D = null
 
 enum MovementMode {
 	SWORD_ORBIT, # The sword orbits the player
-	PLAYER_ORBIT, # TODO The player orbits the sword (Not needed currently; alternative used)
+	PLAYER_ORBIT, # TODO The player orbits the sword (Not needed or functional currently.)
 	NOCLIP # The player flies toward the sword when charging. Collisions disabled in this mode.
 }
 
 # TODO Cache sword and body ref until child structure is altered
 
-@onready var sprite := $playerBody/Sprite2D
+@onready var sprite : Sprite2D = $playerBody/Sprite2D
 
 #region Exports
 
-## Maximum health of the player. Does not regenerate.
-@export var max_health : int = 2
+@export var properties : PlayerProperties = PlayerProperties.new()
 
-## The minimum amount of time required to pass betewen damage.
-@export var invincibility_time : float = 0.5
-
-## The base damage of the sword.
-@export var sword_damage : float = 10.0
-
-## The speed of the sword required to reach max damage.
-@export var sword_speed_damage : float = 3000.0
-
-# --- #
-@export_group("Sword")
-
-## The maximum distance from the sword tip to the player (Soft limit)
-@export var max_distance : float = 140.0
-
-## Minimum distance between the sword tip and player
-@export var min_distance : float = 10.0
-
-## The strength of the player; the sword flings more when higher.
-@export_range(0,5, 0.1) var strength : float = 2.5
-
-## The strength of the player when in player orbit mode.
-@export var player_orbit_strength : float = 10.0
-
-## How much the sword sticks to ground. Higher = lower friction
-@export_range(0,1) var sword_slide : float = 0.2
-
-## The multipler of knockback dealt to the player
-@export var self_knockback_multi : float = 1
-
-# --- #
-@export_group("Inventory")
-
-## The max number of items which the player can hold.
-@export_range(1,10, 1) var max_equip : int = 1
-
-## If true, the player will automatically equip picked up items. This happens by default
-## if the player's max weapons value is reached.
-@export var equip_on_pickup : bool = true
-
-# --- #
-@export_group("Physics")
-
-## The speed which the player falls.
-@export_range(0,3000, 1.0) var gravity : float = 3000.0
-
-## Gravity used for cable speed only.
-@export_range(0,200) var cable_gravity : float = 70.0
-
-## The coefficient of velocity applied each second while in mid-air.
-@export var air_drag : Vector2 = Vector2(0.4,0.8)
-
-## The amount of seconds it takes for friction to be fully applied to velocity.
-## For exampe, if equal to 0.5, and the friction of the ground is 0.5, it will take half a second for 
-## the movement to be halved.
-@export var friction_time : float = 0.5
-
-## The drag applied to the player when being soft-limited (From the sword distance).
-## This is applied to the previous drag multiplicatively.
-@export_range(0,1) var soft_limit_drag : float = 0.1
-
-## The distance beyond max_distance which the player will be limited
-@export_range(0,3) var soft_limit_distance_coef : float = 1.3
-
-## The amount of velocity that is converted into bounce upon the player landing.
-@export_range(0,1) var bounciness : float = 0.25
-
-# --- #
-@export_group("Startup")
-
-## The weapon the player starts with
-@export var starting_weapon : Weapon = null
+var property_modifiers : Dictionary[String, Array]
 
 #endregion
+
+func get_modified_property(property: String) -> Variant:
+	
+	var arr : Array[PropertyModifier] = []
+	if property in property_modifiers:
+		for item : Variant in property_modifiers.get(property):
+			if item is PropertyModifier:
+				arr.append(item)
+
+	return properties.get_modified(property, arr)
 
 #region Properties
 ## The amount of time the player has triggered their M1 ability
@@ -110,28 +48,36 @@ var weapon_visual : WeaponVisual
 ## The current movement mode
 var movement_mode : MovementMode = MovementMode.SWORD_ORBIT
 
-## If the player is currently hooked on a cable.
-## No getter/setter methods as this is managed in cable.gd
-var on_cable : bool = false
-
 ## An array of currently held weapons.
 var held_weapons : Array[Weapon] = []
 
 ## The player's current health.
-var health : int = max_health
+var health : int = properties.max_health
 
 ## The amount of time since damage was last taken.
 var last_hit_time : float = 0.0
 
 ## The amount of damage last dealt
 var last_hit_amount : int = 0
+
+## The amount of lives the player has left. Player dies at zero lives, unline some games.
+var lives : int = 0
+
+## The current time spent respawning
+var time_respawning : float = 0.0
+
+## If true, the player is currently dead (and respawning if not at zero lives.)
+var dead : bool = false
+
+## The global position the player will respawn at.
+var respawn_pos : Vector2
 #endregion
 
 #region Getters
 ## Gets the max distance that the sword should be from the player.
 ## This is not a hard limit.
 func get_max_distance() -> float:
-	var dist : float = max_distance
+	var dist : float =  get_modified_property("max_distance")
 	
 	if current_weapon:
 		dist += current_weapon.get_max_distance_increase()
@@ -140,44 +86,44 @@ func get_max_distance() -> float:
 
 ## Gets the minimum distance the sword should be from the player.
 func get_min_distance() -> float:
-	return min_distance
+	return get_modified_property("min_distance")
 
 ## Gets the speed of gravity of the player
 func get_gravity() -> float:
-	return gravity
+	return get_modified_property("gravity")
 
 ## Gets the cable gravity of the player
 func get_cable_gravity() -> float:
-	return cable_gravity
+	return get_modified_property("cable_gravity")
 
 ## Gets the stregth of the player, i.e. how much the player can fling themselves
 ## with their weapon.
 func get_strength() -> float:
-	return strength
+	return get_modified_property("strength")
 
 ## Gets the strength which the player uses in player_orbit mode.
 ## Currently unimplemented, and may never be.
 func get_player_orbit_strength() -> float:
-	return player_orbit_strength
+	return get_modified_property("player_orbit_strength")
 
 ## Gets the slipperiness of the weapon across the ground [0-1].
 func get_sword_slide() -> float:
-	return sword_slide
+	return get_modified_property("sword_slide")
 
 ## Gets the drag applied each second to the player's velocity while in mid-air.
 func get_air_drag() -> Vector2:
-	return air_drag
+	return get_modified_property("air_drag")
 
 ## Gets the drag applied to the player per second (In addition to normal drag) when the
 ## player is beyond max_distance of the hammer.
 func get_soft_limit_drag() -> float:
-	return soft_limit_drag
+	return get_modified_property("soft_limit_drag")
 
 ## Gets the percentage of the players velocity [0-1] that is applied in reverse upon landing. 
 ## Due to drag, setting the bounce to 1 will not mean that the player fully recovers to their 
 ## origin height. If you wish  to do this, you must control the player manually.
 func get_bounciness() -> float:
-	return bounciness
+	return get_modified_property("bounciness")
 
 ## Gets the coefficient of max_distance which determines when the player's velocity is soft-limited.
 ## E.g. if the coef is 1.1, that means that the player must be father than 1.1 * max_distance to
@@ -185,7 +131,7 @@ func get_bounciness() -> float:
 ##
 ## This feature exists as without it the player may slow greatly when making basic movements.
 func get_soft_limit_distance_coef() -> float:
-	return soft_limit_distance_coef
+	return get_modified_property("soft_limit_distance_coef")
 
 ## Gets the number of seconds which the weapon ability has been charging.
 func get_ability_charge() -> float:
@@ -207,11 +153,11 @@ func get_last_collision() -> KinematicCollision2D:
 ## Returns the damage of the player's sword. Should not be called directly, instead
 ## use get_blade_damage().
 func get_sword_damage() -> float:
-	return sword_damage
+	return get_modified_property("sword_damage")
 
 ## Returns the speed the sword must travel to deal maximum damage.
 func get_sword_speed_damage() -> float:
-	return sword_speed_damage
+	return get_modified_property("sword_speed_damage")
 
 ## Gets the player's body.
 func get_player_body() -> PlayerBody:
@@ -257,12 +203,28 @@ func get_blade_damage() -> float:
 
 ## Gets the multiplier of knockback applied to the player when they are dealt it.
 func get_knockback_multi() -> float:
-	return self_knockback_multi
+	return get_modified_property("self_knockback_multi")
+
+func get_invincibility_time() -> float:
+	return get_modified_property("invincibility_time")
+
+func get_max_equip() -> int:
+	return get_modified_property("max_equip")
+
+func get_equip_on_pickup() -> bool:
+	return get_modified_property("equip_on_pickup")
+
+func get_friction_time() -> float:
+	return get_modified_property("friction_time")
 
 ## Get the largest distance from the player's hitbox edge to the player's origin.
 func get_largest_size() -> float:
 	var shape : CollisionShape2D = get_player_body().shape
 	return (shape.shape.get_rect().size/2).length()
+
+## Returns true if the player is alive. The player is considered dead if they are respawning.
+func is_alive() -> bool:
+	return not dead
 
 #endregion
 
@@ -277,18 +239,23 @@ func _clear_visuals() -> void:
 ## Update any player-related visuals
 func _visual_process(delta : float) -> void:
 	
+	visible = not dead
+	
 	# Update player rotation
 	var body : PlayerBody = get_player_body()
 	if body:
 		body.get_sprite().flip_h = get_player_sword().get_tip_global_position().x < get_player_position().x
 
 	# Update player damage
-	var c : Vector4 = sprite.material.get_shader_parameter("solid_color")
-	sprite.material.set_shader_parameter("solid_color", Vector4(c.x,c.y,c.z,max(0,c.w-delta/invincibility_time)))
+	if sprite:
+		var c : Vector4 = sprite.material.get_shader_parameter("solid_color")
+		sprite.material.set_shader_parameter("solid_color", Vector4(c.x,c.y,c.z,max(0,c.w-delta/get_invincibility_time())))
 
 	# Update weapon visual
 	if weapon_visual:
-		weapon_visual.update_visual(get_player_position(), get_player_sword().get_tip_global_position())
+		var sword := get_player_sword()
+		if sword:
+			weapon_visual.update_visual(get_player_position(), sword.get_tip_global_position())
 
 #endregion
 
@@ -323,7 +290,7 @@ func add_weapon(weapon : Weapon) -> Weapon:
 	
 	held_weapons.append(weapon)
 	
-	if held_weapons.size() > max_equip:
+	if held_weapons.size() > get_max_equip():
 		var target_index : int = held_weapons.find(current_weapon)
 		
 		if held_weapons.size() == 0 or held_weapons.size() == 1:
@@ -346,7 +313,7 @@ func drop_weapon(slot : int) -> Weapon:
 ## Returns the weapon that was dropped as a result, if any.
 func pickup_weapon(weapon : Weapon) -> Weapon:
 	var dropped : Weapon = add_weapon(weapon)
-	if equip_on_pickup:
+	if get_equip_on_pickup():
 		equip_weapon_slot(held_weapons.size()-1)
 	return dropped
 
@@ -433,19 +400,36 @@ func set_movement_mode(mode : MovementMode) -> void:
 
 #region Damage/Death
 
+func _respawn() -> void:
+	dead = false
+	time_respawning = 0
+	lives -= 1
+	
+	var body := get_player_body()
+	var sword := get_player_sword()
+	
+	# Teleport the sword along with the player to prevent weird stuff
+	var sword_offset := sword.global_position - body.global_position
+	body.global_position = respawn_pos
+	sword.global_position = respawn_pos + sword_offset
+
 ## Handle the death of the player.
 func _death() -> void:
+	if dead: return
+	dead = true
 	print("A player has died!")
 
 ## Kill the player.
 func kill() -> void:
 	_death()
 
-## Deal amt of damage to the player, killing them if reaching zero.
+## Deal amt of damage to the player, killing them if reaching zero. Returns true if the damage was
+## successfully dealt.
 func deal_damage(amt : int) -> bool:
+	if dead: return false
 	
 	# Only deal damage in excess of last amount taken if still invincible
-	if last_hit_time < invincibility_time: amt -= last_hit_amount
+	if last_hit_time < get_invincibility_time(): amt -= last_hit_amount
 	if amt <= 0: return false
 	
 	print(str(amt) + " damage dealt")
@@ -464,6 +448,24 @@ func deal_damage(amt : int) -> bool:
 
 #endregion
 
+#region Modifiers
+
+## Add a property modifier to one of the player's stats.
+func add_modifier(mod : PropertyModifier, stat:String) -> void:
+	if stat not in property_modifiers:
+		property_modifiers[stat] = [mod] ; return
+	property_modifiers.get(stat).append(mod)
+
+## Update all of the player's property modifiers.
+func _update_modifiers(delta : float) -> void:
+	for key in property_modifiers:
+		for value : PropertyModifier in property_modifiers[key]:
+			value.update(delta)
+			if not value.is_active():
+				property_modifiers[key].erase(value)
+
+#endregion
+
 func _process(delta: float) -> void:
 	
 	last_hit_time += delta
@@ -477,12 +479,21 @@ func _process(delta: float) -> void:
 		else:
 			ability_charge = 0
 
-	_visual_process(delta)
+	# Update the respawn timer
+	if dead and lives > 0:
+		time_respawning += delta
+		if time_respawning >= get_modified_property("respawn_time"):
+			_respawn()
 
+	_visual_process(delta) # Handle weapon visuals, colors, etc.
+	_update_modifiers(delta) # Modifiers for player properties
+	
 func _ready() -> void:
-	add_weapon(starting_weapon)
+	respawn_pos = get_player_body().global_position
+	lives = get_modified_property("max_lives")
+	add_weapon(get_modified_property("starting_weapon"))
 	equip_weapon_slot(0)
-	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+	Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.
 func set_last_collision(collision:KinematicCollision2D) -> void:
@@ -491,4 +502,5 @@ func set_last_collision(collision:KinematicCollision2D) -> void:
 ## Returns the global position of the player.
 func get_player_position() -> Vector2:
 	var body : PlayerBody = get_player_body()
+	if not body: return Vector2.ZERO
 	return body.global_position

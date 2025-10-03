@@ -4,9 +4,9 @@
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_2630a"]
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="3_3g4uv"]
 [ext_resource type="PackedScene" uid="uid://2mu2oio1rsih" path="res://Scenes/Object/cablev2.tscn" id="4_nqtj8"]
-[ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/camera_setter.tscn" id="5_hgx47"]
+[ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="5_hgx47"]
 [ext_resource type="PackedScene" uid="uid://c6v3xg31w6tg1" path="res://Scenes/Object/ItemPickup.tscn" id="6_2tbx8"]
-[ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/player_spawn.tscn" id="7_qvxf0"]
+[ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="7_qvxf0"]
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="8_dwb8t"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]

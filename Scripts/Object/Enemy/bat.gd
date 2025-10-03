@@ -48,6 +48,8 @@ var target_point : Vector2
 
 var start_pos : Vector2
 
+var dying : bool = false
+
 var target_player : Player
 var start_health := health
 
@@ -93,9 +95,9 @@ func on_sword_hit(player : Player) -> void:
 func _kill() -> void:
 	$GPUParticles2D.emitting = true
 	velocity = Vector2.ZERO
+	respawning = true # Respawn var is used even on permadeath to indicate a dying status
 	if respawn:
 		sprite.visible = false
-		respawning = true
 	else:
 		$GPUParticles2D.finished.connect(queue_free)
 
@@ -142,6 +144,9 @@ func _check_respawn() -> void:
 			respawning = false
 			_respawn()
 
+func _physics_process(delta: float) -> void:
+	_movement(delta)
+
 func _process(delta: float) -> void:
 	
 	time_since_last_hit += delta
@@ -156,11 +161,10 @@ func _process(delta: float) -> void:
 		if not only_respawn_on_screen:
 			_check_respawn()
 		return
-	
-	_movement(delta)
 
 func on_hit(collision : KinematicCollision2D) -> void:
 	if not collision: return
+	if respawning: return
 	if collision.get_collider() is PlayerBody and is_instance_valid(collision.get_collider()):
 		
 		var player_body := collision.get_collider() as PlayerBody

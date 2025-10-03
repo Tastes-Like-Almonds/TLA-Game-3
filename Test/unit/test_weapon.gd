@@ -1,7 +1,10 @@
 extends GutTest
 
-class MockPlayer extends Player:
-	pass
+var player : Player
+
+func before_each() -> void:
+	player = preload("res://Scenes/Player/player.tscn").instantiate()
+	add_child_autofree(player)
 
 func test_not_initialized() -> void:
 	var weapon := TestWeapon.new()
@@ -11,15 +14,11 @@ func test_not_initialized() -> void:
 
 func test_initial_cooldown_zero() -> void:
 	var weapon := TestWeapon.new()
-	var player := MockPlayer.new()
-	add_child_autoqfree(player)
 	weapon.init_weapon(player)
 	assert_true(weapon.can_use(), "Weapon should be usable initially")
 
 func test_use_sets_cooldown() -> void:
 	var weapon := TestWeapon.new(2.5)
-	var player := MockPlayer.new()
-	add_child_autoqfree(player)
 	weapon.init_weapon(player)
 	weapon.use(1)
 	assert_false(weapon.can_use(), "Weapon should be on cooldown after use")
@@ -27,8 +26,6 @@ func test_use_sets_cooldown() -> void:
 
 func test_process_reduces_cooldown() -> void:
 	var weapon := TestWeapon.new(1.5)
-	var player := MockPlayer.new()
-	add_child_autoqfree(player)
 	weapon.init_weapon(player)
 	weapon.use(1)
 	weapon.process_weapon(0.5)

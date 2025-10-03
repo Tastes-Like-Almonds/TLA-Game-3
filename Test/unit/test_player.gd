@@ -6,7 +6,7 @@ var other_weapon : Weapon
 
 func before_each() -> void:
 	player = preload("res://Scenes/Player/player.tscn").instantiate()
-	player.max_equip = 1
+	player.properties.max_equip = 1
 	weapon = TestWeapon.new(1.0)
 	other_weapon = TestWeapon.new(0.5)
 	add_child_autofree(player)

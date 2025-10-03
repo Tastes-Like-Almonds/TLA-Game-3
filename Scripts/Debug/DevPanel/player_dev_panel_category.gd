@@ -12,6 +12,9 @@ class_name PlayerDevPanelCategory extends DevPanelCategory
 @onready var select_item_dropdwon : OptionButton = $MarginContainer/VBoxContainer/GiveWeapon/VBoxCointainer/SelectItem
 @onready var select_item_confirm : Button = $MarginContainer/VBoxContainer/GiveWeapon/VBoxCointainer/ConfirmGiveItem
 
+@onready var kill_player_confirm : Button = $MarginContainer/VBoxContainer/KillPlayer
+@onready var add_life_confirm : Button = $MarginContainer/VBoxContainer/AddLife
+
 var target_player : Player
 var possible_players : Array[Player]
 
@@ -97,6 +100,14 @@ func confirm_give_item() -> void:
 
 #endregion
 
+func confirm_kill_player() -> void:
+	if not is_instance_valid(target_player): return
+	target_player.kill()
+
+func confirm_add_life() -> void:
+	if not is_instance_valid(target_player): return
+	target_player.lives += 1
+
 func _ready() -> void:
 	
 	select_player_confirm_node.pressed.connect(set_selected_player)
@@ -107,5 +118,8 @@ func _ready() -> void:
 	set_stat_stat_select.item_selected.connect(func(_x : float) -> void: update_selected_stat_desc())
 	set_stat_confirm.pressed.connect(func() -> void: update_selected_player_stat(set_stat_val.value))
 	update_selected_stat_desc()
+	
+	kill_player_confirm.pressed.connect(confirm_kill_player)
+	add_life_confirm.pressed.connect(confirm_add_life)
 	
 	select_item_confirm.pressed.connect(confirm_give_item)

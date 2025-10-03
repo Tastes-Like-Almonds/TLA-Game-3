@@ -1,12 +1,13 @@
-[gd_scene load_steps=14 format=4 uid="uid://k8xiwdmm0cyi"]
+[gd_scene load_steps=15 format=4 uid="uid://k8xiwdmm0cyi"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_16du6"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_g8cnj"]
-[ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/player_spawn.tscn" id="3_vy6tc"]
-[ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/camera_setter.tscn" id="4_6628m"]
+[ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_vy6tc"]
+[ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="4_6628m"]
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="5_vy6tc"]
 [ext_resource type="PackedScene" uid="uid://2mu2oio1rsih" path="res://Scenes/Object/cablev2.tscn" id="6_6628m"]
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="7_0t62c"]
+[ext_resource type="PackedScene" uid="uid://bd62nj7nj3ak5" path="res://Scenes/Object/BoostOrb/gravity_orb.tscn" id="8_f6h5u"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -62,7 +63,7 @@ track_player = true
 [node name="PushOrb" parent="." instance=ExtResource("5_vy6tc")]
 position = Vector2(-7927, 1494)
 rotation = -0.29124278
-force = 2500.0
+force = 3000.0
 respawn_time = 0.5
 
 [node name="PushOrb2" parent="." instance=ExtResource("5_vy6tc")]
@@ -95,12 +96,10 @@ respawn = false
 [node name="PushOrb5" parent="." instance=ExtResource("5_vy6tc")]
 position = Vector2(7897, 1848)
 rotation = 0.2617994
-force = 2000.0
 
 [node name="PushOrb6" parent="." instance=ExtResource("5_vy6tc")]
 position = Vector2(8141, 1621)
 rotation = 1.8325958
-force = 2000.0
 
 [node name="PushOrb7" parent="." instance=ExtResource("5_vy6tc")]
 position = Vector2(8454, 1721)
@@ -108,23 +107,24 @@ force = 3000.0
 
 [node name="PushOrb9" parent="." instance=ExtResource("5_vy6tc")]
 position = Vector2(10809, 1044)
-force = 3000.0
+force = 2500.0
 
 [node name="PushOrb10" parent="." instance=ExtResource("5_vy6tc")]
 position = Vector2(10967, 211)
-force = 3000.0
+force = 2500.0
 
 [node name="PushOrb11" parent="." instance=ExtResource("5_vy6tc")]
 position = Vector2(10621, -461)
-force = 3000.0
+force = 2500.0
 
 [node name="PushOrb12" parent="." instance=ExtResource("5_vy6tc")]
 position = Vector2(10777, -1239)
-force = 3000.0
+force = 2500.0
 
 [node name="PushOrb8" parent="." instance=ExtResource("5_vy6tc")]
 position = Vector2(8784, 787)
 rotation = 0.5235988
+force = 2000.0
 
 [node name="Cablev3" parent="." instance=ExtResource("6_6628m")]
 curve = SubResource("Curve2D_f6h5u")
@@ -134,3 +134,9 @@ curve = SubResource("Curve2D_k85jp")
 
 [node name="Cablev5" parent="." instance=ExtResource("6_6628m")]
 curve = SubResource("Curve2D_vym4p")
+
+[node name="PushOrb13" parent="." instance=ExtResource("8_f6h5u")]
+position = Vector2(-9415, 2973)
+
+[node name="PushOrb14" parent="." instance=ExtResource("8_f6h5u")]
+position = Vector2(-9216, 2498)

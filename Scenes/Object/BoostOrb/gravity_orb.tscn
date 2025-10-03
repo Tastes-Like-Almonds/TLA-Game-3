@@ -1,7 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://bemlchhq0hubh"]
+[gd_scene load_steps=16 format=3 uid="uid://bd62nj7nj3ak5"]
 
-[ext_resource type="Script" uid="uid://cw7l8lthmtexr" path="res://Scripts/Object/BoostOrb/push_orb.gd" id="1_do7bd"]
-[ext_resource type="Texture2D" uid="uid://34husopxgdkv" path="res://Assets/Sprites/Placeholder/push_orb.png" id="2_do7bd"]
+[ext_resource type="Script" uid="uid://dcu0y24f1gfdy" path="res://Scripts/Object/BoostOrb/gravity_orb.gd" id="1_amshe"]
+[ext_resource type="Texture2D" uid="uid://boexki44bewdo" path="res://Assets/Sprites/Placeholder/gravity_orb.png" id="2_4onkn"]
 
 [sub_resource type="Gradient" id="Gradient_do7bd"]
 offsets = PackedFloat32Array(1)
@@ -20,7 +20,7 @@ initial_velocity_max = 250.0
 gravity = Vector3(0, 0, 0)
 
 [sub_resource type="Gradient" id="Gradient_posbj"]
-colors = PackedColorArray(0.53800005, 1, 0.16000003, 1, 0.33693138, 0.6306262, 4.813075e-06, 0)
+colors = PackedColorArray(0.6639999, 0.16000003, 1, 1, 0.7143157, 0.2820459, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_41md6"]
 gradient = SubResource("Gradient_posbj")
@@ -68,10 +68,10 @@ radius = 40.04997
 
 [node name="PushOrb" type="StaticBody2D" groups=["BladeHitable"]]
 collision_layer = 8
-script = ExtResource("1_do7bd")
+script = ExtResource("1_amshe")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-modulate = Color(0.13049997, 0.87, 0, 1)
+modulate = Color(0.7366762, 0.42621613, 0.928359, 1)
 emitting = false
 amount = 20
 texture = SubResource("GradientTexture2D_1dkb7")
@@ -88,10 +88,10 @@ texture = SubResource("GradientTexture2D_41md6")
 
 [node name="Sprite" type="Sprite2D" parent="Visual"]
 scale = Vector2(4, 4)
-texture = ExtResource("2_do7bd")
+texture = ExtResource("2_4onkn")
 
 [node name="Particles" type="GPUParticles2D" parent="Visual"]
-self_modulate = Color(0.13999999, 1, 0.29766673, 1)
+self_modulate = Color(0.8021228, 0.49251008, 0.96012074, 1)
 emitting = false
 amount = 1
 texture = SubResource("GradientTexture2D_2c2vr")

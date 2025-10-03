@@ -67,8 +67,8 @@ func _physics_process(delta: float) -> void:
 					
 					sword.cable_speed *= pow(cable_drag, delta)
 
-		# Attach to the cable if able
-		elif (old_sword_pos.y < closest.y and sword.get_tip_global_position().y >= closest.y):
+		# Attach to the cable if the player's sword crosses it
+		elif (old_sword_pos.y < closest.y and sword.get_tip_global_position().y >= closest.y) or (old_sword_pos.x < closest.x and sword.get_tip_global_position().x >= closest.x):
 			if absf(old_sword_pos.x - closest.x) < grip_threshold and not _offset_out_of_range(offset):
 				sword.body.global_position = closest
 				

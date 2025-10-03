@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://colvmmwb4hbws"]
 
 [ext_resource type="Script" uid="uid://cyie1nihhq0e7" path="res://Scripts/Level/basic_level.gd" id="1_5588w"]
-[ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/camera_setter.tscn" id="2_m46l5"]
+[ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="2_m46l5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5588w"]
 size = Vector2(555, 20)

@@ -24,7 +24,7 @@ func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 		drag = Vector2.ONE
 		drag.x = Helper.get_slide_from_collision(get_last_slide_collision(), last_slide)
 		last_slide = drag.x
-		vel.x *= pow(drag.x, delta/player.friction_time)
+		vel.x *= pow(drag.x, delta/player.get_friction_time())
 	else:
 		drag = player.get_air_drag()
 		vel.x *= pow(drag.x, delta)
@@ -67,6 +67,8 @@ func _physics_process(delta: float) -> void:
 	var player : Player = get_player()
 	var sword := player.get_player_sword()
 	
+	if not player.is_alive(): return
+	
 	match player.get_movement_mode():
 		
 		#region Sword Orbit
@@ -77,12 +79,14 @@ func _physics_process(delta: float) -> void:
 			if push:
 				if velocity.y > 0 and sword.is_on_floor():
 					velocity.y = 0
+				if velocity.y < 0 and sword.is_on_ceiling():
+					velocity.y = 0
 				velocity += sword.get_push()  
 			else:
-				velocity.y += player.gravity*delta
+				velocity.y += player.get_gravity()*delta
 				
 			# Slow the player rapidly if beyond the sword's reach
-			if (global_position + velocity*delta).distance_to(sword.get_tip_global_position()) > player.max_distance*player.get_soft_limit_distance_coef():
+			if (global_position + velocity*delta).distance_to(sword.get_tip_global_position()) > player.get_max_distance()*player.get_soft_limit_distance_coef():
 				
 				velocity *= pow(player.get_soft_limit_drag(),delta)
 				

@@ -1,20 +1,21 @@
-[gd_scene load_steps=14 format=3 uid="uid://bgq53i1bdpjo4"]
+class_name PlayerProperties extends Resource
 
-[ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
-[ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
-[ext_resource type="Script" uid="uid://bu2b4pqlln3ot" path="res://Scripts/Player/sword.gd" id="3_htcer"]
-[ext_resource type="Texture2D" uid="uid://ootw7g72v0ku" path="res://Assets/Sprites/Placeholder/knight.png" id="3_mtuoh"]
-[ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="4_0u5uq"]
-[ext_resource type="Script" uid="uid://bmumt3flg26d4" path="res://Scripts/Player/blade_area.gd" id="5_htcer"]
 
-[sub_resource type="GDScript" id="GDScript_dd0ac"]
-script/source = "extends Resource
+
+# --- #
+@export_group("Health and Damage")
+
+## The lives the player will start with after spawning. Altering mid-game does nothing.
+@export var max_lives : int = 3
 
 ## Maximum health of the player. Does not regenerate.
 @export var max_health : int = 2
 
 ## The minimum amount of time required to pass betewen damage.
 @export var invincibility_time : float = 0.5
+
+## The time spent before the player respawns.
+@export var respawn_time : float = 2.0
 
 ## The base damage of the sword.
 @export var sword_damage : float = 10.0
@@ -23,7 +24,7 @@ script/source = "extends Resource
 @export var sword_speed_damage : float = 3000.0
 
 # --- #
-@export_group(\"Sword\")
+@export_group("Sword")
 
 ## The maximum distance from the sword tip to the player (Soft limit)
 @export var max_distance : float = 140.0
@@ -44,7 +45,7 @@ script/source = "extends Resource
 @export var self_knockback_multi : float = 1
 
 # --- #
-@export_group(\"Inventory\")
+@export_group("Inventory")
 
 ## The max number of items which the player can hold.
 @export_range(1,10, 1) var max_equip : int = 1
@@ -54,7 +55,7 @@ script/source = "extends Resource
 @export var equip_on_pickup : bool = true
 
 # --- #
-@export_group(\"Physics\")
+@export_group("Physics")
 
 ## The speed which the player falls.
 @export_range(0,3000, 1.0) var gravity : float = 3000.0
@@ -81,7 +82,7 @@ script/source = "extends Resource
 @export_range(0,1) var bounciness : float = 0.25
 
 # --- #
-@export_group(\"Startup\")
+@export_group("Startup")
 
 ## The weapon the player starts with
 @export var starting_weapon : Weapon = SwordWeapon.new()
@@ -105,67 +106,3 @@ func get_modified(property : String , modifiers : Array[PropertyModifier]) -> Va
 	return p
 
 # TODO Make the modifier system, and both allow temporary and permanent modifiers.
-"
-
-[sub_resource type="Resource" id="Resource_jlvik"]
-script = SubResource("GDScript_dd0ac")
-metadata/_custom_type_script = "uid://dmgnx53wqfhui"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tugb3"]
-size = Vector2(48, 48)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uvnfx"]
-size = Vector2(4, 4)
-
-[sub_resource type="Gradient" id="Gradient_htcer"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.4312, 0.88, 0.2816, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_dd0ac"]
-gradient = SubResource("Gradient_htcer")
-width = 8
-height = 8
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
-size = Vector2(102, 20)
-
-[node name="Player" type="Node2D" groups=["Player"]]
-script = ExtResource("1_xpcdj")
-properties = SubResource("Resource_jlvik")
-
-[node name="playerBody" type="CharacterBody2D" parent="."]
-collision_layer = 2
-script = ExtResource("1_uvnfx")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="playerBody"]
-shape = SubResource("RectangleShape2D_tugb3")
-
-[node name="Sprite2D" type="Sprite2D" parent="playerBody"]
-material = ExtResource("4_0u5uq")
-scale = Vector2(3, 3)
-texture = ExtResource("3_mtuoh")
-
-[node name="Sword" type="Node2D" parent="."]
-script = ExtResource("3_htcer")
-control_mode = 1
-
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="Sword"]
-position = Vector2(0, 50)
-collision_layer = 2
-sync_to_physics = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/AnimatableBody2D"]
-shape = SubResource("RectangleShape2D_uvnfx")
-
-[node name="Sprite2D" type="Sprite2D" parent="Sword/AnimatableBody2D"]
-visible = false
-texture = SubResource("GradientTexture2D_dd0ac")
-
-[node name="Area2D" type="Area2D" parent="Sword"]
-collision_layer = 0
-collision_mask = 8
-script = ExtResource("5_htcer")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Area2D"]
-shape = SubResource("RectangleShape2D_mtuoh")
-debug_color = Color(0.94, 0, 0.28200018, 0.5019608)

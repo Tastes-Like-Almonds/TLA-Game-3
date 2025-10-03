@@ -81,6 +81,7 @@ func _update_blade(_delta : float) -> void:
 func _physics_process(delta: float) -> void:
 	
 	var player : Player = _get_player()
+	if not player.is_alive(): return
 	
 	last_sword_velocity = Vector2.ZERO
 	
@@ -169,6 +170,21 @@ func is_on_floor() -> bool:
 	
 	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
 	parameters.to = parameters.from + Vector2.DOWN * body_shape.shape.get_rect().size.y
+	
+	parameters.collision_mask = 1
+	var result := space_state.intersect_ray(parameters)
+	
+	return result.size() > 0
+
+## Determines if the sword body is on the ceiling via raycasting. Only collides with collision layer 1.
+func is_on_ceiling() -> bool:
+	var space_state := get_world_2d().direct_space_state
+	
+	var parameters := PhysicsRayQueryParameters2D.new()
+	parameters.from = body.global_position
+	
+	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
+	parameters.to = parameters.from + Vector2.UP * body_shape.shape.get_rect().size.y
 	
 	parameters.collision_mask = 1
 	var result := space_state.intersect_ray(parameters)

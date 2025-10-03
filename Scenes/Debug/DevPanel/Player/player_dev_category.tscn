@@ -122,6 +122,10 @@ layout_mode = 2
 text = "Give
 "
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="KillPlayer" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Kill Player"
+
+[node name="AddLife" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Add Life"

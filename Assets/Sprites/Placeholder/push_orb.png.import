@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://boexki44bewdo"
-path="res://.godot/imported/boost-placeholder.png-eabd318bb131240dd35ed714e823ba7e.ctex"
+uid="uid://34husopxgdkv"
+path="res://.godot/imported/push_orb.png-78bab71157224568dac0a39492dd4c80.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Placeholder/boost-placeholder.png"
-dest_files=["res://.godot/imported/boost-placeholder.png-eabd318bb131240dd35ed714e823ba7e.ctex"]
+source_file="res://Assets/Sprites/Placeholder/push_orb.png"
+dest_files=["res://.godot/imported/push_orb.png-78bab71157224568dac0a39492dd4c80.ctex"]
 
 [params]
 
