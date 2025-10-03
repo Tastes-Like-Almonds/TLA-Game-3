@@ -401,9 +401,6 @@ func set_movement_mode(mode : MovementMode) -> void:
 #region Damage/Death
 
 func _respawn() -> void:
-	dead = false
-	time_respawning = 0
-	lives -= 1
 	
 	var body := get_player_body()
 	var sword := get_player_sword()
@@ -412,6 +409,12 @@ func _respawn() -> void:
 	var sword_offset := sword.global_position - body.global_position
 	body.global_position = respawn_pos
 	sword.global_position = respawn_pos + sword_offset
+	
+	time_respawning = 0
+	last_hit_time = get_invincibility_time()*-2
+	lives -= 1
+	health = get_modified_property("max_health")
+	dead = false
 
 ## Handle the death of the player.
 func _death() -> void:

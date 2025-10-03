@@ -99,6 +99,7 @@ func _kill() -> void:
 	if respawn:
 		sprite.visible = false
 	else:
+		sprite.visible = false
 		$GPUParticles2D.finished.connect(queue_free)
 
 func _respawn() -> void:

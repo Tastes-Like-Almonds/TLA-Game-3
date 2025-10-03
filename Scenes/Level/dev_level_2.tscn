@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://k8xiwdmm0cyi"]
+[gd_scene load_steps=14 format=4 uid="uid://k8xiwdmm0cyi"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_16du6"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_g8cnj"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="5_vy6tc"]
 [ext_resource type="PackedScene" uid="uid://2mu2oio1rsih" path="res://Scenes/Object/cablev2.tscn" id="6_6628m"]
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="7_0t62c"]
-[ext_resource type="PackedScene" uid="uid://bd62nj7nj3ak5" path="res://Scenes/Object/BoostOrb/gravity_orb.tscn" id="8_f6h5u"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -134,9 +133,3 @@ curve = SubResource("Curve2D_k85jp")
 
 [node name="Cablev5" parent="." instance=ExtResource("6_6628m")]
 curve = SubResource("Curve2D_vym4p")
-
-[node name="PushOrb13" parent="." instance=ExtResource("8_f6h5u")]
-position = Vector2(-9415, 2973)
-
-[node name="PushOrb14" parent="." instance=ExtResource("8_f6h5u")]
-position = Vector2(-9216, 2498)

@@ -67,7 +67,8 @@ func _physics_process(delta: float) -> void:
 	var player : Player = get_player()
 	var sword := player.get_player_sword()
 	
-	if not player.is_alive(): return
+	# Reset velocity to prevent it staying and colliding after respawn.
+	if not player.is_alive(): velocity = Vector2.ZERO ; return
 	
 	match player.get_movement_mode():
 		
@@ -77,12 +78,13 @@ func _physics_process(delta: float) -> void:
 			# Handle sword movement
 			var push := sword.get_push()
 			if push:
+				# Reset y velocity if landing as to prevent bounce
 				if velocity.y > 0 and sword.is_on_floor():
 					velocity.y = 0
 				if velocity.y < 0 and sword.is_on_ceiling():
 					velocity.y = 0
 				velocity += sword.get_push()  
-			else:
+			else: # Only apply gravity if the sword isn't pushing
 				velocity.y += player.get_gravity()*delta
 				
 			# Slow the player rapidly if beyond the sword's reach

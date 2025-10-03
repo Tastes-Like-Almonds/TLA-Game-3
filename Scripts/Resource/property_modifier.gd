@@ -59,6 +59,9 @@ static func apply_all(mods : Array[PropertyModifier], val : float) -> float:
 	
 	return val
 
+func apply_all_int(mods : Array[PropertyModifier], val : int) -> int:
+	return int(apply_all(mods, float(val)))
+
 func _init(val : float, modifier_type : ModiferType, time : float = 0.0) -> void:
 	value = val
 	mod_type = modifier_type
