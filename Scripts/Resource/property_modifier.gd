@@ -18,6 +18,10 @@ enum ModiferType {
 ## modifier.
 @export var timer : float = 0.0
 
+## ID used to distinguish modifiers which should only be applied once. If multiple are present
+## with the same ID, their modifiers will not add together.
+var id : String
+
 ## The remaining time on the timer.
 var time_left := timer
 
@@ -33,40 +37,62 @@ static func get_type_of_mods(mods : Array[PropertyModifier]) -> ModiferType:
 			return ModiferType.NULL
 	return first_type
 
-static func apply_all(mods : Array[PropertyModifier], val : float) -> float:
+static func apply_all(mods : Array[PropertyModifier], val : Variant) -> Variant:
+	
+	if val is int:
+		return int(apply_all(mods, float(val)))
+	elif val is Vector2:
+		return Vector2(apply_all(mods, val.x), apply_all(mods, val.y))
 	
 	var mod_types := get_type_of_mods(mods)
 	if mod_types == ModiferType.NULL: return val
+	
+	var ids : Array = []
 	
 	match mod_types:
 		
 		ModiferType.ADD:
 			var total : float = 0.0
 			for mod in mods:
+				
+				if mod.id in ids: continue
+				ids.append(mod.id)
+				
 				total += mod.value
+				
 			return val+total
 			
 		ModiferType.ADD_SCALAR:
 			var scalar : float = 1.0
 			for mod in mods:
+				
+				if mod.id in ids: continue
+				ids.append(mod.id)
+				
 				scalar += mod.value
+			
 			return val*scalar
 		
 		ModiferType.MULTIPLY:
 			for mod in mods:
+				
+				if mod.id in ids: continue
+				ids.append(mod.id)
+				
 				val *= mod.value
+				
 			return val
 	
 	return val
-
-func apply_all_int(mods : Array[PropertyModifier], val : int) -> int:
-	return int(apply_all(mods, float(val)))
 
 func _init(val : float, modifier_type : ModiferType, time : float = 0.0) -> void:
 	value = val
 	mod_type = modifier_type
 	timer = time
 	time_left = time
+
+func set_id(s: String) -> void:
+	id = s
 
 func update(delta : float) -> void:
 	if timer != 0.0:

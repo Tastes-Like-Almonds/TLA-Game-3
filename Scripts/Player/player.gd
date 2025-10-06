@@ -453,11 +453,26 @@ func deal_damage(amt : int) -> bool:
 
 #region Modifiers
 
+func get_modifier_ids(stat:String) -> Array[String]:
+	if stat not in property_modifiers : return []
+	var arr : Array[String] = []
+	for mod : PropertyModifier in property_modifiers[stat]:
+		if mod.id: arr.append(mod.id)
+	return arr
+
 ## Add a property modifier to one of the player's stats.
 func add_modifier(mod : PropertyModifier, stat:String) -> void:
 	if stat not in property_modifiers:
 		property_modifiers[stat] = [mod] ; return
-	property_modifiers.get(stat).append(mod)
+	if mod.id not in get_modifier_ids(stat):
+		property_modifiers.get(stat).append(mod)
+
+## Remove a target modifier by its id.
+func remove_modifier_by_id(id : String, stat:String) -> void:
+	if stat not in property_modifiers : return
+	for mod : PropertyModifier in property_modifiers[stat]:
+		if mod.id == id:
+			property_modifiers[stat].erase(mod)
 
 ## Update all of the player's property modifiers.
 func _update_modifiers(delta : float) -> void:

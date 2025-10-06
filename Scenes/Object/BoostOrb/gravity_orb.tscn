@@ -66,7 +66,7 @@ alpha_curve = SubResource("CurveTexture_2c2vr")
 [sub_resource type="CircleShape2D" id="CircleShape2D_41md6"]
 radius = 40.04997
 
-[node name="PushOrb" type="StaticBody2D" groups=["BladeHitable"]]
+[node name="GravityOrb" type="StaticBody2D" groups=["BladeHitable"]]
 collision_layer = 8
 script = ExtResource("1_amshe")
 

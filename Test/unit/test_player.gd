@@ -46,3 +46,25 @@ func test_visuals() -> void:
 	for child in player.get_children():
 		assert_true(not (child is WeaponVisual and is_instance_valid(child) and not child.is_queued_for_deletion()), "Weapon visual not cleared correctly")
 	
+# -------------- #
+# Modifier Tests #
+# -------------- #
+
+func test_add_modifier() -> void:
+	var mod := PropertyModifier.new(2, PropertyModifier.ModiferType.ADD, 50.0)
+	player.add_modifier(mod, "gravity")
+	
+	assert_not_null(player.property_modifiers.get("gravity"), "Adding modifier should create dict key in property_modifiers")
+	assert_true(player.property_modifiers["gravity"] is Array, "Modifier key's value should be an array")
+	assert_true(player.property_modifiers["gravity"].size() == 1, "Adding modifier should only result in one modifier.")
+
+func test_remove_modifier_by_id() -> void:
+	var mod := PropertyModifier.new(2, PropertyModifier.ModiferType.ADD, 50.0)
+	mod.set_id("test_id")
+	player.add_modifier(mod, "gravity") # Assume working from previous test
+	
+	player.remove_modifier_by_id("test_id", "does_not_exist")
+	assert_true(player.property_modifiers["gravity"].size() == 1, "Removing property from invalid category should not remove the modifier")
+	
+	player.remove_modifier_by_id("test_id", "gravity")
+	assert_true(player.property_modifiers["gravity"].size() == 0, "Removing only modifier should result in no modifiers.")

@@ -1,6 +1,12 @@
+## Handles player stats such as strength, sword distance, physics settings, and many others.
+## Stats all have a base value which should not be changed, and can be modified using PropertyModifiers.
+##
+## Those modifiers can be applied to a stat using get_modified and the array of modifiers.
+## 
+## This is done so that status effects and other temporary changes to the player do not override
+## the player's initial stats.
+
 class_name PlayerProperties extends Resource
-
-
 
 # --- #
 @export_group("Health and Damage")
@@ -104,5 +110,3 @@ func get_modified(property : String , modifiers : Array[PropertyModifier]) -> Va
 			p = PropertyModifier.apply_all(typed_mods, p)
 	
 	return p
-
-# TODO Make the modifier system, and both allow temporary and permanent modifiers.
