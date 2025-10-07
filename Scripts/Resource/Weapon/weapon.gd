@@ -65,6 +65,9 @@ func on_unequip() -> void: equipped = false
 ## Called when the weapon is being equipped
 func on_equip() -> void: equipped = true
 
+## Return an array of modifiers to be applied with this weapon.
+func get_property_modifiers() -> Dictionary[String, Array]: return {}
+
 ## Gets the cooldown time of the weapon.
 @abstract func get_cooldown() -> float
 

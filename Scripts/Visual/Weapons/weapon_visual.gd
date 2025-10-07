@@ -8,6 +8,8 @@
 ## Offset applied to the weapon sprite when aligning
 @export_range(0,360,0.1,"degrees") var rotation_offset : float = 45.0
 
+
+
 # --- #
 @export_group("Sparks")
 
@@ -21,8 +23,19 @@
 ## The multiplier of sparks if the player is on a cable.
 @export var spark_cable_multi : float = 5.0
 
+# -- #
+@export_group("Drag")
+
+## Sound file to use, Ideally set to loop.
+@export_global_file(".wav", ".mp3") var drag_sound : String = "res://Assets/Sound/SFX/Sword Slide Edit 1 Export 1 (1).mp3"
+
+## The speed of the sword at which the drag sound is at its maximum.
+@export var drag_speed_max : float = 1000.0
+
 var player : Player
 var spark_particles : GPUParticles2D
+
+var drag_sound_node : AudioStreamPlayer2D
 
 ## Return true if the weapon is dragging on the ground past the given threshold of speed.
 func _is_dragging(threshold : float = 1000.0) -> bool:
@@ -82,6 +95,28 @@ func _update_sparks() -> void:
 
 	sparks.process_material.direction = Vector3(vel.x, vel.y, 0)
 
+## Update the audio part of the weapon.
+func update_audio() -> void:
+	if not is_instance_valid(player): return
+	
+	var sword := player.get_player_sword()
+	
+	# Drag sound
+	if is_instance_valid(drag_sound_node):
+		if sword.on_cable:
+			pass # TODO Cable sound instead
+		elif _is_dragging(0):
+			
+			if drag_sound_node.playing == false:
+				var vel := sword.get_last_sword_velocity()
+				var speed := vel.length()
+				
+				drag_sound_node.play()
+				drag_sound_node.volume_linear = clampf(speed/drag_speed_max, 0, 3)
+				drag_sound_node.pitch_scale = clampf(speed/drag_speed_max, 4, 8)/4
+		else:
+			drag_sound_node.playing = false
+
 ## Update the weapon visual. Origin is the start position and the destination is where the focus of the weapon is.
 ## For players, the origin should be the center and destination the sword tip.
 func update_visual(origin : Vector2, dest : Vector2) -> void: # TODO Replace by pulling origin and dest from the player.
@@ -91,3 +126,12 @@ func update_visual(origin : Vector2, dest : Vector2) -> void: # TODO Replace by 
 ## Set the player who owns this visual. Needed for most effects.
 func set_player(p : Player) -> void:
 	player = p
+
+func _ready() -> void:
+	
+	# Create the dragging sound
+	if not is_instance_valid(drag_sound_node):
+		drag_sound_node = AudioStreamPlayer2D.new()
+		drag_sound_node.stream = load(drag_sound)
+		drag_sound_node.autoplay = true
+		_get_sprite().add_child(drag_sound_node)

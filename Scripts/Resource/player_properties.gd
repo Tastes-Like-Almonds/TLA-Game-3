@@ -32,6 +32,9 @@ class_name PlayerProperties extends Resource
 # --- #
 @export_group("Sword")
 
+## Speed at which the sword moves. This also affects its strength of pushing.
+@export var sword_speed : float = 30
+
 ## The maximum distance from the sword tip to the player (Soft limit)
 @export var max_distance : float = 140.0
 

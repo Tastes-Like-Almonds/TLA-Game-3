@@ -89,7 +89,7 @@ func _physics_process(delta: float) -> void:
 		
 		player.MovementMode.SWORD_ORBIT:
 			var target_pos := _get_target_pos()
-			var movement := body.global_position.direction_to(target_pos)*30*delta*body.global_position.distance_to(target_pos)
+			var movement := body.global_position.direction_to(target_pos)*player.get_sword_speed()*delta*body.global_position.distance_to(target_pos)
 			
 			last_sword_velocity = movement / delta # Get velocity per second as opposed to the frame
 			last_frame_pos = body.global_position

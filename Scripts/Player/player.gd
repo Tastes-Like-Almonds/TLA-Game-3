@@ -29,6 +29,13 @@ func get_modified_property(property: String) -> Variant:
 		for item : Variant in property_modifiers.get(property):
 			if item is PropertyModifier:
 				arr.append(item)
+	
+	if current_weapon:
+		var weapon_mods := current_weapon.get_property_modifiers()
+		if property in weapon_mods:
+			for item : Variant in weapon_mods.get(property):
+				if item is PropertyModifier:
+					arr.append(item)
 
 	return properties.get_modified(property, arr)
 
@@ -155,6 +162,10 @@ func get_last_collision() -> KinematicCollision2D:
 func get_sword_damage() -> float:
 	return get_modified_property("sword_damage")
 
+## Returns the speed of the sword.
+func get_sword_speed() -> float:
+	return get_modified_property("sword_speed")
+
 ## Returns the speed the sword must travel to deal maximum damage.
 func get_sword_speed_damage() -> float:
 	return get_modified_property("sword_speed_damage")
@@ -256,6 +267,7 @@ func _visual_process(delta : float) -> void:
 		var sword := get_player_sword()
 		if sword:
 			weapon_visual.update_visual(get_player_position(), sword.get_tip_global_position())
+			weapon_visual.update_audio()
 
 #endregion
 
