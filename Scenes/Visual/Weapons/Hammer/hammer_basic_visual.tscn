@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=3 uid="uid://dljhtowqu4eyt"]
+
+[ext_resource type="Script" uid="uid://dxnf3hgwxytok" path="res://Scripts/Visual/Weapons/Sword/sword_basic_visual.gd" id="1_1gwti"]
+[ext_resource type="Texture2D" uid="uid://ievly15eb1nm" path="res://Assets/Sprites/Placeholder/Hammer.png" id="2_c7c0h"]
+
+[sub_resource type="Gradient" id="Gradient_47q6j"]
+offsets = PackedFloat32Array(0, 0.33043477, 0.5826087, 0.67826086, 1)
+colors = PackedColorArray(1, 1, 1, 0.74509805, 1, 1, 1, 0.36822158, 1, 1, 1, 0.24998578, 1, 1, 1, 0.15549874, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dod1f"]
+gradient = SubResource("Gradient_47q6j")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.47975078, 0.44548288)
+fill_to = Vector2(0.47975078, 0)
+
+[sub_resource type="Curve" id="Curve_58q71"]
+_data = [Vector2(0.06435643, 0), 0.0, 0.0, 0, 0, Vector2(0.8019802, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_sdpqg"]
+curve = SubResource("Curve_58q71")
+
+[sub_resource type="Curve" id="Curve_cpx17"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.6287129, 0.6603774), 1.7515858, 1.7515858, 0, 0, Vector2(0.99504954, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_l3mnx"]
+curve = SubResource("Curve_cpx17")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_32eie"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 12.0
+scale_max = 12.0
+scale_curve = SubResource("CurveTexture_l3mnx")
+alpha_curve = SubResource("CurveTexture_sdpqg")
+
+[node name="HammerBasicVisual" type="Node2D"]
+script = ExtResource("1_1gwti")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(4, 4)
+texture = ExtResource("2_c7c0h")
+centered = false
+offset = Vector2(-13, -3)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D"]
+self_modulate = Color(0.43, 0.01720001, 0.05160008, 0.5254902)
+position = Vector2(-4.25, 4.75)
+scale = Vector2(0.25, 0.25)
+amount = 4
+texture = SubResource("GradientTexture2D_dod1f")
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_32eie")

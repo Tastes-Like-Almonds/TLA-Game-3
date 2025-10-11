@@ -1,16 +1,7 @@
-# Template Godot Repo
+# TLA-Game-3
 ---
 ## Description
-This is a template for creating godot games with a simple CICD pipeline as well as some other features.
-GUT (Godot Unit Testing) comes preinstalled with the repo.
-Currently uses Godot 4.4.3.
-
-## Reminders
-Make sure to set the following secrets/variables in settings to whatever you need.
-
-GODOT_VERSION: The version of godot used (4.4.3-stable)
-
-USE_MONO: Whether or not godot games are built using the mono (C#) version (true/false)
+A "Getting Over It"-style action platformer. Traverse caves, dungeons, fields, and more in a journey to save the princess.
 
 ## Workflows
 ### Create Relase: 
