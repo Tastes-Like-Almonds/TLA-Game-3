@@ -5,18 +5,6 @@ extends Node2D
 var sound_2d_parent : Node2D
 var sound_parent : Node
 
-## Contains data for a sound, such as the volume, pitch, etc.
-class SoundData:
-	
-	var sound_string : String
-	var volume_linear : float
-	var pitch_scale : float
-	
-	func _init(path : String, vol_linear : float = 0.5, pitch : float = 1.0) -> void:
-		sound_string = path
-		volume_linear = vol_linear
-		pitch_scale = pitch
-
 ## Gets an audiostream from the given SoundData. Returns null if not a stream or invalid.
 func get_stream_from_sound(sound : SoundData) -> AudioStream:
 	
@@ -59,7 +47,7 @@ func play_sound(sound:SoundData, override_previous:bool = true) -> void:
 	
 	# Check if sound already exists
 	if override_previous:
-		for child in sound_2d_parent.get_children():
+		for child in sound_parent.get_children():
 			if child.get_meta("sound_path") == sound.sound_string: child.queue_free()
 	
 	var stream_player := AudioStreamPlayer.new()
@@ -68,7 +56,7 @@ func play_sound(sound:SoundData, override_previous:bool = true) -> void:
 	stream_player.pitch_scale = sound.pitch_scale
 	stream_player.set_meta("sound_path", sound.sound_string)
 	
-	sound_2d_parent.add_child(stream_player)
+	sound_parent.add_child(stream_player)
 	stream_player.play()
 
 func _ready() -> void:

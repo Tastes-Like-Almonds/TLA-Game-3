@@ -27,7 +27,7 @@
 @export_group("Drag")
 
 ## Sound file to use, Ideally set to loop.
-@export_global_file(".wav", ".mp3") var drag_sound : String = "res://Assets/Sound/SFX/Sword Slide Edit 1 Export 1 (1).mp3"
+@export_global_file(".wav", ".mp3") var drag_sound : String = "res://Assets/Sound/SFX/Player/Sword/Sword Slide Edit 1 Export 1 (1).mp3"
 
 ## The speed of the sword at which the drag sound is at its maximum.
 @export var drag_speed_max : float = 1000.0
