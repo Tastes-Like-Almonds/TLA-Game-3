@@ -15,7 +15,7 @@ class_name PlayerProperties extends Resource
 @export var max_lives : int = 3
 
 ## Maximum health of the player. Does not regenerate.
-@export var max_health : int = 2
+@export var max_health : float = 10.0
 
 ## The minimum amount of time required to pass betewen damage.
 @export var invincibility_time : float = 0.5
@@ -24,7 +24,7 @@ class_name PlayerProperties extends Resource
 @export var respawn_time : float = 2.0
 
 ## The base damage of the sword.
-@export var sword_damage : float = 10.0
+@export var sword_damage : float = 6
 
 ## The speed of the sword required to reach max damage.
 @export var sword_speed_damage : float = 3000.0
@@ -33,7 +33,7 @@ class_name PlayerProperties extends Resource
 @export_group("Sword")
 
 ## Speed at which the sword moves. This also affects its strength of pushing.
-@export var sword_speed : float = 30
+@export var sword_speed : float = 3000
 
 ## The maximum distance from the sword tip to the player (Soft limit)
 @export var max_distance : float = 140.0

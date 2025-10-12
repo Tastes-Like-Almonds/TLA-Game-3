@@ -8,7 +8,7 @@ extends AnimatableBody2D
 @export var hit_time : float = 0.5
 
 ## The max health of the bat. Does not regen.
-@export var health : float = 15.0
+@export var health : float = 5.0
 
 ## Movement speed of the bat.
 @export var movement_speed : float = 600.0
@@ -60,6 +60,20 @@ var velocity : Vector2 = Vector2.ZERO
 func get_current_hit_color() -> Vector4:
 	return sprite.material.get_shader_parameter("solid_color")
 
+func deal_damage(damage: float) -> void:
+	
+	if time_since_last_hit < hit_time: return
+	
+	health -= damage
+	time_since_last_hit = 0.0
+	
+	# Damage display
+	var color := get_current_hit_color()
+	sprite.material.set_shader_parameter("solid_color", color + Vector4(0,0,0,1))
+	
+	if health <= 0:
+		_kill()
+
 func on_sword_hit(player : Player) -> void:
 	
 	if respawning : return
@@ -67,10 +81,8 @@ func on_sword_hit(player : Player) -> void:
 	
 	var damage := player.get_blade_damage()
 	var vel := player.get_player_sword().get_last_sword_velocity()
-	var color := get_current_hit_color()
 	
-	health -= damage
-	time_since_last_hit = 0.0
+	deal_damage(damage)
 	var player_body := player.get_player_body()
 	
 	# Apply velocity to player based on sword speed
@@ -85,12 +97,6 @@ func on_sword_hit(player : Player) -> void:
 	
 	# Deal knockback to bat
 	velocity = vel*knockback_coef
-	
-	# Damage display
-	sprite.material.set_shader_parameter("solid_color", color + Vector4(0,0,0,1))
-	
-	if health <= 0:
-		_kill()
 
 func _kill() -> void:
 	$GPUParticles2D.emitting = true
@@ -163,6 +169,7 @@ func _process(delta: float) -> void:
 			_check_respawn()
 		return
 
+
 func on_hit(collision : KinematicCollision2D) -> void:
 	if not collision: return
 	if respawning: return
@@ -173,7 +180,7 @@ func on_hit(collision : KinematicCollision2D) -> void:
 		
 		if not is_instance_valid(player): return
 		elif  time_since_last_hit > hit_time: 
-			player.deal_damage(1) 
+			player.deal_damage(2.6) 
 			player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
 
 func _ready() -> void:

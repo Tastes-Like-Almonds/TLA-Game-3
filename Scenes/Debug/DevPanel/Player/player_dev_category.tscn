@@ -92,6 +92,7 @@ horizontal_alignment = 1
 [node name="SelectStatVal" type="SpinBox" parent="MarginContainer/VBoxContainer/SetStat/VBoxContainer"]
 layout_mode = 2
 max_value = 1000.0
+step = 0.01
 allow_greater = true
 alignment = 1
 

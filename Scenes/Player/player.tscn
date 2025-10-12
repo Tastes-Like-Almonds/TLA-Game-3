@@ -133,7 +133,7 @@ size = Vector2(102, 20)
 script = ExtResource("1_xpcdj")
 properties = SubResource("Resource_jlvik")
 
-[node name="playerBody" type="CharacterBody2D" parent="."]
+[node name="playerBody" type="CharacterBody2D" parent="." groups=["PlayerBody"]]
 collision_layer = 2
 script = ExtResource("1_uvnfx")
 

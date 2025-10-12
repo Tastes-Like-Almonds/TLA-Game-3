@@ -2,6 +2,9 @@
 
 class_name Player extends Node2D
 
+@warning_ignore("unused_signal")
+signal sword_collision(collision : KinematicCollision2D)
+
 var last_collision : KinematicCollision2D = null
 
 enum MovementMode {
@@ -59,13 +62,13 @@ var movement_mode : MovementMode = MovementMode.SWORD_ORBIT
 var held_weapons : Array[Weapon] = []
 
 ## The player's current health.
-var health : int = properties.max_health
+var health : float = properties.max_health
 
 ## The amount of time since damage was last taken.
 var last_hit_time : float = 0.0
 
 ## The amount of damage last dealt
-var last_hit_amount : int = 0
+var last_hit_amount : float = 0
 
 ## The amount of lives the player has left. Player dies at zero lives, unline some games.
 var lives : int = 0
@@ -440,7 +443,7 @@ func kill() -> void:
 
 ## Deal amt of damage to the player, killing them if reaching zero. Returns true if the damage was
 ## successfully dealt.
-func deal_damage(amt : int) -> bool:
+func deal_damage(amt : float) -> bool:
 	if dead: return false
 	
 	# Only deal damage in excess of last amount taken if still invincible
@@ -527,6 +530,7 @@ func _ready() -> void:
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.
 func set_last_collision(collision:KinematicCollision2D) -> void:
+	sword_collision.emit(collision)
 	last_collision = collision
 
 ## Returns the global position of the player.
