@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://civwffoi6a8dl"
+path="res://.godot/imported/Zipline Start Edit 1 Export 1.mp3-61660fc5610c3cf404932b6293834cba.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Player/Zipline/Zipline Start Edit 1 Export 1.mp3"
+dest_files=["res://.godot/imported/Zipline Start Edit 1 Export 1.mp3-61660fc5610c3cf404932b6293834cba.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

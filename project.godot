@@ -26,6 +26,7 @@ CameraManager="*res://Scripts/Global/camera_manager.gd"
 Globals="*res://Scripts/Global/globals.gd"
 LevelRegistry="*res://Scripts/Global/level_registry.gd"
 LevelLoader="*res://Scripts/Global/level_loader.gd"
+Sfx="*res://Scripts/Global/sfx.gd"
 
 [debug]
 
