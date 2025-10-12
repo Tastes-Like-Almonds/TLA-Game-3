@@ -26,6 +26,7 @@ CameraManager="*res://Scripts/Global/camera_manager.gd"
 Globals="*res://Scripts/Global/globals.gd"
 LevelRegistry="*res://Scripts/Global/level_registry.gd"
 LevelLoader="*res://Scripts/Global/level_loader.gd"
+Sfx="*res://Scripts/Global/sfx.gd"
 
 [debug]
 
@@ -57,6 +58,7 @@ folder_colors={
 BladeHitable="Can be hit by a blade. Auto calls on_blade_hit() function."
 Player=""
 PlayerSpawn="A potential spawn fror the player. Levels will check through these to determine the spawn position."
+PlayerBody=""
 
 [input]
 

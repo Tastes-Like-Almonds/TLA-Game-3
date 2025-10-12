@@ -47,14 +47,7 @@ Also, sounds may need to be remade as time goes on. Quality SFX is more importan
 - Sword slash sound
 	- <0.5s
 		- Played when it hits something living, so make it a satisfying impact sound.
-- Bat hit sound <0.25s
-	- Squeak
-- UI Sounds <0.5s
-	- Best to use jummbox or jsfxr for these specifically
-	- UI Hover
-	- UI Select
-	- UI Exit
-	- UI Enter
+
 ### Art
 
 **High Priority (<1 week of time from first meeting)**
@@ -72,40 +65,27 @@ Also, sounds may need to be remade as time goes on. Quality SFX is more importan
 	- Ideally a square character (It's better for gameplay) 
 	- Consult with Anton about the story of the character, and work to create a character.
 	- Remember that cosmetics will also exist in the game, though animations for the character are not needed as much.
-- Tileset
-	- Tilesets will be done differently this year, having individual ones for each environment.
-		- Each environment will be 256x256 (16x16 tiles).
-		- Make 2 circles for each ground type (example under "Tileset Example"). One is for the interior of the ground, the other is for the exterior
-		- Use the rest of the space in the file for props, environment, or other ground types. Two ground types per environment is preferred, though sometimes not necessary.
-		- We are going to need a few of these, so make sure to save each file you make so you can use it as a template for the next.
-- Weapon sprites 16x16
-	- Sword (Longsword)
-	- Hammer (Make the head pretty large)
-	- Staff (Purple present somewhere)
-**Medium priority**
-- Bat for first area, just 3-5 frame flying animation
-- Boost Orbs
-	- 16x16 circles, with symbols in the center representing their effect
-	- A light idle animation as well, just 2-3 frames. Each animation will be played at the same speed, so keep that in mind.
-	- Jump Orb
-		- Arrows pointing **up**, green
-	- Gravity orb
-		- Purple
-	- Explosion orb
-		- Red
-	- Teleport orb
-		- Cyan
-	- Shield Orb
-		- Gray
-	- Shrink orb
-		- Some different color
-	- Grow orb
-		- Some different color
-- Checkpoint lantern (16x32)
-	- A standing lantern
-	- Lit (2+ frames)
-	- Unlit
-	- Lighting animation (2-4 frames)
+
+### Art - Environment
+
+**NOTE:** When I say "Terrain", I mean the circle thing you did with the bricks. I'll use this term from now on to clarify how it should be made.
+
+**High Priority**
+- Add bricks fading out on the edge tiles
+- "Snowy Brick" terrain. Copy paste bricks, just add some snow on top.
+- 3 Decoration tiles for the inside of the bricks
+	- Make them very subtle
+	- They can be anything, as long as they give some texture to the walls
+	- You can add more, just keep it organized as you won't be able to move tiles around later
+- Tiled stone terrain. Similar to bricks, but square.
+
+**Medium Priority**
+- Add 3-5 Decorations to be placed on the ground/ceiling. Make it fit a dungeon-like theme. You could add debris, broken swords, skulls, etc. 
+- Lantern sprites **SAVE THESE IN SEPARATE FILES**
+	- Ceiling lantern 16x16. Make it touch the top of the sprite but not take up all the room. If you want to add a 2-3 frame animation, that would be cool. Not necessary, but I highly recommend.
+	- Ground lantern 16x16, both on and off versions
+	- Tall ground lantern 16x32, both on and off versions. This one needs a "turning on" animation, and an animation while lite.
+
 ### Story
 
 **High Priority**
