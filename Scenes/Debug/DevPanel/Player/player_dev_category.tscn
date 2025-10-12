@@ -1,0 +1,131 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcwd3n7bnqbg8"]
+
+[ext_resource type="Script" uid="uid://c66oijl7grg6w" path="res://Scripts/Debug/DevPanel/player_dev_panel_category.gd" id="1_tbldl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_344ge"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hptm8"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Player" type="FoldableContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_344ge")
+title = "Player"
+script = ExtResource("1_tbldl")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="PlayerDisplay" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Current Player:"
+horizontal_alignment = 1
+
+[node name="TargetPlayer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hptm8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TargetPlayer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TargetPlayer/VBoxContainer"]
+layout_mode = 2
+text = "Target Player"
+horizontal_alignment = 1
+
+[node name="SelectPlayer" type="OptionButton" parent="MarginContainer/VBoxContainer/TargetPlayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="SelectPlayerConfirm" type="Button" parent="MarginContainer/VBoxContainer/TargetPlayer/VBoxContainer"]
+layout_mode = 2
+text = "Set"
+
+[node name="SetStat" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hptm8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/SetStat"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/SetStat/VBoxContainer"]
+layout_mode = 2
+text = "Set Stat"
+horizontal_alignment = 1
+
+[node name="SelectStat" type="OptionButton" parent="MarginContainer/VBoxContainer/SetStat/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="StatCurrentVal" type="Label" parent="MarginContainer/VBoxContainer/SetStat/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="SelectStatVal" type="SpinBox" parent="MarginContainer/VBoxContainer/SetStat/VBoxContainer"]
+layout_mode = 2
+max_value = 1000.0
+allow_greater = true
+alignment = 1
+
+[node name="ConfirmSetStat" type="Button" parent="MarginContainer/VBoxContainer/SetStat/VBoxContainer"]
+layout_mode = 2
+text = "Set"
+
+[node name="GiveWeapon" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hptm8")
+
+[node name="VBoxCointainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/GiveWeapon"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/GiveWeapon/VBoxCointainer"]
+layout_mode = 2
+text = "Give Weapon"
+horizontal_alignment = 1
+
+[node name="SelectItem" type="OptionButton" parent="MarginContainer/VBoxContainer/GiveWeapon/VBoxCointainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="ConfirmGiveItem" type="Button" parent="MarginContainer/VBoxContainer/GiveWeapon/VBoxCointainer"]
+layout_mode = 2
+text = "Give
+"
+
+[node name="KillPlayer" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Kill Player"
+
+[node name="AddLife" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Add Life"
