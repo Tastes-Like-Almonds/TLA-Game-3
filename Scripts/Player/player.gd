@@ -231,6 +231,9 @@ func get_equip_on_pickup() -> bool:
 func get_friction_time() -> float:
 	return get_modified_property("friction_time")
 
+func get_size_scale() -> float:
+	return get_modified_property("size_scale")
+
 ## Get the largest distance from the player's hitbox edge to the player's origin.
 func get_largest_size() -> float:
 	var shape : CollisionShape2D = get_player_body().shape
@@ -339,6 +342,7 @@ func pickup_weapon(weapon : Weapon) -> Weapon:
 ## Teleport toward the target location, with respect to collisions.
 func teleport_toward(vec2 : Vector2) -> void:
 	var space_state := get_world_2d().direct_space_state
+	var body := get_player_body()
 	var body_max_size := get_largest_size()
 	var origin := get_player_position()
 	var dir := origin.direction_to(vec2)
@@ -349,8 +353,9 @@ func teleport_toward(vec2 : Vector2) -> void:
 	if not result:
 		get_player_body().global_position = vec2
 		return
-	get_player_body().global_position = result.position - dir*body_max_size
-
+	
+	body.global_position = result.position - dir*body_max_size
+	
 ## Start charging the main ability of the held weapon
 func start_charging() -> void:
 	charging_ability = true
@@ -520,7 +525,12 @@ func _process(delta: float) -> void:
 
 	_visual_process(delta) # Handle weapon visuals, colors, etc.
 	_update_modifiers(delta) # Modifiers for player properties
+
+func _physics_process(_delta: float) -> void:
+	var size_scale := get_size_scale()
+	scale = Vector2(size_scale, size_scale)
 	
+
 func _ready() -> void:
 	respawn_pos = get_player_body().global_position
 	lives = get_modified_property("max_lives")

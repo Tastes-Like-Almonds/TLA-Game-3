@@ -30,8 +30,10 @@ func _explode(collision: KinematicCollision2D) -> void:
 	if _wielder.get_player_body().velocity.y > 0 and kb.y < 0: _wielder.get_player_body().velocity.y = 0
 	
 	
-	_wielder.apply_velocity(kb*fall_multi)
-	Explosion.make_explosion(_wielder.get_parent(), sword.get_tip_global_position(), ["EnemyBody"], vel_perc*150*fall_multi, 1*fall_multi, 500*fall_multi)
+	var multi := fall_multi * _wielder.get_size_scale()
+	_wielder.apply_velocity(kb*multi)
+	# Only apply fall multi to knockback and size, as to keep damage balance.
+	Explosion.make_explosion(_wielder.get_parent(), sword.get_tip_global_position(), ["EnemyBody"], vel_perc*150*multi, 1*fall_multi, 500*multi)
 	cooldown = 0
 	fall_multi = 1.0
 
@@ -49,7 +51,12 @@ func get_gravity_multi() -> float:
 func get_property_modifiers() -> Dictionary[String, Array]:
 	return {
 		"strength":[PropertyModifier.new(0.2, PropertyModifier.ModiferType.MULTIPLY)],
-		"gravity":[PropertyModifier.new(get_gravity_multi(), PropertyModifier.ModiferType.MULTIPLY)]
+		"gravity":[PropertyModifier.new(get_gravity_multi(), PropertyModifier.ModiferType.MULTIPLY)],
+		"max_distance": [
+			PropertyModifier.new(
+			1-_wielder.get_weapon_charge_perc()*0.2,
+			PropertyModifier.ModiferType.MULTIPLY)
+		]
 	}
 		#"gravity": [PropertyModifier.new(-1, PropertyModifier.ModiferType.MULTIPLY)]
 	#}
@@ -61,9 +68,6 @@ func on_use(_charge_time : float) -> void:
 	#_wielder.apply_velocity(_wielder.get_player_position().direction_to(get_pointer_pos())*min(MAX_CHARGE,charge_time)*3000)
 	#_wielder.teleport_toward(_get_target_point())
 	fall_multi = 1+_wielder.get_weapon_charge_perc()*2.0
-
-func get_max_distance_increase() -> float:
-	return min(_wielder.get_ability_charge()/MAX_CHARGE, 1)*-20
 
 func get_charge_prog(prog : float) -> float:
 	return clampf(prog/MAX_CHARGE, 0, 1)

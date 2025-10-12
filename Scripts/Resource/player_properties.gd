@@ -66,6 +66,9 @@ class_name PlayerProperties extends Resource
 # --- #
 @export_group("Physics")
 
+## Size multiplier of the player. Also affects sword distance.
+@export_range(0.1,5,0.1) var size_scale : float = 1.0
+
 ## The speed which the player falls.
 @export_range(0,3000, 1.0) var gravity : float = 3000.0
 
@@ -111,5 +114,16 @@ func get_modified(property : String , modifiers : Array[PropertyModifier]) -> Va
 		var typed_mods := _get_modifiers_of_type(type_enum, modifiers)
 		if p is float:
 			p = PropertyModifier.apply_all(typed_mods, p)
+	
+	if property == "max_distance":
+		p*=size_scale
+	if property == "min_distance":
+		p*=size_scale
+	if property == "gravity":
+		p*=size_scale
+	if property == "sword_speed":
+		p*=size_scale
+	if property == "cable_gravity":
+		p*=size_scale
 	
 	return p
