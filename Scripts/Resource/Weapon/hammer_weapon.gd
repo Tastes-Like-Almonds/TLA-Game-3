@@ -8,6 +8,10 @@ const MAX_COOLDOWN = 0.25
 var cooldown := 0.0
 var fall_multi:float = 1.0
 
+var max_fall_multi : float = 3.0
+
+var hit_sound := SoundData.new("res://Assets/Sound/SFX/Player/Sword/Hammer Strike.wav")
+
 func init_weapon(player: Player) -> void:
 	super(player)
 	if not is_instance_valid(player) : return
@@ -29,6 +33,15 @@ func _explode(collision: KinematicCollision2D) -> void:
 	
 	if _wielder.get_player_body().velocity.y > 0 and kb.y < 0: _wielder.get_player_body().velocity.y = 0
 	
+	# Manage Sound
+	hit_sound.pitch_scale = 1-clampf(vel.y/_wielder.get_gravity(), 0.0, 1.0)*0.3
+	
+	if fall_multi < (max_fall_multi-1)/2+1: # Change for heavy/small strike
+		hit_sound.sound_string = "res://Assets/Sound/SFX/Player/Sword/Hammer Strike.wav"
+	else:
+		hit_sound.sound_string = "res://Assets/Sound/SFX/Player/Sword/Hammer Strike Full.wav"
+		
+	Sfx.play_sound_2d(hit_sound, collision.get_position())
 	
 	var multi := fall_multi * _wielder.get_size_scale()
 	_wielder.apply_velocity(kb*multi)
@@ -41,6 +54,8 @@ func process_weapon(delta:float) -> void:
 	super(delta)
 	cooldown += delta
 	if _wielder.get_player_body().is_on_floor():
+		fall_multi = 1.0
+	if _wielder.get_player_sword().on_cable != null:
 		fall_multi = 1.0
 
 func get_gravity_multi() -> float:
@@ -67,7 +82,7 @@ func get_cooldown() -> float:
 func on_use(_charge_time : float) -> void:
 	#_wielder.apply_velocity(_wielder.get_player_position().direction_to(get_pointer_pos())*min(MAX_CHARGE,charge_time)*3000)
 	#_wielder.teleport_toward(_get_target_point())
-	fall_multi = 1+_wielder.get_weapon_charge_perc()*2.0
+	fall_multi = 1+_wielder.get_weapon_charge_perc()*(max_fall_multi-1)
 
 func get_charge_prog(prog : float) -> float:
 	return clampf(prog/MAX_CHARGE, 0, 1)

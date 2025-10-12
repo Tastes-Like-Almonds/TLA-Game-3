@@ -15,7 +15,7 @@ extends BoostOrb
 ## The tags required by a collisionbody to be hit
 @export var targets : Array[StringName] = [&"PlayerBody"]
 
-func on_sword_hit(player : Player) -> void:
+func hit_effect(player : Player) -> void:
 	super(player)
 	Explosion.make_explosion(get_parent(), global_position, targets, size, damage, )
 	player.set_velocity(Vector2.ZERO)

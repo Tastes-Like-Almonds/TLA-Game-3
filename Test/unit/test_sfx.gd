@@ -1,9 +1,9 @@
 extends GutTest
 
-var sound : Sfx.SoundData
+var sound : SoundData
 
 func before_each() -> void:
-	sound = Sfx.SoundData.new(
+	sound = SoundData.new(
 		"res://Test/TestResource/TestSound.wav",
 		0,
 		1.0

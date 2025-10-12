@@ -4,7 +4,5 @@
 
 [resource]
 script = ExtResource("1_xdmdd")
-sound_string = "res://Assets/Sound/SFX/Pickup Edit 1 Export 1.mp3"
-volume_linear = 0.5
-pitch_scale = 1.0
+sound_string = "res://Assets/Sound/SFX/Orb/Jump Orb.wav"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"

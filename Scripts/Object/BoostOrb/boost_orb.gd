@@ -21,8 +21,12 @@ var alive : bool = true
 
 var current_respawn_time : float = 0.0
 
-func on_sword_hit(_player : Player) -> void:
+func hit_effect(_player : Player) -> void:
+	pass
+
+func on_sword_hit(player : Player) -> void:
 	if not alive: return
+	hit_effect(player)
 	
 	if sound != null:
 		Sfx.play_sound_2d(sound, global_position)

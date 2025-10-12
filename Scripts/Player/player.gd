@@ -203,6 +203,11 @@ func get_current_weapon() -> Weapon:
 func get_movement_mode() -> MovementMode:
 	return movement_mode
 
+## Gets the percentage of the sword's speed compared to its max speed.
+func get_sword_speed_perc() -> float:
+	var sword : Sword = get_player_sword()
+	return sword.get_last_sword_velocity().length() / get_sword_speed()
+
 ## Gets the current damage of the blade (Value changes based on speed, charge, etc.)
 func get_blade_damage() -> float:
 	var damage := 0.0
@@ -273,7 +278,7 @@ func _visual_process(delta : float) -> void:
 		var sword := get_player_sword()
 		if sword:
 			weapon_visual.update_visual(get_player_position(), sword.get_tip_global_position())
-			weapon_visual.update_audio()
+			weapon_visual.update_audio(delta)
 
 #endregion
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx05lwlejhqqc"]
+[gd_scene load_steps=11 format=3 uid="uid://bx05lwlejhqqc"]
 
 [ext_resource type="Script" uid="uid://dxnf3hgwxytok" path="res://Scripts/Visual/Weapons/Sword/sword_basic_visual.gd" id="1_wwsnl"]
 [ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Sprites/Placeholder/sword.png" id="2_47q6j"]
@@ -37,6 +37,9 @@ scale_max = 12.0
 scale_curve = SubResource("CurveTexture_l3mnx")
 alpha_curve = SubResource("CurveTexture_sdpqg")
 
+[sub_resource type="Gradient" id="Gradient_dod1f"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.27450982)
+
 [node name="SwordBasicVisual" type="Node2D"]
 script = ExtResource("1_wwsnl")
 
@@ -53,3 +56,9 @@ amount = 4
 texture = SubResource("GradientTexture2D_dod1f")
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_32eie")
+
+[node name="Line2D" type="Line2D" parent="."]
+top_level = true
+points = PackedVector2Array(0, 0, 51, 29, 78, 78, 90, 103, 141, 74, 124, 41, 169, 28, 181, 3, 182, 0, 182, -4, 173, -8, 161, -11, 150, -8, 144, -18, 148, -29, 163, -33, 177, -31, 195, -39, 183, -49, 174, -53, 158, -52, 141, -57, 168, -60, 184, -60, 187, -69, 199, -70, 210, -71, 219, -71, 225, -68, 230, -63, 234, -60, 235, -55, 236, -48, 241, -43, 243, -43, 246, -42, 250, -43, 255, -46, 256, -48, 257, -50, 258, -52, 259, -54, 259, -56, 259, -61, 258, -65, 258, -67, 256, -70, 253, -71, 251, -71)
+width = 40.0
+gradient = SubResource("Gradient_dod1f")

@@ -1,6 +1,6 @@
 extends WeaponVisual
 
-@export var sword_length : float = 60
+@export var sword_length : float = 20
 
 @onready var line2D := $Line2D
 var line_curve := Curve2D.new()
