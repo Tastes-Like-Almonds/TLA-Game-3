@@ -34,8 +34,14 @@ func on_use(_charge_time : float) -> void:
 	#_wielder.apply_velocity(_wielder.get_player_position().direction_to(get_pointer_pos())*min(MAX_CHARGE,charge_time)*3000)
 	_wielder.teleport_toward(_get_target_point())
 
-func get_max_distance_increase() -> float:
-	return min(_wielder.get_ability_charge()/MAX_CHARGE, 1)*-20
+func get_property_modifiers() -> Dictionary[String, Array]:
+	return {
+		"max_distance": [
+			PropertyModifier.new(
+			1-_wielder.get_weapon_charge_perc()*0.2,
+			PropertyModifier.ModiferType.MULTIPLY)
+		]
+	}
 
 func get_charge_prog(prog : float) -> float:
 	return clampf(prog/MAX_CHARGE, 0, 1)

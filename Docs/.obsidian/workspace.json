@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Meetings/Meeting Notes/Meeting Notes - First IP Meeting.md",
+                "file": "Meetings/Meeting Notes/Meeting Notes - 9.18.25 1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Meeting Notes - First IP Meeting"
+              "title": "Meeting Notes - 9.18.25 1"
             }
           },
           {
@@ -200,22 +200,26 @@
   },
   "active": "c5189ac6e154e344",
   "lastOpenFiles": [
+    "Meetings/Meeting Notes/Meeting Notes - 10.10.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 9.18.25 1.md",
     "Meetings/Meeting Notes/Meeting Notes - First IP Meeting.md",
+    "Meetings/Meeting Notes/Meeting Notes - 9.16.25.md",
+    "Planning/Programming/Development Notes/Balancing/Health + Damage.md",
+    "Planning/Programming/Development Notes/Guidelines/Testing.md",
+    "Planning/Programming/Development Notes/Balancing",
+    "Planning/Programming/Development Notes/Guidelines/Issues.md",
+    "Planning/Programming/Development Notes/Guidelines/Files.md",
+    "Planning/Programming/Overview - Programming.md",
     "Pasted image 20250928140731.png",
     "Pasted image 20250928140719.png",
     "Planning/Research/Overview - Research.md",
     "Development Notes/Info/Collision Layers.md",
     "Development Notes/Info",
     "Templates/Meeting Notes.md",
-    "Development Notes/Guidelines/Issues.md",
     "Pasted image 20250919142853.png",
-    "Development Notes/Guidelines/Variables.md",
-    "Development Notes/Guidelines/Testing.md",
-    "Development Notes/Guidelines/Files.md",
-    "Development Notes/Guidelines",
-    "Development Notes",
-    "Meetings/Meeting Notes/Meeting Notes - 9.16.25.md",
+    "Planning/Programming/Development Notes/Guidelines/Variables.md",
+    "Planning/Programming/Development Notes/Guidelines",
+    "Planning/Programming/Development Notes",
     "Meetings/Meeting Notes/Meeting Notes - 6.4.26.md",
     "Members/Evan Gould.md",
     "Members/Mizuki Wong.md",
@@ -226,7 +230,6 @@
     "Members/Aidan Wignall.md",
     "Planning/Story/Overview - Story.md",
     "Planning/Art/Overview - Art.md",
-    "Planning/Programming/Overview - Programming.md",
     "Planning/Research",
     "Planning/Programming",
     "Planning/Art",
@@ -235,8 +238,6 @@
     "Mee.md",
     "Ray M. Members/John Doe.md",
     "Ray M. Members",
-    "Members",
-    "2025-06-05.md",
-    "Welcome.md"
+    "2025-06-05.md"
   ]
 }

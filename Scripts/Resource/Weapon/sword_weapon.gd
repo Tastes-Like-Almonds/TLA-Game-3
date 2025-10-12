@@ -17,11 +17,19 @@ func get_dir() -> Vector2:
 
 func on_use(charge_time : float) -> void:
 	if not is_instance_valid(_wielder): return
-	_wielder.apply_velocity(get_dir()*min(MAX_CHARGE,charge_time)*3000)
+	_wielder.apply_velocity(get_dir()*min(MAX_CHARGE,charge_time)*3000*_wielder.get_size_scale())
 
-func get_max_distance_increase() -> float:
-	if not is_instance_valid(_wielder): return 0.0
-	return min(_wielder.get_ability_charge()/MAX_CHARGE, 1)*-20
+func get_property_modifiers() -> Dictionary[String, Array]:
+	if not is_instance_valid(_wielder): return {}
+	
+	return {
+		"max_distance": [
+			PropertyModifier.new(
+		1-_wielder.get_weapon_charge_perc()*0.2,
+		PropertyModifier.ModiferType.MULTIPLY)
+		]
+			
+	}
 
 func get_charge_prog(prog : float) -> float:
 	if not is_instance_valid(_wielder): return 0.0
