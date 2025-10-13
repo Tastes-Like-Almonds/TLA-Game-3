@@ -29,8 +29,10 @@ func _setup_camera() -> void:
 func _setup_player() -> void:
 	var player := _make_player()
 	var spawn := _get_first_spawn()
-	if is_instance_valid(spawn): player.global_position = _get_first_spawn().global_position
-	add_child(player)
+	if is_instance_valid(spawn): 
+		player.get_player_body().global_position = _get_first_spawn().global_position
+		add_child(player)
+		player.get_player_sword().body.global_position = player.get_player_body().global_position
 
 func initialize(config : LevelConfig = null) -> void:
 	

@@ -267,6 +267,7 @@ func _visual_process(delta : float) -> void:
 	var body : PlayerBody = get_player_body()
 	if body:
 		body.get_sprite().flip_h = get_player_sword().get_tip_global_position().x < get_player_position().x
+		body.get_sprite().flip_v = (get_gravity() <= 0)
 
 	# Update player damage
 	if sprite:
@@ -360,6 +361,7 @@ func teleport_toward(vec2 : Vector2) -> void:
 		return
 	
 	body.global_position = result.position - dir*body_max_size
+	get_player_sword().body.global_position  = body.global_position
 	
 ## Start charging the main ability of the held weapon
 func start_charging() -> void:
@@ -383,7 +385,7 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()
 	
-	elif event.is_action_pressed("ui_accept"):
+	elif event.is_action_pressed("noclip"):
 		if get_movement_mode() == MovementMode.NOCLIP:
 			set_movement_mode(MovementMode.SWORD_ORBIT)
 		else:
@@ -461,6 +463,8 @@ func deal_damage(amt : float) -> bool:
 	if amt <= 0: return false
 	
 	print(str(amt) + " damage dealt")
+	
+	GameCamera.set_current_camera_shake(get_viewport(), clampf((amt/2)/get_modified_property("max_health"),0.0,0.2))
 	
 	last_hit_time = 0.0
 	last_hit_amount = amt

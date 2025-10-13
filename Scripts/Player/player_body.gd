@@ -106,8 +106,6 @@ func _physics_process(delta: float) -> void:
 				if is_on_floor():
 					velocity.y = (-current_vel.y - get_last_slide_collision().get_remainder().y) * player.get_bounciness()
 			
-			
-			
 		#endregion
 		
 		#region Player orbit

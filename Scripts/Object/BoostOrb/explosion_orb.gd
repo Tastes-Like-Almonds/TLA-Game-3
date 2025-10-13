@@ -18,5 +18,6 @@ extends BoostOrb
 func hit_effect(player : Player) -> void:
 	super(player)
 	Explosion.make_explosion(get_parent(), global_position, targets, size, damage, )
+	GameCamera.shake_current_camera(get_viewport(), 0.1)
 	player.set_velocity(Vector2.ZERO)
 	player.deal_knockback(hit_knockback*global_position.direction_to(player.get_player_position()))

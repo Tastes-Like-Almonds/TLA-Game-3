@@ -47,6 +47,7 @@ func _explode(collision: KinematicCollision2D) -> void:
 	_wielder.apply_velocity(kb*multi)
 	# Only apply fall multi to knockback and size, as to keep damage balance.
 	Explosion.make_explosion(_wielder.get_parent(), sword.get_tip_global_position(), ["EnemyBody"], vel_perc*150*multi, 1*fall_multi, 500*multi)
+	GameCamera.set_current_camera_shake(_wielder.get_viewport(), 0.05*fall_multi)
 	cooldown = 0
 	fall_multi = 1.0
 

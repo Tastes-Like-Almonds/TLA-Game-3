@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://k8xiwdmm0cyi"]
+[gd_scene load_steps=19 format=4 uid="uid://k8xiwdmm0cyi"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_16du6"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_g8cnj"]
@@ -25,13 +25,13 @@ point_count = 4
 
 [sub_resource type="Curve2D" id="Curve2D_f6h5u"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 9220, 776, -367.5782, -378.92627, 367.5782, 378.92627, 9592, 1162, 0, 0, 0, 0, 10240, 1555, -125.97319, 120.5751, 125.97319, -120.5751, 10464, 1462, 0, 0, 0, 0, 10621, 1282)
+"points": PackedVector2Array(0, 0, 0, 0, 9220, 776, -367.5782, -378.92627, 367.5782, 378.92627, 9592, 1162, 0, 0, 0, 0, 10240, 1555, -125.97319, 120.5751, 125.97319, -120.5751, 10464, 1462, 0, 0, 0, 0, 10602, 1137)
 }
 point_count = 5
 
 [sub_resource type="Curve2D" id="Curve2D_k85jp"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 10237, -2026, 553.046, -289.38452, -553.046, 289.38452, 9452, -1502, 0, 0, 0, 0, 8236, -1568)
+"points": PackedVector2Array(0, 0, 0, 0, 10237, -2026, 553.046, -289.38452, -553.046, 289.38452, 9452, -1502, 0, 0, 0, 0, 8069, -1730)
 }
 point_count = 3
 
@@ -40,6 +40,23 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 7007, -1420, 0, 0, 0, 0, 4318, -803)
 }
 point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_k85jp"]
+colors = PackedColorArray(0.11, 0.11, 0.11, 1, 0, 0.43, 0.26516673, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vym4p"]
+gradient = SubResource("Gradient_k85jp")
+fill_from = Vector2(0, 1)
+
+[sub_resource type="Environment" id="Environment_k85jp"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 1.25
+glow_bloom = 0.25
+glow_map_strength = 0.83
+glow_map = SubResource("GradientTexture2D_vym4p")
+adjustment_enabled = true
+adjustment_contrast = 1.13
 
 [node name="DevLevel2" type="Node2D"]
 script = ExtResource("1_16du6")
@@ -115,10 +132,6 @@ force = 2500.0
 position = Vector2(10967, 211)
 force = 2500.0
 
-[node name="PushOrb11" parent="." instance=ExtResource("5_vy6tc")]
-position = Vector2(10621, -461)
-force = 2500.0
-
 [node name="PushOrb12" parent="." instance=ExtResource("5_vy6tc")]
 position = Vector2(10777, -1239)
 force = 2500.0
@@ -133,6 +146,7 @@ curve = SubResource("Curve2D_f6h5u")
 
 [node name="Cablev4" parent="." instance=ExtResource("6_6628m")]
 curve = SubResource("Curve2D_k85jp")
+cable_drag = 0.8
 
 [node name="Cablev5" parent="." instance=ExtResource("6_6628m")]
 curve = SubResource("Curve2D_vym4p")
@@ -200,3 +214,9 @@ force = 2500.0
 
 [node name="ExplosionOrb" parent="." instance=ExtResource("9_k85jp")]
 position = Vector2(-9474, 3026)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_k85jp")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.9166399, 0.91663986, 0.9166398, 1)

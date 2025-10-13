@@ -97,6 +97,8 @@ func on_sword_hit(player : Player) -> void:
 	
 	# Deal knockback to bat
 	velocity = vel*knockback_coef
+	
+	GameCamera.shake_current_camera(get_viewport(), 0.1)
 
 func _kill() -> void:
 	$GPUParticles2D.emitting = true
