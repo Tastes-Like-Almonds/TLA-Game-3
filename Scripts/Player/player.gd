@@ -381,6 +381,11 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	
 	elif event.is_action_released("use"):
 		stop_charging()
+		var disp := TextDisplay.create(get_player_position(), "Cool")
+		disp.modulate = Color.RED
+		get_parent().add_child(disp)
+		print(disp.global_position)
+		print(get_player_position())
 	
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()
@@ -433,9 +438,8 @@ func _respawn() -> void:
 	var sword := get_player_sword()
 	
 	# Teleport the sword along with the player to prevent weird stuff
-	var sword_offset := sword.global_position - body.global_position
 	body.global_position = respawn_pos
-	sword.global_position = respawn_pos + sword_offset
+	sword.body.global_position = respawn_pos
 	
 	time_respawning = 0
 	last_hit_time = get_invincibility_time()*-2

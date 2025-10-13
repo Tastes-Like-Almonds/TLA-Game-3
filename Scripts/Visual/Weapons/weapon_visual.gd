@@ -42,8 +42,6 @@
 ## Coefficient of the swing sound's pitch
 @export var swing_pitch : float = 1.0
 
-
-
 var player : Player
 var spark_particles : GPUParticles2D
 
@@ -128,7 +126,7 @@ func update_audio(_delta : float) -> void:
 				var speed := vel.length()
 				
 				drag_sound_node.play()
-				drag_sound_node.volume_linear = clampf(speed/drag_speed_max, 0, 3)
+				drag_sound_node.volume_linear = clampf(speed/drag_speed_max, 0.0, 1.0)
 				drag_sound_node.pitch_scale = clampf(speed/drag_speed_max, 4, 8)/4
 		else:
 			drag_sound_node.playing = false
@@ -138,7 +136,7 @@ func update_audio(_delta : float) -> void:
 			
 			var perc := player.get_sword_speed_perc()
 			perc = pow(perc, 2)
-			swing_sound_node.volume_linear = lerpf(swing_sound_node.volume_linear, perc, 0.3)
+			swing_sound_node.volume_linear = clampf(lerpf(swing_sound_node.volume_linear, perc, 0.3), 0.0, 1.0)
 			swing_sound_node.pitch_scale = lerpf(swing_sound_node.pitch_scale,(1+(perc-0.5)*0.2)*swing_pitch,0.1)
 
 ## Update the weapon visual. Origin is the start position and the destination is where the focus of the weapon is.
