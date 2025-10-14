@@ -1,0 +1,51 @@
+class_name BoostOrb extends StaticBody2D
+
+## The time before the orb regenerates after use.
+@export var respawn_time : float = 1.0
+
+## The bob animation height
+@export var bob_dist : float = 10.0
+
+## The bob animation speed
+@export var bob_speed : float = 1.0
+
+## The current time spent in the bob animation, resets after 2PI
+var bob_time : float = 0.0
+
+## The visual of the orb, typically a Node2D with multiple nodes inside.
+var visual : Node2D
+
+var alive : bool = true
+
+var current_respawn_time : float = 0.0
+
+func on_sword_hit(_player : Player) -> void:
+	if not alive: return
+	alive = false
+
+func _process(delta: float) -> void:
+	
+	if not alive:
+		current_respawn_time += delta
+		if current_respawn_time >= respawn_time: 
+			current_respawn_time = 0.0 
+			alive = true
+			var emitter := get_node("Visual/Particles")
+			if emitter and emitter is GPUParticles2D:
+				emitter.emitting = true
+	
+	if visual:
+		bob_time += delta*bob_speed
+		bob_time = fmod(bob_time, 2*PI)
+		visual.position.y = bob_dist * sin(bob_time)
+	
+		if alive:
+			visual.modulate.a = 1.0
+		else:
+			visual.modulate.a = current_respawn_time*0.3 / respawn_time
+
+func _ready() -> void:
+	var visual_node := get_node_or_null("Visual")
+	if is_instance_valid(visual_node):
+		visual = visual_node
+	add_to_group("BladeHitable")

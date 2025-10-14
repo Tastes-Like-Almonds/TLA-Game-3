@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c1cysyloyyefa"]
+
+[ext_resource type="Shader" uid="uid://b3w52kvg34c4c" path="res://Resource/Shader/bat.gdshader" id="1_lxn7p"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_lxn7p")
+shader_parameter/solid_color = Vector4(1, 0, 0, 0)

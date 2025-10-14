@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://i3q04o8l3nk3"
+path="res://.godot/imported/Pickup Edit 1 Export 1.mp3-2c5e5ea9e63117a607ae0545eda83b46.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Pickup Edit 1 Export 1.mp3"
+dest_files=["res://.godot/imported/Pickup Edit 1 Export 1.mp3-2c5e5ea9e63117a607ae0545eda83b46.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
