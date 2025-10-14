@@ -23,6 +23,8 @@ enum MovementMode {
 
 var property_modifiers : Dictionary[String, Array]
 
+var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0)
+
 #endregion
 
 func get_modified_property(property: String) -> Variant:
@@ -381,11 +383,6 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	
 	elif event.is_action_released("use"):
 		stop_charging()
-		var disp := TextDisplay.create(get_player_position(), "Cool")
-		disp.modulate = Color.RED
-		get_parent().add_child(disp)
-		print(disp.global_position)
-		print(get_player_position())
 	
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()
@@ -469,6 +466,10 @@ func deal_damage(amt : float) -> bool:
 	print(str(amt) + " damage dealt")
 	
 	GameCamera.set_current_camera_shake(get_viewport(), clampf((amt/2)/get_modified_property("max_health"),0.0,0.2))
+	Sfx.play_sound_2d(hit_sound, get_player_position())
+	
+	# TODO Set parent to something better
+	TextDisplay.damage_display(get_parent(), get_player_position(),str(amt), Vector2.from_angle(-PI/2+randf_range(-PI/4,PI/4)))
 	
 	last_hit_time = 0.0
 	last_hit_amount = amt

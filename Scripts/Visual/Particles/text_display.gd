@@ -1,67 +1,76 @@
 ## A popup display for text. Can be used for damage numbers, status effects, etc.
 class_name TextDisplay extends Node2D
 
-@onready var label : Label = $Label
-
-@export var font : FontFile = null:
-	set(new):
-		if new == null: return
-		if label:
-			label.add_theme_font_override("font", new)
-		font = new
-
-@export var text := "":
-	set(new):
-		print("CALLED WITH " + new)
-		if new == null: return
-		print("NOT NULL")
-		print(label)
-		if is_instance_valid(label):
-			print("SETTOMG")
-			label.text = str(new)
-		text = new
-
-@export var scale_speed : float = 2
-
-## Lerp value per second toward target_pos
-@export var move_speed : float = 0.8
-
-var target_scale : float = 1.0
-
-## The target global position of the display. Will lerp toward the target space by
-## move_speed per second.
-var target_pos : Vector2 = Vector2.ZERO
+const DAMAGE_NUM_SIZE : int = 40
 
 static func get_scn() -> String:
 	return "res://Scenes/Visual/Particles/text_display.tscn"
 
-static func create(pos : Vector2 = Vector2.ZERO, txt : String = "") -> TextDisplay:
-	var display : TextDisplay = load(TextDisplay.get_scn()).instantiate()
-	display.text = txt
-	display.global_position = pos
-	return display
+static func create(pos : Vector2 = Vector2.ZERO, txt : String = "", size : int = 50, fnt : FontFile = Globals.DEFAULT_FONT) -> Label:
+	#var display : TextDisplay = load(TextDisplay.get_scn()).instantiate()
+	#display.text = txt
+	#display.global_position = pos
+	#return display
+	var l := Label.new()
+	l.global_position = pos
+	l.text = txt
+	l.add_theme_font_override("font", fnt)
+	l.add_theme_font_size_override("font_size", size)
+	return l
 
-## Sets the scale to (amt, amt)
-func set_scale_to_float(amt : float) -> void:
-	scale = Vector2(amt,amt)
-
-## Sets the scale to (amt, amt), but does so at a speed of self.scale_speed
-func set_scale_target_to_float(amt : float) -> void:
-	target_scale = amt
-
-func _process(delta: float) -> void:
-	# Update scale; does not support different x and y for the sake of simplicity.
-	scale.x = move_toward(scale.x, target_scale, scale_speed*delta)
-	scale.x = move_toward(scale.y, target_scale, scale_speed*delta)
+static func damage_display(parent:Node, pos:Vector2, txt : String, direction:Vector2, color:Color = Color.RED, size_scale:float = 1.0,fade_time:float = 2.0,anim_time:float=0.5) -> void:
+	var label := Label.new()
+	label.text = txt
+	label.global_position = pos
 	
-	# Lerp toward target position.
-	global_position = global_position.lerp(target_pos, pow(move_speed, delta))
+	label.modulate = color
+	label.scale = Vector2.ZERO
+	label.add_theme_font_override("font", Globals.DEFAULT_FONT)
+	label.add_theme_font_size_override("font_size", DAMAGE_NUM_SIZE)
+	
+	parent.add_child(label)
+	
+	var tree := label.get_tree()
+	if tree == null: return
+	var tween := tree.create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_parallel(true)
+	tween.tween_property(
+		label,
+		"global_position",
+		pos+direction*80,
+		anim_time
+	)
+	tween.tween_property(
+		label,
+		"scale",
+		Vector2(size_scale,size_scale),
+		anim_time
+	)
+	
+	var fade_tween := tree.create_tween()
+	var invis_color := color
+	invis_color.a = 0
+	fade_tween.tween_property(
+		label,
+		"modulate",
+		invis_color,
+		fade_time
+		
+	)
+	tween.play()
+	tween.tween_callback(fade_tween.play)
+	
 
-func _ready() -> void:
-	label = get_node("Label")
-	if font == null:
-		font = Globals.DEFAULT_FONT
-	if text == "":
-		font = Globals.DEFAULT_FONT
-	label.text = str(text)
-	label.add_theme_font_override("font", font)
+static func tween_pos(l : Label, target : Vector2, time : float = 1) -> void:
+	var tween := l.get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_EXPO)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(
+		l,
+		"global_position",
+		target,
+		time
+	)
+	tween.play()
