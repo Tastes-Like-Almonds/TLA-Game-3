@@ -110,8 +110,6 @@ func on_sword_hit(player : Player) -> void:
 		Sfx.play_sound(hit_sound)
 		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized())
 	
-	
-	
 	var player_body := player.get_player_body()
 	
 	# Apply velocity to player based on sword speed
@@ -132,6 +130,7 @@ func on_sword_hit(player : Player) -> void:
 func _kill() -> void:
 	Sfx.play_sound(death_sound)
 	velocity = Vector2.ZERO
+	respawn_cooldown = 0.0
 	respawning = true # Respawn var is used even on permadeath to indicate a dying status
 	if respawn:
 		sprite.visible = false
@@ -141,19 +140,21 @@ func _kill() -> void:
 func _respawn() -> void:
 	sprite.visible = true
 	respawning = false
+	velocity = Vector2.ZERO
 	health = start_health
 	global_position = start_pos
 
 func _check_respawn() -> void:
-	if respawn_cooldown >= respawn_time:
-			respawn_cooldown = 0
-			respawning = false
-			_respawn()
+	if respawn_cooldown >= respawn_time and respawning:
+		respawn_cooldown = 0
+		respawning = false
+		_respawn()
 
 @abstract func _movement(_delta : float) -> void
 
 func _physics_process(delta: float) -> void:
-	_movement(delta)
+	if not respawning:
+		_movement(delta)
 
 func _process(delta: float) -> void:
 	
@@ -186,6 +187,7 @@ func on_hit(collision : KinematicCollision2D) -> void:
 
 func _ready() -> void:
 	notifier.screen_entered.connect(_check_respawn)
+	notifier.global_position = global_position
 	start_pos = global_position
 	sprite.play("default")
 	if spawn_dead:

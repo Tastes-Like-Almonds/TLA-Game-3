@@ -125,3 +125,4 @@ explosiveness = 0.8
 process_material = SubResource("ParticleProcessMaterial_tuwcp")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+top_level = true

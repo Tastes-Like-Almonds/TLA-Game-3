@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtslq1erjqgho"]
+
+[ext_resource type="Script" uid="uid://drro8wb2qt8li" path="res://Scripts/Visual/proximity_text.gd" id="1_rltsc"]
+
+[node name="ProximityText" type="RichTextLabel"]
+offset_right = 1.0
+offset_bottom = 23.0
+script = ExtResource("1_rltsc")

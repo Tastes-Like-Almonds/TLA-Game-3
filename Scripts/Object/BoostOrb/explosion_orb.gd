@@ -12,6 +12,9 @@ extends BoostOrb
 ## Knockback dealt to the attacker upon explosion. Appled even when the explosion does not hit.
 @export var hit_knockback : float = 1000.0
 
+## The direction hit_knockback is dealt. If nto set, defaults to toward the player.
+@export var hit_knockback_direction : Vector2 = Vector2.ZERO
+
 ## The tags required by a collisionbody to be hit
 @export var targets : Array[StringName] = [&"PlayerBody"]
 
@@ -20,4 +23,7 @@ func hit_effect(player : Player) -> void:
 	Explosion.make_explosion(get_parent(), global_position, targets, size, damage, )
 	GameCamera.shake_current_camera(get_viewport(), 0.1)
 	player.set_velocity(Vector2.ZERO)
-	player.deal_knockback(hit_knockback*global_position.direction_to(player.get_player_position()))
+	if hit_knockback_direction == Vector2.ZERO:
+		player.deal_knockback(hit_knockback*global_position.direction_to(player.get_player_position()))
+	else:
+		player.deal_knockback(hit_knockback*hit_knockback_direction.normalized())

@@ -72,6 +72,7 @@ func _update_blade(_delta : float) -> void:
 	blade.global_position = body.global_position + body.global_position.direction_to(player_pos)*(size*player.get_size_scale()/2)
 	
 	var result := blade.get_overlapping_bodies()
+	result.append_array(blade.get_overlapping_areas())
 	
 	for hit in result:
 		if hit in last_result: continue; # Prevent multiple hits while colliding

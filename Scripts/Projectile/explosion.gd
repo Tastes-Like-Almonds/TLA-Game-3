@@ -11,7 +11,7 @@ signal physics_process_finished
 @export var knockback : float = 300.0
 
 ## Color of the explosion. Auto fades out at the end.
-@export var color : Color = Color("ff5500b3")
+@export var color : Color = Color("ffffff")
 
 # An array of groups to target. Nodes not in one of the groups provided will not be dealt
 # damage/knockback.
@@ -38,13 +38,17 @@ static func make_explosion(parent:Node, pos: Vector2, targets : Array[StringName
 func set_explosion_size(size : float = 8.0) -> void:
 	if size < 8: size = 8
 	$Area2D/CollisionShape2D.scale = Vector2(size/8,size/8) # 8 is the texture size for both
-	$GPUParticles2D.texture.width = size/8
-	$GPUParticles2D.texture.height = size/8
+	$GPUParticles2D.texture.width = size*1.5/8
+	$GPUParticles2D.texture.height = size*1.5/8
+	$GPUParticles2D3.texture.width = size/8
+	$GPUParticles2D3.texture.height = size/8
+	$GPUParticles2D.scale = Vector2(size*1.5/8,size*1.5/8)
+	$GPUParticles2D.amount = size/8
 
 func explode() -> void:
 	await physics_process_finished
 	$GPUParticles2D.emitting = true
-	
+	$GPUParticles2D3.emitting = true
 	# Get bodies in range, and apply damage
 	for body:Node2D in $Area2D.get_overlapping_bodies():
 		for group:StringName in target_groups:

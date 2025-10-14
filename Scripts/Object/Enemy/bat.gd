@@ -5,8 +5,9 @@ class_name Bat extends Enemy
 func _kill() -> void:
 	super()
 	$GPUParticles2D.emitting = true
-	if !$GPUParticles2D.is_connected("finished", queue_free):
-		$GPUParticles2D.finished.connect(queue_free)
+	if !respawn:
+		if !$GPUParticles2D.is_connected("finished", queue_free):
+			$GPUParticles2D.finished.connect(queue_free)
 
 func _movement(delta : float) -> void:
 	

@@ -281,7 +281,7 @@ func _visual_process(delta : float) -> void:
 	if weapon_visual:
 		var sword := get_player_sword()
 		if sword:
-			weapon_visual.update_visual(get_player_position(), sword.get_tip_global_position())
+			weapon_visual.update_visual(delta)
 			weapon_visual.update_audio(delta)
 
 #endregion
@@ -426,18 +426,18 @@ func set_movement_mode(mode : MovementMode) -> void:
 		MovementMode.NOCLIP:
 			set_collisions(false)
 
+## Teleport the player and sword to the target location.
+func teleport_to(pos : Vector2) -> void:
+	get_player_body().global_position = pos
+	get_player_sword().body.global_position = pos
+
 #endregion
 
 #region Damage/Death
 
 func _respawn() -> void:
 	
-	var body := get_player_body()
-	var sword := get_player_sword()
-	
-	# Teleport the sword along with the player to prevent weird stuff
-	body.global_position = respawn_pos
-	sword.body.global_position = respawn_pos
+	teleport_to(respawn_pos)
 	
 	time_respawning = 0
 	last_hit_time = get_invincibility_time()*-2

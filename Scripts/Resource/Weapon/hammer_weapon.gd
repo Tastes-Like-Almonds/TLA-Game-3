@@ -15,7 +15,8 @@ var hit_sound := SoundData.new("res://Assets/Sound/SFX/Player/Sword/Hammer Strik
 func init_weapon(player: Player) -> void:
 	super(player)
 	if not is_instance_valid(player) : return
-	player.sword_collision.connect(_explode)
+	if not player.sword_collision.is_connected(_explode):
+		player.sword_collision.connect(_explode)
 
 func _explode(collision: KinematicCollision2D) -> void:
 	if not collision: return
@@ -23,10 +24,9 @@ func _explode(collision: KinematicCollision2D) -> void:
 	
 	var sword := _wielder.get_player_sword()
 	var vel := (collision.get_remainder() + collision.get_travel()) / sword.last_delta
-	var vel_perc := vel.length() / _wielder.get_sword_speed()
+	var vel_perc := clampf(vel.length()*2 / _wielder.get_sword_speed(), 0.0, 1.0)
 	
-	if vel_perc < 0.1: return
-	if vel_perc < 0.5: vel_perc = 0.5
+	if vel_perc < 0.6: return
 	
 	var kb := vel.normalized()*vel_perc*MAX_STRENGTH*-1
 	kb *= Vector2(1.25, 0.75) # Favor horizontal movement
@@ -46,7 +46,7 @@ func _explode(collision: KinematicCollision2D) -> void:
 	var multi := fall_multi * _wielder.get_size_scale()
 	_wielder.apply_velocity(kb*multi)
 	# Only apply fall multi to knockback and size, as to keep damage balance.
-	Explosion.make_explosion(_wielder.get_parent(), sword.get_tip_global_position(), ["EnemyBody"], vel_perc*150*multi, 1*fall_multi, 500*multi)
+	Explosion.make_explosion(_wielder.get_parent(), sword.get_tip_global_position(), ["EnemyBody"], vel_perc*150*multi, 3*fall_multi, 500*multi)
 	GameCamera.set_current_camera_shake(_wielder.get_viewport(), 0.05*fall_multi)
 	cooldown = 0
 	fall_multi = 1.0

@@ -9,4 +9,4 @@ func get_dev_panel() -> DevPanel:
 
 func _ready() -> void:
 	Globals.main = self
-	LevelLoader.load_level("res://Scenes/Level/dev_level_2.tscn", self)
+	LevelLoader.load_level("res://Scenes/Level/dev_level_3.tscn", self)

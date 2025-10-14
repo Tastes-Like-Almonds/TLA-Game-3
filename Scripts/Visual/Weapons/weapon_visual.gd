@@ -98,7 +98,9 @@ func _get_spark_particles() -> GPUParticles2D:
 	return spark_particles
 
 ## Updates the position and rotation to match the origin and destination.
-func _update_position(origin : Vector2, dest : Vector2) -> void:
+func _update_position(_delta: float) -> void:
+	var origin := player.get_player_position()
+	var dest := player.get_player_sword().get_tip_global_position()
 	var sprite : Variant = _get_sprite()
 	sprite.global_position = dest
 	sprite.rotation = origin.direction_to(dest).angle() + deg_to_rad(rotation_offset)
@@ -166,8 +168,8 @@ func update_audio(_delta : float) -> void:
 
 ## Update the weapon visual. Origin is the start position and the destination is where the focus of the weapon is.
 ## For players, the origin should be the center and destination the sword tip.
-func update_visual(origin : Vector2, dest : Vector2) -> void: # TODO Replace by pulling origin and dest from the player.
-	_update_position(origin, dest)
+func update_visual(delta : float) -> void: # TODO Replace by pulling origin and dest from the player.
+	_update_position(delta)
 	_update_sparks()
 
 ## Set the player who owns this visual. Needed for most effects.
@@ -180,19 +182,19 @@ func _ready() -> void:
 	if not is_instance_valid(drag_sound_node):
 		drag_sound_node = AudioStreamPlayer2D.new()
 		drag_sound_node.stream = load(drag_sound)
-		drag_sound_node.autoplay = true
+		drag_sound_node.autoplay = false
 		_get_sprite().add_child(drag_sound_node)
 	
 	# Create swinging sound
 	if not is_instance_valid(swing_sound_node):
 		swing_sound_node = AudioStreamPlayer2D.new()
 		swing_sound_node.stream = load(swing_sound)
-		swing_sound_node.autoplay = true
+		swing_sound_node.autoplay = false
 		_get_sprite().add_child(swing_sound_node)
 	
 	# Create swinging sound
 	if not is_instance_valid(cable_sound_node):
 		cable_sound_node = AudioStreamPlayer2D.new()
 		cable_sound_node.stream = load(cable_sound)
-		cable_sound_node.autoplay = true
+		cable_sound_node.autoplay = false
 		_get_sprite().add_child(cable_sound_node)
