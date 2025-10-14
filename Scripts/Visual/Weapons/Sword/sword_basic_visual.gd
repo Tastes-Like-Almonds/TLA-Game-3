@@ -10,7 +10,7 @@ func update_visual(origin : Vector2, dest : Vector2) -> void:
 	
 	if is_instance_valid(line2D):
 		line_curve.add_point(dest + (dest.direction_to(origin)*sword_length/2))
-		line2D.width = sword_length
+		line2D.width = sword_length*player.get_size_scale()
 		
 		if line_curve.get_baked_points().size() > 50:
 			line_curve.remove_point(0)

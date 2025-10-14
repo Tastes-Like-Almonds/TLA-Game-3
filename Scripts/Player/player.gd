@@ -24,6 +24,7 @@ enum MovementMode {
 var property_modifiers : Dictionary[String, Array]
 
 var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0)
+var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0)
 
 #endregion
 
@@ -447,8 +448,8 @@ func _respawn() -> void:
 ## Handle the death of the player.
 func _death() -> void:
 	if dead: return
+	Sfx.play_sound_2d(death_sound, get_player_position(), false)
 	dead = true
-	print("A player has died!")
 
 ## Kill the player.
 func kill() -> void:

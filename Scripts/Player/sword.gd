@@ -66,10 +66,10 @@ func _get_target_pos() -> Vector2:
 func _update_blade(_delta : float) -> void:
 	var player := _get_player()
 	var player_pos := player.get_player_position()
-	var size := player_pos.distance_to(body.global_position)
+	var size := player_pos.distance_to(body.global_position)/player.get_size_scale()
 	blade.rotation = player_pos.direction_to(body.global_position).angle()
 	blade.collision_shape.shape.size.x = size
-	blade.global_position = body.global_position + body.global_position.direction_to(player_pos)*size/2
+	blade.global_position = body.global_position + body.global_position.direction_to(player_pos)*(size*player.get_size_scale()/2)
 	
 	var result := blade.get_overlapping_bodies()
 	
