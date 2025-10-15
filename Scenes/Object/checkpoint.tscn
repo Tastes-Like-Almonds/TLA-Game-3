@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://gargnc52j8ej" path="res://Assets/Sprites/Placeholder/Lantern Tall.png" id="3_du3s0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t3ilj"]
-size = Vector2(125, 125)
+size = Vector2(125, 125.5)
 
 [sub_resource type="Gradient" id="Gradient_du3s0"]
 colors = PackedColorArray(0.8026666, 0.86, 0, 1, 0.9333333, 1, 0, 0)
@@ -57,7 +57,7 @@ sprite_off = ExtResource("1_t3ilj")
 sprite_on = ExtResource("3_du3s0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -15)
+position = Vector2(0, -14.75)
 shape = SubResource("RectangleShape2D_t3ilj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

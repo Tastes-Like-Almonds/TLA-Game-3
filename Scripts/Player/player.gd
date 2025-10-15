@@ -393,6 +393,7 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	
 	elif event.is_action_released("use"):
 		stop_charging()
+		print_orphan_nodes()
 	
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()

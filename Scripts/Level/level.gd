@@ -1,7 +1,14 @@
 ## A base class for levels. 
 @abstract class_name Level extends Node2D
 
+signal on_load
+
 var level_config : LevelConfig
+
+@export_group("Files")
+@export_file_path("*.tscn") var level_ui_path : String = "res://Scenes/UI/level_ui.tscn"
+
+var current_ui : LevelUI
 
 ## Gets the spawn which the player should.. well.. spawn at.
 func _get_first_spawn() -> Node2D:
@@ -34,6 +41,11 @@ func _setup_player() -> void:
 		add_child(player)
 		player.get_player_sword().body.global_position = player.get_player_body().global_position
 
+## Instantiate and child the LevelUI. Must be registered to a player to display.
+func _setup_ui() -> void:
+	current_ui = load(level_ui_path).instantiate()
+	add_child(current_ui)
+
 func initialize(config : LevelConfig = null) -> void:
 	
 	if not config:
@@ -42,6 +54,8 @@ func initialize(config : LevelConfig = null) -> void:
 	
 	_setup_player()
 	_setup_camera()
+	
+	on_load.emit()
 
 static func get_level_data() -> void:
 	pass

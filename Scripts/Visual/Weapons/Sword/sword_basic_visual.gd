@@ -35,4 +35,5 @@ func _ready() -> void:
 	super()
 	line2D.points = []
 	line_curve.bake_interval = 1
-	line2D.width = sword_length*player.get_size_scale()
+	if is_instance_valid(player):
+		line2D.width = sword_length*player.get_size_scale()

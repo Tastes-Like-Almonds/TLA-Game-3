@@ -134,8 +134,6 @@ func _kill() -> void:
 	respawning = true # Respawn var is used even on permadeath to indicate a dying status
 	if respawn:
 		sprite.visible = false
-	else:
-		sprite.visible = false
 
 func _respawn() -> void:
 	sprite.visible = true
