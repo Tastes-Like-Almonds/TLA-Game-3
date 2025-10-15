@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bemlchhq0hubh"]
+[gd_scene load_steps=19 format=3 uid="uid://bemlchhq0hubh"]
 
 [ext_resource type="Script" uid="uid://cw7l8lthmtexr" path="res://Scripts/Object/BoostOrb/push_orb.gd" id="1_do7bd"]
 [ext_resource type="Resource" uid="uid://p0quv5g1b7ch" path="res://Resource/Sound/Orb/push_orb.tres" id="2_1dkb7"]
@@ -10,15 +10,27 @@ colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_1dkb7"]
 gradient = SubResource("Gradient_do7bd")
-width = 8
-height = 8
+width = 16
+height = 16
+
+[sub_resource type="Curve" id="Curve_1dkb7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.20812182, 0.6516854), 0.0, 0.0, 0, 0, Vector2(0.99999, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_g0kd0"]
+curve = SubResource("Curve_1dkb7")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g0kd0"]
 particle_flag_disable_z = true
+angle_min = -454.69998
+angle_max = 285.0
 spread = 180.0
 initial_velocity_min = 200.0
 initial_velocity_max = 250.0
+angular_velocity_min = -90.95001
+angular_velocity_max = 181.88998
 gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_g0kd0")
 
 [sub_resource type="Gradient" id="Gradient_posbj"]
 colors = PackedColorArray(0.53800005, 1, 0.16000003, 1, 0.33693138, 0.6306262, 4.813075e-06, 0)
@@ -75,7 +87,7 @@ sound = ExtResource("2_1dkb7")
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 modulate = Color(0.13049997, 0.87, 0, 1)
 emitting = false
-amount = 20
+amount = 14
 texture = SubResource("GradientTexture2D_1dkb7")
 lifetime = 0.25
 one_shot = true

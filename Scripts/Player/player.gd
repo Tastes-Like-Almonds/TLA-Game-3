@@ -5,6 +5,9 @@ class_name Player extends Node2D
 @warning_ignore("unused_signal")
 signal sword_collision(collision : KinematicCollision2D)
 
+## Fired when the player's repsawn point is updated to a **different** value.
+signal respawn_point_changed(new : Vector2)
+
 var last_collision : KinematicCollision2D = null
 
 enum MovementMode {
@@ -83,7 +86,13 @@ var time_respawning : float = 0.0
 var dead : bool = false
 
 ## The global position the player will respawn at.
-var respawn_pos : Vector2
+var respawn_pos : Vector2:
+	set(new):
+		if new != respawn_pos:
+			respawn_pos = new # Done before the signal emits
+			respawn_point_changed.emit(new)
+		else:
+			respawn_pos = new
 #endregion
 
 #region Getters

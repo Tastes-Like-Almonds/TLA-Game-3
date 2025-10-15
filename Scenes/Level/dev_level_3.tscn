@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://bpxes1cbm8ooa"]
+[gd_scene load_steps=26 format=4 uid="uid://bpxes1cbm8ooa"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_7j8as"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_b53cy"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://c8llnuotmeqca" path="res://Scripts/Resource/Weapon/hammer_weapon.gd" id="12_l4vpu"]
 [ext_resource type="PackedScene" uid="uid://dtslq1erjqgho" path="res://Scenes/Visual/proximity_text.tscn" id="13_cqplk"]
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="14_xmomf"]
+[ext_resource type="PackedScene" uid="uid://c6cqn4qbed04l" path="res://Scenes/Object/checkpoint.tscn" id="15_xmomf"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -41,12 +42,12 @@ adjustment_enabled = true
 adjustment_contrast = 1.13
 
 [sub_resource type="Gradient" id="Gradient_7j8as"]
-offsets = PackedFloat32Array(0, 0.40444446)
-colors = PackedColorArray(0.77, 0, 0.102666564, 0, 0.7345204, 0, 0.044665776, 1)
+offsets = PackedFloat32Array(0, 0.7069768)
+colors = PackedColorArray(0.31173578, 0.45934063, 0.14966008, 0, 0.30821064, 0.7191204, 1.347661e-06, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_b53cy"]
 gradient = SubResource("Gradient_7j8as")
-fill_from = Vector2(0.45171338, 0.05919003)
+fill_from = Vector2(0.47435898, 0.115384616)
 fill_to = Vector2(0.47975078, 1)
 
 [sub_resource type="Gradient" id="Gradient_cdmcw"]
@@ -68,9 +69,10 @@ script = ExtResource("1_7j8as")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -10
-position = Vector2(-3464.0002, 319)
+position = Vector2(-60.000244, 1271)
 scale = Vector2(505.0625, 248.3948)
 texture = SubResource("GradientTexture2D_0t62c")
+offset = Vector2(-6.73976, -3.8326082)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(0, 1)
@@ -109,16 +111,15 @@ position = Vector2(-9307, 3047)
 position = Vector2(-6941, 1477)
 scale = Vector2(22.624956, 6.338973)
 target_node = NodePath("../TeleportPos1")
+teleport_to_spawn = false
 
-[node name="TeleportZone2" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("6_g7fmc")]
+[node name="TeleportZone2" parent="." instance=ExtResource("6_g7fmc")]
 position = Vector2(-2024.9998, 1357)
 scale = Vector2(15.792026, -12.0200205)
-target_node = NodePath("../TeleportPos2")
 
-[node name="TeleportZone3" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("6_g7fmc")]
+[node name="TeleportZone3" parent="." instance=ExtResource("6_g7fmc")]
 position = Vector2(-317, 1361)
 scale = Vector2(17.46287, -12.0200205)
-target_node = NodePath("../TeleportPos3")
 
 [node name="ExplosionOrbs" type="Node2D" parent="."]
 
@@ -172,12 +173,6 @@ respawn_time = 0.5
 [node name="TeleportPos1" type="Node2D" parent="."]
 position = Vector2(-8094, 532)
 
-[node name="TeleportPos2" type="Node2D" parent="."]
-position = Vector2(-2445, 415)
-
-[node name="TeleportPos3" type="Node2D" parent="."]
-position = Vector2(-1333, 415)
-
 [node name="Bat" parent="." instance=ExtResource("7_xmomf")]
 position = Vector2(-4997, 620)
 
@@ -187,6 +182,11 @@ position = Vector2(-5497, 689)
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 position = Vector2(-6958.5, 1918.5)
 scale = Vector2(31.609373, 27.078125)
+texture = SubResource("GradientTexture2D_b53cy")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(300.99994, 1508.5)
+scale = Vector2(81.34374, 34.92187)
 texture = SubResource("GradientTexture2D_b53cy")
 
 [node name="Lighting" type="Node" parent="."]
@@ -277,10 +277,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -733.0
-offset_top = -316.0
-offset_right = 166.0
-offset_bottom = -43.0
+offset_left = -910.0
+offset_top = -102.0
+offset_right = -11.0
+offset_bottom = 171.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -293,3 +293,12 @@ fit_content = true
 horizontal_alignment = 1
 min_distance = 600.0
 max_distance = 1500.0
+
+[node name="Checkpoint" parent="." instance=ExtResource("15_xmomf")]
+position = Vector2(-9515, 3074)
+
+[node name="Checkpoint2" parent="." instance=ExtResource("15_xmomf")]
+position = Vector2(-2424, 482)
+
+[node name="Checkpoint3" parent="." instance=ExtResource("15_xmomf")]
+position = Vector2(-1331, 480)
