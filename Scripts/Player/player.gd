@@ -8,6 +8,9 @@ signal sword_collision(collision : KinematicCollision2D)
 ## Fired when the player's repsawn point is updated to a **different** value.
 signal respawn_point_changed(new : Vector2)
 
+## Fires when the player's health is set to a different value through any means.
+signal health_changed(new : float)
+
 var last_collision : KinematicCollision2D = null
 
 enum MovementMode {
@@ -68,7 +71,11 @@ var movement_mode : MovementMode = MovementMode.SWORD_ORBIT
 var held_weapons : Array[Weapon] = []
 
 ## The player's current health.
-var health : float = properties.max_health
+var health : float = properties.max_health:
+	set(new):
+		if new != health:
+			health_changed.emit(new)
+		health = new
 
 ## The amount of time since damage was last taken.
 var last_hit_time : float = 0.0
@@ -185,6 +192,10 @@ func get_sword_speed() -> float:
 func get_sword_speed_damage() -> float:
 	return get_modified_property("sword_speed_damage")
 
+## Returns the max health of the player.
+func get_max_health() -> float:
+	return get_modified_property("max_health")
+
 ## Gets the player's body.
 func get_player_body() -> PlayerBody:
 	
@@ -274,7 +285,7 @@ func _clear_visuals() -> void:
 func _visual_process(delta : float) -> void:
 	
 	visible = not dead
-	
+
 	# Update player rotation
 	var body : PlayerBody = get_player_body()
 	if body:
