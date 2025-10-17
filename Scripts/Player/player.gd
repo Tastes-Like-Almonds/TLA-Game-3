@@ -5,6 +5,12 @@ class_name Player extends Node2D
 @warning_ignore("unused_signal")
 signal sword_collision(collision : KinematicCollision2D)
 
+## Fired when the player's repsawn point is updated to a **different** value.
+signal respawn_point_changed(new : Vector2)
+
+## Fires when the player's health is set to a different value through any means.
+signal health_changed(new : float)
+
 var last_collision : KinematicCollision2D = null
 
 enum MovementMode {
@@ -65,7 +71,11 @@ var movement_mode : MovementMode = MovementMode.SWORD_ORBIT
 var held_weapons : Array[Weapon] = []
 
 ## The player's current health.
-var health : float = properties.max_health
+var health : float = properties.max_health:
+	set(new):
+		if new != health:
+			health_changed.emit(new)
+		health = new
 
 ## The amount of time since damage was last taken.
 var last_hit_time : float = 0.0
@@ -83,7 +93,13 @@ var time_respawning : float = 0.0
 var dead : bool = false
 
 ## The global position the player will respawn at.
-var respawn_pos : Vector2
+var respawn_pos : Vector2:
+	set(new):
+		if new != respawn_pos:
+			respawn_pos = new # Done before the signal emits
+			respawn_point_changed.emit(new)
+		else:
+			respawn_pos = new
 #endregion
 
 #region Getters
@@ -176,6 +192,10 @@ func get_sword_speed() -> float:
 func get_sword_speed_damage() -> float:
 	return get_modified_property("sword_speed_damage")
 
+## Returns the max health of the player.
+func get_max_health() -> float:
+	return get_modified_property("max_health")
+
 ## Gets the player's body.
 func get_player_body() -> PlayerBody:
 	
@@ -265,7 +285,7 @@ func _clear_visuals() -> void:
 func _visual_process(delta : float) -> void:
 	
 	visible = not dead
-	
+
 	# Update player rotation
 	var body : PlayerBody = get_player_body()
 	if body:
@@ -384,6 +404,7 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	
 	elif event.is_action_released("use"):
 		stop_charging()
+		print_orphan_nodes()
 	
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()
@@ -551,7 +572,7 @@ func _ready() -> void:
 	lives = get_modified_property("max_lives")
 	add_weapon(get_modified_property("starting_weapon"))
 	equip_weapon_slot(0)
-	Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
+	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.
 func set_last_collision(collision:KinematicCollision2D) -> void:

@@ -62,6 +62,7 @@ adjustment_contrast = 1.13
 script = ExtResource("1_16du6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -10
 position = Vector2(-3503.999, 323.36548)
 scale = Vector2(505.0625, 248.3948)
 texture = SubResource("GradientTexture2D_0t62c")

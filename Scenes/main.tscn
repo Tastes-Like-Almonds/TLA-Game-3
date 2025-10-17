@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://birc57pmi5hwh"]
+[gd_scene load_steps=9 format=3 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="Theme" uid="uid://1q4kixjfk3u0" path="res://Resource/Theme/dev_panel.tres" id="1_344ge"]
 [ext_resource type="Script" uid="uid://bt4l1nsa4vgma" path="res://Scripts/main.gd" id="1_d1ilt"]
@@ -6,15 +6,26 @@
 [ext_resource type="PackedScene" uid="uid://dcwd3n7bnqbg8" path="res://Scenes/Debug/DevPanel/Player/player_dev_category.tscn" id="3_hptm8"]
 [ext_resource type="PackedScene" uid="uid://cduiqyk45vxko" path="res://Scenes/Debug/DevPanel/Level/level_dev_category.tscn" id="5_6iyac"]
 
+[sub_resource type="Gradient" id="Gradient_kry3j"]
+colors = PackedColorArray(0.7647408, 0.80606586, 0.87960994, 0.15294118, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mluhb"]
+gradient = SubResource("Gradient_kry3j")
+fill_from = Vector2(0.33760685, 0.03846154)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_21xkr"]
+texture = SubResource("GradientTexture2D_mluhb")
+
 [node name="main" type="Node"]
 script = ExtResource("1_d1ilt")
 
 [node name="UI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+visible = false
 
 [node name="DevPanel" type="Control" parent="UI"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -76,3 +87,8 @@ layout_mode = 2
 [node name="Level" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2" instance=ExtResource("5_6iyac")]
 layout_mode = 2
 size_flags_vertical = 1
+
+[node name="Panel" type="Panel" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_21xkr")

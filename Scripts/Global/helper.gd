@@ -20,6 +20,14 @@ func get_closest_player(origin:Vector2, distance_limit : float = 10000000) -> Pl
 			return node
 	return null
 
+## Returns all player nodes in the tree. Note that they must both be Players and have the Player tag.
+func get_all_players() -> Array[Player]:
+	var players : Array[Player] = []
+	for node in get_tree().get_nodes_in_group("Player"):
+		if node is Player:
+			players.append(node)
+	return players
+
 ## Returns the vector between the center of the screen and the mouse.
 func get_mouse_vec_from_center() -> Vector2:
 	var center := get_viewport().get_mouse_position()

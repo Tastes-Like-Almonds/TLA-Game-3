@@ -1,0 +1,134 @@
+[gd_scene load_steps=6 format=3 uid="uid://caj0mx5twqcfe"]
+
+[ext_resource type="Script" uid="uid://l7uxjyga8ie7" path="res://Scripts/UI/level_ui.gd" id="1_xjiw8"]
+[ext_resource type="Texture2D" uid="uid://dr3fx4as1q5if" path="res://Assets/Sprites/Placeholder/Heart Placeholder.png" id="2_pkx18"]
+[ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="3_vk2nj"]
+[ext_resource type="Script" uid="uid://dvoymdlu627u5" path="res://Scripts/UI/hotbar.gd" id="4_m0wgp"]
+[ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Sprites/Placeholder/sword.png" id="4_tk1ol"]
+
+[node name="LevelUI" type="CanvasLayer"]
+script = ExtResource("1_xjiw8")
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Health" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthBar" type="TextureProgressBar" parent="Control/Health"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 92.0
+offset_top = -124.0
+offset_right = 132.0
+offset_bottom = -84.0
+grow_vertical = 0
+scale = Vector2(4, 4)
+max_value = 1.0
+step = 0.01
+value = 0.6
+fill_mode = 4
+nine_patch_stretch = true
+texture_under = ExtResource("2_pkx18")
+texture_progress = ExtResource("2_pkx18")
+tint_under = Color(1, 1, 1, 0.2901961)
+
+[node name="Label" type="Label" parent="Control/Health/HealthBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.75
+offset_top = -31.5
+offset_right = 33.25
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(1, 0.42000002, 0.42000002, 1)
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 32
+text = "5/10"
+horizontal_alignment = 1
+
+[node name="Hotbar" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_m0wgp")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Hotbar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Hotbar/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Control/Hotbar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("4_tk1ol")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="TextureRect3" type="TextureRect" parent="Control/Hotbar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("4_tk1ol")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="TextureRect4" type="TextureRect" parent="Control/Hotbar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("4_tk1ol")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="TemplateItem" type="TextureRect" parent="Control/Hotbar"]
+visible = false
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 0
+offset_left = 754.0
+offset_top = 960.0
+offset_right = 854.0
+offset_bottom = 1060.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = ExtResource("4_tk1ol")
+expand_mode = 3
+stretch_mode = 4

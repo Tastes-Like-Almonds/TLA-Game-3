@@ -48,6 +48,13 @@ static func damage_display(parent:Node, pos:Vector2, txt : String, direction:Vec
 		Vector2(size_scale,size_scale),
 		anim_time
 	)
+	tween.tween_property(
+		label,
+		"rotation",
+		randf_range(-PI/6,PI/6),
+		anim_time
+	)
+	
 	
 	var fade_tween := tree.create_tween()
 	var invis_color := color
