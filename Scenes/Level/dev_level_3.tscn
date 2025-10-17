@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://bpxes1cbm8ooa"]
+[gd_scene load_steps=30 format=4 uid="uid://bpxes1cbm8ooa"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_7j8as"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_b53cy"]
@@ -14,6 +14,11 @@
 [ext_resource type="Script" uid="uid://c8llnuotmeqca" path="res://Scripts/Resource/Weapon/hammer_weapon.gd" id="12_l4vpu"]
 [ext_resource type="PackedScene" uid="uid://dtslq1erjqgho" path="res://Scenes/Visual/proximity_text.tscn" id="13_cqplk"]
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="14_xmomf"]
+[ext_resource type="Texture2D" uid="uid://dk1h5mae4wmv4" path="res://Assets/Background/Gutter/gutterbg1_0004_Layer-11.png" id="15_xmomf"]
+[ext_resource type="Texture2D" uid="uid://tky0b6n8pqkt" path="res://Assets/Background/Gutter/gutterbg1_0003_Layer-10.png" id="16_ulvh8"]
+[ext_resource type="Texture2D" uid="uid://dgfgnqurx58u" path="res://Assets/Background/Gutter/gutterbg1_0000_Layer-12.png" id="17_3ygch"]
+[ext_resource type="Texture2D" uid="uid://bbei7nfusax84" path="res://Assets/Background/Gutter/gutterbg1_0002_Layer-16.png" id="17_gp40w"]
+[ext_resource type="Texture2D" uid="uid://b70umc27oitis" path="res://Assets/Background/Gutter/gutterbg1_0001_Layer-15.png" id="18_gp40w"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -67,6 +72,7 @@ metadata/_custom_type_script = "uid://c8llnuotmeqca"
 script = ExtResource("1_7j8as")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 z_index = -10
 position = Vector2(-3464.0002, 319)
 scale = Vector2(505.0625, 248.3948)
@@ -293,3 +299,52 @@ fit_content = true
 horizontal_alignment = 1
 min_distance = 600.0
 max_distance = 1500.0
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Parallax2D" type="Parallax2D" parent="Background"]
+z_index = -10
+scale = Vector2(16, 16)
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(-80, 1604)
+repeat_size = Vector2(480, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D"]
+texture = ExtResource("15_xmomf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background/Parallax2D"]
+texture = ExtResource("16_ulvh8")
+offset = Vector2(0, -83)
+
+[node name="Parallax2D3" type="Parallax2D" parent="Background"]
+z_index = -10
+scale = Vector2(16, 16)
+scroll_scale = Vector2(0.2, 0.8)
+scroll_offset = Vector2(-80, 1604)
+repeat_size = Vector2(480, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background/Parallax2D3"]
+texture = ExtResource("17_gp40w")
+offset = Vector2(0, -89)
+
+[node name="Parallax2D4" type="Parallax2D" parent="Background"]
+z_index = -10
+scale = Vector2(16, 16)
+scroll_scale = Vector2(0.4, 0.8)
+scroll_offset = Vector2(-80, 1604)
+repeat_size = Vector2(480, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background/Parallax2D4"]
+texture = ExtResource("18_gp40w")
+offset = Vector2(0, -47)
+
+[node name="Parallax2D2" type="Parallax2D" parent="Background"]
+z_index = -10
+scale = Vector2(16, 16)
+scroll_scale = Vector2(0.6, 0.8)
+scroll_offset = Vector2(-80, 1604)
+repeat_size = Vector2(480, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background/Parallax2D2"]
+texture = ExtResource("17_3ygch")
+offset = Vector2(0, -78)
