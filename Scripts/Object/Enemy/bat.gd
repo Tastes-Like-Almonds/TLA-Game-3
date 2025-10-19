@@ -11,6 +11,8 @@ func _kill() -> void:
 
 func _movement(delta : float) -> void:
 	
+	collision_shape.disabled = respawning
+	
 	velocity *= pow(0.2, delta)
 	
 	movement_cooldown -= delta
