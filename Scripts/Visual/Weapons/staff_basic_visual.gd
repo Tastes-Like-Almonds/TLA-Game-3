@@ -9,7 +9,7 @@ var point_wait_delay : float = 0.05
 var current_wait_delay: float = 0.0
 
 func get_hotbar_sprite() -> Texture2D:
-	return load("res://Assets/Sprites/Placeholder/sword.png")
+	return load("res://Assets/Sprites/Placeholder/staff_placeholder.png")
 
 func update_visual(delta : float) -> void:
 	current_wait_delay += delta
