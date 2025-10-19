@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SoundData" load_steps=2 format=3 uid="uid://p0quv5g1b7ch"]
+
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="1_xdmdd"]
+
+[resource]
+script = ExtResource("1_xdmdd")
+sound_string = "res://Assets/Sound/SFX/Orb/Jump Orb.wav"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"

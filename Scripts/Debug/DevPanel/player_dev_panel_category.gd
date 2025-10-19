@@ -24,6 +24,9 @@ func update_select_player_dropdown() -> void:
 	select_player_node.clear()
 	possible_players.clear()
 	
+	var dev_panel := _get_dev_panel()
+	if dev_panel == null: return
+	
 	for player in _get_dev_panel().get_all_players():
 		select_player_node.add_item(player.name)
 	
@@ -47,7 +50,7 @@ func set_selected_player() -> void:
 func update_set_stat_dropdown() -> void:
 	set_stat_stat_select.clear()
 	if not is_instance_valid(target_player) : return
-	for stat in target_player.get_property_list():
+	for stat in target_player.properties.get_property_list():
 		if stat["type"] == Variant.Type.TYPE_FLOAT:
 			if stat["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE: # Only exported vars
 				set_stat_stat_select.add_item(stat["name"])
@@ -60,7 +63,7 @@ func update_selected_stat_desc() -> void:
 	if meta["type"] != Variant.Type.TYPE_FLOAT : return
 	if not (meta["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE) : return
 	
-	var current : float = target_player.get(meta["name"])
+	var current : float = target_player.properties.get(meta["name"])
 	set_stat_current_val.text = "Current value: " + str(current)
 	set_stat_val.value = current
 
@@ -71,7 +74,7 @@ func update_selected_player_stat(val : float) -> void:
 	if meta["type"] != Variant.Type.TYPE_FLOAT : return
 	if not (meta["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE) : return
 	
-	target_player.set(meta["name"], val)
+	target_player.properties.set(meta["name"], val)
 	update_selected_stat_desc()
 
 #endregion

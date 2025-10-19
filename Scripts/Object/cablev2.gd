@@ -4,6 +4,12 @@ class_name Cable
 @onready var line := $Line2D
 @export var cable_drag : float = 0.5
 
+## Speed required to reach maximum screen shake
+@export var speed_shake_max : float = 100
+
+## The maximum that the camera will shake will on the cable.
+@export var screen_shake_max : float = 0.02
+
 func _render_line() -> void:
 	line.clear_points()
 	for point in curve.get_baked_points():
@@ -45,30 +51,40 @@ func _physics_process(delta: float) -> void:
 
 		# Update if the player is attached
 		if sword.on_cable == self:
+			
+			var dir := Vector2.ZERO
+			
+			if is_finite(offset):
+				var current_offset_pos : Vector2 = curve.sample_baked(offset)
+				var next_offset_pos : Vector2 = curve.sample_baked(offset + sword.cable_speed*delta)
+				var og_pos : Vector2 = sword.get_tip_global_position()
 				
-				var dir := Vector2.ZERO
+				dir = current_offset_pos.direction_to(next_offset_pos)
 				
-				if is_finite(offset):
-					var current_offset_pos : Vector2 = curve.sample_baked(offset)
-					var next_offset_pos : Vector2 = curve.sample_baked(offset + sword.cable_speed*delta)
-					var og_pos : Vector2 = sword.get_tip_global_position()
+				GameCamera.set_current_camera_shake(get_viewport(),clampf(sword.cable_speed/speed_shake_max,0.0,1.0)*screen_shake_max)
+				
+				var target : Vector2 = current_offset_pos
+				if next_offset_pos.x-current_offset_pos.x < 0:
+					sword.cable_speed += dir.y*player.get_cable_gravity()
+					target = to_global(curve.get_closest_point(to_local(closest + dir*sword.cable_speed*delta)))
+					sword.body.global_position = target
 					
-					dir = current_offset_pos.direction_to(next_offset_pos)
-					
-					if next_offset_pos.x-current_offset_pos.x < 0:
-						sword.cable_speed += dir.y*player.get_cable_gravity()
-						sword.body.global_position = to_global(curve.get_closest_point(to_local(closest + dir*sword.cable_speed*delta)))
-						
-					elif next_offset_pos.x-current_offset_pos.x > 0:
-						sword.cable_speed -= dir.y*player.get_cable_gravity()
-						sword.body.global_position = to_global(curve.get_closest_point(to_local(closest - dir*sword.cable_speed*delta)))
-					
-					sword.last_sword_velocity = (sword.body.global_position - og_pos) * 1/delta
-					
-					sword.cable_speed *= pow(cable_drag, delta)
+				elif next_offset_pos.x-current_offset_pos.x > 0:
+					sword.cable_speed -= dir.y*player.get_cable_gravity()
+					target = to_global(curve.get_closest_point(to_local(closest - dir*sword.cable_speed*delta)))
+					sword.body.global_position = target
+				
+				if is_equal_approx((current_offset_pos.distance_to(target)), 0.0):
+					sword.exit_cable()
+					return 
+				
+				sword.last_sword_velocity = (sword.body.global_position - og_pos) * 1/delta
+				
+				sword.cable_speed *= pow(cable_drag, delta)
 
 		# Attach to the cable if the player's sword crosses it
-		elif (old_sword_pos.y < closest.y and sword.get_tip_global_position().y >= closest.y) or (old_sword_pos.x < closest.x and sword.get_tip_global_position().x >= closest.x):
+		# Yeah, I know the "or"s are ugly, but I don't feel like making it better.
+		elif (old_sword_pos.y < closest.y and sword.get_tip_global_position().y >= closest.y) or (old_sword_pos.x < closest.x and sword.get_tip_global_position().x >= closest.x) or (old_sword_pos.x > closest.x and sword.get_tip_global_position().x <= closest.x):
 			if absf(old_sword_pos.x - closest.x) < grip_threshold and not _offset_out_of_range(offset):
 				sword.body.global_position = closest
 				

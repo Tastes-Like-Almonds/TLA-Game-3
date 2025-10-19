@@ -47,7 +47,14 @@ Also, sounds may need to be remade as time goes on. Quality SFX is more importan
 - Sword slash sound
 	- <0.5s
 		- Played when it hits something living, so make it a satisfying impact sound.
-
+- Bat hit sound <0.25s
+	- Squeak
+- UI Sounds <0.5s
+	- Best to use jummbox or jsfxr for these specifically
+	- UI Hover
+	- UI Select
+	- UI Exit
+	- UI Enter
 ### Art
 
 **High Priority (<1 week of time from first meeting)**
@@ -71,7 +78,34 @@ Also, sounds may need to be remade as time goes on. Quality SFX is more importan
 		- Make 2 circles for each ground type (example under "Tileset Example"). One is for the interior of the ground, the other is for the exterior
 		- Use the rest of the space in the file for props, environment, or other ground types. Two ground types per environment is preferred, though sometimes not necessary.
 		- We are going to need a few of these, so make sure to save each file you make so you can use it as a template for the next.
-
+- Weapon sprites 16x16
+	- Sword (Longsword)
+	- Hammer (Make the head pretty large)
+	- Staff (Purple present somewhere)
+**Medium priority**
+- Bat for first area, just 3-5 frame flying animation
+- Boost Orbs
+	- 16x16 circles, with symbols in the center representing their effect
+	- A light idle animation as well, just 2-3 frames. Each animation will be played at the same speed, so keep that in mind.
+	- Jump Orb
+		- Arrows pointing **up**, green
+	- Gravity orb
+		- Purple
+	- Explosion orb
+		- Red
+	- Teleport orb
+		- Cyan
+	- Shield Orb
+		- Gray
+	- Shrink orb
+		- Some different color
+	- Grow orb
+		- Some different color
+- Checkpoint lantern (16x32)
+	- A standing lantern
+	- Lit (2+ frames)
+	- Unlit
+	- Lighting animation (2-4 frames)
 ### Story
 
 **High Priority**

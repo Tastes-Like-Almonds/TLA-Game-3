@@ -5,7 +5,7 @@ extends BoostOrb
 ## If true, reverses the gravity of the player when tocuhed. If false, it sets it back to normal. 
 @export var reverse : bool = true
 
-func on_sword_hit(player : Player) -> void:
+func hit_effect(player : Player) -> void:
 	super(player)
 	$GPUParticles2D.emitting = true
 	if reverse:

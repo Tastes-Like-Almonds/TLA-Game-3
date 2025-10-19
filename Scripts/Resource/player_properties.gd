@@ -15,7 +15,7 @@ class_name PlayerProperties extends Resource
 @export var max_lives : int = 3
 
 ## Maximum health of the player. Does not regenerate.
-@export var max_health : int = 2
+@export var max_health : float = 10.0
 
 ## The minimum amount of time required to pass betewen damage.
 @export var invincibility_time : float = 0.5
@@ -24,7 +24,7 @@ class_name PlayerProperties extends Resource
 @export var respawn_time : float = 2.0
 
 ## The base damage of the sword.
-@export var sword_damage : float = 10.0
+@export var sword_damage : float = 6
 
 ## The speed of the sword required to reach max damage.
 @export var sword_speed_damage : float = 3000.0
@@ -33,7 +33,7 @@ class_name PlayerProperties extends Resource
 @export_group("Sword")
 
 ## Speed at which the sword moves. This also affects its strength of pushing.
-@export var sword_speed : float = 30
+@export var sword_speed : float = 6000
 
 ## The maximum distance from the sword tip to the player (Soft limit)
 @export var max_distance : float = 140.0
@@ -42,7 +42,7 @@ class_name PlayerProperties extends Resource
 @export var min_distance : float = 10.0
 
 ## The strength of the player; the sword flings more when higher.
-@export_range(0,5, 0.1) var strength : float = 2.5
+@export_range(0,5, 0.1) var strength : float = 1.25
 
 ## The strength of the player when in player orbit mode.
 @export var player_orbit_strength : float = 10.0
@@ -65,6 +65,9 @@ class_name PlayerProperties extends Resource
 
 # --- #
 @export_group("Physics")
+
+## Size multiplier of the player. Also affects sword distance.
+@export_range(0.1,5,0.1) var size_scale : float = 1.0
 
 ## The speed which the player falls.
 @export_range(0,3000, 1.0) var gravity : float = 3000.0
@@ -111,5 +114,16 @@ func get_modified(property : String , modifiers : Array[PropertyModifier]) -> Va
 		var typed_mods := _get_modifiers_of_type(type_enum, modifiers)
 		if p is float:
 			p = PropertyModifier.apply_all(typed_mods, p)
+	
+	if property == "max_distance":
+		p*=size_scale
+	if property == "min_distance":
+		p*=size_scale
+	if property == "gravity":
+		p*=size_scale
+	if property == "sword_speed":
+		p*=size_scale
+	if property == "cable_gravity":
+		p*=size_scale
 	
 	return p

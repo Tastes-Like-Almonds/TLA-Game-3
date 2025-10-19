@@ -9,6 +9,8 @@ class_name BoostOrb extends StaticBody2D
 ## The bob animation speed
 @export var bob_speed : float = 1.0
 
+@export var sound : SoundData = null
+
 ## The current time spent in the bob animation, resets after 2PI
 var bob_time : float = 0.0
 
@@ -19,8 +21,16 @@ var alive : bool = true
 
 var current_respawn_time : float = 0.0
 
-func on_sword_hit(_player : Player) -> void:
+func hit_effect(_player : Player) -> void:
+	pass
+
+func on_sword_hit(player : Player) -> void:
 	if not alive: return
+	hit_effect(player)
+	
+	if sound != null:
+		Sfx.play_sound_2d(sound, global_position)
+	
 	alive = false
 
 func _process(delta: float) -> void:

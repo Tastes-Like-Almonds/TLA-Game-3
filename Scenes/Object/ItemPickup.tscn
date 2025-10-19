@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c6v3xg31w6tg1"]
+[gd_scene load_steps=6 format=3 uid="uid://c6v3xg31w6tg1"]
 
 [ext_resource type="Script" uid="uid://bjfeea0vc7lrw" path="res://Scripts/Object/item_pickup.gd" id="1_qpo8m"]
 [ext_resource type="Script" uid="uid://86ql3wpw6djb" path="res://Scripts/Resource/Weapon/sword_weapon.gd" id="2_3bsq7"]
+[ext_resource type="Script" uid="uid://cus285jjws48n" path="res://Scripts/Object/item_pickup_area.gd" id="3_ofxu4"]
 
 [sub_resource type="Resource" id="Resource_ofxu4"]
 script = ExtResource("2_3bsq7")
@@ -14,9 +15,10 @@ size = Vector2(32, 32)
 script = ExtResource("1_qpo8m")
 weapon = SubResource("Resource_ofxu4")
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 0
+[node name="Area2D" type="Area2D" parent="." groups=["BladeHitable"]]
+collision_layer = 8
 collision_mask = 2
+script = ExtResource("3_ofxu4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_ihu7q")

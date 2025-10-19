@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy08ytqlliiow"]
+
+[ext_resource type="Script" uid="uid://c1i6sw6q62a3e" path="res://Scripts/Visual/Particles/text_display.gd" id="1_aojie"]
+
+[node name="TextDisplay" type="Node2D"]
+script = ExtResource("1_aojie")

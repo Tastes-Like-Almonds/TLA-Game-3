@@ -22,6 +22,10 @@ var last_result : Array[Node2D]
 var velocity : Vector2 = Vector2.ZERO # Only used for specific movement mode(s)
 var on_cable : Cable = null
 var cable_speed : float = 0.0
+var last_delta : float = 0.0
+
+## The percentage of velocity the sword is at to its maximum.
+var vel_perc : float
 
 func _get_player() -> Player:
 	if get_parent() is Player:
@@ -62,12 +66,13 @@ func _get_target_pos() -> Vector2:
 func _update_blade(_delta : float) -> void:
 	var player := _get_player()
 	var player_pos := player.get_player_position()
-	var size := player_pos.distance_to(body.global_position)
+	var size := player_pos.distance_to(body.global_position)/player.get_size_scale()
 	blade.rotation = player_pos.direction_to(body.global_position).angle()
 	blade.collision_shape.shape.size.x = size
-	blade.global_position = body.global_position + body.global_position.direction_to(player_pos)*size/2
+	blade.global_position = body.global_position + body.global_position.direction_to(player_pos)*(size*player.get_size_scale()/2)
 	
 	var result := blade.get_overlapping_bodies()
+	result.append_array(blade.get_overlapping_areas())
 	
 	for hit in result:
 		if hit in last_result: continue; # Prevent multiple hits while colliding
@@ -80,6 +85,8 @@ func _update_blade(_delta : float) -> void:
 
 func _physics_process(delta: float) -> void:
 	
+	last_delta = delta
+	
 	var player : Player = _get_player()
 	if not player.is_alive(): return
 	
@@ -89,9 +96,22 @@ func _physics_process(delta: float) -> void:
 		
 		player.MovementMode.SWORD_ORBIT:
 			var target_pos := _get_target_pos()
-			var movement := body.global_position.direction_to(target_pos)*player.get_sword_speed()*delta*body.global_position.distance_to(target_pos)
+			#var next_velocity := body.global_position.direction_to(target_pos)*player.get_sword_speed()*body.global_position.distance_to(target_pos)
+			var next_velocity := body.global_position.direction_to(target_pos)*player.get_sword_speed()
+			var movement := next_velocity*delta
 			
-			last_sword_velocity = movement / delta # Get velocity per second as opposed to the frame
+			# Ensure movement doesn't pass target position
+			var current_pos := body.global_position
+			var future_pos := body.global_position + movement
+			
+			if (current_pos.x < target_pos.x) != (future_pos.x < target_pos.x):
+				movement.x = target_pos.x - current_pos.x
+			if (current_pos.y < target_pos.y) != (future_pos.y < target_pos.y):
+				movement.y = target_pos.y - current_pos.y
+			
+			vel_perc = movement.length() / next_velocity.length()
+			
+			last_sword_velocity = movement/delta # Get velocity per second as opposed to the frame
 			last_frame_pos = body.global_position
 			
 			if not on_cable:
