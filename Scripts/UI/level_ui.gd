@@ -6,7 +6,7 @@ class_name LevelUI extends CanvasLayer
 
 @export_group("Health Bar")
 
-@export var pulse_speed : float = 15.0
+@export var pulse_speed : float = 10.0
 
 @export var pulse_size_multi : float = 0.1515
 
