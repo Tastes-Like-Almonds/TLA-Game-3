@@ -204,3 +204,5 @@ func _ready() -> void:
 		cable_sound_node.stream = load(cable_sound)
 		cable_sound_node.autoplay = false
 		_get_sprite().add_child(cable_sound_node)
+
+@abstract func get_hotbar_sprite() -> Texture2D

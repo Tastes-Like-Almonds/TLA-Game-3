@@ -5,6 +5,9 @@ extends WeaponVisual
 @onready var line2D := $Line2D
 var line_curve := Curve2D.new()
 
+func get_hotbar_sprite() -> Texture2D:
+	return load("res://Assets/Sprites/Placeholder/Hammer.png")
+
 func update_visual(delta : float) -> void:
 	super(delta)
 	var origin := player.get_player_position()
