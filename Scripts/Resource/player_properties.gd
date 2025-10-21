@@ -57,7 +57,7 @@ class_name PlayerProperties extends Resource
 @export_group("Inventory")
 
 ## The max number of items which the player can hold.
-@export_range(1,10, 1) var max_equip : int = 1
+@export_range(1,10, 1) var max_equip : int = 2
 
 ## If true, the player will automatically equip picked up items. This happens by default
 ## if the player's max weapons value is reached.

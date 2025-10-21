@@ -8,6 +8,10 @@ signal sword_collision(collision : KinematicCollision2D)
 ## Fired when the player's repsawn point is updated to a **different** value.
 signal respawn_point_changed(new : Vector2)
 
+## Fired after the player's loadout changes, whether this be from a new item picked up or
+## the currently equipped item changing.
+signal loadout_changed
+
 ## Fires when the player's health is set to a different value through any means.
 signal health_changed(new : float)
 
@@ -308,17 +312,23 @@ func _visual_process(delta : float) -> void:
 
 #region Item
 
+## Get the index of the currently equipped weapon, -1 if not found.
+func get_current_weapon_index() -> int:
+	return held_weapons.find(current_weapon)
+
 ## Equip the passed weapon
 func equip_weapon(weapon : Weapon) -> void:
 	
 	if not weapon: return
 	if not weapon.can_use(): weapon.init_weapon(self)
-	
 	weapon.reset()
 	weapon.on_equip()
+	
+	if current_weapon: current_weapon.on_unequip()
 	current_weapon = weapon
 	
 	_clear_visuals()
+	loadout_changed.emit()
 	
 	var scn : PackedScene = CosmeticLoader.get_weapon_visual(weapon)
 	if scn:
@@ -328,14 +338,17 @@ func equip_weapon(weapon : Weapon) -> void:
 
 ## Equip the weapon in the passed slot.
 func equip_weapon_slot(slot : int) -> void:
+	if slot >= held_weapons.size(): return
 	var weapon : Weapon = held_weapons.get(slot)
 	if weapon:
 		equip_weapon(weapon)
+	loadout_changed.emit()
 
 ## Add the passed weapon to held weapons. Returns the weapon that was dropped as a result, if any.
 func add_weapon(weapon : Weapon) -> Weapon:
 	
 	held_weapons.append(weapon)
+	loadout_changed.emit()
 	
 	if held_weapons.size() > get_max_equip():
 		var target_index : int = held_weapons.find(current_weapon)
@@ -353,8 +366,9 @@ func drop_weapon(slot : int) -> Weapon:
 	
 	if held_weapons[slot] == current_weapon:
 		current_weapon.on_unequip()
-	
-	return held_weapons.pop_at(slot) # TODO Add item drop
+	var item : Weapon = held_weapons.pop_at(slot)
+	loadout_changed.emit()
+	return item # TODO Add item drop
 
 ## Pickup the weapon. Should be called by ItemPickup or any item source giving a weapon.
 ## Returns the weapon that was dropped as a result, if any.
@@ -409,12 +423,29 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()
 	
+	elif event.is_action_pressed("next_weapon"):
+		var idx : int = get_current_weapon_index()
+		idx = wrap(idx+1, 0, held_weapons.size())
+		equip_weapon_slot(idx)
+	
+	elif event.is_action_pressed("previous_weapon"):
+		var idx : int = get_current_weapon_index()
+		idx = wrap(idx-1, 0, held_weapons.size())
+		equip_weapon_slot(idx)
+	
 	elif event.is_action_pressed("noclip"):
 		if get_movement_mode() == MovementMode.NOCLIP:
 			set_movement_mode(MovementMode.SWORD_ORBIT)
 		else:
 			get_player_sword().on_cable = null       
 			set_movement_mode(MovementMode.NOCLIP)
+	
+	elif event is InputEventKey:
+		if event.pressed:
+			# Hotbar hotkeys 0-9
+			var number : int = event.keycode-48
+			if number >= 0 and number <= 9:
+				equip_weapon_slot(wrap(number-1, 0, 10))
 	
 ## Apply the passed velocity to the player.
 func apply_velocity(vel : Vector2) -> void:

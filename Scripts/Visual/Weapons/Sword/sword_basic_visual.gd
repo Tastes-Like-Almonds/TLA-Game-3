@@ -28,6 +28,7 @@ func update_visual(delta : float) -> void:
 				line2D.remove_point(0)
 		else:
 			# Update the last point as to sync with the current sword position
+			if line2D.get_point_count() == 0: return
 			line2D.remove_point(line2D.get_point_count()-1)
 			line2D.add_point(dest + (dest.direction_to(origin)*sword_length/2))
 		

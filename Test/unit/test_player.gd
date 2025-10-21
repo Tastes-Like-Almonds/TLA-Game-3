@@ -10,6 +10,8 @@ func before_each() -> void:
 	weapon = TestWeapon.new(1.0)
 	other_weapon = TestWeapon.new(0.5)
 	add_child_autofree(player)
+	player.held_weapons = []
+	player.current_weapon = null
 
 # ------------ #
 # Weapon tests #
@@ -22,20 +24,38 @@ func test_equip_weapon() -> void:
 func test_equip_weapon_slot() -> void:
 	player.add_weapon(weapon)
 	player.equip_weapon_slot(0)
-	assert_true(player.current_weapon == weapon, "Player failed to equip target weapon slot")
+	assert_true(player.current_weapon == weapon, "After adding a weapon, equip_weapon_slot should set the current weapon to the first weapon.")
 
 func test_add_weapon() -> void:
 	player.add_weapon(weapon)
 	assert_true(player.held_weapons.find(weapon) >= 0, "Add weapon not added to held weapons")
 	
 	player.add_weapon(other_weapon)
-	assert_false(player.held_weapons.size() > 1, "Player weapons exceeded max_equip")
-	assert_false(player.held_weapons.size() < 1, "Adding player weapon in excess clears array")
+	assert_false(player.held_weapons.size() > 1, "Player weapons should not exceed max_equip")
+	assert_false(player.held_weapons.size() < 1, "Adding player weapon in excess should not clear array")
+	
+	player.properties.max_equip = 2
+	player.add_weapon(other_weapon)
+	assert_eq(player.held_weapons.size(), 2, "Adding a second weapon should result in two weapons in held_items")
 
 func test_drop_weapon() -> void:
 	player.add_weapon(weapon)
 	player.drop_weapon(0)
 	assert_true(player.held_weapons.size() == 0, "Player drop weapon did not remove from held_items")
+
+func test_pickup_weapon() -> void:
+	player.properties.equip_on_pickup = true
+	player.properties.max_equip = 2
+	
+	var dropped := player.pickup_weapon(weapon)
+	
+	assert_eq(player.current_weapon, weapon, "Picking up weapon should, if equip_on_pickup is true, equip it automatically.")
+	assert_eq(player.held_weapons.size(), 1, "Picking up weapon should result in one equipped weapon.")
+	assert_null(dropped, "Picking up a weapon should not drop a weapon when below max_equip.")
+	
+	player.pickup_weapon(other_weapon)
+	
+	assert_eq(player.held_weapons.size(), 2, "Picking up second weapon should result in two equipped weapons.")
 
 func test_visuals() -> void:
 	player.equip_weapon(weapon)

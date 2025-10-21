@@ -5,12 +5,25 @@ var _debug_dots : Dictionary[String, DebugDot]
 var debug_dot_scn : PackedScene = preload("res://Scenes/Debug/debug_dot.tscn")
 
 ## Returns all descendants of a node.
-func get_all_descendants(node: Node) -> Array[Node]:
+func get_all_descendants(node : Node) -> Array[Node]:
 	var descendants: Array[Node] = []
 	for child in node.get_children():
 		descendants.append(child)
 		descendants.append_array(get_all_descendants(child))
 	return descendants
+
+## Returns all valid children of a node, i.e. nodes which are not freeing/have been freed.
+func get_all_valid_children(node : Node) -> Array[Node]:
+	
+	var children := node.get_children()
+	var valid : Array[Node] = []
+	
+	for idx in range(len(children)):
+		if not is_instance_valid(children[idx]): continue
+		elif children[idx].is_queued_for_deletion(): continue
+		valid.append(children[idx])
+	
+	return valid
 
 ## Returns the closest player to origin.
 func get_closest_player(origin:Vector2, distance_limit : float = 10000000) -> Player:
