@@ -24,6 +24,9 @@ var on_cable : Cable = null
 var cable_speed : float = 0.0
 var last_delta : float = 0.0
 
+var cable_cooldown : float = 0.5
+var current_cable_cooldown : float = 0.0
+
 ## The percentage of velocity the sword is at to its maximum.
 var vel_perc : float
 
@@ -86,6 +89,7 @@ func _update_blade(_delta : float) -> void:
 func _physics_process(delta: float) -> void:
 	
 	last_delta = delta
+	current_cable_cooldown = clampf(current_cable_cooldown + delta, 0, cable_cooldown)
 	
 	var player : Player = _get_player()
 	if not player.is_alive(): return
@@ -114,7 +118,7 @@ func _physics_process(delta: float) -> void:
 			last_sword_velocity = movement/delta # Get velocity per second as opposed to the frame
 			last_frame_pos = body.global_position
 			
-			if not on_cable:
+			if not is_instance_valid(on_cable):
 				
 				var collision := body.move_and_collide(movement)
 				_get_player().set_last_collision(collision)
@@ -158,7 +162,8 @@ func get_push() -> Vector2:
 	var vel := Vector2.ZERO
 
 	if on_cable:
-		vel.y += Input.get_last_mouse_velocity().y * -0.05
+		vel.y += clampf(Input.get_last_mouse_velocity().y, -player.get_sword_speed(), player.get_sword_speed()) * player.get_strength() * -last_delta * 2
+		#vel.x += min(Input.get_last_mouse_velocity().x, player.get_sword_speed()) * player.get_strength() * -last_delta
 
 	elif collision:
 		
@@ -217,4 +222,8 @@ func enter_cable(cable : Cable) -> void:
 
 ## Exit the passed cable.
 func exit_cable() -> void:
+	current_cable_cooldown = 0
 	on_cable = null
+
+func teleport_to_target_pos() -> void:
+	body.global_position = _get_target_pos()

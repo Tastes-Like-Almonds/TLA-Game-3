@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Meetings/Meeting Notes/Meeting Notes - First IP Meeting.md",
+                "file": "Meetings/Meeting Notes/Meeting Notes - 10.24.25.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Meeting Notes - First IP Meeting"
+              "title": "Meeting Notes - 10.24.25"
             }
           }
         ],
@@ -200,10 +200,12 @@
   },
   "active": "c5189ac6e154e344",
   "lastOpenFiles": [
+    "Meetings/Meeting Notes/Meeting Notes - 6.4.26.md",
+    "Meetings/Meeting Notes/Meeting Notes - 10.24.25.md",
+    "Meetings/Meeting Notes/Meeting Notes - 10.13.25.md",
+    "Meetings/Meeting Notes/Meeting Notes - 9.16.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 10.10.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 9.18.25 1.md",
-    "Meetings/Meeting Notes/Meeting Notes - First IP Meeting.md",
-    "Meetings/Meeting Notes/Meeting Notes - 9.16.25.md",
     "Planning/Programming/Development Notes/Balancing/Health + Damage.md",
     "Planning/Programming/Development Notes/Guidelines/Testing.md",
     "Planning/Programming/Development Notes/Balancing",
@@ -220,7 +222,6 @@
     "Planning/Programming/Development Notes/Guidelines/Variables.md",
     "Planning/Programming/Development Notes/Guidelines",
     "Planning/Programming/Development Notes",
-    "Meetings/Meeting Notes/Meeting Notes - 6.4.26.md",
     "Members/Evan Gould.md",
     "Members/Mizuki Wong.md",
     "Members/Zachary Cluff.md",
@@ -237,7 +238,6 @@
     "Planning",
     "Mee.md",
     "Ray M. Members/John Doe.md",
-    "Ray M. Members",
-    "2025-06-05.md"
+    "Ray M. Members"
   ]
 }

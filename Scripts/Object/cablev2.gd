@@ -1,3 +1,6 @@
+## A Cable/zipline for the player to ride on. Note: this is not very performant due to the collision
+## checks; Use sparingly.
+
 extends Path2D
 class_name Cable
 
@@ -37,12 +40,13 @@ func _physics_process(delta: float) -> void:
 	for player : Player in get_tree().get_nodes_in_group("Player"):
 		if player is not Player: continue
 		
+		# Get all neccessary information
 		var sword := player.get_player_sword()
 		var sword_loc := sword.get_tip_global_position()
 		var closest := to_global(curve.get_closest_point(to_local(sword_loc)))
 		var last_vel := sword.get_last_sword_velocity()
 		
-		# Dont do calculations if too far to be relevant
+		# Dont do calculations if too far to be relevant. Might save performance, might not.
 		if closest.distance_to(sword_loc) > last_vel.length()*delta: continue
 		
 		var offset : float = curve.get_closest_offset(sword.get_tip_global_position())
@@ -54,49 +58,73 @@ func _physics_process(delta: float) -> void:
 			
 			var dir := Vector2.ZERO
 			
-			if is_finite(offset):
+			if is_finite(offset): # Edge case check
 				var current_offset_pos : Vector2 = curve.sample_baked(offset)
+				
+				# Next sword teleport location
 				var next_offset_pos : Vector2 = curve.sample_baked(offset + sword.cable_speed*delta)
+				
 				var og_pos : Vector2 = sword.get_tip_global_position()
 				
 				dir = current_offset_pos.direction_to(next_offset_pos)
 				
+				# Update the camera shake in respect to player speed.
 				GameCamera.set_current_camera_shake(get_viewport(),clampf(sword.cable_speed/speed_shake_max,0.0,1.0)*screen_shake_max)
 				
+				# Teleport the sword to next frame's position.
 				var target : Vector2 = current_offset_pos
 				if next_offset_pos.x-current_offset_pos.x < 0:
+					
+					# Accelerate the player if moving down
 					sword.cable_speed += dir.y*player.get_cable_gravity()
+					
 					target = to_global(curve.get_closest_point(to_local(closest + dir*sword.cable_speed*delta)))
 					sword.body.global_position = target
 					
 				elif next_offset_pos.x-current_offset_pos.x > 0:
+					
+					# Slow the player if moving up
 					sword.cable_speed -= dir.y*player.get_cable_gravity()
+					
 					target = to_global(curve.get_closest_point(to_local(closest - dir*sword.cable_speed*delta)))
 					sword.body.global_position = target
 				
+				# If the player isn't moving, exit the cable.
 				if is_equal_approx((current_offset_pos.distance_to(target)), 0.0):
 					sword.exit_cable()
 					return 
 				
+				# Sword vel must be set each physics process, thus must be updated manually here.
+				# Used for stuff like abilities and physics calculations
 				sword.last_sword_velocity = (sword.body.global_position - og_pos) * 1/delta
 				
+				# Apply drag; raising coef to delta approximately applies it per second.
 				sword.cable_speed *= pow(cable_drag, delta)
 
 		# Attach to the cable if the player's sword crosses it
-		# Yeah, I know the "or"s are ugly, but I don't feel like making it better.
-		elif (old_sword_pos.y < closest.y and sword.get_tip_global_position().y >= closest.y) or (old_sword_pos.x < closest.x and sword.get_tip_global_position().x >= closest.x) or (old_sword_pos.x > closest.x and sword.get_tip_global_position().x <= closest.x):
+		elif Helper.line_passes_point_horizontally_or_vertically(old_sword_pos, sword.get_tip_global_position(), closest):
 			if absf(old_sword_pos.x - closest.x) < grip_threshold and not _offset_out_of_range(offset):
 				sword.body.global_position = closest
 				
 				var real_vel := player.get_player_body().get_real_velocity()
+				
+				# PI/4 offset to determine if the angle is roughly vertical.
+				# Used to determine cable move direction.
 				var is_vertical := Helper.is_angle_roughly_vertical(real_vel.angle())
 				
+				# If player's speed does not heavily imply a direction, use the player's sword to choose
+				# which way to go.
+				#
+				# .slide() is used for both outcomes. This ensures that the player's direction
+				# increases their speed depending on the angle of attack.
+				# For instance, if a player falls vertically to a horizontal cable,
+				# slide() ensures that velocity is not falsely applied.
 				if real_vel.x < 0 or (is_vertical and sword.get_tip_global_position().x < player.get_player_position().x):
 					sword.cable_speed = player.get_player_body().get_real_velocity().slide(_get_normal_from_offset(offset, true)).length()
 				
 				elif real_vel.x > 0 or (is_vertical and sword.get_tip_global_position().x > player.get_player_position().x):
 					sword.cable_speed = -player.get_player_body().get_real_velocity().slide(_get_normal_from_offset(offset, true)).length()
-					
+				
 				sword.enter_cable(self)
 		
 		# Exit the cable if able
@@ -111,4 +139,9 @@ func _physics_process(delta: float) -> void:
 			
 			dir = current_offset_pos.direction_to(next_offset_pos)
 			
+			# Transfer the sword's speed (on the cable) to the player's speed.
 			player.apply_velocity(dir*sword.cable_speed)
+			
+			# Snap the sword to the location it should be at. Without this, the sword gets stuck on
+			# the cable.
+			sword.teleport_to_target_pos()

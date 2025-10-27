@@ -2,7 +2,7 @@
 extends Resource
 class_name Weapon
 
-signal used()
+signal used
 
 var _wielder : Player
 var _initialized : bool = false

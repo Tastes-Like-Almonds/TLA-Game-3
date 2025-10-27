@@ -384,6 +384,7 @@ func pickup_weapon(weapon : Weapon) -> Weapon:
 
 ## Teleport toward the target location, with respect to collisions.
 func teleport_toward(vec2 : Vector2) -> void:
+	
 	var space_state := get_world_2d().direct_space_state
 	var body := get_player_body()
 	var body_max_size := get_largest_size()
@@ -480,6 +481,7 @@ func set_movement_mode(mode : MovementMode) -> void:
 
 ## Teleport the player and sword to the target location.
 func teleport_to(pos : Vector2) -> void:
+	get_player_sword().on_cable = null
 	get_player_body().global_position = pos
 	get_player_sword().body.global_position = pos
 
@@ -490,6 +492,7 @@ func teleport_to(pos : Vector2) -> void:
 func _respawn() -> void:
 	
 	teleport_to(respawn_pos)
+	get_player_sword().on_cable = null
 	
 	time_respawning = 0
 	last_hit_time = get_invincibility_time()*-2
@@ -500,6 +503,7 @@ func _respawn() -> void:
 ## Handle the death of the player.
 func _death() -> void:
 	if dead: return
+	get_player_sword().on_cable = null
 	Sfx.play_sound_2d(death_sound, get_player_position(), false)
 	dead = true
 
