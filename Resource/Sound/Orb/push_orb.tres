@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_xdmdd")
 sound_string = "res://Assets/Sound/SFX/Orb/Jump Orb.wav"
+bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"

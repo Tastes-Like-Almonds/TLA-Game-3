@@ -1,8 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://c6cqn4qbed04l"]
+[gd_scene load_steps=16 format=3 uid="uid://c6cqn4qbed04l"]
 
 [ext_resource type="Script" uid="uid://d3i2x124e0aej" path="res://Scripts/Object/checkpoint.gd" id="1_c7sv0"]
 [ext_resource type="Texture2D" uid="uid://10ssd5pcvd3k" path="res://Assets/Sprites/Placeholder/Lantern Tall (Off).png" id="1_t3ilj"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_28qne"]
 [ext_resource type="Texture2D" uid="uid://gargnc52j8ej" path="res://Assets/Sprites/Placeholder/Lantern Tall.png" id="3_du3s0"]
+
+[sub_resource type="Resource" id="Resource_v11gb"]
+script = ExtResource("2_28qne")
+sound_string = "res://Assets/Sound/SFX/Other/Checkpoint.wav"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t3ilj"]
 size = Vector2(125, 125.5)
@@ -53,6 +60,7 @@ alpha_curve = SubResource("CurveTexture_vnjtb")
 [node name="Checkpoint" type="Area2D" groups=["BladeHitable"]]
 collision_layer = 8
 script = ExtResource("1_c7sv0")
+sound = SubResource("Resource_v11gb")
 sprite_off = ExtResource("1_t3ilj")
 sprite_on = ExtResource("3_du3s0")
 

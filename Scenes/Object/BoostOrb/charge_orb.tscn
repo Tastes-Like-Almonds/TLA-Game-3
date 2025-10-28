@@ -1,12 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://bd62nj7nj3ak5"]
+[gd_scene load_steps=20 format=3 uid="uid://bebmdc720fu1w"]
 
-[ext_resource type="Script" uid="uid://dcu0y24f1gfdy" path="res://Scripts/Object/BoostOrb/gravity_orb.gd" id="1_amshe"]
-[ext_resource type="Texture2D" uid="uid://boexki44bewdo" path="res://Assets/Sprites/Placeholder/gravity_orb.png" id="2_4onkn"]
-[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_aab8x"]
+[ext_resource type="Script" uid="uid://g2jlha43oskd" path="res://Scripts/Object/BoostOrb/charge_orb.gd" id="1_fw63j"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_2iwrk"]
+[ext_resource type="Texture2D" uid="uid://tj825q0tg56x" path="res://Assets/Sprites/Placeholder/charge-orb-placeholder.png" id="3_2iwrk"]
 
-[sub_resource type="Resource" id="Resource_yv1qj"]
-script = ExtResource("2_aab8x")
-sound_string = "res://Assets/Sound/SFX/Orb/Gravity Orb.wav"
+[sub_resource type="Resource" id="Resource_1nxk5"]
+script = ExtResource("2_2iwrk")
+sound_string = "res://Assets/Sound/SFX/Orb/Charge Orb.wav"
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
@@ -16,18 +16,30 @@ colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_1dkb7"]
 gradient = SubResource("Gradient_do7bd")
-width = 8
-height = 8
+width = 16
+height = 16
+
+[sub_resource type="Curve" id="Curve_1dkb7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.20812182, 0.6516854), 0.0, 0.0, 0, 0, Vector2(0.99999, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_g0kd0"]
+curve = SubResource("Curve_1dkb7")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g0kd0"]
 particle_flag_disable_z = true
+angle_min = -454.69998
+angle_max = 285.0
 spread = 180.0
 initial_velocity_min = 200.0
 initial_velocity_max = 250.0
+angular_velocity_min = -90.95001
+angular_velocity_max = 181.88998
 gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_g0kd0")
 
 [sub_resource type="Gradient" id="Gradient_posbj"]
-colors = PackedColorArray(0.6639999, 0.16000003, 1, 1, 0.7143157, 0.2820459, 1, 0)
+colors = PackedColorArray(0.06666667, 0.69411767, 0.70980394, 1, 0.11699998, 0.7689501, 0.78, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_41md6"]
 gradient = SubResource("Gradient_posbj")
@@ -73,16 +85,15 @@ alpha_curve = SubResource("CurveTexture_2c2vr")
 [sub_resource type="CircleShape2D" id="CircleShape2D_41md6"]
 radius = 40.04997
 
-[node name="GravityOrb" type="StaticBody2D" groups=["BladeHitable"]]
+[node name="ChargeOrb" type="StaticBody2D" groups=["BladeHitable"]]
 collision_layer = 8
-script = ExtResource("1_amshe")
-reset_weapon_on_hit = false
-sound = SubResource("Resource_yv1qj")
+script = ExtResource("1_fw63j")
+sound = SubResource("Resource_1nxk5")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-modulate = Color(0.7366762, 0.42621613, 0.928359, 1)
+modulate = Color(0, 0.8273189, 0.8010836, 1)
 emitting = false
-amount = 20
+amount = 14
 texture = SubResource("GradientTexture2D_1dkb7")
 lifetime = 0.25
 one_shot = true
@@ -97,10 +108,10 @@ texture = SubResource("GradientTexture2D_41md6")
 
 [node name="Sprite" type="Sprite2D" parent="Visual"]
 scale = Vector2(4, 4)
-texture = ExtResource("2_4onkn")
+texture = ExtResource("3_2iwrk")
 
 [node name="Particles" type="GPUParticles2D" parent="Visual"]
-self_modulate = Color(0.8021228, 0.49251008, 0.96012074, 1)
+self_modulate = Color(1.732707e-06, 0.95417625, 0.9254546, 1)
 emitting = false
 amount = 1
 texture = SubResource("GradientTexture2D_2c2vr")

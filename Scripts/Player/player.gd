@@ -505,15 +505,19 @@ func teleport_toward(vec2 : Vector2) -> void:
 
 #region Damage/Death
 
+## Clears all of the property modifiers attatched to the player which reset upon respawn (default)
+func clear_respawn_modifiers() -> void:
+	for stat:String in property_modifiers:
+		for modifier:PropertyModifier in property_modifiers[stat]:
+			if modifier.reset_on_respawn:
+				property_modifiers[stat].erase(modifier)
+
 func _respawn() -> void:
 	
 	teleport_to(respawn_pos)
 	get_player_sword().on_cable = null
 	
-	for stat:String in property_modifiers:
-		for modifier:PropertyModifier in property_modifiers[stat]:
-			if modifier.reset_on_respawn:
-				property_modifiers[stat].erase(modifier)
+	clear_respawn_modifiers()
 	
 	time_respawning = 0
 	last_hit_time = get_invincibility_time()*-2

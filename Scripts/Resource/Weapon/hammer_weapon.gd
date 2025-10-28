@@ -12,14 +12,15 @@ var max_fall_multi : float = 3.0
 var hit_sound := SoundData.new("res://Assets/Sound/SFX/Player/Sword/Hammer Strike.wav")
 
 func _init() -> void:
-	MAX_CHARGE = 0.25
+	MAX_CHARGE = 0.75
 
 func on_equip() -> void:
 	if not is_instance_valid(_wielder) : return
-	if (not _wielder.sword_collision.is_connected(_explode)) and _wielder.last_collision == null:
+	if (not _wielder.sword_collision.is_connected(_explode)):
 		_wielder.sword_collision.connect(_explode)
 
 func _explode(collision: KinematicCollision2D) -> void:
+	if _wielder.last_collision != null: return
 	if not collision: return
 	if cooldown < MAX_COOLDOWN: return
 	
@@ -36,8 +37,7 @@ func _explode(collision: KinematicCollision2D) -> void:
 	
 	# Manage Sound
 	hit_sound.pitch_scale = 1-clampf(vel.y/_wielder.get_gravity(), 0.0, 1.0)*0.3
-	
-	if fall_multi < (max_fall_multi-1)/2+1: # Change for heavy/small strike
+	if fall_multi == 1.0: # Change for heavy/small strike
 		hit_sound.sound_string = "res://Assets/Sound/SFX/Player/Sword/Hammer Strike.wav"
 	else:
 		hit_sound.sound_string = "res://Assets/Sound/SFX/Player/Sword/Hammer Strike Full.wav"
@@ -67,7 +67,7 @@ func get_gravity_multi() -> float:
 
 func get_property_modifiers() -> Dictionary[String, Array]:
 	return {
-		"strength":[PropertyModifier.new(0.2, PropertyModifier.ModiferType.MULTIPLY)],
+		"strength":[PropertyModifier.new(0.8, PropertyModifier.ModiferType.MULTIPLY)],
 		"gravity":[PropertyModifier.new(fall_multi, PropertyModifier.ModiferType.MULTIPLY)],
 	}
 

@@ -2,6 +2,9 @@ extends Area2D
 
 @onready var sprite : Sprite2D = $Sprite2D
 
+## Sound played when a player reaches the checkpoint
+@export var sound : SoundData
+
 @export_group("Respawn")
 
 ## If true, all players' spawn position is set upon contact.
@@ -59,6 +62,7 @@ func update_texture() -> void:
 	# Tween light
 	$PointLight2D.visible = on
 	if (last_on != on) and on: # If just turned on
+		if sound: Sfx.play_sound_2d(sound, global_position, false)
 		$PointLight2D.scale = Vector2.ZERO
 		var tween := get_tree().create_tween()
 		tween.set_ease(Tween.EASE_OUT)

@@ -7,6 +7,8 @@
 [sub_resource type="Resource" id="Resource_yo0mt"]
 script = ExtResource("2_rmydc")
 sound_string = "res://Assets/Sound/SFX/Orb/Explosion Orb Edit 1 Export 1.mp3"
+volume_linear = 0.2
+bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Gradient" id="Gradient_do7bd"]
