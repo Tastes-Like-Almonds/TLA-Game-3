@@ -71,6 +71,7 @@ func is_angle_roughly_vertical(ang : float, max_offset : float = PI/4) -> bool:
 ## This is used for calculating how much friction different tiles have, though may have
 ## other uses in the future.
 func get_slide_from_collision(collision : KinematicCollision2D, default : float = 0.6) -> float:
+	if not collision: return 0.0
 	var collider := collision.get_collider()
 	
 	if collider is TileMapLayer:

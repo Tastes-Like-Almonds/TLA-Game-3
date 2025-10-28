@@ -4,6 +4,7 @@ var cooldown: float
 
 func _init(_cooldown: float = 1.0) -> void:
 	cooldown = _cooldown
+	MAX_CHARGE = 0.25
 
 func get_cooldown() -> float:
 	return cooldown

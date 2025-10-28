@@ -201,6 +201,23 @@ func is_on_floor() -> bool:
 	
 	return result.size() > 0
 
+## Similar to is_on_floor, but uses the player's gravity direction to calculate the ground.
+func is_on_ground() -> bool:
+	var player := _get_player()
+	if not player: return false # Can't be on the ground if the player doesn't exist
+	var space_state := get_world_2d().direct_space_state
+	
+	var parameters := PhysicsRayQueryParameters2D.new()
+	parameters.from = body.global_position
+	
+	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
+	parameters.to = parameters.from + _get_player().get_gravity_direction() * body_shape.shape.get_rect().size.y
+	
+	parameters.collision_mask = 1
+	var result := space_state.intersect_ray(parameters)
+	
+	return result.size() > 0
+
 ## Determines if the sword body is on the ceiling via raycasting. Only collides with collision layer 1.
 func is_on_ceiling() -> bool:
 	var space_state := get_world_2d().direct_space_state
@@ -222,6 +239,7 @@ func enter_cable(cable : Cable) -> void:
 
 ## Exit the passed cable.
 func exit_cable() -> void:
+	_get_player().reset_weapon_use()
 	current_cable_cooldown = 0
 	on_cable = null
 

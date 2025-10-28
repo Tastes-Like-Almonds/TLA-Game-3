@@ -122,7 +122,7 @@ func _physics_process(delta: float) -> void:
 		#region Noclip
 		player.MovementMode.NOCLIP:
 			velocity = Vector2.ZERO
-			if player.is_charging_ability():
+			if Input.is_action_pressed("use"):
 				var body_pos := player.get_player_body().global_position
 				velocity = body_pos.direction_to(get_global_mouse_position())*body_pos.distance_to(get_global_mouse_position())*10
 			move_and_slide()
