@@ -56,7 +56,7 @@ func ray_is_on_floor() -> Dictionary:
 	parameters.from = global_position
 	
 	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
-	parameters.to = parameters.from + Vector2.DOWN * shape.shape.get_rect().size.y
+	parameters.to = parameters.from + get_player().get_gravity_direction() * shape.shape.get_rect().size.y
 	
 	parameters.collision_mask = 1
 	var result := space_state.intersect_ray(parameters)
@@ -86,7 +86,13 @@ func _physics_process(delta: float) -> void:
 				velocity += sword.get_push()  
 			else: # Only apply gravity if the sword isn't pushing
 				velocity.y += player.get_gravity()*delta
-				
+			
+			# Account for sword intertia
+			var collision := player.get_last_collision()
+			if collision:
+				if collision.get_collider() is AnimatableBody2D:
+					global_position += collision.get_collider().constant_linear_velocity
+			
 			# Slow the player rapidly if beyond the sword's reach
 			if (global_position + velocity*delta).distance_to(sword.get_tip_global_position()) > player.get_max_distance()*player.get_soft_limit_distance_coef():
 				
@@ -122,7 +128,7 @@ func _physics_process(delta: float) -> void:
 		#region Noclip
 		player.MovementMode.NOCLIP:
 			velocity = Vector2.ZERO
-			if player.is_charging_ability():
+			if Input.is_action_pressed("use"):
 				var body_pos := player.get_player_body().global_position
 				velocity = body_pos.direction_to(get_global_mouse_position())*body_pos.distance_to(get_global_mouse_position())*10
 			move_and_slide()

@@ -47,6 +47,22 @@ func get_mouse_vec_from_center() -> Vector2:
 	var size := get_viewport_rect().size
 	return center - Vector2(size.x, size.y)/2
 
+## Returns true if the line between start and end moves past the target point's x or y position.
+func line_passes_point_horizontally_or_vertically(start: Vector2, end: Vector2, point: Vector2) -> bool:
+	
+	# Yes, there is probably a more elegrant solution, but it will work.
+	if start.y > point.y and end.y < point.y:
+		return true
+	if start.y < point.y and end.y > point.y:
+		return true
+	if start.x > point.x and end.x < point.x:
+		return true
+	if start.x < point.x and end.x > point.x:
+		return true
+	
+	# Not horizontal or vertical
+	return false
+
 ## Returns true if the passed angle is vertical.
 func is_angle_roughly_vertical(ang : float, max_offset : float = PI/4) -> bool:
 	return (absf(ang - PI/2)<max_offset or absf(ang - -PI/2)<max_offset)
@@ -55,6 +71,7 @@ func is_angle_roughly_vertical(ang : float, max_offset : float = PI/4) -> bool:
 ## This is used for calculating how much friction different tiles have, though may have
 ## other uses in the future.
 func get_slide_from_collision(collision : KinematicCollision2D, default : float = 0.6) -> float:
+	if not collision: return 0.0
 	var collider := collision.get_collider()
 	
 	if collider is TileMapLayer:
@@ -75,7 +92,7 @@ func get_tile_data_from_collision(collision : KinematicCollision2D) -> TileData:
 	var collider := collision.get_collider()
 	
 	if collider is TileMapLayer:
-						
+		
 		collider = collider as TileMapLayer
 		
 		var coords : Vector2i = collider.local_to_map(collider.to_local(collision.get_position()))
@@ -92,7 +109,6 @@ func get_tile_pos_from_collision(collision : KinematicCollision2D) -> Vector2:
 	if collider is TileMapLayer:
 		var map := collider as TileMapLayer
 		var coords : Vector2i = collider.local_to_map(collider.to_local(collision.get_position()))
-		print("done")
 		return map.to_global(map.map_to_local(coords))
 	return collision.get_position()
 	

@@ -33,7 +33,7 @@ func update_visual(delta : float) -> void:
 			line2D.add_point(dest + (dest.direction_to(origin)*sword_length/2))
 		
 		
-	$Sprite2D/GPUParticles2D.modulate.a = player.get_weapon_charge_perc()
+	$Sprite2D/GPUParticles2D.modulate.a = lerpf($Sprite2D/GPUParticles2D.modulate.a, player.get_weapon_charge_perc(), 0.2)
 
 func _ready() -> void:
 	super()

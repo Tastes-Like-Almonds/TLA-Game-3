@@ -1,7 +1,6 @@
 extends Weapon
 class_name HammerWeapon
 
-const MAX_CHARGE = 1
 const MAX_STRENGTH = 2000.0
 const MAX_COOLDOWN = 0.25
 
@@ -12,12 +11,16 @@ var max_fall_multi : float = 3.0
 
 var hit_sound := SoundData.new("res://Assets/Sound/SFX/Player/Sword/Hammer Strike.wav")
 
+func _init() -> void:
+	MAX_CHARGE = 0.75
+
 func on_equip() -> void:
 	if not is_instance_valid(_wielder) : return
-	if (not _wielder.sword_collision.is_connected(_explode)) and _wielder.last_collision == null:
+	if (not _wielder.sword_collision.is_connected(_explode)):
 		_wielder.sword_collision.connect(_explode)
 
 func _explode(collision: KinematicCollision2D) -> void:
+	if _wielder.last_collision != null: return
 	if not collision: return
 	if cooldown < MAX_COOLDOWN: return
 	
@@ -27,15 +30,14 @@ func _explode(collision: KinematicCollision2D) -> void:
 	
 	if vel_perc < 0.6: return
 	
-	var kb := vel.normalized()*vel_perc*MAX_STRENGTH*-1
+	var kb := collision.get_remainder().normalized()*vel_perc*MAX_STRENGTH*-1
 	kb *= Vector2(1.25, 0.75) # Favor horizontal movement
 	
 	if _wielder.get_player_body().velocity.y > 0 and kb.y < 0: _wielder.get_player_body().velocity.y = 0
 	
 	# Manage Sound
 	hit_sound.pitch_scale = 1-clampf(vel.y/_wielder.get_gravity(), 0.0, 1.0)*0.3
-	
-	if fall_multi < (max_fall_multi-1)/2+1: # Change for heavy/small strike
+	if fall_multi == 1.0: # Change for heavy/small strike
 		hit_sound.sound_string = "res://Assets/Sound/SFX/Player/Sword/Hammer Strike.wav"
 	else:
 		hit_sound.sound_string = "res://Assets/Sound/SFX/Player/Sword/Hammer Strike Full.wav"
@@ -43,7 +45,7 @@ func _explode(collision: KinematicCollision2D) -> void:
 	Sfx.play_sound_2d(hit_sound, collision.get_position())
 	
 	var multi := fall_multi * _wielder.get_size_scale()
-	_wielder.apply_velocity(kb*multi)
+	_wielder.set_velocity(kb*multi)
 	# Only apply fall multi to knockback and size, as to keep damage balance.
 	Explosion.make_explosion(_wielder.get_parent(), sword.get_tip_global_position(), ["EnemyBody"], vel_perc*150*multi, 3*fall_multi, 500*multi)
 	GameCamera.set_current_camera_shake(_wielder.get_viewport(), 0.05*fall_multi)
@@ -65,13 +67,8 @@ func get_gravity_multi() -> float:
 
 func get_property_modifiers() -> Dictionary[String, Array]:
 	return {
-		"strength":[PropertyModifier.new(0.2, PropertyModifier.ModiferType.MULTIPLY)],
+		"strength":[PropertyModifier.new(0.8, PropertyModifier.ModiferType.MULTIPLY)],
 		"gravity":[PropertyModifier.new(fall_multi, PropertyModifier.ModiferType.MULTIPLY)],
-		"max_distance": [
-			PropertyModifier.new(
-			1-_wielder.get_weapon_charge_perc()*0.2,
-			PropertyModifier.ModiferType.MULTIPLY)
-		]
 	}
 
 func on_unequip() -> void:

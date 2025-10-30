@@ -33,8 +33,8 @@ enum MovementMode {
 
 var property_modifiers : Dictionary[String, Array]
 
-var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0)
-var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0)
+@export var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0)
+@export var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0)
 
 #endregion
 
@@ -275,6 +275,13 @@ func get_largest_size() -> float:
 func is_alive() -> bool:
 	return not dead
 
+## Returns the direction that the player is falling
+func get_gravity_direction() -> Vector2:
+	if get_modified_property("gravity") < 0:
+		return Vector2.UP
+	else:
+		return Vector2.DOWN
+
 #endregion
 
 #region Visual
@@ -320,7 +327,7 @@ func get_current_weapon_index() -> int:
 func equip_weapon(weapon : Weapon) -> void:
 	
 	if not weapon: return
-	if not weapon.can_use(): weapon.init_weapon(self)
+	if not weapon.can_use: weapon.init_weapon(self)
 	weapon.reset()
 	weapon.on_equip()
 	
@@ -381,32 +388,13 @@ func pickup_weapon(weapon : Weapon) -> Weapon:
 #endregion
 
 #region Actions
-
-## Teleport toward the target location, with respect to collisions.
-func teleport_toward(vec2 : Vector2) -> void:
-	var space_state := get_world_2d().direct_space_state
-	var body := get_player_body()
-	var body_max_size := get_largest_size()
-	var origin := get_player_position()
-	var dir := origin.direction_to(vec2)
-	
-	var query := PhysicsRayQueryParameters2D.create(origin, vec2 + dir*body_max_size, 1)
-	var result := space_state.intersect_ray(query)
-	
-	if not result:
-		get_player_body().global_position = vec2
-		return
-	
-	body.global_position = result.position - dir*body_max_size
-	get_player_sword().body.global_position  = body.global_position
 	
 ## Start charging the main ability of the held weapon
 func start_charging() -> void:
-	charging_ability = true
+	ability_charge = get_current_weapon().MAX_CHARGE
 
 ## Use the main ability of the help weapon, resetting its charge.
 func stop_charging() -> void:
-	charging_ability = false
 	if current_weapon:
 		current_weapon.use(ability_charge)
 	ability_charge = 0.0
@@ -414,11 +402,17 @@ func stop_charging() -> void:
 func _input(event: InputEvent) -> void: # TODO Replace this with an input manager class.
 	
 	if event.is_action_pressed("use"):
-		start_charging()
+		if current_weapon:
+			if ability_charge > 0.0:
+				Sfx.play_sound_2d(current_weapon.use_end_sound, get_player_position())
+				current_weapon.use(ability_charge)
+				ability_charge = 0.0
+			else:
+				Sfx.play_sound_2d(current_weapon.use_start_sound, get_player_position())
+				ability_charge = current_weapon.MAX_CHARGE
 	
-	elif event.is_action_released("use"):
-		stop_charging()
-		print_orphan_nodes()
+	#elif event.is_action_released("use"):
+		#stop_charging()
 	
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()
@@ -478,18 +472,54 @@ func set_movement_mode(mode : MovementMode) -> void:
 		MovementMode.NOCLIP:
 			set_collisions(false)
 
+## Sets the can_use property of the player's weapon to true; allows the player to
+## use their weapon's ability again
+func reset_weapon_use() -> void:
+	if current_weapon:
+		current_weapon.can_use = true
+
 ## Teleport the player and sword to the target location.
 func teleport_to(pos : Vector2) -> void:
+	get_player_sword().on_cable = null
 	get_player_body().global_position = pos
 	get_player_sword().body.global_position = pos
+
+## Teleport toward the target location, with respect to collisions.
+func teleport_toward(vec2 : Vector2) -> void:
+	
+	var space_state := get_world_2d().direct_space_state
+	var body := get_player_body()
+	var body_max_size := get_largest_size()
+	var origin := get_player_position()
+	var dir := origin.direction_to(vec2)
+	
+	var query := PhysicsRayQueryParameters2D.create(origin, vec2 + dir*body_max_size, 1)
+	var result := space_state.intersect_ray(query)
+	
+	if not result:
+		get_player_body().global_position = vec2
+		return
+	
+	body.global_position = result.position - dir*body_max_size
+	get_player_sword().body.global_position  = body.global_position
 
 #endregion
 
 #region Damage/Death
 
+## Clears all of the property modifiers attatched to the player which reset upon respawn (default)
+func clear_respawn_modifiers() -> void:
+	for stat:String in property_modifiers:
+		for modifier:PropertyModifier in property_modifiers[stat]:
+			if modifier.reset_on_respawn:
+				property_modifiers[stat].erase(modifier)
+
 func _respawn() -> void:
 	
 	teleport_to(respawn_pos)
+	get_player_sword().on_cable = null
+	
+	clear_respawn_modifiers()
 	
 	time_respawning = 0
 	last_hit_time = get_invincibility_time()*-2
@@ -500,6 +530,7 @@ func _respawn() -> void:
 ## Handle the death of the player.
 func _death() -> void:
 	if dead: return
+	get_player_sword().on_cable = null
 	Sfx.play_sound_2d(death_sound, get_player_position(), false)
 	dead = true
 
@@ -515,8 +546,6 @@ func deal_damage(amt : float) -> bool:
 	# Only deal damage in excess of last amount taken if still invincible
 	if last_hit_time < get_invincibility_time(): amt -= last_hit_amount
 	if amt <= 0: return false
-	
-	print(str(amt) + " damage dealt")
 	
 	GameCamera.set_current_camera_shake(get_viewport(), clampf((amt/2)/get_modified_property("max_health"),0.0,0.2))
 	Sfx.play_sound_2d(hit_sound, get_player_position())
@@ -578,11 +607,14 @@ func _process(delta: float) -> void:
 	if current_weapon:
 		current_weapon.process_weapon(delta)
 	
+	charging_ability = (ability_charge > 0.0)
+	
 	if charging_ability and is_instance_valid(current_weapon):
-		if current_weapon.can_use():
-			ability_charge += delta
+		if current_weapon.can_use:
+			ability_charge -= delta
 		else:
 			ability_charge = 0
+	ability_charge = max(0, ability_charge)
 
 	# Update the respawn timer
 	if dead and lives > 0:
@@ -596,7 +628,6 @@ func _process(delta: float) -> void:
 func _physics_process(_delta: float) -> void:
 	var size_scale := get_size_scale()
 	scale = Vector2(size_scale, size_scale)
-	
 
 func _ready() -> void:
 	respawn_pos = get_player_body().global_position

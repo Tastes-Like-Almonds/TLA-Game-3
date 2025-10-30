@@ -2,12 +2,22 @@
 extends Resource
 class_name Weapon
 
-signal used()
+signal used
+
+@export var use_start_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Sword/Use start.wav", 0.25, 1.3)
+@export var use_end_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Sword/Use end (1).wav", 0.5)
 
 var _wielder : Player
 var _initialized : bool = false
 var current_use_cooldown : float = 0.0
 var equipped : bool = false
+
+var can_use : bool = true:
+	get():
+		if !_valid(): return false
+		return can_use
+
+var MAX_CHARGE: float
 
 ## Returns true if the weapon has a valid wielder.
 func _has_wielder() -> bool:
@@ -39,15 +49,9 @@ func process_weapon(delta:float) -> void:
 	if !_valid(): return
 	current_use_cooldown = max(0.0, current_use_cooldown-delta)
 
-## Returns true if the weapon can be used
-func can_use() -> bool:
-	if !_valid(): return false
-	return current_use_cooldown <= 0.0
-
 ## Activates the weapon's ability
 func use(charge_time : float) -> void:
-	if !can_use(): return
-	if !_valid(): return
+	if !can_use: return
 	current_use_cooldown = get_cooldown()
 	on_use(charge_time)
 	used.emit()
