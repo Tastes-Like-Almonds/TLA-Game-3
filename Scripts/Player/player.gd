@@ -391,7 +391,7 @@ func pickup_weapon(weapon : Weapon) -> Weapon:
 	
 ## Start charging the main ability of the held weapon
 func start_charging() -> void:
-	ability_charge = get_current_weapon().MAX_CHARGE*10000
+	ability_charge = get_current_weapon().MAX_CHARGE
 
 ## Use the main ability of the help weapon, resetting its charge.
 func stop_charging() -> void:
@@ -404,9 +404,11 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	if event.is_action_pressed("use"):
 		if current_weapon:
 			if ability_charge > 0.0:
+				Sfx.play_sound_2d(current_weapon.use_end_sound, get_player_position())
 				current_weapon.use(ability_charge)
 				ability_charge = 0.0
 			else:
+				Sfx.play_sound_2d(current_weapon.use_start_sound, get_player_position())
 				ability_charge = current_weapon.MAX_CHARGE
 	
 	#elif event.is_action_released("use"):
@@ -544,8 +546,6 @@ func deal_damage(amt : float) -> bool:
 	# Only deal damage in excess of last amount taken if still invincible
 	if last_hit_time < get_invincibility_time(): amt -= last_hit_amount
 	if amt <= 0: return false
-	
-	print(str(amt) + " damage dealt")
 	
 	GameCamera.set_current_camera_shake(get_viewport(), clampf((amt/2)/get_modified_property("max_health"),0.0,0.2))
 	Sfx.play_sound_2d(hit_sound, get_player_position())

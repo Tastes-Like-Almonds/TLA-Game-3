@@ -109,7 +109,6 @@ func get_tile_pos_from_collision(collision : KinematicCollision2D) -> Vector2:
 	if collider is TileMapLayer:
 		var map := collider as TileMapLayer
 		var coords : Vector2i = collider.local_to_map(collider.to_local(collision.get_position()))
-		print("done")
 		return map.to_global(map.map_to_local(coords))
 	return collision.get_position()
 	

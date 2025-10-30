@@ -125,6 +125,8 @@ func _physics_process(delta: float) -> void:
 				
 				if collision:
 					var friction := _get_slide_from_last_collision()
+					if collision.get_collider() is AnimatableBody2D:
+						body.global_position += collision.get_collider().constant_linear_velocity
 					body.move_and_collide(movement.slide(collision.get_normal()) * friction)
 		
 		player.MovementMode.PLAYER_ORBIT: # No use as of now.

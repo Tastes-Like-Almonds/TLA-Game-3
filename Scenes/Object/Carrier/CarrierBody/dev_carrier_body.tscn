@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://djkdj66psxxr3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhu6"]
+size = Vector2(48, 24)
+
+[node name="AnimatableBody2D" type="AnimatableBody2D"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_lbhu6")

@@ -12,7 +12,7 @@ class_name PlayerProperties extends Resource
 @export_group("Health and Damage")
 
 ## The lives the player will start with after spawning. Altering mid-game does nothing.
-@export var max_lives : int = 3
+@export var max_lives : int = 300
 
 ## Maximum health of the player. Does not regenerate.
 @export var max_health : float = 10.0

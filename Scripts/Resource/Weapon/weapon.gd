@@ -4,6 +4,9 @@ class_name Weapon
 
 signal used
 
+@export var use_start_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Sword/Use start.wav", 0.25, 1.3)
+@export var use_end_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Sword/Use end (1).wav", 0.5)
+
 var _wielder : Player
 var _initialized : bool = false
 var current_use_cooldown : float = 0.0
