@@ -76,7 +76,6 @@ radius = 40.04997
 [node name="GravityOrb" type="StaticBody2D" groups=["BladeHitable"]]
 collision_layer = 8
 script = ExtResource("1_amshe")
-reset_weapon_on_hit = false
 sound = SubResource("Resource_yv1qj")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]

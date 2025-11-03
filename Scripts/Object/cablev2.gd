@@ -128,7 +128,10 @@ func _physics_process(delta: float) -> void:
 				sword.enter_cable(self)
 		
 		# Exit the cable if able
-		if (player.get_player_position().y < closest.y - (player.get_max_distance()) or _offset_out_of_range(offset + sword.cable_speed*delta)) and sword.on_cable == self:
+		if (
+			player.get_player_position().y < closest.y - (player.get_max_distance()) or 
+			(player.get_player_body().velocity.y < 0 and player.get_player_position().y < closest.y and player.get_player_sword()._get_target_pos().y < closest.y) or
+			_offset_out_of_range(offset + sword.cable_speed*delta)) and sword.on_cable == self:
 			sword.cable_speed = 0.0
 			sword.exit_cable()
 			

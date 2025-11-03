@@ -96,11 +96,14 @@ func _physics_process(delta: float) -> void:
 			# Slow the player rapidly if beyond the sword's reach
 			if (global_position + velocity*delta).distance_to(sword.get_tip_global_position()) > player.get_max_distance()*player.get_soft_limit_distance_coef():
 				
-				velocity *= pow(player.get_soft_limit_drag(),delta)
+				var soft_limit_drag := player.get_soft_limit_drag()
 				
 				if sword.is_on_cable():
 					var dir := global_position.direction_to(sword.get_tip_global_position())
+					soft_limit_drag *= 0.2
 					velocity += dir*global_position.distance_squared_to(sword.get_tip_global_position())*0.005
+				
+				velocity *= pow(soft_limit_drag,delta)
 			
 			# Apply drag
 			velocity = _apply_drag(velocity, delta)

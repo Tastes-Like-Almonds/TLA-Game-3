@@ -115,13 +115,13 @@ fill_from = Vector2(0.6282051, 0.9017094)
 
 [sub_resource type="Curve2D" id="Curve2D_vbji5"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -2105, -156, -975.2474, -127.093414, 975.2474, 127.093414, -851, 697, -212.3, 123.200005, 212.3, -123.200005, 419, 596, 0, 0, 0, 0, 711, 327)
+"points": PackedVector2Array(0, 0, 0, 0, -1858, -127, -567.2516, -67.46326, 567.2516, 67.46326, -240, 997, -289.76297, 568.29456, 289.76297, -568.29456, 1120, 364)
 }
-point_count = 4
+point_count = 3
 
 [sub_resource type="Curve2D" id="Curve2D_jxrps"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1480, -665, -292.82, -199.65001, 292.82, 199.65001, 2137, -135, -183.92001, 117.37, 183.92001, -117.37, 2918, -169, 0, 0, 0, 0, 3105, -365)
+"points": PackedVector2Array(0, 0, 0, 0, 1656, -365, -292.82, -199.65001, 292.82, 199.65001, 2087, 63, -151.12311, 207.1864, 151.12311, -207.1864, 2918, -169, 0, 0, 0, 0, 3139, -489)
 }
 point_count = 4
 
@@ -510,6 +510,18 @@ position = Vector2(-2296, 359)
 force = 2000.0
 respawn_time = 0.5
 
+[node name="PushOrb31" parent="JumpOrbs" instance=ExtResource("5_l4vpu")]
+position = Vector2(3236, -652)
+rotation = 0.5235988
+force = 2000.0
+respawn_time = 0.5
+
+[node name="PushOrb32" parent="JumpOrbs" instance=ExtResource("5_l4vpu")]
+position = Vector2(3443, -951.9999)
+rotation = 0.2617994
+force = 2000.0
+respawn_time = 0.5
+
 [node name="PushOrb26" parent="JumpOrbs" instance=ExtResource("5_l4vpu")]
 position = Vector2(3821, -1345)
 force = 2000.0
@@ -775,12 +787,6 @@ position = Vector2(-3642, -10645)
 position = Vector2(-9701, 3074)
 track_player = true
 
-[node name="CameraSetter2" parent="CameraSetters" instance=ExtResource("4_cdmcw")]
-position = Vector2(-1346, 294)
-scale = Vector2(6.3667917, -10.300244)
-target_zoom = Vector2(0.5, 0.5)
-track_player = true
-
 [node name="CameraSetter5" parent="CameraSetters" instance=ExtResource("4_cdmcw")]
 position = Vector2(193, -3589)
 scale = Vector2(6.3667917, -10.300244)
@@ -789,11 +795,6 @@ track_player = true
 
 [node name="CameraSetter3" parent="CameraSetters" instance=ExtResource("4_cdmcw")]
 position = Vector2(-2506, 289.99997)
-scale = Vector2(6.3667917, -10.300244)
-track_player = true
-
-[node name="CameraSetter4" parent="CameraSetters" instance=ExtResource("4_cdmcw")]
-position = Vector2(346, -171)
 scale = Vector2(6.3667917, -10.300244)
 track_player = true
 
@@ -1326,12 +1327,12 @@ respawn_time = 0.2
 [node name="Cablev5" parent="." instance=ExtResource("21_whl7f")]
 modulate = Color(0.2509804, 0.6313726, 0, 1)
 curve = SubResource("Curve2D_vbji5")
-cable_drag = 0.9
+cable_drag = 0.95
 
 [node name="Cablev6" parent="." instance=ExtResource("21_whl7f")]
 modulate = Color(0.2509804, 0.6313726, 0, 1)
 curve = SubResource("Curve2D_jxrps")
-cable_drag = 0.9
+cable_drag = 0.95
 
 [node name="Checkpoint" parent="." instance=ExtResource("15_xmomf")]
 position = Vector2(-1618, -14107)

@@ -113,11 +113,13 @@ func _physics_process(delta: float) -> void:
 			if (current_pos.y < target_pos.y) != (future_pos.y < target_pos.y):
 				movement.y = target_pos.y - current_pos.y
 			
+			# Used for visual / damage calculations
 			vel_perc = movement.length() / next_velocity.length()
 			
 			last_sword_velocity = movement/delta # Get velocity per second as opposed to the frame
 			last_frame_pos = body.global_position
 			
+			# Cables move the sword manually, so don't do physics here.
 			if not is_instance_valid(on_cable):
 				
 				var collision := body.move_and_collide(movement)
@@ -126,8 +128,8 @@ func _physics_process(delta: float) -> void:
 				if collision:
 					var friction := _get_slide_from_last_collision()
 					if collision.get_collider() is AnimatableBody2D:
-						body.global_position += collision.get_collider().constant_linear_velocity
-					body.move_and_collide(movement.slide(collision.get_normal()) * friction)
+						body.global_position += collision.get_collider().constant_linear_velocityv
+					body.move_and_collide(collision.get_remainder().slide(collision.get_normal()) * friction)
 		
 		player.MovementMode.PLAYER_ORBIT: # No use as of now.
 			
@@ -164,8 +166,8 @@ func get_push() -> Vector2:
 	var vel := Vector2.ZERO
 
 	if on_cable:
-		vel.y += clampf(Input.get_last_mouse_velocity().y, -player.get_sword_speed(), player.get_sword_speed()) * player.get_strength() * -last_delta * 2
-		#vel.x += min(Input.get_last_mouse_velocity().x, player.get_sword_speed()) * player.get_strength() * -last_delta
+		vel.y += clampf(Input.get_last_mouse_velocity().y, -player.get_sword_speed(), player.get_sword_speed()) * player.get_strength() * -last_delta
+		vel.x += clampf(Input.get_last_mouse_velocity().x, -player.get_sword_speed(), player.get_sword_speed()) * player.get_strength() * -last_delta
 
 	elif collision:
 		

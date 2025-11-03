@@ -29,7 +29,8 @@ func process_weapon(delta:float) -> void:
 
 func on_use(charge_time : float) -> void:
 	if not is_instance_valid(_wielder): return
-	_wielder.apply_velocity(get_dir()*(min(MAX_CHARGE,charge_time)/MAX_CHARGE)*1200*_wielder.get_size_scale())
+	GameCamera.set_current_camera_shake(_wielder.get_viewport(), 0.06)
+	_wielder.set_velocity(get_dir()*(min(MAX_CHARGE,charge_time)/MAX_CHARGE)*1800*_wielder.get_size_scale())
 	current_touch_cooldown = 0.0
 	can_use = false
 
