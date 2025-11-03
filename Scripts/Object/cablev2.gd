@@ -133,7 +133,7 @@ func _physics_process(delta: float) -> void:
 			sword.exit_cable()
 			
 			var dir := Vector2.ZERO
-				
+				  
 			var current_offset_pos : Vector2 = curve.sample_baked(offset)
 			var next_offset_pos : Vector2 = curve.sample_baked(offset + sword.cable_speed*delta)
 			

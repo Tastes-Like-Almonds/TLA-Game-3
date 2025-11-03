@@ -29,7 +29,7 @@ func process_weapon(delta:float) -> void:
 
 func on_use(charge_time : float) -> void:
 	if not is_instance_valid(_wielder): return
-	_wielder.apply_velocity(get_dir()*(min(MAX_CHARGE,charge_time)/MAX_CHARGE)*1500*_wielder.get_size_scale())
+	_wielder.apply_velocity(get_dir()*(min(MAX_CHARGE,charge_time)/MAX_CHARGE)*1200*_wielder.get_size_scale())
 	current_touch_cooldown = 0.0
 	can_use = false
 

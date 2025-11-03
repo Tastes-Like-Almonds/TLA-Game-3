@@ -380,7 +380,7 @@ scale = Vector2(83.68233, 13.715727)
 
 [node name="TeleportZone3" parent="TeleportZones" instance=ExtResource("6_g7fmc")]
 position = Vector2(1999, 1674)
-scale = Vector2(88.38479, -11.904499)
+scale = Vector2(88.1174, -4.942318)
 
 [node name="JumpOrbs" type="Node2D" parent="."]
 
@@ -1212,10 +1212,10 @@ texture_scale = 4.88
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -10
-position = Vector2(-2485.0005, -8308.781)
+position = Vector2(-2551.9998, -1039.0005)
 scale = Vector2(505.0625, 379.69742)
 texture = SubResource("GradientTexture2D_0t62c")
-offset = Vector2(1.7126594, 8.599214)
+offset = Vector2(1.845315, -10.547034)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(0, 1)
