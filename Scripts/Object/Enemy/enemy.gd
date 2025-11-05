@@ -126,6 +126,7 @@ func on_sword_hit(player : Player) -> void:
 			player.apply_velocity(vel)
 	
 	# Deal knockback to bat
+	player.reset_weapon_use()
 	velocity = vel.normalized()*min(vel.length()*knockback_coef,max_kb)
 	
 	GameCamera.shake_current_camera(get_viewport(), 0.1)

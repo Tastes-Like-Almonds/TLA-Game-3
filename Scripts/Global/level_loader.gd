@@ -35,6 +35,7 @@ func load_level(path : String, parent: Node, config : LevelConfig = null) -> Loa
 	
 	print("Level '" + path + "' loaded!")
 	
+	SignalBus.LevelPathLoaded.emit(path)
 	return LoadLevelStatus.SUCCESS
 
 ## Returns an array of all file paths of levels. Note: This only checks if files are .tscn files,

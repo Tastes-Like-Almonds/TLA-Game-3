@@ -375,8 +375,8 @@ position = Vector2(-11691, -5650)
 scale = Vector2(75.34091, -5.462082)
 
 [node name="TeleportZone7" parent="TeleportZones" instance=ExtResource("6_g7fmc")]
-position = Vector2(-8254, -11939)
-scale = Vector2(51.642075, 1.9183248)
+position = Vector2(-8917, -11909.999)
+scale = Vector2(65.85413, 3.014791)
 
 [node name="TeleportZone9" parent="TeleportZones" instance=ExtResource("6_g7fmc")]
 position = Vector2(-8165.001, -8405.001)
@@ -643,61 +643,11 @@ position = Vector2(-8867, -5263)
 scale = Vector2(2, 2)
 size = 200.0
 
-[node name="ExplosionOrb7" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
-position = Vector2(-11553, -8405)
-scale = Vector2(4, 4)
-size = 400.0
-
 [node name="ExplosionOrb20" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
 position = Vector2(-7610, -6996)
 scale = Vector2(4, 4)
 size = 500.0
 damage = 20.0
-
-[node name="ExplosionOrb8" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
-position = Vector2(-10952, -8415)
-scale = Vector2(4, 4)
-size = 400.0
-
-[node name="ExplosionOrb9" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
-position = Vector2(-11553, -8714)
-scale = Vector2(4, 4)
-size = 400.0
-
-[node name="ExplosionOrb10" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
-position = Vector2(-10952, -8724)
-scale = Vector2(4, 4)
-size = 400.0
-
-[node name="ExplosionOrb11" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
-position = Vector2(-11555, -9035)
-scale = Vector2(4, 4)
-size = 400.0
-
-[node name="ExplosionOrb12" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
-position = Vector2(-10954, -9045)
-scale = Vector2(4, 4)
-size = 400.0
-
-[node name="ExplosionOrb13" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
-position = Vector2(-11541, -9349)
-scale = Vector2(4, 4)
-size = 400.0
-
-[node name="ExplosionOrb14" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
-position = Vector2(-10940, -9359)
-scale = Vector2(4, 4)
-size = 400.0
-
-[node name="ExplosionOrb15" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
-position = Vector2(-11550, -9670)
-scale = Vector2(4, 4)
-size = 400.0
-
-[node name="ExplosionOrb16" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
-position = Vector2(-10949, -9680)
-scale = Vector2(4, 4)
-size = 400.0
 
 [node name="ExplosionOrb21" parent="ExplosionOrbs" instance=ExtResource("7_5wcjk")]
 position = Vector2(-8843, -10370)
@@ -816,11 +766,6 @@ track_player = true
 
 [node name="CameraSetter6" parent="CameraSetters" instance=ExtResource("4_cdmcw")]
 position = Vector2(3146, -2662)
-scale = Vector2(6.3667917, -10.300244)
-track_player = true
-
-[node name="CameraSetter7" parent="CameraSetters" instance=ExtResource("4_cdmcw")]
-position = Vector2(-7994, -6259)
 scale = Vector2(6.3667917, -10.300244)
 track_player = true
 

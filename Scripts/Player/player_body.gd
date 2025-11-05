@@ -56,7 +56,8 @@ func ray_is_on_floor() -> Dictionary:
 	parameters.from = global_position
 	
 	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
-	parameters.to = parameters.from + get_player().get_gravity_direction() * shape.shape.get_rect().size.y
+	parameters.to = parameters.from + get_player().get_gravity_direction() * shape.shape.get_rect().size.y/2
+	parameters.to = parameters.to.normalized()*0.5 + parameters.to # Add unit vector
 	
 	parameters.collision_mask = 1
 	var result := space_state.intersect_ray(parameters)
@@ -66,6 +67,11 @@ func ray_is_on_floor() -> Dictionary:
 func _physics_process(delta: float) -> void:
 	var player : Player = get_player()
 	var sword := player.get_player_sword()
+	
+	if player.get_gravity() < 0:
+		up_direction = Vector2(0, 1)
+	else:
+		up_direction = Vector2(0, -1)
 	
 	# Reset velocity to prevent it staying and colliding after respawn.
 	if not player.is_alive(): velocity = Vector2.ZERO ; return

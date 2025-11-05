@@ -20,6 +20,13 @@ signal PlayerAdded(player : Player)
 ## reference is not included in the signal (null).
 @warning_ignore("unused_signal")
 signal PlayerRemoved()
+
+#endregion
+
+#region level
+## Fired when a level is loaded via LevelLoader.gd. Passes the string path of the level.
+@warning_ignore("unused_signal")
+signal LevelPathLoaded(level: Level)
 #endregion
 
 func _ready() -> void:

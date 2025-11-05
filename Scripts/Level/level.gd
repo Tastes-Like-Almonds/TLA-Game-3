@@ -63,6 +63,7 @@ func initialize(config : LevelConfig = null) -> void:
 	register_ui(player)
 	
 	on_load.emit()
+	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 
 static func get_level_data() -> void:
 	pass
