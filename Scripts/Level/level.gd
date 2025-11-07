@@ -1,6 +1,15 @@
 ## A base class for levels. 
 @abstract class_name Level extends Node2D
 
+enum Difficulty {
+	EFFORTLESS,
+	EASY,
+	AVERAGE,
+	HARD,
+	TOUGH,
+	INSANE
+}
+
 signal on_load
 
 var level_config : LevelConfig

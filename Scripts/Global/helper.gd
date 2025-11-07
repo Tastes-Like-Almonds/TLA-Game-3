@@ -45,7 +45,7 @@ func get_all_players() -> Array[Player]:
 func get_mouse_vec_from_center() -> Vector2:
 	var center := get_viewport().get_mouse_position()
 	var size := get_viewport_rect().size
-	return center - Vector2(size.x, size.y)/2
+	return (center - Vector2(size.x, size.y)/2)/get_viewport().get_camera_2d().zoom
 
 ## Returns true if the line between start and end moves past the target point's x or y position.
 func line_passes_point_horizontally_or_vertically(start: Vector2, end: Vector2, point: Vector2) -> bool:
