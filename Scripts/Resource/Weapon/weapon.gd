@@ -15,6 +15,7 @@ var equipped : bool = false
 var can_use : bool = true:
 	get():
 		if !_valid(): return false
+		if _wielder.get_player_body().ray_is_on_floor(): return false
 		return can_use
 
 var MAX_CHARGE: float

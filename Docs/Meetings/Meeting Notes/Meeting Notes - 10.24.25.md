@@ -19,7 +19,7 @@ query: #members
 - Gather those who haven't used github
 - Assign TLA to discuss the game title and Anton to explain the story thus far
 	- Also have the artists talk about how much they can complete from what we have listed
-- For those who havent used github, teach them
+- For those who haven't used github, teach them
 	- How to create an account
 	- Using Github Desktop
 	- Creating a repository

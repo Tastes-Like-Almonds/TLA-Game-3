@@ -19,9 +19,9 @@ func get_all_players() -> Array[Player]:
 	var players : Array[Player] = []
 	
 	# Without this line, error triggers upon game closing
-	if tree_exiting: return players
+	#if tree_exiting: return players
 	var tree := get_tree()
-	
+	if tree == null: return players
 	for player in tree.get_nodes_in_group("Player"):
 		if player is Player:
 			players.append(player)

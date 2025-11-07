@@ -7,6 +7,10 @@ class_name Cable
 @onready var line := $Line2D
 @export var cable_drag : float = 0.5
 
+## The minimum velocity the player will have upon entering the cable. Setting this allows for
+## the player to not as easily lose speed when riding one.
+@export var min_start_velocity : float = 1000
+
 ## Speed required to reach maximum screen shake
 @export var speed_shake_max : float = 100
 
@@ -125,15 +129,24 @@ func _physics_process(delta: float) -> void:
 				elif real_vel.x > 0 or (is_vertical and sword.get_tip_global_position().x > player.get_player_position().x):
 					sword.cable_speed = -player.get_player_body().get_real_velocity().slide(_get_normal_from_offset(offset, true)).length()
 				
+				# Apply minimum velocity.
+				if sword.cable_speed < 0:
+					sword.cable_speed = min(sword.cable_speed, -min_start_velocity)
+				elif sword.cable_speed > 0:
+					sword.cable_speed = max(sword.cable_speed, min_start_velocity)
+				
 				sword.enter_cable(self)
 		
 		# Exit the cable if able
-		if (player.get_player_position().y < closest.y - (player.get_max_distance()) or _offset_out_of_range(offset + sword.cable_speed*delta)) and sword.on_cable == self:
+		if (
+			player.get_player_position().y < closest.y - (player.get_max_distance()) or 
+			(player.get_player_body().velocity.y < 0 and player.get_player_position().y < closest.y and player.get_player_sword()._get_target_pos().y < closest.y) or
+			_offset_out_of_range(offset + sword.cable_speed*delta)) and sword.on_cable == self:
 			sword.cable_speed = 0.0
 			sword.exit_cable()
 			
 			var dir := Vector2.ZERO
-				
+				  
 			var current_offset_pos : Vector2 = curve.sample_baked(offset)
 			var next_offset_pos : Vector2 = curve.sample_baked(offset + sword.cable_speed*delta)
 			

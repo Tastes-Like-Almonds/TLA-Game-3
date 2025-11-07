@@ -2,6 +2,8 @@ extends Area2D
 
 @onready var sprite : Sprite2D = $Sprite2D
 
+@export var heal_on_reach: bool = true
+
 ## Sound played when a player reaches the checkpoint
 @export var sound : SoundData
 
@@ -38,6 +40,10 @@ func set_player_respawn(player : Player) -> void:
 	var players : Array[Player] = [player]
 	if set_all_players: players = Helper.get_all_players()
 	
+	if player.respawn_pos != respawn_position:
+		if heal_on_reach:
+			player.health = player.get_max_health()
+	
 	for p in players:
 		p.respawn_pos = respawn_position
 		if not p.respawn_point_changed.is_connected(_update_from_signal):
@@ -63,7 +69,9 @@ func update_texture() -> void:
 	$PointLight2D.visible = on
 	if (last_on != on) and on: # If just turned on
 		if sound: Sfx.play_sound_2d(sound, global_position, false)
+		
 		$PointLight2D.scale = Vector2.ZERO
+		
 		var tween := get_tree().create_tween()
 		tween.set_ease(Tween.EASE_OUT)
 		tween.set_trans(Tween.TRANS_EXPO)

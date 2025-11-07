@@ -32,7 +32,10 @@
 @export var knockback : float = 100.0
 
 ## Coefficient of knockback applied.
-@export var knockback_coef : float = 0.6
+@export var knockback_coef : float = 2
+
+## Maximum knockback that can be dealt to the enemy.
+@export var max_kb : float = 1800
 
 # --- #
 @export_group("Movement")
@@ -123,7 +126,8 @@ func on_sword_hit(player : Player) -> void:
 			player.apply_velocity(vel)
 	
 	# Deal knockback to bat
-	velocity = vel*knockback_coef
+	player.reset_weapon_use()
+	velocity = vel.normalized()*min(vel.length()*knockback_coef,max_kb)
 	
 	GameCamera.shake_current_camera(get_viewport(), 0.1)
 

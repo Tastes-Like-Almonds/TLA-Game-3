@@ -388,28 +388,14 @@ func pickup_weapon(weapon : Weapon) -> Weapon:
 #endregion
 
 #region Actions
-	
-## Start charging the main ability of the held weapon
-func start_charging() -> void:
-	ability_charge = get_current_weapon().MAX_CHARGE
-
-## Use the main ability of the help weapon, resetting its charge.
-func stop_charging() -> void:
-	if current_weapon:
-		current_weapon.use(ability_charge)
-	ability_charge = 0.0
 
 func _input(event: InputEvent) -> void: # TODO Replace this with an input manager class.
 	
 	if event.is_action_pressed("use"):
-		if current_weapon:
-			if ability_charge > 0.0:
-				Sfx.play_sound_2d(current_weapon.use_end_sound, get_player_position())
-				current_weapon.use(ability_charge)
-				ability_charge = 0.0
-			else:
-				Sfx.play_sound_2d(current_weapon.use_start_sound, get_player_position())
-				ability_charge = current_weapon.MAX_CHARGE
+		if current_weapon and current_weapon.can_use:
+			Sfx.play_sound_2d(current_weapon.use_end_sound, get_player_position())
+			ability_charge = current_weapon.MAX_CHARGE
+			current_weapon.use(ability_charge)
 	
 	#elif event.is_action_released("use"):
 		#stop_charging()
