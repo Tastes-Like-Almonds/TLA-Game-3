@@ -24,6 +24,9 @@ func update_select_player_dropdown() -> void:
 	select_player_node.clear()
 	possible_players.clear()
 	
+	var dev_panel := _get_dev_panel()
+	if dev_panel == null: return
+	
 	for player in _get_dev_panel().get_all_players():
 		select_player_node.add_item(player.name)
 	

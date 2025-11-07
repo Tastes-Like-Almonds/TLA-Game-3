@@ -31,3 +31,4 @@ func _ready() -> void:
 	var parent := Globals.main
 	select_level_confirm.pressed.connect(func() -> void: _load_selected_level(parent))
 	reload_level_confirm.pressed.connect(func() -> void: LevelLoader.clear_levels(parent) ; LevelLoader.load_level(last_level, parent))
+	SignalBus.LevelPathLoaded.connect(func(x:String) -> void: last_level = x)

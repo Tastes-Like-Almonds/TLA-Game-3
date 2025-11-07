@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dhh0l8wx0iyhh"]
 
-[ext_resource type="Script" uid="uid://dxnf3hgwxytok" path="res://Scripts/Visual/Weapons/Sword/sword_basic_visual.gd" id="1_fjwji"]
+[ext_resource type="Script" uid="uid://bcu42gx6uwdjr" path="res://Scripts/Visual/Weapons/staff_basic_visual.gd" id="1_w5k32"]
 [ext_resource type="Texture2D" uid="uid://ddlnms7so4rt6" path="res://Assets/Sprites/Placeholder/staff_placeholder.png" id="2_w5k32"]
 
 [sub_resource type="Gradient" id="Gradient_47q6j"]
@@ -38,7 +38,7 @@ scale_curve = SubResource("CurveTexture_l3mnx")
 alpha_curve = SubResource("CurveTexture_sdpqg")
 
 [node name="StaffBasicVisual" type="Node2D"]
-script = ExtResource("1_fjwji")
+script = ExtResource("1_w5k32")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1

@@ -5,6 +5,16 @@ class_name Player extends Node2D
 @warning_ignore("unused_signal")
 signal sword_collision(collision : KinematicCollision2D)
 
+## Fired when the player's repsawn point is updated to a **different** value.
+signal respawn_point_changed(new : Vector2)
+
+## Fired after the player's loadout changes, whether this be from a new item picked up or
+## the currently equipped item changing.
+signal loadout_changed
+
+## Fires when the player's health is set to a different value through any means.
+signal health_changed(new : float)
+
 var last_collision : KinematicCollision2D = null
 
 enum MovementMode {
@@ -22,6 +32,9 @@ enum MovementMode {
 @export var properties : PlayerProperties = PlayerProperties.new()
 
 var property_modifiers : Dictionary[String, Array]
+
+@export var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0)
+@export var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0)
 
 #endregion
 
@@ -62,7 +75,11 @@ var movement_mode : MovementMode = MovementMode.SWORD_ORBIT
 var held_weapons : Array[Weapon] = []
 
 ## The player's current health.
-var health : float = properties.max_health
+var health : float = properties.max_health:
+	set(new):
+		if new != health:
+			health_changed.emit(new)
+		health = new
 
 ## The amount of time since damage was last taken.
 var last_hit_time : float = 0.0
@@ -80,7 +97,13 @@ var time_respawning : float = 0.0
 var dead : bool = false
 
 ## The global position the player will respawn at.
-var respawn_pos : Vector2
+var respawn_pos : Vector2:
+	set(new):
+		if new != respawn_pos:
+			respawn_pos = new # Done before the signal emits
+			respawn_point_changed.emit(new)
+		else:
+			respawn_pos = new
 #endregion
 
 #region Getters
@@ -173,6 +196,10 @@ func get_sword_speed() -> float:
 func get_sword_speed_damage() -> float:
 	return get_modified_property("sword_speed_damage")
 
+## Returns the max health of the player.
+func get_max_health() -> float:
+	return get_modified_property("max_health")
+
 ## Gets the player's body.
 func get_player_body() -> PlayerBody:
 	
@@ -202,6 +229,11 @@ func get_current_weapon() -> Weapon:
 ## Gets the current movement mode
 func get_movement_mode() -> MovementMode:
 	return movement_mode
+
+## Gets the percentage of the sword's speed compared to its max speed.
+func get_sword_speed_perc() -> float:
+	var sword : Sword = get_player_sword()
+	return sword.get_last_sword_velocity().length() / get_sword_speed()
 
 ## Gets the current damage of the blade (Value changes based on speed, charge, etc.)
 func get_blade_damage() -> float:
@@ -243,6 +275,13 @@ func get_largest_size() -> float:
 func is_alive() -> bool:
 	return not dead
 
+## Returns the direction that the player is falling
+func get_gravity_direction() -> Vector2:
+	if get_modified_property("gravity") < 0:
+		return Vector2.UP
+	else:
+		return Vector2.DOWN
+
 #endregion
 
 #region Visual
@@ -257,11 +296,12 @@ func _clear_visuals() -> void:
 func _visual_process(delta : float) -> void:
 	
 	visible = not dead
-	
+
 	# Update player rotation
 	var body : PlayerBody = get_player_body()
 	if body:
 		body.get_sprite().flip_h = get_player_sword().get_tip_global_position().x < get_player_position().x
+		body.get_sprite().flip_v = (get_gravity() <= 0)
 
 	# Update player damage
 	if sprite:
@@ -272,24 +312,30 @@ func _visual_process(delta : float) -> void:
 	if weapon_visual:
 		var sword := get_player_sword()
 		if sword:
-			weapon_visual.update_visual(get_player_position(), sword.get_tip_global_position())
-			weapon_visual.update_audio()
+			weapon_visual.update_visual(delta)
+			weapon_visual.update_audio(delta)
 
 #endregion
 
 #region Item
 
+## Get the index of the currently equipped weapon, -1 if not found.
+func get_current_weapon_index() -> int:
+	return held_weapons.find(current_weapon)
+
 ## Equip the passed weapon
 func equip_weapon(weapon : Weapon) -> void:
 	
 	if not weapon: return
-	if not weapon.can_use(): weapon.init_weapon(self)
-	
+	if not weapon.can_use: weapon.init_weapon(self)
 	weapon.reset()
 	weapon.on_equip()
+	
+	if current_weapon: current_weapon.on_unequip()
 	current_weapon = weapon
 	
 	_clear_visuals()
+	loadout_changed.emit()
 	
 	var scn : PackedScene = CosmeticLoader.get_weapon_visual(weapon)
 	if scn:
@@ -299,14 +345,17 @@ func equip_weapon(weapon : Weapon) -> void:
 
 ## Equip the weapon in the passed slot.
 func equip_weapon_slot(slot : int) -> void:
+	if slot >= held_weapons.size(): return
 	var weapon : Weapon = held_weapons.get(slot)
 	if weapon:
 		equip_weapon(weapon)
+	loadout_changed.emit()
 
 ## Add the passed weapon to held weapons. Returns the weapon that was dropped as a result, if any.
 func add_weapon(weapon : Weapon) -> Weapon:
 	
 	held_weapons.append(weapon)
+	loadout_changed.emit()
 	
 	if held_weapons.size() > get_max_equip():
 		var target_index : int = held_weapons.find(current_weapon)
@@ -324,8 +373,9 @@ func drop_weapon(slot : int) -> Weapon:
 	
 	if held_weapons[slot] == current_weapon:
 		current_weapon.on_unequip()
-	
-	return held_weapons.pop_at(slot) # TODO Add item drop
+	var item : Weapon = held_weapons.pop_at(slot)
+	loadout_changed.emit()
+	return item # TODO Add item drop
 
 ## Pickup the weapon. Should be called by ItemPickup or any item source giving a weapon.
 ## Returns the weapon that was dropped as a result, if any.
@@ -339,51 +389,43 @@ func pickup_weapon(weapon : Weapon) -> Weapon:
 
 #region Actions
 
-## Teleport toward the target location, with respect to collisions.
-func teleport_toward(vec2 : Vector2) -> void:
-	var space_state := get_world_2d().direct_space_state
-	var body := get_player_body()
-	var body_max_size := get_largest_size()
-	var origin := get_player_position()
-	var dir := origin.direction_to(vec2)
-	
-	var query := PhysicsRayQueryParameters2D.create(origin, vec2 + dir*body_max_size, 1)
-	var result := space_state.intersect_ray(query)
-	
-	if not result:
-		get_player_body().global_position = vec2
-		return
-	
-	body.global_position = result.position - dir*body_max_size
-	
-## Start charging the main ability of the held weapon
-func start_charging() -> void:
-	charging_ability = true
-
-## Use the main ability of the help weapon, resetting its charge.
-func stop_charging() -> void:
-	charging_ability = false
-	if current_weapon:
-		current_weapon.use(ability_charge)
-	ability_charge = 0.0
-
 func _input(event: InputEvent) -> void: # TODO Replace this with an input manager class.
 	
 	if event.is_action_pressed("use"):
-		start_charging()
+		if current_weapon and current_weapon.can_use:
+			Sfx.play_sound_2d(current_weapon.use_end_sound, get_player_position())
+			ability_charge = current_weapon.MAX_CHARGE
+			current_weapon.use(ability_charge)
 	
-	elif event.is_action_released("use"):
-		stop_charging()
+	#elif event.is_action_released("use"):
+		#stop_charging()
 	
 	elif event.is_action_pressed("quit"):
 		get_tree().quit()
 	
-	elif event.is_action_pressed("ui_accept"):
+	elif event.is_action_pressed("next_weapon"):
+		var idx : int = get_current_weapon_index()
+		idx = wrap(idx+1, 0, held_weapons.size())
+		equip_weapon_slot(idx)
+	
+	elif event.is_action_pressed("previous_weapon"):
+		var idx : int = get_current_weapon_index()
+		idx = wrap(idx-1, 0, held_weapons.size())
+		equip_weapon_slot(idx)
+	
+	elif event.is_action_pressed("noclip"):
 		if get_movement_mode() == MovementMode.NOCLIP:
 			set_movement_mode(MovementMode.SWORD_ORBIT)
 		else:
 			get_player_sword().on_cable = null       
 			set_movement_mode(MovementMode.NOCLIP)
+	
+	elif event is InputEventKey:
+		if event.pressed:
+			# Hotbar hotkeys 0-9
+			var number : int = event.keycode-48
+			if number >= 0 and number <= 9:
+				equip_weapon_slot(wrap(number-1, 0, 10))
 	
 ## Apply the passed velocity to the player.
 func apply_velocity(vel : Vector2) -> void:
@@ -416,19 +458,54 @@ func set_movement_mode(mode : MovementMode) -> void:
 		MovementMode.NOCLIP:
 			set_collisions(false)
 
+## Sets the can_use property of the player's weapon to true; allows the player to
+## use their weapon's ability again
+func reset_weapon_use() -> void:
+	if current_weapon:
+		current_weapon.can_use = true
+
+## Teleport the player and sword to the target location.
+func teleport_to(pos : Vector2) -> void:
+	get_player_sword().on_cable = null
+	get_player_body().global_position = pos
+	get_player_sword().body.global_position = pos
+
+## Teleport toward the target location, with respect to collisions.
+func teleport_toward(vec2 : Vector2) -> void:
+	
+	var space_state := get_world_2d().direct_space_state
+	var body := get_player_body()
+	var body_max_size := get_largest_size()
+	var origin := get_player_position()
+	var dir := origin.direction_to(vec2)
+	
+	var query := PhysicsRayQueryParameters2D.create(origin, vec2 + dir*body_max_size, 1)
+	var result := space_state.intersect_ray(query)
+	
+	if not result:
+		get_player_body().global_position = vec2
+		return
+	
+	body.global_position = result.position - dir*body_max_size
+	get_player_sword().body.global_position  = body.global_position
+
 #endregion
 
 #region Damage/Death
 
+## Clears all of the property modifiers attatched to the player which reset upon respawn (default)
+func clear_respawn_modifiers() -> void:
+	for stat:String in property_modifiers:
+		for modifier:PropertyModifier in property_modifiers[stat]:
+			if modifier.reset_on_respawn:
+				property_modifiers[stat].erase(modifier)
+
 func _respawn() -> void:
 	
-	var body := get_player_body()
-	var sword := get_player_sword()
+	teleport_to(respawn_pos)
+	get_player_sword().on_cable = null
 	
-	# Teleport the sword along with the player to prevent weird stuff
-	var sword_offset := sword.global_position - body.global_position
-	body.global_position = respawn_pos
-	sword.global_position = respawn_pos + sword_offset
+	clear_respawn_modifiers()
 	
 	time_respawning = 0
 	last_hit_time = get_invincibility_time()*-2
@@ -439,8 +516,9 @@ func _respawn() -> void:
 ## Handle the death of the player.
 func _death() -> void:
 	if dead: return
+	get_player_sword().on_cable = null
+	Sfx.play_sound_2d(death_sound, get_player_position(), false)
 	dead = true
-	print("A player has died!")
 
 ## Kill the player.
 func kill() -> void:
@@ -455,7 +533,11 @@ func deal_damage(amt : float) -> bool:
 	if last_hit_time < get_invincibility_time(): amt -= last_hit_amount
 	if amt <= 0: return false
 	
-	print(str(amt) + " damage dealt")
+	GameCamera.set_current_camera_shake(get_viewport(), clampf((amt/2)/get_modified_property("max_health"),0.0,0.2))
+	Sfx.play_sound_2d(hit_sound, get_player_position())
+	
+	# TODO Set parent to something better
+	TextDisplay.damage_display(get_parent(), get_player_position(),str(amt), Vector2.from_angle(-PI/2+randf_range(-PI/4,PI/4)))
 	
 	last_hit_time = 0.0
 	last_hit_amount = amt
@@ -511,11 +593,14 @@ func _process(delta: float) -> void:
 	if current_weapon:
 		current_weapon.process_weapon(delta)
 	
+	charging_ability = (ability_charge > 0.0)
+	
 	if charging_ability and is_instance_valid(current_weapon):
-		if current_weapon.can_use():
-			ability_charge += delta
+		if current_weapon.can_use:
+			ability_charge -= delta
 		else:
 			ability_charge = 0
+	ability_charge = max(0, ability_charge)
 
 	# Update the respawn timer
 	if dead and lives > 0:
@@ -529,14 +614,13 @@ func _process(delta: float) -> void:
 func _physics_process(_delta: float) -> void:
 	var size_scale := get_size_scale()
 	scale = Vector2(size_scale, size_scale)
-	
 
 func _ready() -> void:
 	respawn_pos = get_player_body().global_position
 	lives = get_modified_property("max_lives")
 	add_weapon(get_modified_property("starting_weapon"))
 	equip_weapon_slot(0)
-	Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
+	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.
 func set_last_collision(collision:KinematicCollision2D) -> void:

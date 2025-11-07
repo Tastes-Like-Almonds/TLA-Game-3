@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://sueffrpq18bh"
+path="res://.godot/imported/Shrink Orb Edit 1 Export 1.mp3-84ce559eb0d3d67543c1835a96f9ee33.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Orb/Shrink Orb Edit 1 Export 1.mp3"
+dest_files=["res://.godot/imported/Shrink Orb Edit 1 Export 1.mp3-84ce559eb0d3d67543c1835a96f9ee33.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

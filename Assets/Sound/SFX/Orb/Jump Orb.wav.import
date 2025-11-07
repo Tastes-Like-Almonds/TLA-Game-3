@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bcic8teejridb"
+path="res://.godot/imported/Jump Orb.wav-0f820f96eb42f0fe7ca5f5d822fd9f57.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Orb/Jump Orb.wav"
+dest_files=["res://.godot/imported/Jump Orb.wav-0f820f96eb42f0fe7ca5f5d822fd9f57.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

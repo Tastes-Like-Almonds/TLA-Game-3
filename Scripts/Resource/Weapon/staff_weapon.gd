@@ -1,11 +1,13 @@
 extends Weapon
 class_name StaffWeapon
 
-const MAX_CHARGE = 0.25
 const DISTANCE = 600
 
 var staff_line := preload("res://Scenes/Visual/staff_line.tscn")
 var current_staff_line : Line2D = null
+
+func _init() -> void:
+	MAX_CHARGE = 0.25
 
 func _get_target_point() -> Vector2:
 	var pos := _wielder.get_player_position()
@@ -36,11 +38,6 @@ func on_use(_charge_time : float) -> void:
 
 func get_property_modifiers() -> Dictionary[String, Array]:
 	return {
-		"max_distance": [
-			PropertyModifier.new(
-			1-_wielder.get_weapon_charge_perc()*0.2,
-			PropertyModifier.ModiferType.MULTIPLY)
-		]
 	}
 
 func get_charge_prog(prog : float) -> float:

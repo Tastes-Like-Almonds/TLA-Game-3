@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dnhrht2ktgijh"
+path="res://.godot/imported/Sword Slide Edit 1 Export 1.mp3-b5237b64fac64b8b95d4c1541f2f0586.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Player/Sword/Sword Slide Edit 1 Export 1.mp3"
+dest_files=["res://.godot/imported/Sword Slide Edit 1 Export 1.mp3-b5237b64fac64b8b95d4c1541f2f0586.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

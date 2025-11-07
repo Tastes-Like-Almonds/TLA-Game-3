@@ -135,6 +135,7 @@ properties = SubResource("Resource_jlvik")
 
 [node name="playerBody" type="CharacterBody2D" parent="." groups=["PlayerBody"]]
 collision_layer = 2
+platform_wall_layers = 256
 script = ExtResource("1_uvnfx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="playerBody"]

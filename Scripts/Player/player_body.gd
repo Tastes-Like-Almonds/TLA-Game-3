@@ -56,7 +56,8 @@ func ray_is_on_floor() -> Dictionary:
 	parameters.from = global_position
 	
 	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
-	parameters.to = parameters.from + Vector2.DOWN * shape.shape.get_rect().size.y
+	parameters.to = parameters.from + get_player().get_gravity_direction() * shape.shape.get_rect().size.y/2
+	parameters.to = parameters.to.normalized()*0.5 + parameters.to # Add unit vector
 	
 	parameters.collision_mask = 1
 	var result := space_state.intersect_ray(parameters)
@@ -66,6 +67,11 @@ func ray_is_on_floor() -> Dictionary:
 func _physics_process(delta: float) -> void:
 	var player : Player = get_player()
 	var sword := player.get_player_sword()
+	
+	if player.get_gravity() < 0:
+		up_direction = Vector2(0, 1)
+	else:
+		up_direction = Vector2(0, -1)
 	
 	# Reset velocity to prevent it staying and colliding after respawn.
 	if not player.is_alive(): velocity = Vector2.ZERO ; return
@@ -86,15 +92,24 @@ func _physics_process(delta: float) -> void:
 				velocity += sword.get_push()  
 			else: # Only apply gravity if the sword isn't pushing
 				velocity.y += player.get_gravity()*delta
-				
+			
+			# Account for sword intertia
+			var collision := player.get_last_collision()
+			if collision:
+				if collision.get_collider() is AnimatableBody2D:
+					global_position += collision.get_collider().constant_linear_velocity
+			
 			# Slow the player rapidly if beyond the sword's reach
 			if (global_position + velocity*delta).distance_to(sword.get_tip_global_position()) > player.get_max_distance()*player.get_soft_limit_distance_coef():
 				
-				velocity *= pow(player.get_soft_limit_drag(),delta)
+				var soft_limit_drag := player.get_soft_limit_drag()
 				
 				if sword.is_on_cable():
 					var dir := global_position.direction_to(sword.get_tip_global_position())
+					soft_limit_drag *= 0.2
 					velocity += dir*global_position.distance_squared_to(sword.get_tip_global_position())*0.005
+				
+				velocity *= pow(soft_limit_drag,delta)
 			
 			# Apply drag
 			velocity = _apply_drag(velocity, delta)
@@ -105,8 +120,6 @@ func _physics_process(delta: float) -> void:
 			if move_and_slide():
 				if is_on_floor():
 					velocity.y = (-current_vel.y - get_last_slide_collision().get_remainder().y) * player.get_bounciness()
-			
-			
 			
 		#endregion
 		
@@ -124,7 +137,7 @@ func _physics_process(delta: float) -> void:
 		#region Noclip
 		player.MovementMode.NOCLIP:
 			velocity = Vector2.ZERO
-			if player.is_charging_ability():
+			if Input.is_action_pressed("use"):
 				var body_pos := player.get_player_body().global_position
 				velocity = body_pos.direction_to(get_global_mouse_position())*body_pos.distance_to(get_global_mouse_position())*10
 			move_and_slide()

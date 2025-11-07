@@ -12,7 +12,7 @@ class_name PlayerProperties extends Resource
 @export_group("Health and Damage")
 
 ## The lives the player will start with after spawning. Altering mid-game does nothing.
-@export var max_lives : int = 3
+@export var max_lives : int = 300
 
 ## Maximum health of the player. Does not regenerate.
 @export var max_health : float = 10.0
@@ -42,7 +42,7 @@ class_name PlayerProperties extends Resource
 @export var min_distance : float = 10.0
 
 ## The strength of the player; the sword flings more when higher.
-@export_range(0,5, 0.1) var strength : float = 2.5
+@export_range(0,5, 0.1) var strength : float = 3
 
 ## The strength of the player when in player orbit mode.
 @export var player_orbit_strength : float = 10.0
@@ -57,7 +57,7 @@ class_name PlayerProperties extends Resource
 @export_group("Inventory")
 
 ## The max number of items which the player can hold.
-@export_range(1,10, 1) var max_equip : int = 1
+@export_range(1,10, 1) var max_equip : int = 2
 
 ## If true, the player will automatically equip picked up items. This happens by default
 ## if the player's max weapons value is reached.

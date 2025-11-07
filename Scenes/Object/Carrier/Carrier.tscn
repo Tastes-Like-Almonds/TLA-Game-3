@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwlmrcs80finq"]
+
+[ext_resource type="Script" uid="uid://bn655ymuve1a7" path="res://Scripts/Object/carrier.gd" id="1_lbhu6"]
+
+[sub_resource type="Curve2D" id="Curve2D_lbhu6"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -8832, 3037, 0, 0, 0, 0, -8319, 3003, 0, 0, 0, 0, -8343, 2642, 0, 0, 0, 0, -8905, 2625, 0, 0, 0, 0, -8810, 1602, 0, 0, 0, 0, -8379, 1467)
+}
+point_count = 6
+
+[node name="Carrier" type="Path2D"]
+curve = SubResource("Curve2D_lbhu6")
+script = ExtResource("1_lbhu6")
+body_path = "res://Scenes/Object/Carrier/CarrierBody/dev_carrier_body.tscn"
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(-8832, 3037)
+rotates = false
+loop = false
