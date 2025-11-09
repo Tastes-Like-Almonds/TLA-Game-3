@@ -19,7 +19,7 @@ texture = SubResource("GradientTexture2D_mluhb")
 
 [node name="main" type="Node"]
 script = ExtResource("1_d1ilt")
-autoload_level = "res://Scenes/Level/Bob.tscn"
+autoload_level = "res://Scenes/Level/Tutorial.tscn"
 
 [node name="UI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
