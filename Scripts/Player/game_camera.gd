@@ -101,21 +101,21 @@ func _physics_process(delta: float) -> void:
 	
 	var current_target_zoom := target_zoom
 	
-	# - Calculate zoom based on velocity - #
-	var speed := last_vel
-	var rect := get_viewport_rect()
-	
-	var target_speed_rect := rect
-	target_speed_rect.position += speed * zoom_with_vel_time/delta
-	
-	# Gets the rect formed by the current and future camera position, then scales the current
-	# camera zoom to match the coverage.
-	var target_rect := get_viewport_rect().merge(target_speed_rect)
-	var speed_target_zoom :float = 1/max(target_rect.size.x/rect.size.x, target_rect.size.y/rect.size.y)
-	
-	# Ensure zoom doesn't stretch the camera
-	current_target_zoom *= Vector2(speed_target_zoom, speed_target_zoom)
-	# - End - #
+	# Calculate zoom based on velocity
+	if zoom_with_velocity:
+		var speed := last_vel
+		var rect := get_viewport_rect()
+		
+		var target_speed_rect := rect
+		target_speed_rect.position += speed * zoom_with_vel_time/delta
+		
+		# Gets the rect formed by the current and future camera position, then scales the current
+		# camera zoom to match the coverage.
+		var target_rect := get_viewport_rect().merge(target_speed_rect)
+		var speed_target_zoom :float = 1/max(target_rect.size.x/rect.size.x, target_rect.size.y/rect.size.y)
+		
+		# Ensure zoom doesn't stretch the camera
+		current_target_zoom *= Vector2(speed_target_zoom, speed_target_zoom)
 	
 	if smooth_zoom:
 		zoom = zoom.move_toward(current_target_zoom, zoom_speed*zoom.distance_to(current_target_zoom)*delta)

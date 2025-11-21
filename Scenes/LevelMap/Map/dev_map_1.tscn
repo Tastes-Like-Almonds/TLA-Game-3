@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://deq0kx0ybsu2d"]
+
+[ext_resource type="Script" uid="uid://ccwvoknoqe0ae" path="res://Scripts/LevelMap/Map/dev_map_1.gd" id="1_n632w"]
+[ext_resource type="Script" uid="uid://bnq1hbdw1yhgi" path="res://Scripts/LevelMap/Class/map_node.gd" id="2_hp7ar"]
+[ext_resource type="Script" uid="uid://3ihwse3ojqyr" path="res://Scripts/LevelMap/Resource/map_level_node_data.gd" id="3_dda2l"]
+[ext_resource type="Texture2D" uid="uid://bgd2k2q6im83g" path="res://Assets/Sprites/Placeholder/Placeholder Map.png" id="4_7lg0l"]
+[ext_resource type="PackedScene" uid="uid://r3ohdsixo0u7" path="res://Scenes/LevelMap/Class/node_card.tscn" id="5_t57w8"]
+
+[sub_resource type="Resource" id="Resource_qiv83"]
+script = ExtResource("3_dda2l")
+title = "dev-level-3"
+description = "The third development level for the game, and the first to be released on the demo! This level is pretty difficult for a first level, so try to keep your sanity."
+button_text = "View"
+button_text_color = Color(0.5098261, 0.7161346, 0.034901727, 1)
+metadata/_custom_type_script = "uid://3ihwse3ojqyr"
+
+[node name="DevMap1" type="Node2D"]
+script = ExtResource("1_n632w")
+
+[node name="MapNode" type="Node2D" parent="." node_paths=PackedStringArray("node_card")]
+script = ExtResource("2_hp7ar")
+node_data = SubResource("Resource_qiv83")
+node_card = NodePath("../NodeCard")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(8, 8)
+texture = ExtResource("4_7lg0l")
+
+[node name="NodeCard" parent="." instance=ExtResource("5_t57w8")]
+offset_right = 450.0
+offset_bottom = 260.0
+description = "The third development level for the game, and the first to be released on the demo! This level is pretty difficult for a first level, so try to keep your sanity."
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(-427, -206, -311, -272, -398, -358)
+width = 1.0
+round_precision = 5

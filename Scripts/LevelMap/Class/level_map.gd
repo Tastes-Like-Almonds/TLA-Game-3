@@ -1,5 +1,5 @@
 ##A 2D map used to group levels together and save level progress.
-@abstract class_name Map extends Node2D
+@abstract class_name LevelMap extends Node2D
 
 ## Variable data
 var map_data : MapData
