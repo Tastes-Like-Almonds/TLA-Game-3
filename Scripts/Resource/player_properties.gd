@@ -36,7 +36,7 @@ class_name PlayerProperties extends Resource
 @export var sword_speed : float = 3000
 
 ## The maximum distance from the sword tip to the player (Soft limit)
-@export var max_distance : float = 140.0
+@export var max_distance : float = 160.0
 
 ## Minimum distance between the sword tip and player
 @export var min_distance : float = 10.0

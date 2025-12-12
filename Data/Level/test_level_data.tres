@@ -7,5 +7,5 @@ script = ExtResource("1_0irq0")
 title = "Testing Level"
 description = "You shouldn't see this; it is a test for level data storage/loading."
 difficulty = 3
-level_path = "res://Scenes/Level/dev_level_3.tscn"
+level_path = "res://Scenes/Level/dev_level_4.tscn"
 metadata/_custom_type_script = "uid://3mlju2v7jhxa"
