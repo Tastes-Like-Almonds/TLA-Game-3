@@ -2,4 +2,4 @@
 @abstract class_name DevPanelCategory extends FoldableContainer
 
 func _get_dev_panel() -> DevPanel:
-	return %DevPanel
+	return get_node_or_null("%DevPanel")

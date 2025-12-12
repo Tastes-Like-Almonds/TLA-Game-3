@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://t5imfrhoeq3t"]
+
+[ext_resource type="Script" uid="uid://3mlju2v7jhxa" path="res://Scripts/Resource/Level/level_data.gd" id="1_0irq0"]
+
+[resource]
+script = ExtResource("1_0irq0")
+title = "Testing Level"
+description = "You shouldn't see this; it is a test for level data storage/loading."
+difficulty = 3
+level_path = "res://Scenes/Level/dev_level_3.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"

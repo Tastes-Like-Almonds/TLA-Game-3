@@ -49,6 +49,7 @@ enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
 folder_colors={
 "res://Assets/": "green",
+"res://Data/": "red",
 "res://Resource/": "teal",
 "res://Scenes/": "blue",
 "res://Scripts/": "orange",

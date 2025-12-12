@@ -42,7 +42,7 @@ class_name PlayerProperties extends Resource
 @export var min_distance : float = 10.0
 
 ## The strength of the player; the sword flings more when higher.
-@export_range(0,5, 0.1) var strength : float = 3
+@export_range(0,5, 0.1) var strength : float = 4.5
 
 ## The strength of the player when in player orbit mode.
 @export var player_orbit_strength : float = 10.0
