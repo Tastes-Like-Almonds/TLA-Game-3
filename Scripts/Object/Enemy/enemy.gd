@@ -165,7 +165,7 @@ func _process(delta: float) -> void:
 	var color : Vector4 = get_current_hit_color()
 	sprite.material.set_shader_parameter("solid_color", Vector4(color.x,color.y,color.z,max(0,color.w-delta/hit_time)))
 	
-	sprite.flip_h = (target_point.x < global_position.x)
+	sprite.flip_h = !(target_point.x < global_position.x)
 	
 	if respawning:
 		respawn_cooldown += delta

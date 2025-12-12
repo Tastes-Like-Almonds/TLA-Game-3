@@ -57,15 +57,15 @@ func _check_damage_collisions(collision : KinematicCollision2D) -> void:
 					player.deal_knockback(kb)
 
 ## Determines if the player is on the ground via raycasting. Only collides with collision layer 1.
-func ray_is_on_floor() -> Dictionary:
+func ray_is_on_floor(length:float = 3) -> Dictionary:
 	var space_state := get_world_2d().direct_space_state
 	
 	var parameters := PhysicsRayQueryParameters2D.new()
 	parameters.from = global_position
 	
 	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
-	parameters.to = parameters.from + get_player().get_gravity_direction() * shape.shape.get_rect().size.y/2
-	parameters.to = parameters.to.normalized()*0.5 + parameters.to # Add unit vector
+	parameters.to = parameters.from + get_player().get_gravity_direction() * (shape.shape.get_rect().size.y/2 + shape.position.y)
+	parameters.to = parameters.to.normalized()*length + parameters.to # Add unit vector
 	
 	parameters.collision_mask = 1
 	var result := space_state.intersect_ray(parameters)
