@@ -39,7 +39,7 @@ class_name PlayerProperties extends Resource
 @export var max_distance : float = 160.0
 
 ## Minimum distance between the sword tip and player
-@export var min_distance : float = 10.0
+@export var min_distance : float = 30.0
 
 ## The strength of the player; the sword flings more when higher.
 @export_range(0,5, 0.1) var strength : float = 4.5
