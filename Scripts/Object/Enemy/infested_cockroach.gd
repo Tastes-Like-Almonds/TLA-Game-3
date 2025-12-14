@@ -1,7 +1,9 @@
 class_name InfestedCockroach extends Enemy
 
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
-@export var gravity: float = 300
+@onready var shape := $CollisionShape2D
+@export var gravity: float = 3000
+@export var walk_sound : AudioStreamPlayer2D
 
 func _kill() -> void:
 	super()
@@ -30,20 +32,51 @@ func _movement(delta : float) -> void:
 			if nearest_player:
 				target_player = nearest_player
 
+	var move_speed := movement_speed
+	if abs(target_point.x - global_position.x) < movement_speed*delta:
+		# Prevent shaking when arriving at point
+		move_speed = 0
+
 	if target_point:
-		pass
 		var movement := Vector2.ZERO
 		if target_point.x - global_position.x < 0: # Left
-			movement = Vector2(-movement_speed*delta, 0)
+			movement = Vector2(-move_speed, 0)
 		else:
-			movement = Vector2(movement_speed*delta, 0)
+			movement = Vector2(move_speed, 0)
 		
-		velocity += Vector2.DOWN * gravity
-		movement += velocity*delta
+		velocity += Vector2.DOWN * gravity*delta # Gravity
 		
-		var result := move_and_collide(movement*delta)
+		if target_point.y < global_position.y - 40:
+			if ray_is_on_floor():
+				#print("ON FLOOR")
+				velocity.y = -800
+		
+		#print(velocity.y)
+		
+		#var og_pos := global_position
+		var total_movement := movement+velocity
+		var result := move_and_collide((total_movement)*delta)
 		if result:
-			move_and_collide(movement.slide(result.get_normal()))
+			move_and_collide(total_movement.slide(result.get_normal())*delta)
+		
+		# If not moving, stop the walking sound. Otherwise, play it.
+		#if respawning or (absf(global_position.x - og_pos.x) > move_speed*delta): walk_sound.stop()
+		#elif not walk_sound.playing: walk_sound.play() ; print("START")
+
+func ray_is_on_floor(length:float = 3) -> Dictionary:
+	var space_state := get_world_2d().direct_space_state
+	
+	var parameters := PhysicsRayQueryParameters2D.new()
+	parameters.from = global_position
+	
+	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
+	parameters.to = parameters.from + Vector2.DOWN * (shape.shape.get_rect().size.y/2 + shape.position.y)
+	parameters.to = parameters.to.normalized()*length + parameters.to # Add unit vector
+	
+	parameters.collision_mask = 1
+	var result := space_state.intersect_ray(parameters)
+	
+	return result
 
 func _physics_process(delta: float) -> void:
 	super(delta)

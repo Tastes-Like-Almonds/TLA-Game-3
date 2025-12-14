@@ -1,6 +1,8 @@
 ## Base enemy class with health, respawn, and some other logic.
 @abstract class_name Enemy extends AnimatableBody2D
 
+signal Killed
+
 # --- #
 @export_group("Basic Data (Must be set)")
 ## Sprite2D / AnimatedSprite2D of the enemy.
@@ -137,13 +139,16 @@ func on_sword_hit(player : Player) -> void:
 	GameCamera.shake_current_camera(get_viewport(), 0.1)
 
 func _kill() -> void:
+	
 	if death_sound:
 		Sfx.play_sound(death_sound)
 	velocity = Vector2.ZERO
 	respawn_cooldown = 0.0
+	
 	respawning = true # Respawn var is used even on permadeath to indicate a dying status
-	if respawn:
-		sprite.visible = false
+	sprite.visible = false
+	
+	Killed.emit()
 
 func _respawn() -> void:
 	sprite.visible = true
@@ -198,6 +203,7 @@ func _ready() -> void:
 	notifier.global_position = global_position
 	start_pos = global_position
 	sprite.play("default")
+	start_health = health
 	
 	if not disable_physics_hitbox:
 		add_to_group(&"BladeHitable")
