@@ -1,6 +1,7 @@
-class_name Bat extends Enemy
+class_name InfestedCockroach extends Enemy
 
 @onready var collision_shape : CollisionShape2D = $CollisionShape2D
+@export var gravity: float = 300
 
 func _kill() -> void:
 	super()
@@ -11,40 +12,39 @@ func _kill() -> void:
 
 func _movement(delta : float) -> void:
 	
-	velocity *= pow(0.2, delta)
+	velocity *= pow(0.2, delta) # Drag
 	
 	movement_cooldown -= delta
 	
-	if movement_cooldown <= 0 or not target_point:
+	if movement_cooldown <= 0 or not target_point: # Find target
 		movement_cooldown = movement_delay + randf_range(movement_delay*-0.1,movement_delay*0.1)
-		if target_player:
+		if target_player: # If there is a player found already, prioritize them
 			# Cancel and redo if player out of range
 			if target_player.get_player_position().distance_to(global_position) > aggro_range: target_player = null ; _movement(delta) ; return
 			target_point = target_player.get_player_position()
-			target_point.y -= collision_shape.shape.get_rect().size.y/2
-		else:
-			# Set to random point if no target found
-			target_point = Vector2(cos(randf()*2*PI), sin(randf()*2*PI))*100.0 + global_position
+			target_point.y += collision_shape.shape.get_rect().size.y/2
+			#Helper.debug_dot(get_parent(), target_point, "EEE") # Uncomment to debug pos
+		else: # If no player, set to a random one.
+			target_point = global_position + Vector2(randf_range(-100,100), 0) # Random pos if no players
 			var nearest_player : Player = Helper.get_closest_player(global_position, aggro_range)
 			if nearest_player:
 				target_player = nearest_player
-	
-	var move_speed := movement_speed
-	if global_position.distance_to(target_point) < movement_speed*delta:
-		move_speed = global_position.distance_to(target_point)
 
 	if target_point:
-		var movement := global_position.direction_to(target_point)*move_speed*delta + velocity*delta
-		var result := move_and_collide(movement)
+		pass
+		var movement := Vector2.ZERO
+		if target_point.x - global_position.x < 0: # Left
+			movement = Vector2(-movement_speed*delta, 0)
+		else:
+			movement = Vector2(movement_speed*delta, 0)
+		
+		velocity += Vector2.DOWN * gravity
+		movement += velocity*delta
+		
+		var result := move_and_collide(movement*delta)
 		if result:
 			move_and_collide(movement.slide(result.get_normal()))
-			if result.get_collider() is PlayerBody:
-				on_hit(result.get_collider())
 
 func _physics_process(delta: float) -> void:
 	super(delta)
 	collision_shape.disabled = respawning
-
-func _ready() -> void:
-	super()
-	notifier.rect = collision_shape.shape.get_rect()

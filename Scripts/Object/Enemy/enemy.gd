@@ -23,6 +23,9 @@
 ## The max health of the bat. Does not regen.
 @export var health : float = 5.0
 
+## If false, the enemy will use its physics body as a damage hitbox.
+@export var disable_physics_hitbox : bool = false
+
 # --- #
 @export_group("Knockback")
 ## Maximum knockback dealt to the player when they hit the bat.
@@ -99,6 +102,7 @@ func deal_damage(damage: float) -> bool:
 		return true
 	return false
 
+## When a sword strikes the enemy. Called from player.gd.
 func on_sword_hit(player : Player) -> void:
 	
 	if respawning : return
@@ -110,7 +114,8 @@ func on_sword_hit(player : Player) -> void:
 	if deal_damage(damage): # If killed
 		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized(), Color.RED, 1.5)
 	else:
-		Sfx.play_sound(hit_sound)
+		if hit_sound:
+			Sfx.play_sound(hit_sound)
 		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized())
 	
 	var player_body := player.get_player_body()
@@ -132,7 +137,8 @@ func on_sword_hit(player : Player) -> void:
 	GameCamera.shake_current_camera(get_viewport(), 0.1)
 
 func _kill() -> void:
-	Sfx.play_sound(death_sound)
+	if death_sound:
+		Sfx.play_sound(death_sound)
 	velocity = Vector2.ZERO
 	respawn_cooldown = 0.0
 	respawning = true # Respawn var is used even on permadeath to indicate a dying status
@@ -173,13 +179,13 @@ func _process(delta: float) -> void:
 			_check_respawn()
 		return
 
-
-func on_hit(collision : KinematicCollision2D) -> void:
-	if not collision: return
+## Called with the *player* is hit by the enemy
+func on_hit(collider : PhysicsBody2D) -> void:
+	if not collider: return
 	if respawning: return
-	if collision.get_collider() is PlayerBody and is_instance_valid(collision.get_collider()):
+	if collider is PlayerBody and is_instance_valid(collider):
 		
-		var player_body := collision.get_collider() as PlayerBody
+		var player_body := collider as PlayerBody
 		var player : Player = player_body.get_player()
 		
 		if not is_instance_valid(player): return
@@ -192,6 +198,10 @@ func _ready() -> void:
 	notifier.global_position = global_position
 	start_pos = global_position
 	sprite.play("default")
+	
+	if not disable_physics_hitbox:
+		add_to_group(&"BladeHitable")
+	
 	if spawn_dead:
 		respawning = true
 		respawn_cooldown = respawn_time

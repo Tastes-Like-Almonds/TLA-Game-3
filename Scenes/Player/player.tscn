@@ -156,7 +156,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 2.0
+"speed": 4.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvnfx"]
@@ -204,7 +204,7 @@ material = ExtResource("4_0u5uq")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_aqm4k")
 animation = &"idle"
-frame_progress = 0.16818589
+frame_progress = 0.9318208
 
 [node name="Sword" type="Node2D" parent="."]
 script = ExtResource("3_htcer")
