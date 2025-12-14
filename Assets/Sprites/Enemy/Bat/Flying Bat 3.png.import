@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nbfk28dvfggy"
-path="res://.godot/imported/Bat_spritesheet.png-737f22ca0f5cea0a312b8e9d049273d4.ctex"
+uid="uid://br5gohrjgiv5j"
+path="res://.godot/imported/Flying Bat 3.png-3899e8d14979905dd04faff1c9ad9a5e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Placeholder/Bat_spritesheet.png"
-dest_files=["res://.godot/imported/Bat_spritesheet.png-737f22ca0f5cea0a312b8e9d049273d4.ctex"]
+source_file="res://Assets/Sprites/Enemy/Bat/Flying Bat 3.png"
+dest_files=["res://.godot/imported/Flying Bat 3.png-3899e8d14979905dd04faff1c9ad9a5e.ctex"]
 
 [params]
 

@@ -2,6 +2,14 @@
 
 class_name PlayerBody extends CharacterBody2D
 
+@export var ground_hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Ground Land.wav", 0.4)
+
+## Maximum velocity used for determining ground land screen shake + sound volume
+@export var ground_hit_max : float = 2000.0
+
+## Minimum velocity upon ground land to play sound and shake screen
+@export var ground_hit_min : float = 10.0
+
 @onready var shape : CollisionShape2D = $CollisionShape2D
 
 var last_slide : float = 1.0
@@ -49,15 +57,15 @@ func _check_damage_collisions(collision : KinematicCollision2D) -> void:
 					player.deal_knockback(kb)
 
 ## Determines if the player is on the ground via raycasting. Only collides with collision layer 1.
-func ray_is_on_floor() -> Dictionary:
+func ray_is_on_floor(length:float = 3) -> Dictionary:
 	var space_state := get_world_2d().direct_space_state
 	
 	var parameters := PhysicsRayQueryParameters2D.new()
 	parameters.from = global_position
 	
 	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
-	parameters.to = parameters.from + get_player().get_gravity_direction() * shape.shape.get_rect().size.y/2
-	parameters.to = parameters.to.normalized()*0.5 + parameters.to # Add unit vector
+	parameters.to = parameters.from + get_player().get_gravity_direction() * (shape.shape.get_rect().size.y/2 + shape.position.y)
+	parameters.to = parameters.to.normalized()*length + parameters.to # Add unit vector
 	
 	parameters.collision_mask = 1
 	var result := space_state.intersect_ray(parameters)
@@ -118,7 +126,23 @@ func _physics_process(delta: float) -> void:
 			var current_vel : Vector2 = velocity
 			_check_damage_collisions(get_last_slide_collision())
 			if move_and_slide():
-				if is_on_floor():
+				if is_on_floor(): # Hit ground
+					
+					# Determine "strength" of ground hit
+					var ground_hit_perc : float = clampf(((current_vel.y-ground_hit_min)/(ground_hit_max)), 0, 1.0)
+					
+					# Play ground hit sound
+					if ground_hit_perc > 0.2:
+						var new_sound : SoundData = ground_hit_sound.duplicate()
+						new_sound.bus = &"SFX"
+						new_sound.volume_linear = pow(ground_hit_sound.volume_linear * ground_hit_perc, 2)+0.1
+						new_sound.pitch_scale = 1-(ground_hit_perc/5)
+						Sfx.play_sound_2d(new_sound, global_position, false)
+						
+					# Shake camera
+					GameCamera.set_current_camera_shake(get_viewport(), ground_hit_perc*0.1)
+					
+					# Bounce
 					velocity.y = (-current_vel.y - get_last_slide_collision().get_remainder().y) * player.get_bounciness()
 			
 		#endregion

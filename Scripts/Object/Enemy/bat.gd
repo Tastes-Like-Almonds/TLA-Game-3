@@ -38,7 +38,8 @@ func _movement(delta : float) -> void:
 		var result := move_and_collide(movement)
 		if result:
 			move_and_collide(movement.slide(result.get_normal()))
-		on_hit(result)
+			if result.get_collider() is PlayerBody:
+				on_hit(result.get_collider())
 
 func _physics_process(delta: float) -> void:
 	super(delta)

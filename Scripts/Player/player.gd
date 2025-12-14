@@ -25,7 +25,7 @@ enum MovementMode {
 
 # TODO Cache sword and body ref until child structure is altered
 
-@onready var sprite : Sprite2D = $playerBody/Sprite2D
+@onready var sprite : AnimatedSprite2D = $playerBody/Sprite2D
 
 #region Exports
 
@@ -300,7 +300,7 @@ func _visual_process(delta : float) -> void:
 	# Update player rotation
 	var body : PlayerBody = get_player_body()
 	if body:
-		body.get_sprite().flip_h = get_player_sword().get_tip_global_position().x < get_player_position().x
+		body.get_sprite().flip_h = !get_player_sword().get_tip_global_position().x < get_player_position().x
 		body.get_sprite().flip_v = (get_gravity() <= 0)
 
 	# Update player damage
@@ -620,6 +620,7 @@ func _ready() -> void:
 	lives = get_modified_property("max_lives")
 	add_weapon(get_modified_property("starting_weapon"))
 	equip_weapon_slot(0)
+	sprite.play("idle")
 	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.

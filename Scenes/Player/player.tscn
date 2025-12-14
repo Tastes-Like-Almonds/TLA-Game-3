@@ -1,11 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene load_steps=23 format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
 [ext_resource type="Script" uid="uid://bu2b4pqlln3ot" path="res://Scripts/Player/sword.gd" id="3_htcer"]
-[ext_resource type="Texture2D" uid="uid://ootw7g72v0ku" path="res://Assets/Sprites/Placeholder/knight.png" id="3_mtuoh"]
 [ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="4_0u5uq"]
+[ext_resource type="Texture2D" uid="uid://ddw28q8ijph6" path="res://Assets/Sprites/Player/Damaged Sewer Guy 1.png" id="4_oikmp"]
+[ext_resource type="Texture2D" uid="uid://o26vj04fkner" path="res://Assets/Sprites/Player/Damaged Sewer Guy 2.png" id="5_06tpx"]
 [ext_resource type="Script" uid="uid://bmumt3flg26d4" path="res://Scripts/Player/blade_area.gd" id="5_htcer"]
+[ext_resource type="Texture2D" uid="uid://dij003d72gesl" path="res://Assets/Sprites/Player/Damaged Sewer Guy 3.png" id="6_7g0yx"]
+[ext_resource type="Texture2D" uid="uid://dcexp3babhhst" path="res://Assets/Sprites/Player/Sewer Guy Idle 1.png" id="7_dey5f"]
+[ext_resource type="Texture2D" uid="uid://ccl8lr7w157yu" path="res://Assets/Sprites/Player/Sewer Guy Idle 2.png" id="8_r5xpd"]
+[ext_resource type="Texture2D" uid="uid://c4g75rwy1qnv3" path="res://Assets/Sprites/Player/Sewer Guy Idle 3.png" id="9_ks1b7"]
+[ext_resource type="Texture2D" uid="uid://bnto80x30sd76" path="res://Assets/Sprites/Player/Sewer Guy Idle 4.png" id="10_hnuln"]
 
 [sub_resource type="GDScript" id="GDScript_dd0ac"]
 script/source = "extends Resource
@@ -112,7 +118,46 @@ script = SubResource("GDScript_dd0ac")
 metadata/_custom_type_script = "uid://dmgnx53wqfhui"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tugb3"]
-size = Vector2(48, 48)
+size = Vector2(32, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aqm4k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_oikmp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_06tpx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7g0yx")
+}],
+"loop": false,
+"name": &"damaged",
+"speed": 16.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_dey5f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_r5xpd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ks1b7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_hnuln")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvnfx"]
 size = Vector2(4, 4)
@@ -129,6 +174,18 @@ height = 8
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
 size = Vector2(102, 20)
 
+[sub_resource type="Gradient" id="Gradient_oikmp"]
+offsets = PackedFloat32Array(0, 0.68472904, 0.7044335, 0.7832512, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0.9507389, 1, 1, 1, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_06tpx"]
+gradient = SubResource("Gradient_oikmp")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.51282054)
+fill_to = Vector2(0.508547, 0)
+
 [node name="Player" type="Node2D" groups=["Player"]]
 script = ExtResource("1_xpcdj")
 properties = SubResource("Resource_jlvik")
@@ -139,12 +196,15 @@ platform_wall_layers = 256
 script = ExtResource("1_uvnfx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="playerBody"]
+position = Vector2(4, 12)
 shape = SubResource("RectangleShape2D_tugb3")
 
-[node name="Sprite2D" type="Sprite2D" parent="playerBody"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="playerBody"]
 material = ExtResource("4_0u5uq")
 scale = Vector2(3, 3)
-texture = ExtResource("3_mtuoh")
+sprite_frames = SubResource("SpriteFrames_aqm4k")
+animation = &"idle"
+frame_progress = 0.9318208
 
 [node name="Sword" type="Node2D" parent="."]
 script = ExtResource("3_htcer")
@@ -170,3 +230,20 @@ script = ExtResource("5_htcer")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Area2D"]
 shape = SubResource("RectangleShape2D_mtuoh")
 debug_color = Color(0.94, 0, 0.28200018, 0.5019608)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+value = 50.0
+texture_progress = SubResource("GradientTexture2D_06tpx")

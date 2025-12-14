@@ -101,8 +101,9 @@ func _physics_process(delta: float) -> void:
 		player.MovementMode.SWORD_ORBIT:
 			var target_pos := _get_target_pos()
 			#var next_velocity := body.global_position.direction_to(target_pos)*player.get_sword_speed()*body.global_position.distance_to(target_pos)
-			var next_velocity := body.global_position.direction_to(target_pos)*player.get_sword_speed()
+			var next_velocity := body.global_position.direction_to(target_pos)*player.get_sword_speed() + _get_player().get_player_body().velocity
 			var movement := next_velocity*delta
+			
 			
 			# Ensure movement doesn't pass target position
 			var current_pos := body.global_position
@@ -128,7 +129,7 @@ func _physics_process(delta: float) -> void:
 				if collision:
 					var friction := _get_slide_from_last_collision()
 					if collision.get_collider() is AnimatableBody2D:
-						body.global_position += collision.get_collider().constant_linear_velocityv
+						body.global_position += collision.get_collider().constant_linear_velocity
 					body.move_and_collide(collision.get_remainder().slide(collision.get_normal()) * friction)
 		
 		player.MovementMode.PLAYER_ORBIT: # No use as of now.
