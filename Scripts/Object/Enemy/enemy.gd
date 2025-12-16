@@ -16,6 +16,7 @@ signal Killed
 
 @export var hit_sound: SoundData
 @export var death_sound : SoundData
+@export var alert_sound : SoundData
 
 # --- #
 @export_group("Health and Damage")
@@ -84,6 +85,9 @@ var time_since_last_hit : float = 0.0
 
 var velocity : Vector2 = Vector2.ZERO
 
+@abstract func _movement(_delta : float) -> void
+
+#region Health and damage
 func get_current_hit_color() -> Vector4:
 	return sprite.material.get_shader_parameter("solid_color")
 
@@ -163,8 +167,31 @@ func _check_respawn() -> void:
 		respawning = false
 		_respawn()
 
-@abstract func _movement(_delta : float) -> void
+## Called with the *player* is hit by the enemy
+func on_hit(collider : PhysicsBody2D) -> void:
+	if not collider: return
+	if respawning: return
+	if collider is PlayerBody and is_instance_valid(collider):
+		
+		var player_body := collider as PlayerBody
+		var player : Player = player_body.get_player()
+		
+		if not is_instance_valid(player): return
+		elif  time_since_last_hit > hit_time: 
+			player.deal_damage(2.6) 
+			player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
+#endregion
 
+#region Sound
+func play_alert_sound() -> void:
+	if alert_sound:
+		Sfx.play_sound_2d(alert_sound, global_position, false)
+	else:
+		push_warning("Attempt to play invalid alert sound")
+
+#endregion
+
+#region Basic
 func _physics_process(delta: float) -> void:
 	if not respawning:
 		_movement(delta)
@@ -184,20 +211,6 @@ func _process(delta: float) -> void:
 			_check_respawn()
 		return
 
-## Called with the *player* is hit by the enemy
-func on_hit(collider : PhysicsBody2D) -> void:
-	if not collider: return
-	if respawning: return
-	if collider is PlayerBody and is_instance_valid(collider):
-		
-		var player_body := collider as PlayerBody
-		var player : Player = player_body.get_player()
-		
-		if not is_instance_valid(player): return
-		elif  time_since_last_hit > hit_time: 
-			player.deal_damage(2.6) 
-			player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
-
 func _ready() -> void:
 	notifier.screen_entered.connect(_check_respawn)
 	notifier.global_position = global_position
@@ -211,3 +224,4 @@ func _ready() -> void:
 	if spawn_dead:
 		respawning = true
 		respawn_cooldown = respawn_time
+#endregion

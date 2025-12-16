@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://sye5w3jy5qfu"]
+[gd_scene load_steps=19 format=3 uid="uid://sye5w3jy5qfu"]
 
 [ext_resource type="Script" uid="uid://d0bvnnccjcow" path="res://Scripts/Object/Enemy/infested_cockroach.gd" id="1_uk48t"]
 [ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_2lw46"]
@@ -13,11 +13,19 @@
 [sub_resource type="Resource" id="Resource_2lw46"]
 script = ExtResource("2_2lw46")
 sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Hit Edit 1 Export 1.mp3"
+bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Resource" id="Resource_fokgr"]
 script = ExtResource("2_2lw46")
 sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Death Edit 1 Export 1.mp3"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_paiv5"]
+script = ExtResource("2_2lw46")
+sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Alert.wav"
+bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o6sep"]
@@ -72,8 +80,10 @@ sprite = NodePath("AnimatedSprite2D")
 notifier = NodePath("VisibleOnScreenNotifier2D")
 hit_sound = SubResource("Resource_2lw46")
 death_sound = SubResource("Resource_fokgr")
+alert_sound = SubResource("Resource_paiv5")
 health = 10.0
 knockback = 300.0
+aggro_range = 800.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 49)

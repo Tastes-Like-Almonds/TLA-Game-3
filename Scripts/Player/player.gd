@@ -581,8 +581,6 @@ func add_modifier(mod : PropertyModifier, stat:String) -> void:
 	# Make modifier display for timed modifications
 	if mod.timer > 0:
 		var color : Color = Color.WHITE
-		print("-- TOUCH --")
-		print(mod.id)
 		match mod.id: # Hardcoded color. Yes, its not great, but its a niche use.
 			"gravity_orb":
 				color = Color.PURPLE
