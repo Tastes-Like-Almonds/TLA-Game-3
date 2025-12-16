@@ -1,0 +1,77 @@
+[gd_scene load_steps=13 format=3 uid="uid://cetagv570bbem"]
+
+[ext_resource type="Script" uid="uid://cng0jefncvi35" path="res://Scripts/Object/BoostOrb/boost_orb.gd" id="1_41md6"]
+[ext_resource type="Texture2D" uid="uid://boexki44bewdo" path="res://Assets/Sprites/Placeholder/gravity_orb.png" id="1_posbj"]
+
+[sub_resource type="Gradient" id="Gradient_posbj"]
+colors = PackedColorArray(0.53800005, 1, 0.16000003, 1, 0.33693138, 0.6306262, 4.813075e-06, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_41md6"]
+gradient = SubResource("Gradient_posbj")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_41md6"]
+offsets = PackedFloat32Array(0.4, 0.7162791, 0.9162791, 0.95348835)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.03137255, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2c2vr"]
+gradient = SubResource("Gradient_41md6")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="Curve" id="Curve_41md6"]
+_data = [Vector2(0, 0.94382024), 0.0, 0.0, 0, 0, Vector2(0.7461929, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2c2vr"]
+curve = SubResource("Curve_41md6")
+
+[sub_resource type="Curve" id="Curve_v3c6e"]
+_limits = [0.0, 10.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 10), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_caxdj"]
+curve = SubResource("Curve_v3c6e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s5biv"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_caxdj")
+alpha_curve = SubResource("CurveTexture_2c2vr")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_41md6"]
+radius = 40.04997
+
+[node name="BoostOrb" type="StaticBody2D" groups=["BladeHitable"]]
+collision_layer = 8
+script = ExtResource("1_41md6")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Glow" type="Sprite2D" parent="Visual"]
+scale = Vector2(7, 7)
+texture = SubResource("GradientTexture2D_41md6")
+
+[node name="Sprite" type="Sprite2D" parent="Visual"]
+scale = Vector2(4, 4)
+texture = ExtResource("1_posbj")
+
+[node name="Particles" type="GPUParticles2D" parent="Visual"]
+self_modulate = Color(0.13999999, 1, 0.29766673, 1)
+emitting = false
+amount = 1
+texture = SubResource("GradientTexture2D_2c2vr")
+lifetime = 0.5
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_s5biv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_41md6")

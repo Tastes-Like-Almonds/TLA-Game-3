@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://xwksuqeprovr"
+path="res://.godot/imported/Cockroach Alert.wav-f6c7d0a4cb3e49f664ac70a56d23af80.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Alert.wav"
+dest_files=["res://.godot/imported/Cockroach Alert.wav-f6c7d0a4cb3e49f664ac70a56d23af80.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

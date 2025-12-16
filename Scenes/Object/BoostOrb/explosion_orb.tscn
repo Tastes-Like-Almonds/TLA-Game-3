@@ -1,0 +1,114 @@
+[gd_scene load_steps=18 format=3 uid="uid://j43ke12vh6s6"]
+
+[ext_resource type="Script" uid="uid://bdc7b5wgk7o6p" path="res://Scripts/Object/BoostOrb/explosion_orb.gd" id="1_ph773"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_rmydc"]
+[ext_resource type="Texture2D" uid="uid://bjf7fg3f0yye3" path="res://Assets/Sprites/Orbs/RedOrb_Finalized.png" id="3_rmydc"]
+
+[sub_resource type="Resource" id="Resource_yo0mt"]
+script = ExtResource("2_rmydc")
+sound_string = "res://Assets/Sound/SFX/Orb/Explosion Orb Edit 1 Export 1.mp3"
+volume_linear = 0.2
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Gradient" id="Gradient_do7bd"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1dkb7"]
+gradient = SubResource("Gradient_do7bd")
+width = 8
+height = 8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g0kd0"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_posbj"]
+colors = PackedColorArray(0.91, 0, 0, 1, 0.9999998, 0.09325261, 0.13587543, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_41md6"]
+gradient = SubResource("Gradient_posbj")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_41md6"]
+offsets = PackedFloat32Array(0.4, 0.7162791, 0.9162791, 0.95348835)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.03137255, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2c2vr"]
+gradient = SubResource("Gradient_41md6")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="Curve" id="Curve_41md6"]
+_data = [Vector2(0, 0.94382024), 0.0, 0.0, 0, 0, Vector2(0.7461929, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2c2vr"]
+curve = SubResource("Curve_41md6")
+
+[sub_resource type="Curve" id="Curve_v3c6e"]
+_limits = [0.0, 10.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 10), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_caxdj"]
+curve = SubResource("Curve_v3c6e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s5biv"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_caxdj")
+alpha_curve = SubResource("CurveTexture_2c2vr")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_41md6"]
+radius = 40.04997
+
+[node name="ExplosionOrb" type="StaticBody2D" groups=["BladeHitable"]]
+collision_layer = 8
+script = ExtResource("1_ph773")
+sound = SubResource("Resource_yo0mt")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(0.941985, 0.37704903, 0.38935214, 1)
+emitting = false
+amount = 20
+texture = SubResource("GradientTexture2D_1dkb7")
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.78
+process_material = SubResource("ParticleProcessMaterial_g0kd0")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Glow" type="Sprite2D" parent="Visual"]
+scale = Vector2(7, 7)
+texture = SubResource("GradientTexture2D_41md6")
+
+[node name="Sprite" type="Sprite2D" parent="Visual"]
+scale = Vector2(4, 4)
+texture = ExtResource("3_rmydc")
+offset = Vector2(0.5, 0.5)
+
+[node name="Particles" type="GPUParticles2D" parent="Visual"]
+self_modulate = Color(0.980817, 0.46424443, 0.467767, 1)
+emitting = false
+amount = 1
+texture = SubResource("GradientTexture2D_2c2vr")
+lifetime = 0.5
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_s5biv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_41md6")

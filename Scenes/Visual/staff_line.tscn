@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqu88w2kx3tso"]
+
+[sub_resource type="Curve" id="Curve_00koi"]
+_data = [Vector2(0, 0.63046247), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_qo6ko"]
+offsets = PackedFloat32Array(0, 0.1324201, 1)
+colors = PackedColorArray(0.6442504, 0.38114712, 0.97946316, 0, 0.63594806, 0.44609213, 0.9904906, 0.91764706, 0.4475001, 0.35000002, 1, 1)
+
+[node name="StaffLine" type="Line2D"]
+width_curve = SubResource("Curve_00koi")
+gradient = SubResource("Gradient_qo6ko")

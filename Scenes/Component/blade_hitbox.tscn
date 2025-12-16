@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7tman8kp8k6o"]
+
+[ext_resource type="Script" uid="uid://c650xem711hy5" path="res://Scripts/Component/blade_hitbox.gd" id="1_omqxc"]
+
+[node name="BladeHitbox" type="AnimatableBody2D"]
+script = ExtResource("1_omqxc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
