@@ -59,11 +59,12 @@ func _movement(delta : float) -> void:
 		#print(velocity.y)
 		
 		#var og_pos := global_position
-		var total_movement := movement+velocity
-		var result := move_and_collide((total_movement)*delta)
+		var result := move_and_collide((movement+velocity)*delta)
 		if result:
-			move_and_collide(total_movement.slide(result.get_normal())*delta)
-		
+			if ray_is_on_floor(3): # Hit ground
+				velocity.y = -result.get_remainder().y*0.2
+			move_and_collide(((movement+velocity).slide(result.get_normal()))*delta)
+
 		# If not moving, stop the walking sound. Otherwise, play it.
 		#if respawning or (absf(global_position.x - og_pos.x) > move_speed*delta): walk_sound.stop()
 		#elif not walk_sound.playing: walk_sound.play() ; print("START")

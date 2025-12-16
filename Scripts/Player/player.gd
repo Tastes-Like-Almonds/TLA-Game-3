@@ -184,6 +184,10 @@ func is_charging_ability() -> bool:
 func get_last_collision() -> KinematicCollision2D:
 	return last_collision
 
+## Returns the player's knockback strength
+func get_knockback() -> float:
+	return get_modified_property("knockback")
+
 ## Returns the damage of the player's sword. Should not be called directly, instead
 ## use get_blade_damage().
 func get_sword_damage() -> float:
@@ -194,8 +198,11 @@ func get_sword_speed() -> float:
 	return get_modified_property("sword_speed")
 
 ## Returns the speed the sword must travel to deal maximum damage.
-func get_sword_speed_damage() -> float:
-	return get_modified_property("sword_speed_damage")
+#func get_sword_speed_damage() -> float:
+	#return get_modified_property("sword_speed_damage")
+
+func get_max_damage_time() -> float:
+	return get_modified_property("max_damage_time")
 
 ## Returns the max health of the player.
 func get_max_health() -> float:
@@ -236,16 +243,19 @@ func get_sword_speed_perc() -> float:
 	var sword : Sword = get_player_sword()
 	return sword.get_last_sword_velocity().length() / get_sword_speed()
 
+## Returns the coefficient that would be applied to the player's damage
+## upon a hit.
+func get_blade_damage_perc() -> float:
+	var sword : Sword = get_player_sword()
+	var perc : float = sword.speed_value
+	perc = min(perc, 1.0)
+	return perc
+
 ## Gets the current damage of the blade (Value changes based on speed, charge, etc.)
 func get_blade_damage() -> float:
 	var damage := 0.0
-	var sword : Sword = get_player_sword()
-	
-	var perc : float = max(0.0, sword.get_last_sword_velocity().length()/get_sword_speed_damage())
-	perc = min(perc, 1.0)
-	
+	var perc := get_blade_damage_perc()
 	damage += get_sword_damage()*perc
-	
 	return damage
 
 ## Gets the multiplier of knockback applied to the player when they are dealt it.

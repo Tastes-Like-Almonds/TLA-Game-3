@@ -30,6 +30,8 @@ var current_cable_cooldown : float = 0.0
 ## The percentage of velocity the sword is at to its maximum.
 var vel_perc : float
 
+var speed_value : float = 0.0
+
 func _get_player() -> Player:
 	if get_parent() is Player:
 		return get_parent()
@@ -94,8 +96,6 @@ func _physics_process(delta: float) -> void:
 	var player : Player = _get_player()
 	if not player.is_alive(): return
 	
-	last_sword_velocity = Vector2.ZERO
-	
 	match player.movement_mode:
 		
 		player.MovementMode.SWORD_ORBIT:
@@ -103,7 +103,6 @@ func _physics_process(delta: float) -> void:
 			#var next_velocity := body.global_position.direction_to(target_pos)*player.get_sword_speed()*body.global_position.distance_to(target_pos)
 			var next_velocity := body.global_position.direction_to(target_pos)*player.get_sword_speed() + _get_player().get_player_body().velocity
 			var movement := next_velocity*delta
-			
 			
 			# Ensure movement doesn't pass target position
 			var current_pos := body.global_position
@@ -114,8 +113,27 @@ func _physics_process(delta: float) -> void:
 			if (current_pos.y < target_pos.y) != (future_pos.y < target_pos.y):
 				movement.y = target_pos.y - current_pos.y
 			
-			# Used for visual / damage calculations
-			vel_perc = movement.length() / next_velocity.length()
+			# The percentage of the maximum speed the sword is reaching.
+			# Used for visual / damage calculations.
+			vel_perc = (movement.length() / next_velocity.length()) / delta
+			
+			# Calculate speed value given last velocity
+			# Speed value is the amount of time the sword moves in the same direction,
+			# modified by player stats.
+			var origin : Vector2 = body.global_position - get_last_sword_velocity()*delta
+			var current_movement := origin + movement*delta
+			var last_movement := origin + last_sword_velocity*delta
+			
+			# If origin + current is closer to origin + last than origin, add time to speed_value
+			# Thus, if the movement follows the same direction, speed_value is increased.
+			if (current_movement.distance_to(last_movement) < origin.distance_to(last_movement)):
+				speed_value += (delta/player.get_max_damage_time())*vel_perc # vel_perc makes the sword speed matter
+			else:
+				speed_value = 0
+			
+			#print(vel_perc/delta)
+			#print(speed_value)
+			# End speed value block
 			
 			last_sword_velocity = movement/delta # Get velocity per second as opposed to the frame
 			last_frame_pos = body.global_position

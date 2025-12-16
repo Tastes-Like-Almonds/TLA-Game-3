@@ -136,9 +136,9 @@ func on_sword_hit(player : Player) -> void:
 		else:
 			player.apply_velocity(vel)
 	
-	# Deal knockback to bat
-	player.reset_weapon_use()
-	velocity = vel.normalized()*min(vel.length()*knockback_coef,max_kb)
+	# Deal knockback to enemy
+	player.reset_weapon_use() # Allow dash after hit
+	velocity = player.get_blade_damage_perc()*player.get_knockback()*vel.normalized()
 	
 	GameCamera.shake_current_camera(get_viewport(), 0.1)
 

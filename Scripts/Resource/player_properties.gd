@@ -26,11 +26,15 @@ class_name PlayerProperties extends Resource
 ## The base damage of the sword.
 @export var sword_damage : float = 6
 
-## The speed of the sword required to reach max damage.
-@export var sword_speed_damage : float = 3000.0
+## The shortest amount of time needed to reach maximum damage; higher values will require
+## longer swings to deal max damage.
+@export var max_damage_time : float = 0.5
 
 # --- #
 @export_group("Sword")
+
+## Max knockback dealt to enemies on hit
+@export var knockback : float = 1600.0
 
 ## Speed at which the sword moves. This also affects its strength of pushing.
 @export var sword_speed : float = 3000
