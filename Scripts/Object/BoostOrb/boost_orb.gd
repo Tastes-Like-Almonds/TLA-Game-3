@@ -29,14 +29,13 @@ func hit_effect(_player : Player) -> void:
 
 func on_sword_hit(player : Player) -> void:
 	if not alive: return
+	alive = false
 	
 	hit_effect(player)
 	if reset_weapon_on_hit: player.reset_weapon_use()
 	
 	if sound != null:
 		Sfx.play_sound_2d(sound, global_position)
-	
-	alive = false
 
 func _process(delta: float) -> void:
 	
@@ -49,7 +48,7 @@ func _process(delta: float) -> void:
 			if emitter and emitter is GPUParticles2D:
 				emitter.emitting = true
 	
-	if visual:
+	if is_instance_valid(visual):
 		bob_time += delta*bob_speed
 		bob_time = fmod(bob_time, 2*PI)
 		visual.position.y = bob_dist * sin(bob_time)

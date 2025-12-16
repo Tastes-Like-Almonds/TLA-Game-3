@@ -63,12 +63,12 @@ noise = SubResource("FastNoiseLite_vbji5")
 color_ramp = SubResource("Gradient_p84su")
 seamless = true
 
-[sub_resource type="Gradient" id="Gradient_cdmcw"]
+[sub_resource type="Gradient" id="Gradient_vbji5"]
 offsets = PackedFloat32Array(0, 0.044444446, 0.2488889, 0.51111114, 1)
 colors = PackedColorArray(0.6858397, 0.7708662, 0, 1, 0.72782683, 0.7967464, 0, 0.62565076, 0.75931716, 0.8161565, 0, 0.34488887, 0.78603625, 0.8326257, 0, 0.106666684, 0.79800004, 0.84, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_l4vpu"]
-gradient = SubResource("Gradient_cdmcw")
+gradient = SubResource("Gradient_vbji5")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)

@@ -64,7 +64,7 @@ linear_accel_max = -2.2351742e-06
 
 [node name="Bat" type="AnimatableBody2D" node_paths=PackedStringArray("sprite", "notifier") groups=["BladeHitable", "EnemyBody"]]
 collision_layer = 8
-collision_mask = 11
+collision_mask = 27
 sync_to_physics = false
 script = ExtResource("1_t36nw")
 sprite = NodePath("AnimatedSprite2D")

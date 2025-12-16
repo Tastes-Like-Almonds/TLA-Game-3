@@ -1,7 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene load_steps=22 format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
+[ext_resource type="Script" uid="uid://cyvbimmue3s1g" path="res://Scripts/Player/modifier_display_manager.gd" id="2_06tpx"]
 [ext_resource type="Script" uid="uid://bu2b4pqlln3ot" path="res://Scripts/Player/sword.gd" id="3_htcer"]
 [ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="4_0u5uq"]
 [ext_resource type="Texture2D" uid="uid://ddw28q8ijph6" path="res://Assets/Sprites/Player/Damaged Sewer Guy 1.png" id="4_oikmp"]
@@ -174,18 +175,6 @@ height = 8
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
 size = Vector2(102, 20)
 
-[sub_resource type="Gradient" id="Gradient_oikmp"]
-offsets = PackedFloat32Array(0, 0.68472904, 0.7044335, 0.7832512, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0.9507389, 1, 1, 1, 0, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_06tpx"]
-gradient = SubResource("Gradient_oikmp")
-width = 128
-height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.51282054)
-fill_to = Vector2(0.508547, 0)
-
 [node name="Player" type="Node2D" groups=["Player"]]
 script = ExtResource("1_xpcdj")
 properties = SubResource("Resource_jlvik")
@@ -205,6 +194,9 @@ scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_aqm4k")
 animation = &"idle"
 frame_progress = 0.9318208
+
+[node name="ModifierDisplayManager" type="Node2D" parent="playerBody"]
+script = ExtResource("2_06tpx")
 
 [node name="Sword" type="Node2D" parent="."]
 script = ExtResource("3_htcer")
@@ -230,20 +222,3 @@ script = ExtResource("5_htcer")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Area2D"]
 shape = SubResource("RectangleShape2D_mtuoh")
 debug_color = Color(0.94, 0, 0.28200018, 0.5019608)
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-value = 50.0
-texture_progress = SubResource("GradientTexture2D_06tpx")

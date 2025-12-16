@@ -13,6 +13,10 @@ class_name PlayerBody extends CharacterBody2D
 @onready var shape : CollisionShape2D = $CollisionShape2D
 
 var last_slide : float = 1.0
+var initial_shape_pos : Vector2
+
+func _ready() -> void:
+	initial_shape_pos = shape.position
 
 func get_player() -> Player:
 	if get_parent() is Player:
@@ -75,11 +79,11 @@ func ray_is_on_floor(length:float = 3) -> Dictionary:
 func _physics_process(delta: float) -> void:
 	var player : Player = get_player()
 	var sword := player.get_player_sword()
+	var gravity_direction := get_player().get_gravity_direction()
 	
-	if player.get_gravity() < 0:
-		up_direction = Vector2(0, 1)
-	else:
-		up_direction = Vector2(0, -1)
+	# Adjust for gravity
+	up_direction = -gravity_direction
+	shape.position = initial_shape_pos * gravity_direction
 	
 	# Reset velocity to prevent it staying and colliding after respawn.
 	if not player.is_alive(): velocity = Vector2.ZERO ; return
@@ -129,7 +133,10 @@ func _physics_process(delta: float) -> void:
 				if is_on_floor(): # Hit ground
 					
 					# Determine "strength" of ground hit
-					var ground_hit_perc : float = clampf(((current_vel.y-ground_hit_min)/(ground_hit_max)), 0, 1.0)
+					# Dot product will equal the amount of velocity traveling in the direction
+					# gravity_direction, thus using it we can get the "fall speed"
+					var dot := gravity_direction.dot(current_vel)
+					var ground_hit_perc : float = clampf(((dot-ground_hit_min)/(ground_hit_max)), 0, 1.0)
 					
 					# Play ground hit sound
 					if ground_hit_perc > 0.2:

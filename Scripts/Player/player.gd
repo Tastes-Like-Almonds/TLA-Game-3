@@ -26,6 +26,7 @@ enum MovementMode {
 # TODO Cache sword and body ref until child structure is altered
 
 @onready var sprite : AnimatedSprite2D = $playerBody/Sprite2D
+@onready var modifier_display: ModifierDisplayManager = $playerBody/ModifierDisplayManager
 
 #region Exports
 
@@ -564,10 +565,29 @@ func get_modifier_ids(stat:String) -> Array[String]:
 
 ## Add a property modifier to one of the player's stats.
 func add_modifier(mod : PropertyModifier, stat:String) -> void:
+	
 	if stat not in property_modifiers:
-		property_modifiers[stat] = [mod] ; return
-	if mod.id not in get_modifier_ids(stat):
+		property_modifiers[stat] = [mod]
+	
+	elif mod.id not in get_modifier_ids(stat): # Add modifier if the id isn't present
 		property_modifiers.get(stat).append(mod)
+	
+	else: # Modifier with id already present; override it
+		for current_mod:Variant in property_modifiers.get(stat):
+			if current_mod.id == mod.id:
+				property_modifiers[stat].erase(current_mod)
+		property_modifiers.get(stat).append(mod)
+	
+	# Make modifier display for timed modifications
+	if mod.timer > 0:
+		var color : Color = Color.WHITE
+		print("-- TOUCH --")
+		print(mod.id)
+		match mod.id: # Hardcoded color. Yes, its not great, but its a niche use.
+			"gravity_orb":
+				color = Color.PURPLE
+		
+		modifier_display.create_display(mod.id, mod.timer, color)
 
 ## Remove a target modifier by its id.
 func remove_modifier_by_id(id : String, stat:String) -> void:
