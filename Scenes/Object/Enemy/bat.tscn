@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d3n0ld0lgrg4q"]
+[gd_scene load_steps=16 format=3 uid="uid://d3n0ld0lgrg4q"]
 
 [ext_resource type="Script" uid="uid://ko4prto8gjvb" path="res://Scripts/Object/Enemy/bat.gd" id="1_t36nw"]
 [ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="2_gnly0"]
@@ -17,6 +17,12 @@ metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 [sub_resource type="Resource" id="Resource_omse7"]
 script = ExtResource("2_tuwcp")
 sound_string = "res://Assets/Sound/SFX/Enemy/Bat/Bat Death.wav"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_22w8g"]
+script = ExtResource("2_tuwcp")
+sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Alert.wav"
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
@@ -71,7 +77,9 @@ sprite = NodePath("AnimatedSprite2D")
 notifier = NodePath("VisibleOnScreenNotifier2D")
 hit_sound = SubResource("Resource_dhqts")
 death_sound = SubResource("Resource_omse7")
-health = 7.5
+alert_sound = SubResource("Resource_22w8g")
+health = 6.0
+respawn = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_o6sep")
