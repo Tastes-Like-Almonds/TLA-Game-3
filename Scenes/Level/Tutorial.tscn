@@ -30,10 +30,10 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
-[sub_resource type="Gradient" id="Gradient_3j5by"]
+[sub_resource type="Gradient" id="Gradient_p84su"]
 colors = PackedColorArray(1, 0.54999995, 0.39999998, 0, 0, 0.65, 0.18416664, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_bywm7"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vbji5"]
 noise_type = 0
 frequency = 0.0036
 fractal_octaves = 2
@@ -44,8 +44,8 @@ domain_warp_fractal_octaves = 3
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4w8uw"]
 width = 1024
 height = 1024
-noise = SubResource("FastNoiseLite_bywm7")
-color_ramp = SubResource("Gradient_3j5by")
+noise = SubResource("FastNoiseLite_vbji5")
+color_ramp = SubResource("Gradient_p84su")
 seamless = true
 
 [sub_resource type="Gradient" id="Gradient_7j8as"]
@@ -73,7 +73,7 @@ glow_intensity = 5.6
 glow_strength = 1.49
 glow_bloom = 0.8
 glow_map_strength = 1.0
-glow_map = SubResource("GradientTexture2D_26fll")
+glow_map = SubResource("GradientTexture2D_vym4p")
 adjustment_enabled = true
 adjustment_brightness = 1.07
 adjustment_contrast = 1.19
