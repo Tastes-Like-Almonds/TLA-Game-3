@@ -82,7 +82,7 @@ hit_sound = SubResource("Resource_2lw46")
 death_sound = SubResource("Resource_fokgr")
 alert_sound = SubResource("Resource_paiv5")
 health = 10.0
-knockback = 300.0
+knockback = 500.0
 aggro_range = 800.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -128,6 +128,8 @@ position = Vector2(2, 49)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("8_2lw46")
+call_on_hit = false
+check_on_process = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
 position = Vector2(-2.2897284, -49)

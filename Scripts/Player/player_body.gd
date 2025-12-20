@@ -15,14 +15,32 @@ class_name PlayerBody extends CharacterBody2D
 var last_slide : float = 1.0
 var initial_shape_pos : Vector2
 
-func _ready() -> void:
-	initial_shape_pos = shape.position
+## Velocity to be applied upon the next physics frame. Unlike regular velocity,
+## this resets to Vector2.ZERO upon being applied.
+var _temp_velocity : Vector2
 
+#region Public
+## Get the player this body is assigned to. Returns null if the player is not found.
 func get_player() -> Player:
 	if get_parent() is Player:
 		return get_parent()
 	return null
 
+## Gets the sprite of the player, an AnimatedSprite2D.
+## Variant is used for a return in the event the sprite type is changed (unlikely).
+func get_sprite() -> Variant:
+	return $Sprite2D
+
+## Apply "temporary velocity" to the player. This velocity is applied to the player's next
+## movement frame, and resets to Vector2.ZERO after.
+func add_temp_velocity(vel:Vector2) -> void:
+	_temp_velocity += vel
+#endregion
+
+func _ready() -> void:
+	initial_shape_pos = shape.position
+
+#region Physics
 ## Apply drag to the passed velocity, as per the player's stats.
 ## Separated from _physics_process in case multiple movement methods need it.
 func _apply_drag(vel : Vector2, delta : float) -> Vector2:
@@ -129,7 +147,12 @@ func _physics_process(delta: float) -> void:
 			# Bounce
 			var current_vel : Vector2 = velocity
 			_check_damage_collisions(get_last_slide_collision())
+			velocity += _temp_velocity # Apply temp_velocity for the frame
 			if move_and_slide():
+				velocity -= _temp_velocity
+				# NOTE: Not dealing with subtracting temp_velocity here; there's no good way
+				# to return the velocity to it's initial state, so I just hope this
+				# doesn't cause problems.
 				if is_on_floor(): # Hit ground
 					
 					# Determine "strength" of ground hit
@@ -151,6 +174,10 @@ func _physics_process(delta: float) -> void:
 					
 					# Bounce
 					velocity.y = (-current_vel.y - get_last_slide_collision().get_remainder().y) * player.get_bounciness()
+			else: # No collision
+				velocity -= _temp_velocity
+			
+			_temp_velocity = Vector2.ZERO
 			
 		#endregion
 		
@@ -173,6 +200,4 @@ func _physics_process(delta: float) -> void:
 				velocity = body_pos.direction_to(get_global_mouse_position())*body_pos.distance_to(get_global_mouse_position())*10
 			move_and_slide()
 		#endregion
-
-func get_sprite() -> Variant:
-	return $Sprite2D
+#endregion

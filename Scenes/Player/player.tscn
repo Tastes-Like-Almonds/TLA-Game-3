@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene load_steps=33 format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
@@ -9,10 +9,14 @@
 [ext_resource type="Texture2D" uid="uid://o26vj04fkner" path="res://Assets/Sprites/Player/Damaged Sewer Guy 2.png" id="5_06tpx"]
 [ext_resource type="Script" uid="uid://bmumt3flg26d4" path="res://Scripts/Player/blade_area.gd" id="5_htcer"]
 [ext_resource type="Texture2D" uid="uid://dij003d72gesl" path="res://Assets/Sprites/Player/Damaged Sewer Guy 3.png" id="6_7g0yx"]
+[ext_resource type="Texture2D" uid="uid://cur61nr4s23an" path="res://Assets/Sprites/Player/Airborne/Airborne 3.png" id="6_h8ma5"]
 [ext_resource type="Texture2D" uid="uid://dcexp3babhhst" path="res://Assets/Sprites/Player/Sewer Guy Idle 1.png" id="7_dey5f"]
+[ext_resource type="Texture2D" uid="uid://jiqmppshf1p5" path="res://Assets/Sprites/Player/Airborne/Airborne 4.png" id="7_eksi1"]
+[ext_resource type="Texture2D" uid="uid://bn06luk01jrej" path="res://Assets/Sprites/Player/Airborne/Airborne 5.png" id="8_jincj"]
 [ext_resource type="Texture2D" uid="uid://ccl8lr7w157yu" path="res://Assets/Sprites/Player/Sewer Guy Idle 2.png" id="8_r5xpd"]
 [ext_resource type="Texture2D" uid="uid://c4g75rwy1qnv3" path="res://Assets/Sprites/Player/Sewer Guy Idle 3.png" id="9_ks1b7"]
 [ext_resource type="Texture2D" uid="uid://bnto80x30sd76" path="res://Assets/Sprites/Player/Sewer Guy Idle 4.png" id="10_hnuln"]
+[ext_resource type="Script" uid="uid://4383yqbiu0iv" path="res://Scripts/Player/animator.gd" id="14_7g0yx"]
 
 [sub_resource type="GDScript" id="GDScript_dd0ac"]
 script/source = "extends Resource
@@ -125,6 +129,20 @@ size = Vector2(32, 40)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("6_h8ma5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_eksi1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jincj")
+}],
+"loop": true,
+"name": &"airborne",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("4_oikmp")
 }, {
 "duration": 1.0,
@@ -160,6 +178,40 @@ animations = [{
 "speed": 4.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_06tpx"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0.015686275, 0.2509804, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7g0yx"]
+gradient = SubResource("Gradient_06tpx")
+width = 48
+height = 8
+
+[sub_resource type="Curve" id="Curve_dey5f"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.17766498, 1), 0.0, 0.0, 0, 0, Vector2(0.7309645, 0.64044946), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_r5xpd"]
+curve = SubResource("Curve_dey5f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ks1b7"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, 37, 0)
+emission_shape_scale = Vector3(16, 0.5, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_r5xpd")
+
+[sub_resource type="Gradient" id="Gradient_7g0yx"]
+colors = PackedColorArray(0.20794782, 0.36018124, 9.62615e-08, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dey5f"]
+gradient = SubResource("Gradient_7g0yx")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvnfx"]
 size = Vector2(4, 4)
 
@@ -192,11 +244,21 @@ shape = SubResource("RectangleShape2D_tugb3")
 material = ExtResource("4_0u5uq")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_aqm4k")
-animation = &"idle"
-frame_progress = 0.9318208
+animation = &"airborne"
+frame_progress = 0.99177355
 
 [node name="ModifierDisplayManager" type="Node2D" parent="playerBody"]
 script = ExtResource("2_06tpx")
+
+[node name="GroundParticles" type="GPUParticles2D" parent="playerBody"]
+amount = 60
+texture = SubResource("GradientTexture2D_7g0yx")
+process_material = SubResource("ParticleProcessMaterial_ks1b7")
+
+[node name="PointLight2D" type="PointLight2D" parent="playerBody"]
+scale = Vector2(3, 3)
+energy = 0.6
+texture = SubResource("GradientTexture2D_dey5f")
 
 [node name="Sword" type="Node2D" parent="."]
 script = ExtResource("3_htcer")
@@ -222,3 +284,6 @@ script = ExtResource("5_htcer")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Area2D"]
 shape = SubResource("RectangleShape2D_mtuoh")
 debug_color = Color(0.94, 0, 0.28200018, 0.5019608)
+
+[node name="Animator" type="Node" parent="."]
+script = ExtResource("14_7g0yx")

@@ -86,6 +86,23 @@ func get_slide_from_collision(collision : KinematicCollision2D, default : float 
 
 	return default
 
+## Same as get_slide_from_collision, but returns the "sword_friction" property of the given tile.
+func get_sword_slide_from_collision(collision : KinematicCollision2D, default : float = 0.6) -> float:
+	if not collision: return 0.0
+	var collider := collision.get_collider()
+	
+	if collider is TileMapLayer:
+						
+		collider = collider as TileMapLayer
+		
+		var coords : Vector2i = collider.local_to_map(collider.to_local(collision.get_position()))
+		var tile_data : TileData = collider.get_cell_tile_data(coords)
+		
+		if tile_data:
+			return 1 - tile_data.get_custom_data("sword_friction")
+
+	return default
+
 ## Given a collision, returns the colliding tile's tiledata, if the collider is a tile.
 func get_tile_data_from_collision(collision : KinematicCollision2D) -> TileData:
 	if not collision: return null

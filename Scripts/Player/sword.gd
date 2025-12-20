@@ -39,7 +39,7 @@ func _get_player() -> Player:
 
 func _get_slide_from_last_collision() -> float:
 	var collision := _get_player().get_last_collision()
-	return Helper.get_slide_from_collision(collision, _get_player().get_sword_slide())
+	return Helper.get_sword_slide_from_collision(collision, _get_player().get_sword_slide())
 
 ## Limits vector b to be, at most, dist away from vector a. Returns the modified b vector.
 func _limit_distance(dist:float, a:Vector2, b:Vector2) -> Vector2:

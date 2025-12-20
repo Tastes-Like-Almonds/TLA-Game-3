@@ -64,6 +64,7 @@ func _movement(delta : float) -> void:
 			if ray_is_on_floor(3): # Hit ground
 				velocity.y = -result.get_remainder().y*0.2
 			move_and_collide(((movement+velocity).slide(result.get_normal()))*delta)
+		$DamageArea.check_hits()
 
 		# If not moving, stop the walking sound. Otherwise, play it.
 		#if respawning or (absf(global_position.x - og_pos.x) > move_speed*delta): walk_sound.stop()

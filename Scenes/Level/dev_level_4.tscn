@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=4 uid="uid://bwv4arrkq23j7"]
+[gd_scene load_steps=32 format=4 uid="uid://bwv4arrkq23j7"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_7blr3"]
 [ext_resource type="PackedScene" uid="uid://bd62nj7nj3ak5" path="res://Scenes/Object/BoostOrb/gravity_orb.tscn" id="4_3hcw5"]
+[ext_resource type="PackedScene" uid="uid://cks0qs8xg7v0r" path="res://Scenes/Object/Element/velocity_influencer.tscn" id="5_3hcw5"]
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="10_1jjb1"]
 [ext_resource type="PackedScene" uid="uid://sye5w3jy5qfu" path="res://Scenes/Object/Enemy/infested_cockroach.tscn" id="10_fleyr"]
 [ext_resource type="PackedScene" uid="uid://c32ukwj524sxi" path="res://Scenes/Object/Zone/kill_barrier.tscn" id="11_1jjb1"]
@@ -18,6 +19,16 @@ colors = PackedColorArray(1.015258e-07, 0.09616593, 0.024670655, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_fleyr"]
 gradient = SubResource("Gradient_bn6cp")
+
+[sub_resource type="Gradient" id="Gradient_1jjb1"]
+offsets = PackedFloat32Array(0, 0.18139535, 0.26976743, 0.41395348, 0.627907, 0.7953488, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0040000007, 0.08, 0.016666654, 1, 0.018199999, 0.14, 0.04662, 1, 0.00067574374, 0.17885765, 0.26637086, 1, 0.2922, 0.14400001, 0.3, 1, 0.1813, 0.22533005, 0.37, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3hcw5"]
+gradient = SubResource("Gradient_1jjb1")
+width = 2000
+height = 2000
+fill_from = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_3j5by"]
 offsets = PackedFloat32Array(1)
@@ -118,9 +129,16 @@ scale = Vector2(2861.9429, 2163.58)
 texture = SubResource("GradientTexture2D_fleyr")
 offset = Vector2(1.845315, -10.547034)
 
+[node name="Sprite2D2" type="Sprite2D" parent="Background"]
+modulate = Color(1, 1, 1, 0.40784314)
+z_index = -7
+position = Vector2(-1432.9999, -31.999998)
+scale = Vector2(5, 5)
+texture = SubResource("GradientTexture2D_3hcw5")
+
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Background"]
 z_index = -7
-position = Vector2(-7390.0005, 125)
+position = Vector2(-5344, 125)
 scale = Vector2(3, 3)
 amount = 5000
 texture = SubResource("GradientTexture2D_hssce")
@@ -175,7 +193,7 @@ tile_set = ExtResource("17_7o1ml")
 z_index = -2
 position = Vector2(0, 1)
 scale = Vector2(3, 3)
-tile_map_data = PackedByteArray("AAC5/zcAAQANAAsAAAC0/zkAAQANAAsAAACr/zoAAQANAAsAAACh/zoAAQANAAsAAACd/zQAAQANAAsAAACu/y4AAQANAAsAAACx/zAAAQANAAsAAACk/yoAAQANAAsAAAC0/y8AAQANAAsAAAC4/y8AAQANAAsAAAC5/y8AAQAOAAsAAACs/ywAAQANAAwAAACn/zoAAQANAAwAAAC5/zoAAQAOAAwAAACy/zkAAQAMAAsAAAAOAC0AAQANAAsAAAAOADoAAQANAAwAAAAQADoAAQAPAAwAAAARADoAAQANAAwAAAAUADoAAQANAAsAAAAYADoAAQANAAsAAAAeADoAAQANAAsAAAAfADoAAQAOAAsAAAAiADoAAQANAAsAAAAjADoAAQAPAAwAAAAkADoAAQAPAAsAAAAlADoAAQAPAAsAAAAmADoAAQANAAsAAAAsADoAAQANAAsAAAAtADoAAQAOAAwAAAAvADoAAQANAAsAAAAwADoAAQANAAsAAAAxADoAAQAPAAsAAAA1ADoAAQAOAAwAAAA4ADoAAQAPAAsAAAA/ADoAAQAOAAsAAAANAC8AAQAPAAsAAADE/y8AAQANAAwAAADK/y8AAQANAAwAAADG/y8AAQAPAAwAAADH/y8AAQAPAAsAAADL/y8AAQANAAwAAADO/y8AAQAPAAsAAADb/y8AAQAOAAwAAADY/y8AAQANAAsAAADE/yYAAQANAAsAAADE/yEAAQAOAAwAAADE/x4AAQANAAwAAADH/x0AAQAPAAwAAADI/xwAAQANAAwAAADS/xsAAQAOAAsAAADT/xsAAQAPAAwAAADX/x0AAQANAAwAAADZ/x4AAQAOAAwAAADZ/x8AAQAPAAwAAADj/xsAAQAPAAsAAADq/y8AAQANAAwAAADv/y8AAQANAAwAAAD5/wAAAQAPAAsAAAD5/xkAAQAOAAsAAAD5/xoAAQAPAAsAAAD5/yIAAQAPAAsAAAD5/ywAAQANAAsAAADj/wcAAQAOAAsAAADX/y4AAQAJAA4AAADV/y4AAQAJAA4AAADI/x8AAQAEAAwAAADI/yAAAQAEAAwAAADW/x4AAQAEAAwAAADi/yQAAQAEAAwAAADi/yUAAQAEAAwAAADi/yYAAQAEAAwAAADi/ycAAQAEAAwAAADj/yQAAQAEAAwAAADj/yUAAQAEAAwAAADj/yYAAQAEAAwAAAA=")
+tile_map_data = PackedByteArray("AAC5/zcAAQANAAsAAAC0/zkAAQANAAsAAACr/zoAAQANAAsAAACh/zoAAQANAAsAAACd/zQAAQANAAsAAACu/y4AAQANAAsAAACx/zAAAQANAAsAAACk/yoAAQANAAsAAAC0/y8AAQANAAsAAAC4/y8AAQANAAsAAAC5/y8AAQAOAAsAAACs/ywAAQANAAwAAACn/zoAAQANAAwAAAC5/zoAAQAOAAwAAACy/zkAAQAMAAsAAAAOAC0AAQANAAsAAAAOADoAAQANAAwAAAAQADoAAQAPAAwAAAARADoAAQANAAwAAAAUADoAAQANAAsAAAAYADoAAQANAAsAAAAeADoAAQANAAsAAAAfADoAAQAOAAsAAAAiADoAAQANAAsAAAAjADoAAQAPAAwAAAAkADoAAQAPAAsAAAAlADoAAQAPAAsAAAAmADoAAQANAAsAAAAsADoAAQANAAsAAAAtADoAAQAOAAwAAAAvADoAAQANAAsAAAAwADoAAQANAAsAAAAxADoAAQAPAAsAAAA1ADoAAQAOAAwAAAA4ADoAAQAPAAsAAAA/ADoAAQAOAAsAAAANAC8AAQAPAAsAAADE/y8AAQANAAwAAADK/y8AAQANAAwAAADG/y8AAQAPAAwAAADH/y8AAQAPAAsAAADL/y8AAQANAAwAAADO/y8AAQAPAAsAAADb/y8AAQAOAAwAAADY/y8AAQANAAsAAADE/yYAAQANAAsAAADE/yEAAQAOAAwAAADE/x4AAQANAAwAAADH/x0AAQAPAAwAAADI/xwAAQANAAwAAADS/xsAAQAOAAsAAADT/xsAAQAPAAwAAADX/x0AAQANAAwAAADZ/x4AAQAOAAwAAADZ/x8AAQAPAAwAAADj/xsAAQAPAAsAAADq/y8AAQANAAwAAADv/y8AAQANAAwAAAD5/wAAAQAPAAsAAAD5/xkAAQAOAAsAAAD5/xoAAQAPAAsAAAD5/yIAAQAPAAsAAAD5/ywAAQANAAsAAADj/wcAAQAOAAsAAADX/y4AAQAJAA4AAADV/y4AAQAJAA4AAADI/x8AAQAEAAwAAADI/yAAAQAEAAwAAADW/x4AAQAEAAwAAADi/yQAAQAEAAwAAADi/yUAAQAEAAwAAADi/yYAAQAEAAwAAADi/ycAAQAEAAwAAADj/yQAAQAEAAwAAADj/yUAAQAEAAwAAADj/yYAAQAEAAwAAADA/9z/AQAOAAwAAADA/9v/AQAOAAsAAADA/9P/AQAOAAwAAACy/9P/AQAOAAsAAACy/9D/AQAOAAwAAACy/8//AQANAAsAAACy/87/AQAPAAsAAACz/83/AQANAAsAAACz/8z/AQAPAAsAAAC0/8n/AQAOAAwAAAC3/8j/AQANAAsAAAC4/8j/AQAOAAwAAAC5/8b/AQAPAAsAAAC9/8X/AQANAAsAAADA/8T/AQAOAAsAAADE/8T/AQAOAAwAAADF/8T/AQAPAAwAAACw/+b/AQANAAwAAACr/+b/AQANAAwAAACq/+b/AQANAAwAAACo/+T/AQAPAAwAAACn/+P/AQANAAwAAACm/+L/AQAPAAsAAACm/+D/AQAOAAsAAACm/9//AQAPAAwAAACm/9v/AQANAAwAAACo/9f/AQAOAAwAAACr/9b/AQAOAAsAAACt/9b/AQAPAAsAAACt/9T/AQANAAwAAACu/9P/AQANAAsAAACv/9P/AQAPAAsAAADC/97/AQAPAAwAAADF/97/AQANAAsAAADG/97/AQAPAAsAAADI/97/AQANAAsAAADP/+r/AQAOAAwAAADQ/+z/AQAPAAsAAADX/+7/AQAOAAsAAADZ/+7/AQAPAAwAAACw/+j/AQANAAsAAACw/+v/AQAOAAwAAACx//D/AQAPAAwAAACw//D/AQAOAAsAAACy//D/AQAPAAwAAAC4//z/AQAOAAwAAAC6//z/AQAPAAsAAAC7//z/AQANAAsAAAC8//z/AQAPAAsAAAC///z/AQAOAAsAAADA//z/AQAPAAsAAADB//z/AQAPAAsAAADF//z/AQANAAwAAADG//z/AQANAAsAAADP//z/AQAOAAsAAADQ//z/AQAOAAsAAAC4//r/AQAOAAwAAAC3//n/AQAPAAsAAAC3//r/AQAPAAwAAAC0//X/AQAPAAwAAAC1//X/AQANAAwAAACz//P/AQAOAAsAAACz//T/AQAOAAsAAACy//H/AQAOAAwAAACy//L/AQAPAAsAAADU//j/AQANAAwAAADS//j/AQAPAAsAAADS//r/AQAPAAwAAADV//r/AQAPAAsAAADX//z/AQAPAAwAAADa//z/AQAOAAsAAADb//z/AQAOAAwAAADe//r/AQANAAsAAADg//r/AQAPAAwAAADg//v/AQAOAAsAAADj//7/AQAOAAwAAADj/wIAAQAPAAwAAADj/wQAAQANAAsAAADj/wUAAQAOAAsAAADj/wYAAQANAAwAAADv//z/AQAOAAsAAADv//3/AQAOAAsAAADv//7/AQAPAAwAAADv////AQAOAAwAAADv/wEAAQAPAAwAAADv/wIAAQANAAsAAADv/wQAAQANAAsAAAD5//D/AQAOAAsAAAD5//T/AQAOAAwAAAD5//f/AQANAAsAAAD5//j/AQAOAAwAAAD5//n/AQANAAsAAAD5//v/AQANAAsAAAD5/wIAAQAPAAwAAAD5/wQAAQANAAwAAAD5/wUAAQAOAAwAAAD5/w0AAQAOAAsAAAD5/w4AAQAPAAwAAAD2/xAAAQAOAAsAAAD2/xMAAQANAAsAAAD2/xUAAQAOAAsAAADj/wwAAQANAAwAAADj/w8AAQANAAsAAADj/xEAAQAPAAsAAADj/xIAAQANAAwAAADj/xkAAQAPAAsAAADk/woAAQAOAAsAAADk/wsAAQAOAAwAAADm/wkAAQAOAAsAAADp/wkAAQANAAsAAADr/wgAAQAOAAwAAADm/yAAAQANAAsAAADo/yAAAQAOAAsAAADq/yAAAQANAAwAAADr/yAAAQANAAsAAADt/yAAAQAOAAsAAADn/yMAAQAOAAwAAADo/yMAAQAPAAwAAADs/yMAAQANAAwAAADw/yMAAQAPAAwAAAA=")
 tile_set = ExtResource("17_7o1ml")
 
 [node name="OverPlayer" type="TileMapLayer" parent="Level/Tiles"]
@@ -189,6 +207,9 @@ tile_set = ExtResource("17_7o1ml")
 position = Vector2(-3462, -1452)
 time = 1.0
 
+[node name="VelocityInfluencer" parent="Level/Tiles" instance=ExtResource("5_3hcw5")]
+process_mode = 4
+
 [node name="Decor" type="Node2D" parent="Level"]
 
 [node name="CeilingLanternPlaceholder" type="Sprite2D" parent="Level/Decor"]
@@ -197,6 +218,26 @@ scale = Vector2(3, 3)
 texture = ExtResource("14_hssce")
 
 [node name="PointLight2D" type="PointLight2D" parent="Level/Decor/CeilingLanternPlaceholder"]
+position = Vector2(0, 2.0980835e-05)
+texture = SubResource("GradientTexture2D_hywip")
+texture_scale = 4.88
+
+[node name="CeilingLanternPlaceholder11" type="Sprite2D" parent="Level/Decor"]
+position = Vector2(-1024, 1464)
+scale = Vector2(3, 3)
+texture = ExtResource("14_hssce")
+
+[node name="PointLight2D" type="PointLight2D" parent="Level/Decor/CeilingLanternPlaceholder11"]
+position = Vector2(0, 2.0980835e-05)
+texture = SubResource("GradientTexture2D_hywip")
+texture_scale = 4.88
+
+[node name="CeilingLanternPlaceholder12" type="Sprite2D" parent="Level/Decor"]
+position = Vector2(-4504, 2191)
+scale = Vector2(3, 3)
+texture = ExtResource("14_hssce")
+
+[node name="PointLight2D" type="PointLight2D" parent="Level/Decor/CeilingLanternPlaceholder12"]
 position = Vector2(0, 2.0980835e-05)
 texture = SubResource("GradientTexture2D_hywip")
 texture_scale = 4.88
@@ -237,6 +278,56 @@ scale = Vector2(3, 3)
 texture = ExtResource("14_hssce")
 
 [node name="PointLight2D" type="PointLight2D" parent="Level/Decor/CeilingLanternPlaceholder5"]
+position = Vector2(0, 2.0980835e-05)
+texture = SubResource("GradientTexture2D_hywip")
+texture_scale = 4.88
+
+[node name="CeilingLanternPlaceholder6" type="Sprite2D" parent="Level/Decor"]
+position = Vector2(-1071, -845)
+scale = Vector2(3, 3)
+texture = ExtResource("14_hssce")
+
+[node name="PointLight2D" type="PointLight2D" parent="Level/Decor/CeilingLanternPlaceholder6"]
+position = Vector2(0, 2.0980835e-05)
+texture = SubResource("GradientTexture2D_hywip")
+texture_scale = 4.88
+
+[node name="CeilingLanternPlaceholder7" type="Sprite2D" parent="Level/Decor"]
+position = Vector2(-2571, -840)
+scale = Vector2(3, 3)
+texture = ExtResource("14_hssce")
+
+[node name="PointLight2D" type="PointLight2D" parent="Level/Decor/CeilingLanternPlaceholder7"]
+position = Vector2(0, 2.0980835e-05)
+texture = SubResource("GradientTexture2D_hywip")
+texture_scale = 4.88
+
+[node name="CeilingLanternPlaceholder8" type="Sprite2D" parent="Level/Decor"]
+position = Vector2(-3712, -1508)
+scale = Vector2(3, 3)
+texture = ExtResource("14_hssce")
+
+[node name="PointLight2D" type="PointLight2D" parent="Level/Decor/CeilingLanternPlaceholder8"]
+position = Vector2(0, 2.0980835e-05)
+texture = SubResource("GradientTexture2D_hywip")
+texture_scale = 4.88
+
+[node name="CeilingLanternPlaceholder9" type="Sprite2D" parent="Level/Decor"]
+position = Vector2(-3244, -2763)
+scale = Vector2(3, 3)
+texture = ExtResource("14_hssce")
+
+[node name="PointLight2D" type="PointLight2D" parent="Level/Decor/CeilingLanternPlaceholder9"]
+position = Vector2(0, 2.0980835e-05)
+texture = SubResource("GradientTexture2D_hywip")
+texture_scale = 4.88
+
+[node name="CeilingLanternPlaceholder10" type="Sprite2D" parent="Level/Decor"]
+position = Vector2(-2249, -2762)
+scale = Vector2(3, 3)
+texture = ExtResource("14_hssce")
+
+[node name="PointLight2D" type="PointLight2D" parent="Level/Decor/CeilingLanternPlaceholder10"]
 position = Vector2(0, 2.0980835e-05)
 texture = SubResource("GradientTexture2D_hywip")
 texture_scale = 4.88

@@ -177,9 +177,9 @@ func on_hit(collider : PhysicsBody2D) -> void:
 		var player : Player = player_body.get_player()
 		
 		if not is_instance_valid(player): return
-		elif  time_since_last_hit > hit_time: 
-			player.deal_damage(2.6) 
-			player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
+		elif time_since_last_hit > hit_time:
+			if player.deal_damage(2.6): # Only KB if the hit lands
+				player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
 #endregion
 
 #region Sound
