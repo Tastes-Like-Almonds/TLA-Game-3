@@ -1,16 +1,18 @@
-[gd_scene load_steps=10 format=4 uid="uid://cgwid185tvamn"]
+[gd_scene load_steps=18 format=4 uid="uid://cgwid185tvamn"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ngu0n"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_7iqcy"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_3daaf"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="4_5v7y6"]
+[ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="6_wlmii"]
+[ext_resource type="PackedScene" uid="uid://c81uyitrokgax" path="res://Scenes/Object/Zone/kill_zone.tscn" id="7_3rcce"]
 [ext_resource type="Texture2D" uid="uid://dh2sqypdgd61a" path="res://Assets/Sprites/Placeholder/Ceiling lantern placeholder.png" id="16_ogjmw"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.0873481, 0.11979169, 0.11979169, 1)
+offsets = PackedFloat32Array(0.9130435, 1)
+colors = PackedColorArray(0.02808804, 0.08726957, 0.059087858, 1, 0.02808804, 0.08726957, 0.059087858, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0t62c"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wlmii"]
 gradient = SubResource("Gradient_bo1nx")
 
 [sub_resource type="Gradient" id="Gradient_cdmcw"]
@@ -23,14 +25,53 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
+[sub_resource type="Gradient" id="Gradient_p84su"]
+colors = PackedColorArray(1, 0.54999995, 0.39999998, 0, 0, 0.65, 0.18416664, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vbji5"]
+noise_type = 0
+frequency = 0.0036
+fractal_octaves = 2
+fractal_lacunarity = 1.5
+fractal_weighted_strength = 0.21
+domain_warp_fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3rcce"]
+width = 1024
+height = 1024
+noise = SubResource("FastNoiseLite_vbji5")
+color_ramp = SubResource("Gradient_p84su")
+seamless = true
+
+[sub_resource type="Gradient" id="Gradient_ph1vs"]
+colors = PackedColorArray(0.11, 0.11, 0.11, 1, 0, 0.43, 0.26516673, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vym4p"]
+gradient = SubResource("Gradient_ph1vs")
+fill_from = Vector2(0, 1)
+
+[sub_resource type="Environment" id="Environment_ngu0n"]
+background_mode = 3
+tonemap_exposure = 0.62
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 3.36
+glow_strength = 1.27
+glow_bloom = 0.85
+glow_map_strength = 1.0
+glow_map = SubResource("GradientTexture2D_vym4p")
+adjustment_enabled = true
+adjustment_contrast = 1.13
+adjustment_saturation = 1.3
+
 [node name="DevLevel2" type="Node2D"]
 script = ExtResource("1_ngu0n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -10
-position = Vector2(-907.9961, 1743)
+position = Vector2(487.00003, 1245)
 scale = Vector2(505.0625, 248.3948)
-texture = SubResource("GradientTexture2D_0t62c")
+texture = SubResource("GradientTexture2D_wlmii")
 offset = Vector2(-6.73976, -3.8326082)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -76,3 +117,33 @@ texture = ExtResource("16_ogjmw")
 [node name="PointLight2D" type="PointLight2D" parent="Lights/CeilingLanternPlaceholder2"]
 texture = SubResource("GradientTexture2D_7ktlv")
 texture_scale = 4.88
+
+[node name="Fog" type="Node2D" parent="."]
+
+[node name="Parallax2D" type="Parallax2D" parent="Fog"]
+modulate = Color(1, 1, 1, 0.10980392)
+scale = Vector2(4, 4)
+scroll_offset = Vector2(-23938, 7332)
+repeat_size = Vector2(3072, 1024)
+autoscroll = Vector2(120, -5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Fog/Parallax2D"]
+scale = Vector2(3, 1)
+texture = SubResource("NoiseTexture2D_3rcce")
+
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_ngu0n")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Environment"]
+color = Color(0.88838434, 0.9311266, 0.9006013, 1)
+
+[node name="KillZone" parent="." instance=ExtResource("7_3rcce")]
+position = Vector2(-6682.003, 4779.9995)
+scale = Vector2(365.12518, 8.42273)
+
+[node name="Bat" parent="." instance=ExtResource("6_wlmii")]
+position = Vector2(-9466.001, -111330)
+scale = Vector2(5816.1694, 5333.7075)
+respawn = false

@@ -11,12 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="8_hepfv"]
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="8_t7mbg"]
 
-[sub_resource type="Gradient" id="Gradient_bo1nx"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.02808804, 0.08726957, 0.059087858, 1)
+[sub_resource type="Gradient" id="Gradient_t7mbg"]
+offsets = PackedFloat32Array(0.9130435, 1)
+colors = PackedColorArray(0.02808804, 0.08726957, 0.059087858, 1, 0.02808804, 0.08726957, 0.059087858, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0t62c"]
-gradient = SubResource("Gradient_bo1nx")
+gradient = SubResource("Gradient_t7mbg")
 
 [sub_resource type="Gradient" id="Gradient_cdmcw"]
 offsets = PackedFloat32Array(0, 0.044444446, 0.2488889, 0.51111114, 1)
@@ -28,10 +28,10 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
-[sub_resource type="Gradient" id="Gradient_p84su"]
+[sub_resource type="Gradient" id="Gradient_3j5by"]
 colors = PackedColorArray(1, 0.54999995, 0.39999998, 0, 0, 0.65, 0.18416664, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_vbji5"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bywm7"]
 noise_type = 0
 frequency = 0.0036
 fractal_octaves = 2
@@ -42,8 +42,8 @@ domain_warp_fractal_octaves = 3
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4w8uw"]
 width = 1024
 height = 1024
-noise = SubResource("FastNoiseLite_vbji5")
-color_ramp = SubResource("Gradient_p84su")
+noise = SubResource("FastNoiseLite_bywm7")
+color_ramp = SubResource("Gradient_3j5by")
 seamless = true
 
 [sub_resource type="Gradient" id="Gradient_7j8as"]
@@ -58,7 +58,7 @@ fill_to = Vector2(0.47975078, 1)
 [sub_resource type="Gradient" id="Gradient_up8s3"]
 colors = PackedColorArray(0.11, 0.11, 0.11, 1, 0, 0.43, 0.26516673, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_vym4p"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_26fll"]
 gradient = SubResource("Gradient_up8s3")
 fill_from = Vector2(0, 1)
 
@@ -71,7 +71,7 @@ glow_intensity = 3.36
 glow_strength = 1.27
 glow_bloom = 0.85
 glow_map_strength = 1.0
-glow_map = SubResource("GradientTexture2D_vym4p")
+glow_map = SubResource("GradientTexture2D_26fll")
 adjustment_enabled = true
 adjustment_contrast = 1.13
 adjustment_saturation = 1.3
