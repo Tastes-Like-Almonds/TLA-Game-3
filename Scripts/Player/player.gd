@@ -25,7 +25,8 @@ enum MovementMode {
 
 # TODO Cache sword and body ref until child structure is altered
 
-@onready var sprite : Sprite2D = $playerBody/Sprite2D
+@onready var sprite : AnimatedSprite2D = $playerBody/Sprite2D
+@onready var modifier_display: ModifierDisplayManager = $playerBody/ModifierDisplayManager
 
 #region Exports
 
@@ -183,6 +184,10 @@ func is_charging_ability() -> bool:
 func get_last_collision() -> KinematicCollision2D:
 	return last_collision
 
+## Returns the player's knockback strength
+func get_knockback() -> float:
+	return get_modified_property("knockback")
+
 ## Returns the damage of the player's sword. Should not be called directly, instead
 ## use get_blade_damage().
 func get_sword_damage() -> float:
@@ -193,8 +198,11 @@ func get_sword_speed() -> float:
 	return get_modified_property("sword_speed")
 
 ## Returns the speed the sword must travel to deal maximum damage.
-func get_sword_speed_damage() -> float:
-	return get_modified_property("sword_speed_damage")
+#func get_sword_speed_damage() -> float:
+	#return get_modified_property("sword_speed_damage")
+
+func get_max_damage_time() -> float:
+	return get_modified_property("max_damage_time")
 
 ## Returns the max health of the player.
 func get_max_health() -> float:
@@ -235,16 +243,19 @@ func get_sword_speed_perc() -> float:
 	var sword : Sword = get_player_sword()
 	return sword.get_last_sword_velocity().length() / get_sword_speed()
 
+## Returns the coefficient that would be applied to the player's damage
+## upon a hit.
+func get_blade_damage_perc() -> float:
+	var sword : Sword = get_player_sword()
+	var perc : float = sword.speed_value
+	perc = min(perc, 1.0)
+	return perc
+
 ## Gets the current damage of the blade (Value changes based on speed, charge, etc.)
 func get_blade_damage() -> float:
 	var damage := 0.0
-	var sword : Sword = get_player_sword()
-	
-	var perc : float = max(0.0, sword.get_last_sword_velocity().length()/get_sword_speed_damage())
-	perc = min(perc, 1.0)
-	
+	var perc := get_blade_damage_perc()
 	damage += get_sword_damage()*perc
-	
 	return damage
 
 ## Gets the multiplier of knockback applied to the player when they are dealt it.
@@ -300,7 +311,7 @@ func _visual_process(delta : float) -> void:
 	# Update player rotation
 	var body : PlayerBody = get_player_body()
 	if body:
-		body.get_sprite().flip_h = get_player_sword().get_tip_global_position().x < get_player_position().x
+		body.get_sprite().flip_h = !get_player_sword().get_tip_global_position().x < get_player_position().x
 		body.get_sprite().flip_v = (get_gravity() <= 0)
 
 	# Update player damage
@@ -564,10 +575,27 @@ func get_modifier_ids(stat:String) -> Array[String]:
 
 ## Add a property modifier to one of the player's stats.
 func add_modifier(mod : PropertyModifier, stat:String) -> void:
+	
 	if stat not in property_modifiers:
-		property_modifiers[stat] = [mod] ; return
-	if mod.id not in get_modifier_ids(stat):
+		property_modifiers[stat] = [mod]
+	
+	elif mod.id not in get_modifier_ids(stat): # Add modifier if the id isn't present
 		property_modifiers.get(stat).append(mod)
+	
+	else: # Modifier with id already present; override it
+		for current_mod:Variant in property_modifiers.get(stat):
+			if current_mod.id == mod.id:
+				property_modifiers[stat].erase(current_mod)
+		property_modifiers.get(stat).append(mod)
+	
+	# Make modifier display for timed modifications
+	if mod.timer > 0:
+		var color : Color = Color.WHITE
+		match mod.id: # Hardcoded color. Yes, its not great, but its a niche use.
+			"gravity_orb":
+				color = Color.PURPLE
+		
+		modifier_display.create_display(mod.id, mod.timer, color)
 
 ## Remove a target modifier by its id.
 func remove_modifier_by_id(id : String, stat:String) -> void:
@@ -620,6 +648,7 @@ func _ready() -> void:
 	lives = get_modified_property("max_lives")
 	add_weapon(get_modified_property("starting_weapon"))
 	equip_weapon_slot(0)
+	sprite.play("idle")
 	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.

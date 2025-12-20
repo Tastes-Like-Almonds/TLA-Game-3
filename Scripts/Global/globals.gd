@@ -10,3 +10,7 @@ var main : Main:
 ## Returns true if main is present, false otherwise.
 func has_main() -> bool:
 	return is_instance_valid(main)
+
+## Returns that default node that levels should be loaded into (via LevelLoader.gd)
+func get_level_load_node() -> Node:
+	return main

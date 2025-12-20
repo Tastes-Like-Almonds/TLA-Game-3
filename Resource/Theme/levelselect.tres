@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://clav6fao2ppmo"]
+
+[ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="1_upe2v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8etey"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.19, 0.19, 0.19, 0.68235296)
+
+[resource]
+default_font = ExtResource("1_upe2v")
+default_font_size = 80
+HBoxContainer/constants/separation = 20
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_8etey")
+VBoxContainer/constants/separation = 20

@@ -1,6 +1,8 @@
 ## Base enemy class with health, respawn, and some other logic.
 @abstract class_name Enemy extends AnimatableBody2D
 
+signal Killed
+
 # --- #
 @export_group("Basic Data (Must be set)")
 ## Sprite2D / AnimatedSprite2D of the enemy.
@@ -14,6 +16,7 @@
 
 @export var hit_sound: SoundData
 @export var death_sound : SoundData
+@export var alert_sound : SoundData
 
 # --- #
 @export_group("Health and Damage")
@@ -22,6 +25,9 @@
 
 ## The max health of the bat. Does not regen.
 @export var health : float = 5.0
+
+## If false, the enemy will use its physics body as a damage hitbox.
+@export var disable_physics_hitbox : bool = false
 
 # --- #
 @export_group("Knockback")
@@ -79,6 +85,9 @@ var time_since_last_hit : float = 0.0
 
 var velocity : Vector2 = Vector2.ZERO
 
+@abstract func _movement(_delta : float) -> void
+
+#region Health and damage
 func get_current_hit_color() -> Vector4:
 	return sprite.material.get_shader_parameter("solid_color")
 
@@ -99,6 +108,7 @@ func deal_damage(damage: float) -> bool:
 		return true
 	return false
 
+## When a sword strikes the enemy. Called from player.gd.
 func on_sword_hit(player : Player) -> void:
 	
 	if respawning : return
@@ -110,7 +120,8 @@ func on_sword_hit(player : Player) -> void:
 	if deal_damage(damage): # If killed
 		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized(), Color.RED, 1.5)
 	else:
-		Sfx.play_sound(hit_sound)
+		if hit_sound:
+			Sfx.play_sound(hit_sound)
 		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized())
 	
 	var player_body := player.get_player_body()
@@ -125,19 +136,23 @@ func on_sword_hit(player : Player) -> void:
 		else:
 			player.apply_velocity(vel)
 	
-	# Deal knockback to bat
-	player.reset_weapon_use()
-	velocity = vel.normalized()*min(vel.length()*knockback_coef,max_kb)
+	# Deal knockback to enemy
+	player.reset_weapon_use() # Allow dash after hit
+	velocity = player.get_blade_damage_perc()*player.get_knockback()*vel.normalized()
 	
 	GameCamera.shake_current_camera(get_viewport(), 0.1)
 
 func _kill() -> void:
-	Sfx.play_sound(death_sound)
+	
+	if death_sound:
+		Sfx.play_sound(death_sound)
 	velocity = Vector2.ZERO
 	respawn_cooldown = 0.0
+	
 	respawning = true # Respawn var is used even on permadeath to indicate a dying status
-	if respawn:
-		sprite.visible = false
+	sprite.visible = false
+	
+	Killed.emit()
 
 func _respawn() -> void:
 	sprite.visible = true
@@ -152,8 +167,31 @@ func _check_respawn() -> void:
 		respawning = false
 		_respawn()
 
-@abstract func _movement(_delta : float) -> void
+## Called with the *player* is hit by the enemy
+func on_hit(collider : PhysicsBody2D) -> void:
+	if not collider: return
+	if respawning: return
+	if collider is PlayerBody and is_instance_valid(collider):
+		
+		var player_body := collider as PlayerBody
+		var player : Player = player_body.get_player()
+		
+		if not is_instance_valid(player): return
+		elif  time_since_last_hit > hit_time: 
+			player.deal_damage(2.6) 
+			player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
+#endregion
 
+#region Sound
+func play_alert_sound() -> void:
+	if alert_sound:
+		Sfx.play_sound_2d(alert_sound, global_position, false)
+	else:
+		push_warning("Attempt to play invalid alert sound")
+
+#endregion
+
+#region Basic
 func _physics_process(delta: float) -> void:
 	if not respawning:
 		_movement(delta)
@@ -165,7 +203,7 @@ func _process(delta: float) -> void:
 	var color : Vector4 = get_current_hit_color()
 	sprite.material.set_shader_parameter("solid_color", Vector4(color.x,color.y,color.z,max(0,color.w-delta/hit_time)))
 	
-	sprite.flip_h = (target_point.x < global_position.x)
+	sprite.flip_h = !(target_point.x < global_position.x)
 	
 	if respawning:
 		respawn_cooldown += delta
@@ -173,25 +211,17 @@ func _process(delta: float) -> void:
 			_check_respawn()
 		return
 
-
-func on_hit(collision : KinematicCollision2D) -> void:
-	if not collision: return
-	if respawning: return
-	if collision.get_collider() is PlayerBody and is_instance_valid(collision.get_collider()):
-		
-		var player_body := collision.get_collider() as PlayerBody
-		var player : Player = player_body.get_player()
-		
-		if not is_instance_valid(player): return
-		elif  time_since_last_hit > hit_time: 
-			player.deal_damage(2.6) 
-			player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
-
 func _ready() -> void:
 	notifier.screen_entered.connect(_check_respawn)
 	notifier.global_position = global_position
 	start_pos = global_position
 	sprite.play("default")
+	start_health = health
+	
+	if not disable_physics_hitbox:
+		add_to_group(&"BladeHitable")
+	
 	if spawn_dead:
 		respawning = true
 		respawn_cooldown = respawn_time
+#endregion

@@ -27,6 +27,10 @@ func process_weapon(delta:float) -> void:
 		if current_touch_cooldown >= touch_ground_cooldown:
 			can_use = true
 
+func use(charge_time : float) -> void:
+	if _wielder.get_player_body().is_on_floor(): return
+	super(charge_time)
+
 func on_use(charge_time : float) -> void:
 	if not is_instance_valid(_wielder): return
 	GameCamera.set_current_camera_shake(_wielder.get_viewport(), 0.06)
