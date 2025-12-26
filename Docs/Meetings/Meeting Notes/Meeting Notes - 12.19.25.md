@@ -42,7 +42,8 @@ ___
 - 4-6 levels
 	- + Bonus dungeon
 - 2 Bosses
-	- 
+	- Re-flavored version of the second swamp boss
+	- Ghost boss
 - Whimsical forest
 	- Basically phosphorescence
 		- Very colorful and vibrant
