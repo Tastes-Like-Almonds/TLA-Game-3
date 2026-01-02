@@ -50,9 +50,29 @@ ___
 **Burg von Westphalia**
 - 3 levels
 - Final area; climb and traverse the castle
-- 
 
-****
+### Gameplay loop ideas
+#### Persistent Ideas
+- Level design is done by hand
+- Movement is done through the weapon
+- Multiple weapons exist
+- Combat is present
+#### RPG-style
+- Progress through the game continuously
+- Items unlocked can be used in past areas
+- Upgrades present somehow
+- Hollow knight kind of
+#### Non-continuous
+- No continuity; have some level selector and separate levels as such
+- No persistent data between levels, possibly a list level selection would work
+#### Shovel Knight
+- Every level has a gimmick of some sort
+- Longer levels
+- Two options
+	- Persistent data with items and such (more like shovel knight)
+	- Levels completely separate
+
+___
 
 ## Remaining Notes
 ___
