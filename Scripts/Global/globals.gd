@@ -14,3 +14,9 @@ func has_main() -> bool:
 ## Returns that default node that levels should be loaded into (via LevelLoader.gd)
 func get_level_load_node() -> Node:
 	return main
+
+## Returns the default node that levels should be loaded into via LeveLoader.gd.
+func get_default_level_load_node() -> Node:
+	assert(is_instance_valid(main)) # Error if main not present
+	return main
+	

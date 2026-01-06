@@ -208,6 +208,8 @@ colors = PackedColorArray(0.20794782, 0.36018124, 9.62615e-08, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dey5f"]
 gradient = SubResource("Gradient_7g0yx")
+width = 128
+height = 128
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
@@ -256,6 +258,7 @@ texture = SubResource("GradientTexture2D_7g0yx")
 process_material = SubResource("ParticleProcessMaterial_ks1b7")
 
 [node name="PointLight2D" type="PointLight2D" parent="playerBody"]
+visible = false
 scale = Vector2(3, 3)
 energy = 0.6
 texture = SubResource("GradientTexture2D_dey5f")
