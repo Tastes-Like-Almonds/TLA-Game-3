@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://cyemvticywuop"]
+[gd_scene load_steps=26 format=4 uid="uid://cyemvticywuop"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_26fll"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_c8ny0"]
@@ -12,6 +12,7 @@
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="8_t7mbg"]
 [ext_resource type="PackedScene" uid="uid://c32ukwj524sxi" path="res://Scenes/Object/Zone/kill_barrier.tscn" id="11_t7mbg"]
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="12_3j5by"]
+[ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="13_bywm7"]
 
 [sub_resource type="Gradient" id="Gradient_bn6cp"]
 offsets = PackedFloat32Array(1)
@@ -30,24 +31,6 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
-[sub_resource type="Gradient" id="Gradient_p84su"]
-colors = PackedColorArray(1, 0.54999995, 0.39999998, 0, 0, 0.65, 0.18416664, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_vbji5"]
-noise_type = 0
-frequency = 0.0036
-fractal_octaves = 2
-fractal_lacunarity = 1.5
-fractal_weighted_strength = 0.21
-domain_warp_fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4w8uw"]
-width = 1024
-height = 1024
-noise = SubResource("FastNoiseLite_vbji5")
-color_ramp = SubResource("Gradient_p84su")
-seamless = true
-
 [sub_resource type="Gradient" id="Gradient_7j8as"]
 offsets = PackedFloat32Array(0, 0.7069768)
 colors = PackedColorArray(0.31173578, 0.45934063, 0.14966008, 0, 0.30821064, 0.7191204, 1.347661e-06, 1)
@@ -56,28 +39,6 @@ colors = PackedColorArray(0.31173578, 0.45934063, 0.14966008, 0, 0.30821064, 0.7
 gradient = SubResource("Gradient_7j8as")
 fill_from = Vector2(0.47435898, 0.115384616)
 fill_to = Vector2(0.47975078, 1)
-
-[sub_resource type="Gradient" id="Gradient_bywm7"]
-colors = PackedColorArray(0.11, 0.11, 0.11, 1, 0, 0.43, 0.26516673, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_vym4p"]
-gradient = SubResource("Gradient_bywm7")
-fill_from = Vector2(0, 1)
-
-[sub_resource type="Environment" id="Environment_26fll"]
-background_mode = 3
-tonemap_exposure = 0.62
-glow_enabled = true
-glow_normalized = true
-glow_intensity = 5.6
-glow_strength = 1.49
-glow_bloom = 0.8
-glow_map_strength = 1.0
-glow_map = SubResource("GradientTexture2D_vym4p")
-adjustment_enabled = true
-adjustment_brightness = 1.07
-adjustment_contrast = 1.19
-adjustment_saturation = 1.3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bywm7"]
 size = Vector2(48, 16)
@@ -423,19 +384,6 @@ position = Vector2(-10655, -1196)
 [node name="Checkpoint3" parent="Checkpoints" instance=ExtResource("7_b1p4s")]
 position = Vector2(-6531, -571)
 
-[node name="Fog" type="Node2D" parent="."]
-
-[node name="Parallax2D" type="Parallax2D" parent="Fog"]
-modulate = Color(1, 1, 1, 0.10980392)
-scale = Vector2(4, 4)
-scroll_offset = Vector2(-23938, 7332)
-repeat_size = Vector2(3072, 1024)
-autoscroll = Vector2(120, -5)
-
-[node name="Sprite2D" type="Sprite2D" parent="Fog/Parallax2D"]
-scale = Vector2(3, 1)
-texture = SubResource("NoiseTexture2D_4w8uw")
-
 [node name="Words" type="Node2D" parent="."]
 
 [node name="ProximityText3" parent="Words" instance=ExtResource("7_up8s3")]
@@ -535,14 +483,6 @@ position = Vector2(-4224.75, -8)
 scale = Vector2(69.11719, 7.882811)
 texture = SubResource("GradientTexture2D_hepfv")
 
-[node name="Environment" type="Node2D" parent="."]
-
-[node name="CanvasModulate" type="CanvasModulate" parent="Environment"]
-color = Color(0.88838434, 0.9311266, 0.9006013, 1)
-
-[node name="WorldEnvironment2" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_26fll")
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-11303, 610)
 collision_mask = 0
@@ -594,6 +534,7 @@ rotation = 0.5235988
 force = 2000.0
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
+visible = false
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Parallax2D"]
 z_index = -7
@@ -605,3 +546,5 @@ preprocess = 45.0
 speed_scale = 0.2
 visibility_rect = Rect2(0, -5000, 15000, 20000)
 process_material = SubResource("ParticleProcessMaterial_26fll")
+
+[node name="Gutter2Env" parent="." instance=ExtResource("13_bywm7")]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=30 format=4 uid="uid://caaxff2gr7scy"]
+[gd_scene load_steps=19 format=4 uid="uid://caaxff2gr7scy"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ex82n"]
+[ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_7brat"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="2_cvvtj"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="3_7brat"]
 [ext_resource type="PackedScene" uid="uid://bd62nj7nj3ak5" path="res://Scenes/Object/BoostOrb/gravity_orb.tscn" id="4_2hpmh"]
@@ -12,84 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="10_vsrqb"]
 [ext_resource type="PackedScene" uid="uid://c6cqn4qbed04l" path="res://Scenes/Object/checkpoint.tscn" id="11_j5hc7"]
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="12_f6l6f"]
-
-[sub_resource type="Gradient" id="Gradient_bn6cp"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1.015258e-07, 0.09616593, 0.024670655, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_fleyr"]
-gradient = SubResource("Gradient_bn6cp")
-
-[sub_resource type="Gradient" id="Gradient_1jjb1"]
-offsets = PackedFloat32Array(0, 0.18139535, 0.26976743, 0.41395348, 0.627907, 0.7953488, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.0040000007, 0.08, 0.016666654, 1, 0.018199999, 0.14, 0.04662, 1, 0.00067574374, 0.17885765, 0.26637086, 1, 0.2922, 0.14400001, 0.3, 1, 0.1813, 0.22533005, 0.37, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3hcw5"]
-gradient = SubResource("Gradient_1jjb1")
-width = 2000
-height = 2000
-fill_from = Vector2(0, 1)
-
-[sub_resource type="Gradient" id="Gradient_3j5by"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_hssce"]
-gradient = SubResource("Gradient_3j5by")
-width = 4
-height = 4
-
-[sub_resource type="Curve" id="Curve_2xrhl"]
-_data = [Vector2(0.050761417, 1), 0.0, 0.0, 0, 0, Vector2(0.12182741, 0.764045), 0.0, 0.0, 0, 0, Vector2(0.18274112, 1), 0.0, 0.0, 0, 0, Vector2(0.28426397, 0.6629214), 0.0, 0.0, 0, 0, Vector2(0.33502537, 1), 0.0, 0.0, 0, 0, Vector2(0.43654823, 0.61797756), 0.0, 0.0, 0, 0, Vector2(0.4923858, 1), 0.0, 0.0, 0, 0, Vector2(0.5837563, 0.8089888), 0.0, 0.0, 0, 0, Vector2(0.70050764, 0.764045), 0.0, 0.0, 0, 0, Vector2(0.80203044, 1), 0.0, 0.0, 0, 0, Vector2(0.87309647, 0.73033714), 0.0, 0.0, 0, 0, Vector2(0.95431477, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 13
-
-[sub_resource type="CurveTexture" id="CurveTexture_bywm7"]
-curve = SubResource("Curve_2xrhl")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hywip"]
-particle_flag_disable_z = true
-emission_shape_scale = Vector3(1, 1400, 1)
-emission_shape = 3
-emission_box_extents = Vector3(1, 1, 1)
-spread = 0.398
-initial_velocity_min = 100.0
-initial_velocity_max = 300.0
-gravity = Vector3(0, 0, 0)
-scale_min = 0.5
-scale_max = 1.5
-alpha_curve = SubResource("CurveTexture_bywm7")
-
-[sub_resource type="Environment" id="Environment_k85jp"]
-background_mode = 3
-tonemap_exposure = 0.62
-glow_enabled = true
-glow_normalized = true
-glow_intensity = 5.6
-glow_strength = 1.49
-glow_bloom = 0.8
-glow_map_strength = 1.0
-adjustment_enabled = true
-adjustment_brightness = 0.94
-adjustment_contrast = 1.13
-adjustment_saturation = 0.55
-
-[sub_resource type="Gradient" id="Gradient_p84su"]
-colors = PackedColorArray(1, 0.54999995, 0.39999998, 0, 0, 0.65, 0.18416664, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_vbji5"]
-noise_type = 0
-frequency = 0.0036
-fractal_octaves = 2
-fractal_lacunarity = 1.5
-fractal_weighted_strength = 0.21
-domain_warp_fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jxrps"]
-width = 1024
-height = 1024
-noise = SubResource("FastNoiseLite_vbji5")
-color_ramp = SubResource("Gradient_p84su")
-seamless = true
+[ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="13_cvvtj"]
 
 [sub_resource type="Gradient" id="Gradient_2xrhl"]
 offsets = PackedFloat32Array(0, 0.044444446, 0.2488889, 0.51111114, 1)
@@ -110,56 +34,7 @@ size = Vector2(38.03192, 121.95044)
 [node name="DevLevel2" type="Node2D"]
 script = ExtResource("1_ex82n")
 
-[node name="Background" type="CanvasLayer" parent="."]
-layer = -1
-follow_viewport_enabled = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Background"]
-z_index = -12
-position = Vector2(-18603.002, -3338.0002)
-scale = Vector2(2861.9429, 2163.58)
-texture = SubResource("GradientTexture2D_fleyr")
-offset = Vector2(1.845315, -10.547034)
-
-[node name="Sprite2D2" type="Sprite2D" parent="Background"]
-modulate = Color(1, 1, 1, 0.40784314)
-z_index = -7
-position = Vector2(-1432.9999, -31.999998)
-scale = Vector2(5, 5)
-texture = SubResource("GradientTexture2D_3hcw5")
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Background"]
-visible = false
-z_index = -7
-position = Vector2(-5344, 125)
-scale = Vector2(3, 3)
-amount = 5000
-texture = SubResource("GradientTexture2D_hssce")
-lifetime = 13.54
-preprocess = 36.0
-speed_scale = 0.2
-visibility_rect = Rect2(0, -5000, 10000, 10000)
-process_material = SubResource("ParticleProcessMaterial_hywip")
-
-[node name="Environment" type="Node2D" parent="."]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_k85jp")
-
-[node name="CanvasModulate" type="CanvasModulate" parent="Environment"]
-color = Color(0.62856215, 0.7361342, 0.6613292, 1)
-
-[node name="Fog" type="Node2D" parent="."]
-
-[node name="Parallax2D" type="Parallax2D" parent="Fog"]
-modulate = Color(1, 1, 1, 0.10980392)
-scale = Vector2(4, 4)
-repeat_size = Vector2(3072, 1024)
-autoscroll = Vector2(120, -5)
-
-[node name="Sprite2D" type="Sprite2D" parent="Fog/Parallax2D"]
-scale = Vector2(3, 1)
-texture = SubResource("NoiseTexture2D_jxrps")
+[node name="Gutter2Env" parent="." instance=ExtResource("2_7brat")]
 
 [node name="PlayerSpawn" parent="." instance=ExtResource("2_cvvtj")]
 position = Vector2(-4274, 2517)
@@ -383,3 +258,7 @@ position = Vector2(-2901, -328)
 
 [node name="Bat3" parent="." instance=ExtResource("12_f6l6f")]
 position = Vector2(-3289, -522)
+
+[node name="LevelTransition" parent="." instance=ExtResource("13_cvvtj")]
+position = Vector2(-4241, 2721)
+load_level = "res://Scenes/Level/Tutorial.tscn"
