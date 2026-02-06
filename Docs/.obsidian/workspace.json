@@ -39,14 +39,17 @@
             "id": "c5189ac6e154e344",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "Meetings/Meeting Notes/Meeting Notes 2 - 1.9.26.md",
-                "mode": "source",
-                "source": false
+                "file": "Planning/Programming/Level Selector/Class Structure Overview.canvas",
+                "viewState": {
+                  "x": 142,
+                  "y": 223.5,
+                  "zoom": -1.1829332436416145
+                }
               },
-              "icon": "lucide-file",
-              "title": "Meeting Notes 2 - 1.9.26"
+              "icon": "lucide-layout-dashboard",
+              "title": "Class Structure Overview"
             }
           }
         ],
@@ -200,9 +203,9 @@
   },
   "active": "c5189ac6e154e344",
   "lastOpenFiles": [
+    "Meetings/Meeting Notes/Meeting Notes 2 - 1.9.26.md",
     "Meetings/Meeting Notes/Meeting Notes - 12.11.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 12.19.25.md",
-    "Meetings/Meeting Notes/Meeting Notes 2 - 1.9.26.md",
     "Meetings/Meeting Notes/Meeting Notes - 6.4.26.md",
     "Meetings/Meeting Notes/Meeting Notes - 10.13.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 10.24.25.md",
