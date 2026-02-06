@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://birc57pmi5hwh"]
+[gd_scene load_steps=10 format=3 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="Theme" uid="uid://1q4kixjfk3u0" path="res://Resource/Theme/dev_panel.tres" id="1_344ge"]
 [ext_resource type="Script" uid="uid://bt4l1nsa4vgma" path="res://Scripts/main.gd" id="1_d1ilt"]
 [ext_resource type="Script" uid="uid://cf1jl21eb8oe3" path="res://Scripts/Debug/DevPanel/dev_panel.gd" id="2_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://dcwd3n7bnqbg8" path="res://Scenes/Debug/DevPanel/Player/player_dev_category.tscn" id="3_hptm8"]
 [ext_resource type="PackedScene" uid="uid://cduiqyk45vxko" path="res://Scenes/Debug/DevPanel/Level/level_dev_category.tscn" id="5_6iyac"]
+[ext_resource type="PackedScene" uid="uid://tu5stt8xu3fx" path="res://Scenes/UI/level_select.tscn" id="6_21xkr"]
 
 [sub_resource type="Gradient" id="Gradient_kry3j"]
 colors = PackedColorArray(0.7647408, 0.80606586, 0.87960994, 0.15294118, 1, 1, 1, 0)
@@ -19,6 +20,7 @@ texture = SubResource("GradientTexture2D_mluhb")
 
 [node name="main" type="Node"]
 script = ExtResource("1_d1ilt")
+autoload_level = ""
 
 [node name="UI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -92,3 +94,5 @@ size_flags_vertical = 1
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_21xkr")
+
+[node name="LevelSelect" parent="." instance=ExtResource("6_21xkr")]

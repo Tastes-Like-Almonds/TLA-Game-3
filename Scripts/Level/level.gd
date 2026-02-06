@@ -1,6 +1,15 @@
 ## A base class for levels. 
 @abstract class_name Level extends Node2D
 
+enum Difficulty {
+	EFFORTLESS,
+	EASY,
+	AVERAGE,
+	HARD,
+	TOUGH,
+	INSANE
+}
+
 signal on_load
 
 var level_config : LevelConfig
@@ -47,6 +56,8 @@ func _setup_ui() -> void:
 	current_ui = load(level_ui_path).instantiate()
 	add_child(current_ui)
 
+## Syncronize displayed information (items, health, etc.) with a target player.
+## Should be called whenever a new UI is created.
 func register_ui(player : Player) -> void:
 	current_ui.register_player(player)
 
@@ -63,6 +74,7 @@ func initialize(config : LevelConfig = null) -> void:
 	register_ui(player)
 	
 	on_load.emit()
+	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 
 static func get_level_data() -> void:
 	pass

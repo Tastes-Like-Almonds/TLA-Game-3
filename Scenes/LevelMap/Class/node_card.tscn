@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://r3ohdsixo0u7"]
+
+[ext_resource type="Theme" uid="uid://1q4kixjfk3u0" path="res://Resource/Theme/dev_panel.tres" id="1_qca5g"]
+[ext_resource type="Script" uid="uid://he14u0b2mexk" path="res://Scripts/LevelMap/Class/node_card.gd" id="1_xtnff"]
+
+[node name="NodeCard" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_qca5g")
+script = ExtResource("1_xtnff")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+text = "Title"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Description" type="Label" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 33
+text = "This is a description. Nlah Blah Blah."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Button Text"

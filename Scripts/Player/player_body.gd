@@ -2,15 +2,45 @@
 
 class_name PlayerBody extends CharacterBody2D
 
+@export var ground_hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Ground Land.wav", 0.4)
+
+## Maximum velocity used for determining ground land screen shake + sound volume
+@export var ground_hit_max : float = 2000.0
+
+## Minimum velocity upon ground land to play sound and shake screen
+@export var ground_hit_min : float = 10.0
+
 @onready var shape : CollisionShape2D = $CollisionShape2D
 
 var last_slide : float = 1.0
+var initial_shape_pos : Vector2
 
+## Velocity to be applied upon the next physics frame. Unlike regular velocity,
+## this resets to Vector2.ZERO upon being applied.
+var _temp_velocity : Vector2
+
+#region Public
+## Get the player this body is assigned to. Returns null if the player is not found.
 func get_player() -> Player:
 	if get_parent() is Player:
 		return get_parent()
 	return null
 
+## Gets the sprite of the player, an AnimatedSprite2D.
+## Variant is used for a return in the event the sprite type is changed (unlikely).
+func get_sprite() -> Variant:
+	return $Sprite2D
+
+## Apply "temporary velocity" to the player. This velocity is applied to the player's next
+## movement frame, and resets to Vector2.ZERO after.
+func add_temp_velocity(vel:Vector2) -> void:
+	_temp_velocity += vel
+#endregion
+
+func _ready() -> void:
+	initial_shape_pos = shape.position
+
+#region Physics
 ## Apply drag to the passed velocity, as per the player's stats.
 ## Separated from _physics_process in case multiple movement methods need it.
 func _apply_drag(vel : Vector2, delta : float) -> Vector2:
@@ -49,14 +79,15 @@ func _check_damage_collisions(collision : KinematicCollision2D) -> void:
 					player.deal_knockback(kb)
 
 ## Determines if the player is on the ground via raycasting. Only collides with collision layer 1.
-func ray_is_on_floor() -> Dictionary:
+func ray_is_on_floor(length:float = 3) -> Dictionary:
 	var space_state := get_world_2d().direct_space_state
 	
 	var parameters := PhysicsRayQueryParameters2D.new()
 	parameters.from = global_position
 	
 	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
-	parameters.to = parameters.from + Vector2.DOWN * shape.shape.get_rect().size.y
+	parameters.to = parameters.from + get_player().get_gravity_direction() * (shape.shape.get_rect().size.y/2 + shape.position.y)
+	parameters.to = parameters.to.normalized()*length + parameters.to # Add unit vector
 	
 	parameters.collision_mask = 1
 	var result := space_state.intersect_ray(parameters)
@@ -66,6 +97,11 @@ func ray_is_on_floor() -> Dictionary:
 func _physics_process(delta: float) -> void:
 	var player : Player = get_player()
 	var sword := player.get_player_sword()
+	var gravity_direction := get_player().get_gravity_direction()
+	
+	# Adjust for gravity
+	up_direction = -gravity_direction
+	shape.position = initial_shape_pos * gravity_direction
 	
 	# Reset velocity to prevent it staying and colliding after respawn.
 	if not player.is_alive(): velocity = Vector2.ZERO ; return
@@ -86,15 +122,24 @@ func _physics_process(delta: float) -> void:
 				velocity += sword.get_push()  
 			else: # Only apply gravity if the sword isn't pushing
 				velocity.y += player.get_gravity()*delta
-				
+			
+			# Account for sword intertia
+			var collision := player.get_last_collision()
+			if collision:
+				if collision.get_collider() is AnimatableBody2D:
+					global_position += collision.get_collider().constant_linear_velocity
+			
 			# Slow the player rapidly if beyond the sword's reach
 			if (global_position + velocity*delta).distance_to(sword.get_tip_global_position()) > player.get_max_distance()*player.get_soft_limit_distance_coef():
 				
-				velocity *= pow(player.get_soft_limit_drag(),delta)
+				var soft_limit_drag := player.get_soft_limit_drag()
 				
 				if sword.is_on_cable():
 					var dir := global_position.direction_to(sword.get_tip_global_position())
+					soft_limit_drag *= 0.2
 					velocity += dir*global_position.distance_squared_to(sword.get_tip_global_position())*0.005
+				
+				velocity *= pow(soft_limit_drag,delta)
 			
 			# Apply drag
 			velocity = _apply_drag(velocity, delta)
@@ -102,9 +147,37 @@ func _physics_process(delta: float) -> void:
 			# Bounce
 			var current_vel : Vector2 = velocity
 			_check_damage_collisions(get_last_slide_collision())
+			velocity += _temp_velocity # Apply temp_velocity for the frame
 			if move_and_slide():
-				if is_on_floor():
+				velocity -= _temp_velocity
+				# NOTE: Not dealing with subtracting temp_velocity here; there's no good way
+				# to return the velocity to it's initial state, so I just hope this
+				# doesn't cause problems.
+				if is_on_floor(): # Hit ground
+					
+					# Determine "strength" of ground hit
+					# Dot product will equal the amount of velocity traveling in the direction
+					# gravity_direction, thus using it we can get the "fall speed"
+					var dot := gravity_direction.dot(current_vel)
+					var ground_hit_perc : float = clampf(((dot-ground_hit_min)/(ground_hit_max)), 0, 1.0)
+					
+					# Play ground hit sound
+					if ground_hit_perc > 0.2:
+						var new_sound : SoundData = ground_hit_sound.duplicate()
+						new_sound.bus = &"SFX"
+						new_sound.volume_linear = pow(ground_hit_sound.volume_linear * ground_hit_perc, 2)+0.1
+						new_sound.pitch_scale = 1-(ground_hit_perc/5)
+						Sfx.play_sound_2d(new_sound, global_position, false)
+						
+					# Shake camera
+					GameCamera.set_current_camera_shake(get_viewport(), ground_hit_perc*0.1)
+					
+					# Bounce
 					velocity.y = (-current_vel.y - get_last_slide_collision().get_remainder().y) * player.get_bounciness()
+			else: # No collision
+				velocity -= _temp_velocity
+			
+			_temp_velocity = Vector2.ZERO
 			
 		#endregion
 		
@@ -122,11 +195,9 @@ func _physics_process(delta: float) -> void:
 		#region Noclip
 		player.MovementMode.NOCLIP:
 			velocity = Vector2.ZERO
-			if player.is_charging_ability():
+			if Input.is_action_pressed("use"):
 				var body_pos := player.get_player_body().global_position
 				velocity = body_pos.direction_to(get_global_mouse_position())*body_pos.distance_to(get_global_mouse_position())*10
 			move_and_slide()
 		#endregion
-
-func get_sprite() -> Variant:
-	return $Sprite2D
+#endregion

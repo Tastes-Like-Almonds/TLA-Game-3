@@ -25,6 +25,10 @@ var id : String
 ## The remaining time on the timer.
 var time_left := timer
 
+## If true, the player will automatically delete the property when they respawn.
+## This does not change functionality within the PropertyModifier class.
+var reset_on_respawn : bool = true
+
 ## If true, the modifier is still active. Whether or not it is active has no impact on function.
 var active : bool = true
 

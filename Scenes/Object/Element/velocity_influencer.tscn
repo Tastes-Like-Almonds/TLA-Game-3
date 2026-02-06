@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cks0qs8xg7v0r"]
+
+[ext_resource type="Script" uid="uid://d4kguwctggr5r" path="res://Scripts/Object/Element/velocity_influencer.gd" id="1_2xv3s"]
+
+[sub_resource type="Curve2D" id="Curve2D_1582k"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -3828, 2715, 0, 0, 0, 0, -2759, 2090)
+}
+point_count = 2
+
+[node name="VelocityInfluencer" type="Path2D"]
+curve = SubResource("Curve2D_1582k")
+script = ExtResource("1_2xv3s")

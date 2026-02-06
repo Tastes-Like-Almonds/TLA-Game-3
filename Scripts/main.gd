@@ -12,6 +12,10 @@ func get_dev_panel() -> DevPanel:
 func _ready() -> void:
 	Globals.main = self
 	LevelLoader.load_level(autoload_level, self)
+	
+	# The below commented-out code is used for multiplayer testing, which will not be done for a while.
+	# It may never get added, but it's here in case it does.
+	
 	#var args := OS.get_cmdline_args()
 	#var user_type := ""
 	#for arg in args:
