@@ -260,5 +260,5 @@ position = Vector2(-2901, -328)
 position = Vector2(-3289, -522)
 
 [node name="LevelTransition" parent="." instance=ExtResource("13_cvvtj")]
-position = Vector2(-4241, 2721)
+position = Vector2(-4528, 2739)
 load_level = "res://Scenes/Level/Tutorial.tscn"
