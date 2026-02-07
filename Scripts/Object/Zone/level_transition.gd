@@ -9,6 +9,9 @@ var valid_level:bool = false
 ## If level is currently switching
 var transitioning:bool = false
 
+func call_loader() -> void:
+	LevelLoader.load_level(load_level, Globals.get_level_load_node())
+
 ## Load load_level via LevelLoader.gd.
 func transition() -> void:
 	print("Transition.")
@@ -18,8 +21,9 @@ func transition() -> void:
 	
 	# NOTE: LevelConfig is not passed here, so if this is used in the future
 	# be sure to change it probably via finding it in level.gd.
-	LevelLoader.load_level(load_level, Globals.get_level_load_node())
-
+	#Globals.main.transiton_overlay_player.play("fade_to_black")
+	Globals.main.transiton_overlay_player.animation_finished.connect(call_loader)
+	SignalBus.LevelPathLoaded.connect(func(_x:Variant) -> void: Globals.main.transiton_overlay_player.play("fade_to_black"))
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is PlayerBody:
