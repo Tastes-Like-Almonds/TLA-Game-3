@@ -15,3 +15,8 @@ func hit_effect(player : Player) -> void:
 		
 	else:
 		player.remove_modifier_by_id("gravity_orb", "gravity")
+
+func _ready() -> void:
+	super()
+	if not reverse:
+		$Visual/GPUParticles2D2.process_material.direction.y = 1

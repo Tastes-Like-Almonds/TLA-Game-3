@@ -8,6 +8,10 @@ var sound_parent : Node
 ## Gets an audiostream from the given SoundData. Returns null if not a stream or invalid.
 func get_stream_from_sound(sound : SoundData) -> AudioStream:
 	
+	if not sound:
+		push_warning("Attempt to get stream from null sound!")
+		return null
+	
 	var stream := load(sound.sound_string)
 	
 	if not stream or (stream is not AudioStream): return null
@@ -27,6 +31,7 @@ func play_sound_2d(sound:SoundData, pos:Vector2, override_previous:bool = true) 
 			if child.get_meta("sound_path") == sound.sound_string: child.queue_free()
 	
 	var stream_player := AudioStreamPlayer2D.new()
+	stream_player.bus = sound.bus
 	stream_player.stream = stream
 	stream_player.volume_linear = sound.volume_linear
 	stream_player.pitch_scale = sound.pitch_scale
@@ -51,6 +56,7 @@ func play_sound(sound:SoundData, override_previous:bool = true) -> void:
 			if child.get_meta("sound_path") == sound.sound_string: child.queue_free()
 	
 	var stream_player := AudioStreamPlayer.new()
+	stream_player.bus = sound.bus
 	stream_player.stream = stream
 	stream_player.volume_linear = sound.volume_linear
 	stream_player.pitch_scale = sound.pitch_scale

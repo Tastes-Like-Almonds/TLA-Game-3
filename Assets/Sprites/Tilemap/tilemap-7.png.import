@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nbfk28dvfggy"
-path="res://.godot/imported/Bat_spritesheet.png-737f22ca0f5cea0a312b8e9d049273d4.ctex"
+uid="uid://bie3wjk0sovv6"
+path="res://.godot/imported/tilemap-7.png-5ffe81860e7ab5e4d6d4ef21634bfce3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Placeholder/Bat_spritesheet.png"
-dest_files=["res://.godot/imported/Bat_spritesheet.png-737f22ca0f5cea0a312b8e9d049273d4.ctex"]
+source_file="res://Assets/Sprites/Tilemap/tilemap-7.png"
+dest_files=["res://.godot/imported/tilemap-7.png-5ffe81860e7ab5e4d6d4ef21634bfce3.ctex"]
 
 [params]
 

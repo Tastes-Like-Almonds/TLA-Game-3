@@ -176,6 +176,12 @@ func update_visual(delta : float) -> void: # TODO Replace by pulling origin and 
 func set_player(p : Player) -> void:
 	player = p
 
+func get_texture() -> Texture2D:
+	var sprite : Variant = _get_sprite()
+	if (sprite is Sprite2D) or (sprite is AnimatedSprite2D):
+		return sprite.texture
+	return null
+
 func _ready() -> void:
 	
 	# Create the dragging sound

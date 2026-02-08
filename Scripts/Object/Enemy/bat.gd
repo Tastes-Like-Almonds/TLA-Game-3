@@ -11,8 +11,6 @@ func _kill() -> void:
 
 func _movement(delta : float) -> void:
 	
-	collision_shape.disabled = respawning
-	
 	velocity *= pow(0.2, delta)
 	
 	movement_cooldown -= delta
@@ -40,7 +38,12 @@ func _movement(delta : float) -> void:
 		var result := move_and_collide(movement)
 		if result:
 			move_and_collide(movement.slide(result.get_normal()))
-		on_hit(result)
+			if result.get_collider() is PlayerBody:
+				on_hit(result.get_collider())
+
+func _physics_process(delta: float) -> void:
+	super(delta)
+	collision_shape.disabled = respawning
 
 func _ready() -> void:
 	super()

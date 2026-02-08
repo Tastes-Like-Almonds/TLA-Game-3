@@ -89,5 +89,4 @@ texture = SubResource("GradientTexture2D_6d67o")
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 shape = SubResource("RectangleShape2D_4bmev")

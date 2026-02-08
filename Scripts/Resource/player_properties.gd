@@ -12,7 +12,7 @@ class_name PlayerProperties extends Resource
 @export_group("Health and Damage")
 
 ## The lives the player will start with after spawning. Altering mid-game does nothing.
-@export var max_lives : int = 3
+@export var max_lives : int = 300
 
 ## Maximum health of the player. Does not regenerate.
 @export var max_health : float = 10.0
@@ -26,23 +26,27 @@ class_name PlayerProperties extends Resource
 ## The base damage of the sword.
 @export var sword_damage : float = 6
 
-## The speed of the sword required to reach max damage.
-@export var sword_speed_damage : float = 3000.0
+## The shortest amount of time needed to reach maximum damage; higher values will require
+## longer swings to deal max damage.
+@export var max_damage_time : float = 0.5
 
 # --- #
 @export_group("Sword")
 
+## Max knockback dealt to enemies on hit
+@export var knockback : float = 1600.0
+
 ## Speed at which the sword moves. This also affects its strength of pushing.
-@export var sword_speed : float = 6000
+@export var sword_speed : float = 3000
 
 ## The maximum distance from the sword tip to the player (Soft limit)
-@export var max_distance : float = 140.0
+@export var max_distance : float = 160.0
 
 ## Minimum distance between the sword tip and player
-@export var min_distance : float = 10.0
+@export var min_distance : float = 30.0
 
 ## The strength of the player; the sword flings more when higher.
-@export_range(0,5, 0.1) var strength : float = 1.25
+@export_range(0,5, 0.1) var strength : float = 4.5
 
 ## The strength of the player when in player orbit mode.
 @export var player_orbit_strength : float = 10.0
@@ -57,7 +61,7 @@ class_name PlayerProperties extends Resource
 @export_group("Inventory")
 
 ## The max number of items which the player can hold.
-@export_range(1,10, 1) var max_equip : int = 1
+@export_range(1,10, 1) var max_equip : int = 2
 
 ## If true, the player will automatically equip picked up items. This happens by default
 ## if the player's max weapons value is reached.

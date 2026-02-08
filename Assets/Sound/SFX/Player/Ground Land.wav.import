@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dub8yo00fqnht"
+path="res://.godot/imported/Ground Land.wav-570d762e6ac9d7fc901f6c034a3b7e3c.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Player/Ground Land.wav"
+dest_files=["res://.godot/imported/Ground Land.wav-570d762e6ac9d7fc901f6c034a3b7e3c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
