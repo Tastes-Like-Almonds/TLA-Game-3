@@ -27,6 +27,7 @@ func _movement(delta : float) -> void:
 			target_point = Vector2(cos(randf()*2*PI), sin(randf()*2*PI))*100.0 + global_position
 			var nearest_player : Player = Helper.get_closest_player(global_position, aggro_range)
 			if nearest_player:
+				alert()
 				target_player = nearest_player
 	
 	var move_speed := movement_speed

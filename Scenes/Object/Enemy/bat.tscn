@@ -102,3 +102,6 @@ process_material = SubResource("ParticleProcessMaterial_tuwcp")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 top_level = true
 rect = Rect2(-32, -32, 60, 60)
+
+[node name="AlertPos" type="Node2D" parent="."]
+position = Vector2(-1, -30)

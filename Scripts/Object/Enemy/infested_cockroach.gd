@@ -32,7 +32,7 @@ func _movement(delta : float) -> void:
 			target_point = global_position + Vector2(randf_range(-300,300), 0) # Random pos if no players
 			var nearest_player : Player = Helper.get_closest_player(global_position, aggro_range)
 			if nearest_player:
-				play_alert_sound()
+				alert()
 				target_player = nearest_player
 	
 	if not target_player:

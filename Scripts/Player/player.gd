@@ -36,6 +36,7 @@ var property_modifiers : Dictionary[String, Array]
 
 @export var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0)
 @export var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0)
+@export var refresh_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Refresh Short.wav", 0.7, 1.0)
 
 #endregion
 
@@ -473,6 +474,8 @@ func set_movement_mode(mode : MovementMode) -> void:
 ## use their weapon's ability again
 func reset_weapon_use() -> void:
 	if current_weapon:
+		if !current_weapon.can_use:
+			Sfx.play_sound(refresh_sound)
 		current_weapon.can_use = true
 
 ## Teleport the player and sword to the target location.
