@@ -28,7 +28,7 @@ class_name PlayerProperties extends Resource
 
 ## The shortest amount of time needed to reach maximum damage; higher values will require
 ## longer swings to deal max damage.
-@export var max_damage_time : float = 0.5
+@export var max_damage_time : float = 0.3
 
 # --- #
 @export_group("Sword")
