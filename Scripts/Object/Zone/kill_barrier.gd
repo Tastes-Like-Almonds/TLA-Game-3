@@ -17,6 +17,9 @@ func _ready() -> void:
 	
 	# Initialize killed array
 	for link in links:
+		if !is_instance_valid(link):
+			push_warning("No links set for kill barrier!")
+			return
 		killed.append(false)
 		link.Killed.connect(func() -> void: _on_death(link))
 	

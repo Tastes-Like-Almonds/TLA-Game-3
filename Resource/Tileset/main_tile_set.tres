@@ -1,7 +1,8 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://cn7nyyyrdxx1"]
+[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://cn7nyyyrdxx1"]
 
 [ext_resource type="Texture2D" uid="uid://25ly160jnq2l" path="res://Assets/Sprites/Placeholder/tileset_test.png" id="1_un331"]
 [ext_resource type="Texture2D" uid="uid://5ket24ouegjf" path="res://Assets/Sprites/Tilemap/recolor2.png" id="2_3py6v"]
+[ext_resource type="PackedScene" uid="uid://ryavy613ragg" path="res://Scenes/Object/saw.tscn" id="3_s7qww"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3py6v"]
 texture = ExtResource("1_un331")
@@ -1060,6 +1061,10 @@ texture = ExtResource("2_3py6v")
 15:15/0 = 0
 15:15/0/custom_data_2 = 0.6
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_o3gwr"]
+resource_name = "Objects"
+scenes/1/scene = ExtResource("3_s7qww")
+
 [resource]
 physics_layer_0/collision_layer = 1
 terrain_set_0/mode = 0
@@ -1077,3 +1082,4 @@ custom_data_layer_2/name = "sword_friction"
 custom_data_layer_2/type = 3
 sources/0 = SubResource("TileSetAtlasSource_3py6v")
 sources/1 = SubResource("TileSetAtlasSource_s7qww")
+sources/2 = SubResource("TileSetScenesCollectionSource_o3gwr")
