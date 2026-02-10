@@ -56,6 +56,9 @@ func _setup_ui() -> void:
 	current_ui = load(level_ui_path).instantiate()
 	add_child(current_ui)
 
+func hide_ui() -> void:
+	current_ui.hide()
+
 ## Syncronize displayed information (items, health, etc.) with a target player.
 ## Should be called whenever a new UI is created.
 func register_ui(player : Player) -> void:

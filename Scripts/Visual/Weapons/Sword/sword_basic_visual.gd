@@ -19,6 +19,8 @@ func update_visual(delta : float) -> void:
 	
 	if is_instance_valid(line2D):
 		
+		line2D.modulate.a = max(line2D.modulate.a-delta, pow(player.get_blade_damage_perc(),2)*0.4)
+		
 		# The line2D points only add after a given interval as to avoid choppiness which appears
 		# with too many line segments.
 		if current_wait_delay > point_wait_delay:
@@ -33,7 +35,7 @@ func update_visual(delta : float) -> void:
 			line2D.add_point(dest + (dest.direction_to(origin)*sword_length/2))
 		
 		
-	$Sprite2D/GPUParticles2D.modulate.a = lerpf($Sprite2D/GPUParticles2D.modulate.a, player.get_weapon_charge_perc(), 0.2)
+	$Sprite2D/GPUParticles2D.modulate.a = lerpf($Sprite2D/GPUParticles2D.modulate.a, player.get_blade_damage_perc(), 0.2)
 
 func _ready() -> void:
 	super()

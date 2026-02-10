@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://cyemvticywuop"]
+[gd_scene load_steps=29 format=4 uid="uid://cyemvticywuop"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_26fll"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_c8ny0"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://c32ukwj524sxi" path="res://Scenes/Object/Zone/kill_barrier.tscn" id="11_t7mbg"]
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="12_3j5by"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="13_bywm7"]
+[ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="14_26fll"]
 
 [sub_resource type="Gradient" id="Gradient_bn6cp"]
 offsets = PackedFloat32Array(1)
@@ -71,6 +72,13 @@ gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_max = 1.5
 alpha_curve = SubResource("CurveTexture_bywm7")
+
+[sub_resource type="Gradient" id="Gradient_26fll"]
+offsets = PackedFloat32Array(0.42731276, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c8ny0"]
+gradient = SubResource("Gradient_26fll")
 
 [node name="DevLevel2" type="Node2D"]
 script = ExtResource("1_26fll")
@@ -451,19 +459,6 @@ text = "Don't Slip."
 fit_content = true
 horizontal_alignment = 1
 
-[node name="ProximityText11" parent="Words" instance=ExtResource("7_up8s3")]
-offset_left = -356.0
-offset_top = -1173.0
-offset_right = -12.0
-offset_bottom = -1039.0
-theme_override_colors/font_shadow_color = Color(0.24913332, 0.37, 0.24049999, 0.14117648)
-theme_override_constants/shadow_outline_size = 10
-theme_override_fonts/normal_font = ExtResource("8_t7mbg")
-theme_override_font_sizes/normal_font_size = 66
-text = "*Insert Win"
-fit_content = true
-horizontal_alignment = 1
-
 [node name="Bat" parent="." instance=ExtResource("7_2pxma")]
 position = Vector2(-8275, -1057)
 health = 5.5
@@ -548,3 +543,13 @@ visibility_rect = Rect2(0, -5000, 15000, 20000)
 process_material = SubResource("ParticleProcessMaterial_26fll")
 
 [node name="Gutter2Env" parent="." instance=ExtResource("13_bywm7")]
+
+[node name="LevelTransition" parent="." instance=ExtResource("14_26fll")]
+position = Vector2(-102, -1242)
+scale = Vector2(39.164894, 15.791585)
+load_level = "res://Scenes/Level/Dash.tscn"
+
+[node name="Fadeout" type="Sprite2D" parent="."]
+position = Vector2(-398, -1244)
+scale = Vector2(-19.973055, 10.361957)
+texture = SubResource("GradientTexture2D_c8ny0")

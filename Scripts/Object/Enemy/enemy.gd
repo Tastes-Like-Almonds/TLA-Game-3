@@ -3,6 +3,8 @@
 
 signal Killed
 
+@onready var alert_pos : Node2D = null
+
 # --- #
 @export_group("Basic Data (Must be set)")
 ## Sprite2D / AnimatedSprite2D of the enemy.
@@ -183,7 +185,9 @@ func on_hit(collider : PhysicsBody2D) -> void:
 #endregion
 
 #region Sound
-func play_alert_sound() -> void:
+func alert() -> void:
+	if alert_pos:
+		TextDisplay.damage_display(get_parent(), alert_pos.global_position, "!", Vector2.UP, Color.RED, 2, 2, 0.1)
 	if alert_sound:
 		Sfx.play_sound_2d(alert_sound, global_position, false)
 	else:
@@ -224,4 +228,7 @@ func _ready() -> void:
 	if spawn_dead:
 		respawning = true
 		respawn_cooldown = respawn_time
+	
+	if has_node("AlertPos"):
+		alert_pos = get_node("AlertPos")
 #endregion

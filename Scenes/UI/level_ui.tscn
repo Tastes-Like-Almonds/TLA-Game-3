@@ -48,9 +48,11 @@ fill_mode = 4
 nine_patch_stretch = true
 texture_under = ExtResource("2_pkx18")
 texture_progress = ExtResource("2_pkx18")
-tint_under = Color(1, 1, 1, 0.2901961)
+tint_under = Color(1, 1, 1, 0.16470589)
+tint_progress = Color(1, 1, 1, 0.8117647)
 
 [node name="Label" type="Label" parent="Control/Health/HealthBar"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
