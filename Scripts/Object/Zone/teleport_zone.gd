@@ -13,11 +13,20 @@ extends Area2D
 ## upon a teleport.
 @export var property_respawn_reset : bool = true
 
+## If >0, will deal damage to the player upon teleporting equal to this amount.
+@export var damage: float = 0
+
 func _on_body_entered(body: Node2D) -> void:
 	if body is PlayerBody:
 		var player : Player = body.get_player()
 		
 		if not is_instance_valid(player): return
+	
+		if damage > 0:
+			player.deal_damage(damage)
+			if player.dead:
+				return # Respawn normally if the player dies.
+				
 		
 		if teleport_to_spawn:
 			player.teleport_to(player.respawn_pos)
@@ -30,4 +39,3 @@ func _on_body_entered(body: Node2D) -> void:
 		
 		if cancel_velocity:
 			player.set_velocity(Vector2.ZERO)
-		
