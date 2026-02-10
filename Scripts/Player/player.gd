@@ -538,6 +538,10 @@ func _death() -> void:
 func kill() -> void:
 	_death()
 
+## Returns true if the player is currently invincible, i.e. has just been hit.
+func iframes_active() -> bool:
+	return last_hit_time < get_invincibility_time()
+
 ## Deal amt of damage to the player, killing them if reaching zero. Returns true if the damage was
 ## successfully dealt.
 func deal_damage(amt : float) -> bool:
