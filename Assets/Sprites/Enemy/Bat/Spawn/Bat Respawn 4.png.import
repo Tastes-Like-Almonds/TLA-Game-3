@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eod30jdaxbai"
-path="res://.godot/imported/Recolormap1.png-14665ea715aaf3732b0fbd8fb88f17dd.ctex"
+uid="uid://dbpjuw2tgcxp7"
+path="res://.godot/imported/Bat Respawn 4.png-b98a0246b3b55fb880cbbc0e4d9cf08c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Player/Recolormap1.png"
-dest_files=["res://.godot/imported/Recolormap1.png-14665ea715aaf3732b0fbd8fb88f17dd.ctex"]
+source_file="res://Assets/Sprites/Enemy/Bat/Spawn/Bat Respawn 4.png"
+dest_files=["res://.godot/imported/Bat Respawn 4.png-b98a0246b3b55fb880cbbc0e4d9cf08c.ctex"]
 
 [params]
 

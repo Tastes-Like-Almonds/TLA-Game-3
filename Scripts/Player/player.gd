@@ -55,7 +55,12 @@ func get_modified_property(property: String) -> Variant:
 				if item is PropertyModifier:
 					arr.append(item)
 
-	return properties.get_modified(property, arr)
+	# Prevent infinite recursion (size_scale doesn't need it to be passed)
+	var size_scale : float = 1
+	if property != "size_scale":
+		size_scale = get_size_scale()
+	
+	return properties.get_modified(property, arr, size_scale)
 
 #region Properties
 ## The amount of time the player has triggered their M1 ability
@@ -583,6 +588,8 @@ func get_modifier_ids(stat:String) -> Array[String]:
 ## Add a property modifier to one of the player's stats.
 func add_modifier(mod : PropertyModifier, stat:String) -> void:
 	
+	var last_size : float = get_size_scale()
+	
 	if stat not in property_modifiers:
 		property_modifiers[stat] = [mod]
 	
@@ -603,6 +610,9 @@ func add_modifier(mod : PropertyModifier, stat:String) -> void:
 				color = Color.PURPLE
 		
 		modifier_display.create_display(mod.id, mod.timer, color)
+	
+	if stat == "size_scale":
+		teleport_to(get_player_body().global_position/(get_size_scale()/last_size))
 
 ## Remove a target modifier by its id.
 func remove_modifier_by_id(id : String, stat:String) -> void:
@@ -617,7 +627,10 @@ func _update_modifiers(delta : float) -> void:
 		for value : PropertyModifier in property_modifiers[key]:
 			value.update(delta)
 			if not value.is_active():
+				var last_size : float = get_size_scale()
 				property_modifiers[key].erase(value)
+				if key == "size_scale":
+					teleport_to(get_player_body().global_position/(get_size_scale()/last_size))
 
 #endregion
 

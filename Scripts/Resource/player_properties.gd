@@ -110,7 +110,7 @@ static func _get_modifiers_of_type(type : PropertyModifier.ModiferType, modifier
 	return all
 
 ## Gets the target property, accounting for modifiers.
-func get_modified(property : String , modifiers : Array[PropertyModifier]) -> Variant:
+func get_modified(property : String , modifiers : Array[PropertyModifier], scale_override:float=size_scale) -> Variant:
 	var p : Variant = get(property)
 	
 	for type_key:String in PropertyModifier.ModiferType.keys():
@@ -119,15 +119,17 @@ func get_modified(property : String , modifiers : Array[PropertyModifier]) -> Va
 		if p is float:
 			p = PropertyModifier.apply_all(typed_mods, p)
 	
+	# Yes, this is ugly. I didn't really consider size scale when making this system though, so
+	# this is the best we will get.
 	if property == "max_distance":
-		p*=size_scale
-	if property == "min_distance":
-		p*=size_scale
-	if property == "gravity":
-		p*=size_scale
-	if property == "sword_speed":
-		p*=size_scale
-	if property == "cable_gravity":
-		p*=size_scale
+		p*=scale_override
+	elif property == "min_distance":
+		p*=scale_override
+	elif property == "gravity":
+		p*=scale_override
+	elif property == "sword_speed":
+		p*=scale_override
+	elif property == "cable_gravity":
+		p*=scale_override
 	
 	return p

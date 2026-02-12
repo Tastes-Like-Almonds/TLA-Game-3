@@ -9,7 +9,14 @@ func _kill() -> void:
 		if !$GPUParticles2D.is_connected("finished", queue_free):
 			$GPUParticles2D.finished.connect(queue_free)
 
+func _respawn() -> void:
+	super()
+	sprite.play("spawn")
+
 func _movement(delta : float) -> void:
+	
+	if sprite.animation == &"spawn" and sprite.is_playing():
+		return
 	
 	velocity *= pow(0.2, delta)
 	
@@ -33,6 +40,9 @@ func _movement(delta : float) -> void:
 	var move_speed := movement_speed
 	if global_position.distance_to(target_point) < movement_speed*delta:
 		move_speed = global_position.distance_to(target_point)
+
+	if sprite.animation != "default":
+		sprite.play("default")
 
 	if target_point:
 		var movement := global_position.direction_to(target_point)*move_speed*delta + velocity*delta

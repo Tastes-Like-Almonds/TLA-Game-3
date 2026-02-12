@@ -12,7 +12,14 @@ func _kill() -> void:
 		if !$GPUParticles2D.is_connected("finished", queue_free):
 			$GPUParticles2D.finished.connect(queue_free)
 
+func _respawn() -> void:
+	super()
+	sprite.play("spawn")
+	#sprite.animation_finished.connect(func(_x:Variant) -> void: respawning = false)
+
 func _movement(delta : float) -> void:
+	if sprite.animation == &"spawn" and sprite.is_playing():
+		return
 	
 	velocity *= pow(0.2, delta) # Drag
 	
@@ -57,6 +64,10 @@ func _movement(delta : float) -> void:
 				velocity.y = -800
 		
 		#print(velocity.y)
+		
+		if movement != Vector2.ZERO:
+			if sprite.animation != "default":
+				sprite.play("default")
 		
 		#var og_pos := global_position
 		var result := move_and_collide((movement+velocity)*delta)

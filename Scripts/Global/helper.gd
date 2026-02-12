@@ -70,20 +70,17 @@ func is_angle_roughly_vertical(ang : float, max_offset : float = PI/4) -> bool:
 ## Returns the slide (1 - friction) based upon a collision, returning default if not applicable.
 ## This is used for calculating how much friction different tiles have, though may have
 ## other uses in the future.
-func get_slide_from_collision(collision : KinematicCollision2D, default : float = 0.6) -> float:
+func get_slide_from_collision(collision : KinematicCollision2D, default : float = 0.9, offset:Vector2=Vector2.ZERO) -> float:
 	if not collision: return 0.0
 	var collider := collision.get_collider()
-	
 	if collider is TileMapLayer:
-						
 		collider = collider as TileMapLayer
 		
-		var coords : Vector2i = collider.local_to_map(collider.to_local(collision.get_position()))
+		var coords : Vector2i = collider.local_to_map(collider.to_local(collision.get_position()+offset))
 		var tile_data : TileData = collider.get_cell_tile_data(coords)
 		
 		if tile_data:
 			return 1 - tile_data.get_custom_data("friction")
-
 	return default
 
 ## Same as get_slide_from_collision, but returns the "sword_friction" property of the given tile.

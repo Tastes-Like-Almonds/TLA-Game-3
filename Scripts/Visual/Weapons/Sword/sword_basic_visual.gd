@@ -21,18 +21,20 @@ func update_visual(delta : float) -> void:
 		
 		line2D.modulate.a = max(line2D.modulate.a-delta, pow(player.get_blade_damage_perc(),2)*0.4)
 		
+		line2D.width = sword_length*player.get_size_scale()
+		
 		# The line2D points only add after a given interval as to avoid choppiness which appears
 		# with too many line segments.
 		if current_wait_delay > point_wait_delay:
 			current_wait_delay = 0.0
-			line2D.add_point(dest + (dest.direction_to(origin)*sword_length/2))
+			line2D.add_point(dest + (dest.direction_to(origin)*line2D.width/2))
 			if line2D.get_point_count() > 10:
 				line2D.remove_point(0)
 		else:
 			# Update the last point as to sync with the current sword position
 			if line2D.get_point_count() == 0: return
 			line2D.remove_point(line2D.get_point_count()-1)
-			line2D.add_point(dest + (dest.direction_to(origin)*sword_length/2))
+			line2D.add_point(dest + (dest.direction_to(origin)*line2D.width/2))
 		
 		
 	$Sprite2D/GPUParticles2D.modulate.a = lerpf($Sprite2D/GPUParticles2D.modulate.a, player.get_blade_damage_perc(), 0.2)

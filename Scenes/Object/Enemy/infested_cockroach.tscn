@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://sye5w3jy5qfu"]
+[gd_scene load_steps=26 format=3 uid="uid://sye5w3jy5qfu"]
 
 [ext_resource type="Script" uid="uid://d0bvnnccjcow" path="res://Scripts/Object/Enemy/infested_cockroach.gd" id="1_uk48t"]
 [ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_2lw46"]
@@ -6,9 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://lkllehtk716b" path="res://Assets/Sprites/Enemy/Infected Cockroach/Infected Cockroach 1.png" id="4_upkqw"]
 [ext_resource type="Texture2D" uid="uid://dshdjrhk84t04" path="res://Assets/Sprites/Enemy/Infected Cockroach/Infected Cockroach 2.png" id="5_uk48t"]
 [ext_resource type="Texture2D" uid="uid://dsti1miel6vmp" path="res://Assets/Sprites/Enemy/Infected Cockroach/Infected Cockroach 3.png" id="6_2lw46"]
+[ext_resource type="Texture2D" uid="uid://cmqhr145cvv6" path="res://Assets/Sprites/Enemy/Infected Cockroach/Spawn/Cockroach Respawn 1.png" id="7_isip5"]
 [ext_resource type="Script" uid="uid://bt4s0eko6axeb" path="res://Scripts/Object/Enemy/Component/hitbox.gd" id="7_uk48t"]
 [ext_resource type="Script" uid="uid://c8qvuoapglubu" path="res://Scripts/Object/Enemy/Component/damage_area.gd" id="8_2lw46"]
+[ext_resource type="Texture2D" uid="uid://b4oknl7cjj841" path="res://Assets/Sprites/Enemy/Infected Cockroach/Spawn/Cockroach Respawn 2.png" id="8_pc8bk"]
+[ext_resource type="Texture2D" uid="uid://bx73y5amn8x5j" path="res://Assets/Sprites/Enemy/Infected Cockroach/Spawn/Cockroach Respawn 3.png" id="9_4fnbn"]
 [ext_resource type="AudioStream" uid="uid://do1lx75avuihy" path="res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Walk Edit 1 Export 1(3).mp3" id="9_fokgr"]
+[ext_resource type="Texture2D" uid="uid://c67e7kjesntee" path="res://Assets/Sprites/Enemy/Infected Cockroach/Spawn/Cockroach Respawn 4.png" id="10_r58un"]
+[ext_resource type="Texture2D" uid="uid://bomkondrhs6et" path="res://Assets/Sprites/Enemy/Infected Cockroach/Spawn/Cockroach Respawn 5.png" id="11_vr0m1"]
+[ext_resource type="Texture2D" uid="uid://bhbjrn8n2o0kh" path="res://Assets/Sprites/Enemy/Infected Cockroach/Spawn/Cockroach Respawn 6.png" id="12_om3bv"]
+[ext_resource type="Texture2D" uid="uid://coh8w1g66qime" path="res://Assets/Sprites/Enemy/Infected Cockroach/Spawn/Cockroach Respawn 7.png" id="13_oq6ra"]
 
 [sub_resource type="Resource" id="Resource_2lw46"]
 script = ExtResource("2_2lw46")
@@ -46,6 +53,32 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_isip5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_pc8bk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_4fnbn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_r58un")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_vr0m1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_om3bv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_oq6ra")
+}],
+"loop": false,
+"name": &"spawn",
+"speed": 10.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_6un6e"]
@@ -82,6 +115,7 @@ hit_sound = SubResource("Resource_2lw46")
 death_sound = SubResource("Resource_fokgr")
 alert_sound = SubResource("Resource_paiv5")
 health = 10.0
+max_hit_kb = 1000.0
 knockback = 500.0
 aggro_range = 800.0
 
@@ -94,7 +128,7 @@ material = ExtResource("3_fokgr")
 position = Vector2(-2, -1.0000038)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_v4fcd")
-frame_progress = 0.59774065
+frame_progress = 0.30815852
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(2, -57)

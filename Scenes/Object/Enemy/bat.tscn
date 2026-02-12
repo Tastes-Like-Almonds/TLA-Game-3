@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d3n0ld0lgrg4q"]
+[gd_scene load_steps=23 format=3 uid="uid://d3n0ld0lgrg4q"]
 
 [ext_resource type="Script" uid="uid://ko4prto8gjvb" path="res://Scripts/Object/Enemy/bat.gd" id="1_t36nw"]
 [ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="2_gnly0"]
@@ -7,6 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://dx6swf5yuhjfp" path="res://Assets/Sprites/Enemy/Bat/Flying Bat 2.png" id="5_4l3wa"]
 [ext_resource type="Texture2D" uid="uid://br5gohrjgiv5j" path="res://Assets/Sprites/Enemy/Bat/Flying Bat 3.png" id="6_t7lfu"]
 [ext_resource type="Texture2D" uid="uid://6sujdcdvixie" path="res://Assets/Sprites/Enemy/Bat/Flying Bat 4.png" id="7_v4fcd"]
+[ext_resource type="Texture2D" uid="uid://cw8tur3xo2erk" path="res://Assets/Sprites/Enemy/Bat/Spawn/Bat Respawn 1.png" id="8_mbuds"]
+[ext_resource type="Texture2D" uid="uid://m6f55vbvlyfc" path="res://Assets/Sprites/Enemy/Bat/Spawn/Bat Respawn 2.png" id="9_cwhad"]
+[ext_resource type="Texture2D" uid="uid://p6qrpdx0ec2v" path="res://Assets/Sprites/Enemy/Bat/Spawn/Bat Respawn 3.png" id="10_m3qet"]
+[ext_resource type="Texture2D" uid="uid://dbpjuw2tgcxp7" path="res://Assets/Sprites/Enemy/Bat/Spawn/Bat Respawn 4.png" id="11_hul3y"]
+[ext_resource type="Texture2D" uid="uid://s3rqajcudw72" path="res://Assets/Sprites/Enemy/Bat/Spawn/Bat Respawn 5.png" id="12_xstc8"]
+[ext_resource type="Texture2D" uid="uid://d07m10ie7n47m" path="res://Assets/Sprites/Enemy/Bat/Spawn/Bat Respawn 6.png" id="13_j5h2m"]
+[ext_resource type="Texture2D" uid="uid://bs60vo4b30opi" path="res://Assets/Sprites/Enemy/Bat/Spawn/Bat Respawn 7.png" id="14_3ijxq"]
 
 [sub_resource type="Resource" id="Resource_dhqts"]
 script = ExtResource("2_tuwcp")
@@ -47,6 +54,32 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_mbuds")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_cwhad")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_m3qet")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hul3y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_xstc8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_j5h2m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_3ijxq")
+}],
+"loop": false,
+"name": &"spawn",
+"speed": 10.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_6un6e"]
@@ -79,6 +112,7 @@ hit_sound = SubResource("Resource_dhqts")
 death_sound = SubResource("Resource_omse7")
 alert_sound = SubResource("Resource_22w8g")
 health = 6.0
+max_hit_kb = 1000.0
 respawn = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -88,7 +122,9 @@ shape = SubResource("RectangleShape2D_o6sep")
 material = ExtResource("2_gnly0")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_v4fcd")
-frame_progress = 0.80774915
+animation = &"spawn"
+frame = 6
+frame_progress = 1.0
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false

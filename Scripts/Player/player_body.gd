@@ -52,7 +52,15 @@ func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 	
 	if is_on_floor():
 		drag = Vector2.ONE
-		drag.x = Helper.get_slide_from_collision(get_last_slide_collision(), last_slide)
+		var collision := get_last_slide_collision()
+		
+		# Apply an offset toward the ground, ensuring the proper tile is selected for friction data
+		var offset : Vector2 = get_player().get_gravity_direction()*2
+		
+		# Accounts for friction and such
+		drag.x = Helper.get_slide_from_collision(collision, last_slide, offset)
+		
+		# Store last value in case the tile data can't be found
 		last_slide = drag.x
 		vel.x *= pow(drag.x, delta/player.get_friction_time())
 	else:
