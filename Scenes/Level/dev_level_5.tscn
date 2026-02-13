@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://caaxff2gr7scy"]
+[gd_scene load_steps=22 format=4 uid="uid://caaxff2gr7scy"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ex82n"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_7brat"]
@@ -17,12 +17,12 @@
 [ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="13_cvvtj"]
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="16_fnk1r"]
 
-[sub_resource type="Gradient" id="Gradient_2xrhl"]
+[sub_resource type="Gradient" id="Gradient_fnk1r"]
 offsets = PackedFloat32Array(0, 0.044444446, 0.2488889, 0.51111114, 1)
 colors = PackedColorArray(0.6858397, 0.7708662, 0, 1, 0.72782683, 0.7967464, 0, 0.62565076, 0.75931716, 0.8161565, 0, 0.34488887, 0.78603625, 0.8326257, 0, 0.106666684, 0.79800004, 0.84, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hywip"]
-gradient = SubResource("Gradient_2xrhl")
+gradient = SubResource("Gradient_fnk1r")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
@@ -30,15 +30,12 @@ fill_to = Vector2(0.5, 0)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qbfoh"]
 size = Vector2(38.03192, 121.95044)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2xrhl"]
-size = Vector2(38.03192, 121.95044)
-
-[sub_resource type="Gradient" id="Gradient_fnk1r"]
+[sub_resource type="Gradient" id="Gradient_tj5jg"]
 offsets = PackedFloat32Array(0, 0.24229075)
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2hpmh"]
-gradient = SubResource("Gradient_fnk1r")
+gradient = SubResource("Gradient_tj5jg")
 fill_from = Vector2(0.47435898, 0.115384616)
 fill_to = Vector2(0.47975078, 1)
 
@@ -398,8 +395,8 @@ scale = Vector2(3, 13)
 links = [NodePath("../Infested Cockroach"), NodePath("../Infested Cockroach2")]
 
 [node name="KillBarrier2" parent="Level" node_paths=PackedStringArray("links") instance=ExtResource("9_6hw2k")]
-position = Vector2(-4580, -3946)
-scale = Vector2(3, 13)
+position = Vector2(-4594, -3980.0002)
+scale = Vector2(3.095544, 10.053009)
 links = [NodePath("../../Infested Cockroach2"), NodePath("../../Infested Cockroach")]
 
 [node name="PushOrb" parent="Level" instance=ExtResource("10_vsrqb")]
@@ -434,15 +431,6 @@ collision_mask = 0
 position = Vector2(-22.96812, 61.95048)
 shape = SubResource("RectangleShape2D_qbfoh")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Level/EnemyWall2"]
-position = Vector2(-119.19354, -446.9965)
-shape = SubResource("RectangleShape2D_qbfoh")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Level/EnemyWall2"]
-position = Vector2(-318.1594, -182.96674)
-scale = Vector2(5.841477, 0.24907905)
-shape = SubResource("RectangleShape2D_2xrhl")
-
 [node name="Bat" parent="." instance=ExtResource("12_f6l6f")]
 position = Vector2(-2504, -405)
 
@@ -468,6 +456,11 @@ position = Vector2(-939, -3134)
 scale = Vector2(25.828417, -4.841042)
 damage = 1.0
 
+[node name="TeleportZone4" parent="." instance=ExtResource("16_fnk1r")]
+position = Vector2(-939, -1532)
+scale = Vector2(25.828417, -4.841042)
+damage = 1.0
+
 [node name="Sprite2D5" type="Sprite2D" parent="."]
 z_index = 100
 position = Vector2(-882, -1562)
@@ -487,10 +480,10 @@ position = Vector2(-4012, -3813)
 position = Vector2(-3070, -3802)
 
 [connection signal="body_entered" from="Level/Tiles/Ground/Saw" to="Level/Tiles/Ground/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@90056" to="Level/Tiles/Ground/@Area2D@90056" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@90057" to="Level/Tiles/Ground/@Area2D@90057" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@90058" to="Level/Tiles/Ground/@Area2D@90058" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@90059" to="Level/Tiles/Ground/@Area2D@90059" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@90060" to="Level/Tiles/Ground/@Area2D@90060" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@90061" to="Level/Tiles/Ground/@Area2D@90061" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@90062" to="Level/Tiles/Ground/@Area2D@90062" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40606" to="Level/Tiles/Ground/@Area2D@40606" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40607" to="Level/Tiles/Ground/@Area2D@40607" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40608" to="Level/Tiles/Ground/@Area2D@40608" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40609" to="Level/Tiles/Ground/@Area2D@40609" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40610" to="Level/Tiles/Ground/@Area2D@40610" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40611" to="Level/Tiles/Ground/@Area2D@40611" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40612" to="Level/Tiles/Ground/@Area2D@40612" method="_on_body_entered"]

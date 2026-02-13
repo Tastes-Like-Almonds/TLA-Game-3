@@ -1,8 +1,10 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://cn7nyyyrdxx1"]
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://cn7nyyyrdxx1"]
 
 [ext_resource type="Texture2D" uid="uid://25ly160jnq2l" path="res://Assets/Sprites/Placeholder/tileset_test.png" id="1_un331"]
 [ext_resource type="Texture2D" uid="uid://5ket24ouegjf" path="res://Assets/Sprites/Tilemap/recolor2.png" id="2_3py6v"]
 [ext_resource type="PackedScene" uid="uid://ryavy613ragg" path="res://Scenes/Object/saw.tscn" id="3_s7qww"]
+[ext_resource type="PackedScene" uid="uid://c2gf3o0yw438h" path="res://Scenes/Object/large_saw.tscn" id="4_o3gwr"]
+[ext_resource type="PackedScene" uid="uid://chqabge4gl3tl" path="res://Scenes/Object/Decor/ceiling_lantern.tscn" id="5_opqfb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3py6v"]
 texture = ExtResource("1_un331")
@@ -1114,6 +1116,8 @@ texture = ExtResource("2_3py6v")
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_o3gwr"]
 resource_name = "Objects"
 scenes/1/scene = ExtResource("3_s7qww")
+scenes/2/scene = ExtResource("4_o3gwr")
+scenes/4/scene = ExtResource("5_opqfb")
 
 [resource]
 physics_layer_0/collision_layer = 1

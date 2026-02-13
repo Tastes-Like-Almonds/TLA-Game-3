@@ -31,7 +31,7 @@ gravity = Vector3(0, 0, 0)
 alpha_curve = SubResource("CurveTexture_yv1qj")
 
 [sub_resource type="Gradient" id="Gradient_posbj"]
-colors = PackedColorArray(0.4600399, 0.55700475, 1, 1, 0.27084938, 0.54332465, 1, 0)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_w5wny"]
 gradient = SubResource("Gradient_posbj")
@@ -105,6 +105,8 @@ radius = 40.04997
 collision_layer = 8
 script = ExtResource("1_kfdxb")
 time = 0.0
+shrink_image = "res://Assets/Sprites/Orbs/ShrinkOrb.png"
+grow_image = "res://Assets/Sprites/Orbs/GrowOrb.png"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 modulate = Color(0.7366762, 0.42621613, 0.928359, 1)
@@ -119,6 +121,7 @@ process_material = SubResource("ParticleProcessMaterial_g0kd0")
 [node name="Visual" type="Node2D" parent="."]
 
 [node name="Glow" type="Sprite2D" parent="Visual"]
+modulate = Color(0.40010625, 0.60875666, 0.9449542, 1)
 scale = Vector2(7, 7)
 texture = SubResource("GradientTexture2D_w5wny")
 
@@ -139,7 +142,7 @@ process_material = SubResource("ParticleProcessMaterial_s5biv")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="Visual"]
 visible = false
-modulate = Color(0.7366762, 0.42621613, 0.928359, 1)
+modulate = Color(0.41073737, 0.5776914, 0.93661237, 1)
 texture = SubResource("GradientTexture2D_1dkb7")
 lifetime = 1.38
 process_material = SubResource("ParticleProcessMaterial_4onkn")
