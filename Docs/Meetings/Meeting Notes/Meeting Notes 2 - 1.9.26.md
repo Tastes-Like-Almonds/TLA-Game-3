@@ -30,6 +30,7 @@ ___
 	- On collision, load level from exported path
 	- Visual transition between levels
 - Create separate environment node to be instantiated across levels in the same world
+- Create dialog system
 ## Remaining Notes
 ___
 - Make hammer lock to the nearest sixteenth rotation

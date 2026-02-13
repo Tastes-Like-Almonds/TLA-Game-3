@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" load_steps=5 format=3 uid="uid://cn7nyyyrdxx1"]
 
 [ext_resource type="Texture2D" uid="uid://25ly160jnq2l" path="res://Assets/Sprites/Placeholder/tileset_test.png" id="1_un331"]
-[ext_resource type="Texture2D" uid="uid://cckevpcb2kk8c" path="res://Assets/Sprites/Tilemap/tilemap-9.png" id="2_3py6v"]
+[ext_resource type="Texture2D" uid="uid://5ket24ouegjf" path="res://Assets/Sprites/Tilemap/recolor2.png" id="2_3py6v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3py6v"]
 texture = ExtResource("1_un331")
