@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene load_steps=37 format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
@@ -17,6 +17,9 @@
 [ext_resource type="Texture2D" uid="uid://c4g75rwy1qnv3" path="res://Assets/Sprites/Player/Sewer Guy Idle 3.png" id="9_ks1b7"]
 [ext_resource type="Texture2D" uid="uid://bnto80x30sd76" path="res://Assets/Sprites/Player/Sewer Guy Idle 4.png" id="10_hnuln"]
 [ext_resource type="Script" uid="uid://4383yqbiu0iv" path="res://Scripts/Player/animator.gd" id="14_7g0yx"]
+[ext_resource type="Script" uid="uid://h2etf8462ck0" path="res://Scripts/Player/cosmetic_container.gd" id="15_h8ma5"]
+[ext_resource type="Texture2D" uid="uid://dpcxsu7nurdap" path="res://Assets/Sprites/Cosmetic/Hat/Tricorn Hat.png" id="15_hnuln"]
+[ext_resource type="Script" uid="uid://oksvaahqx7ou" path="res://Scripts/Resource/Cosmetic/body_cosmetic.gd" id="16_eksi1"]
 
 [sub_resource type="GDScript" id="GDScript_dd0ac"]
 script/source = "extends Resource
@@ -218,6 +221,13 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
+[sub_resource type="Resource" id="Resource_jincj"]
+script = ExtResource("16_eksi1")
+default_flip_h = true
+offset = Vector2(0, -48)
+texture = ExtResource("15_hnuln")
+metadata/_custom_type_script = "uid://oksvaahqx7ou"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvnfx"]
 size = Vector2(4, 4)
 
@@ -250,7 +260,7 @@ shape = SubResource("RectangleShape2D_tugb3")
 material = ExtResource("4_0u5uq")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_aqm4k")
-animation = &"idle"
+animation = &"airborne"
 
 [node name="ModifierDisplayManager" type="Node2D" parent="playerBody"]
 script = ExtResource("2_06tpx")
@@ -266,6 +276,10 @@ visible = false
 scale = Vector2(3, 3)
 energy = 0.6
 texture = SubResource("GradientTexture2D_dey5f")
+
+[node name="Cosmetics" type="Node2D" parent="playerBody"]
+script = ExtResource("15_h8ma5")
+autoload_cosmetic = SubResource("Resource_jincj")
 
 [node name="Sword" type="Node2D" parent="."]
 script = ExtResource("3_htcer")

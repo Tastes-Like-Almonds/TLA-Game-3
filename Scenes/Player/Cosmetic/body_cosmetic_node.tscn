@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://brc82cornv4aj"]
+
+[ext_resource type="Script" uid="uid://b16rysl744g1o" path="res://Scripts/Player/cosmetic.gd" id="2_s30jg"]
+
+[node name="BodyCosmeticSprite" type="Sprite2D"]
+scale = Vector2(3, 3)
+script = ExtResource("2_s30jg")

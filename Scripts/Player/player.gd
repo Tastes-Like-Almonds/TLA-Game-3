@@ -317,8 +317,10 @@ func _visual_process(delta : float) -> void:
 	# Update player rotation
 	var body : PlayerBody = get_player_body()
 	if body:
-		body.get_sprite().flip_h = !get_player_sword().get_tip_global_position().x < get_player_position().x
-		body.get_sprite().flip_v = (get_gravity() <= 0)
+		var do_flip_h : bool = !get_player_sword().get_tip_global_position().x < get_player_position().x
+		var do_flip_v : bool = (get_gravity() <= 0)
+		body.get_sprite().flip_h = do_flip_h
+		body.get_sprite().flip_v = do_flip_v
 
 	# Update player damage
 	if sprite:

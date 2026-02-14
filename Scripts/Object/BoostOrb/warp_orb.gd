@@ -16,7 +16,7 @@ func _ready() -> void:
 		line.add_point(Vector2.ZERO)
 		line.add_point(to_local(dest.global_position))
 		line.show()
-	else:
+	elif dest == null:
 		disabled = true
 
 func _process(_delta: float) -> void:

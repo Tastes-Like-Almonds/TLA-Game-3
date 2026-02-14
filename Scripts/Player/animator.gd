@@ -37,5 +37,6 @@ func _physics_process(_delta: float) -> void:
 	else:
 		current_player_animation = "airborne"
 	
+	# Don't play the current animation if it's already playing.
 	if not (player_sprite.animation == current_player_animation):
 		player_sprite.play(current_player_animation)

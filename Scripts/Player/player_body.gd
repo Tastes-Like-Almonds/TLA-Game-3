@@ -11,6 +11,8 @@ class_name PlayerBody extends CharacterBody2D
 @export var ground_hit_min : float = 10.0
 
 @onready var shape : CollisionShape2D = $CollisionShape2D
+@onready var sprite : Variant = $Sprite2D
+@onready var cosmetics_node := $Cosmetics
 
 var last_slide : float = 1.0
 var initial_shape_pos : Vector2
@@ -26,10 +28,14 @@ func get_player() -> Player:
 		return get_parent()
 	return null
 
+## Gets the node to be used for cosmetics.
+func get_cosmetics_node() -> Node2D:
+	return cosmetics_node
+
 ## Gets the sprite of the player, an AnimatedSprite2D.
 ## Variant is used for a return in the event the sprite type is changed (unlikely).
 func get_sprite() -> Variant:
-	return $Sprite2D
+	return sprite
 
 ## Apply "temporary velocity" to the player. This velocity is applied to the player's next
 ## movement frame, and resets to Vector2.ZERO after.

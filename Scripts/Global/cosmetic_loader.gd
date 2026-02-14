@@ -13,3 +13,6 @@ func get_weapon_visual(weapon : Weapon) -> PackedScene:
 		return load("res://Scenes/Visual/Weapons/Hammer/hammer_basic_visual.tscn")
 
 	return load("res://Scenes/Visual/Weapons/Sword/sword_basic_visual.tscn")
+
+func get_body_cosmetics() -> Array[BodyCosmetic]:
+	return []
