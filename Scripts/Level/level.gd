@@ -1,4 +1,5 @@
-## A base class for levels. 
+## A base class for levels. If anything looks abnormal, it's because this was designed to be more
+## adaptable to multiplayer should we do so later in development.
 @abstract class_name Level extends Node2D
 
 enum Difficulty {
@@ -19,6 +20,7 @@ var level_config : LevelConfig
 
 var current_ui : LevelUI
 
+#region Private
 ## Gets the spawn which the player should.. well.. spawn at.
 func _get_first_spawn() -> Node2D:
 	for node in get_tree().get_nodes_in_group("PlayerSpawn"):
@@ -55,7 +57,10 @@ func _setup_player() -> Player:
 func _setup_ui() -> void:
 	current_ui = load(level_ui_path).instantiate()
 	add_child(current_ui)
+	
+#endregion
 
+#region Public
 func hide_ui() -> void:
 	current_ui.hide()
 
@@ -81,3 +86,12 @@ func initialize(config : LevelConfig = null) -> void:
 
 static func get_level_data() -> void:
 	pass
+#endregion
+
+#region Inherited
+func _ready() -> void:
+	
+	# Delegate pausing to separate node as to ensure level gets paused, as well.
+	var pause_man : Node = load("res://Scenes/Component/pause_manager.tscn").instantiate()
+	add_child(pause_man)
+#endregion

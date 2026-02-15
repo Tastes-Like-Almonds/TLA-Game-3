@@ -27,6 +27,14 @@ signal PlayerRemoved()
 ## Fired when a level is loaded via LevelLoader.gd. Passes the string path of the level.
 @warning_ignore("unused_signal")
 signal LevelPathLoaded(level: Level)
+
+## Firest when the game is paused/unpaused.
+@warning_ignore("unused_signal")
+signal PauseToggled()
+
+## Request the game to be paused. Called from the pause menu to pause_manager.gd to avoid coupling.
+@warning_ignore("unused_signal")
+signal RequestUnpause()
 #endregion
 
 func _ready() -> void:

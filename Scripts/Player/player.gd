@@ -419,9 +419,6 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	#elif event.is_action_released("use"):
 		#stop_charging()
 	
-	elif event.is_action_pressed("quit"):
-		get_tree().quit()
-	
 	elif event.is_action_pressed("next_weapon"):
 		var idx : int = get_current_weapon_index()
 		idx = wrap(idx+1, 0, held_weapons.size())
