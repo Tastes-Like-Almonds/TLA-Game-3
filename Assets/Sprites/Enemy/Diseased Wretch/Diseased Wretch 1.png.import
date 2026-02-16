@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cc6l7336hk5ve"
-path="res://.godot/imported/Diseased Wretch Idle 1.png-3b2ff0643f34251fa416c3bd4e56f956.ctex"
+uid="uid://dd5rvo0oubtwe"
+path="res://.godot/imported/Diseased Wretch 1.png-911e3e9d6972049461344e61d8f96970.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Enemy/Diseased Wretch/Diseased Wretch Idle 1.png"
-dest_files=["res://.godot/imported/Diseased Wretch Idle 1.png-3b2ff0643f34251fa416c3bd4e56f956.ctex"]
+source_file="res://Assets/Sprites/Enemy/Diseased Wretch/Diseased Wretch 1.png"
+dest_files=["res://.godot/imported/Diseased Wretch 1.png-911e3e9d6972049461344e61d8f96970.ctex"]
 
 [params]
 
