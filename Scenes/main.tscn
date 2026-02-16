@@ -1,11 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://birc57pmi5hwh"]
+[gd_scene load_steps=19 format=3 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="Theme" uid="uid://1q4kixjfk3u0" path="res://Resource/Theme/dev_panel.tres" id="1_344ge"]
 [ext_resource type="Script" uid="uid://bt4l1nsa4vgma" path="res://Scripts/main.gd" id="1_d1ilt"]
 [ext_resource type="Script" uid="uid://cf1jl21eb8oe3" path="res://Scripts/Debug/DevPanel/dev_panel.gd" id="2_ynf5e"]
 [ext_resource type="PackedScene" uid="uid://dcwd3n7bnqbg8" path="res://Scenes/Debug/DevPanel/Player/player_dev_category.tscn" id="3_hptm8"]
 [ext_resource type="PackedScene" uid="uid://cduiqyk45vxko" path="res://Scenes/Debug/DevPanel/Level/level_dev_category.tscn" id="5_6iyac"]
+[ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="6_6bp64"]
 [ext_resource type="PackedScene" uid="uid://tu5stt8xu3fx" path="res://Scenes/UI/level_select.tscn" id="6_21xkr"]
+[ext_resource type="Shader" uid="uid://c4528t06wn63w" path="res://Resource/testing.gdshader" id="7_ynf5e"]
 
 [sub_resource type="Gradient" id="Gradient_kry3j"]
 colors = PackedColorArray(0.7647408, 0.80606586, 0.87960994, 0.15294118, 1, 1, 1, 0)
@@ -70,12 +72,36 @@ _data = {
 &"fade_to_black": SubResource("Animation_6bp64")
 }
 
+[sub_resource type="Theme" id="Theme_344ge"]
+default_font = ExtResource("6_6bp64")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bp64"]
+bg_color = Color(0.16206557, 0.1620656, 0.16206548, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_344ge"]
+shader = ExtResource("7_ynf5e")
+shader_parameter/resolution = Vector2(1280, 720)
+shader_parameter/scan_line_amount = 0.2800000133
+shader_parameter/warp_amount = 0.0
+shader_parameter/noise_amount = 0.03
+shader_parameter/interference_amount = 0.07600000361
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.146000006935
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.1550000073625
+shader_parameter/roll_line_amount = 0.014000000665
+shader_parameter/roll_speed = 1.0000004274999998
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
+
 [node name="main" type="Node"]
 script = ExtResource("1_d1ilt")
 autoload_level = ""
 
 [node name="UI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+layer = 2
 
 [node name="DevPanel" type="Control" parent="UI"]
 unique_name_in_owner = true
@@ -171,5 +197,65 @@ color = Color(0, 0, 0, 1)
 libraries = {
 &"": SubResource("AnimationLibrary_ynf5e")
 }
+
+[node name="Settings" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_344ge")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="TabContainer" type="TabContainer" parent="UI/Settings/MarginContainer"]
+layout_mode = 2
+theme_override_constants/tab_separation = 4
+theme_override_font_sizes/font_size = 48
+theme_override_styles/panel = SubResource("StyleBoxFlat_6bp64")
+current_tab = 0
+
+[node name="Audio" type="Control" parent="UI/Settings/MarginContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Keybinds" type="Control" parent="UI/Settings/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Overlay" type="Control" parent="UI"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/Overlay"]
+material = SubResource("ShaderMaterial_344ge")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="LevelSelect" parent="." instance=ExtResource("6_21xkr")]

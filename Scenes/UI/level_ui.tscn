@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://caj0mx5twqcfe"]
+[gd_scene load_steps=15 format=3 uid="uid://caj0mx5twqcfe"]
 
 [ext_resource type="Script" uid="uid://l7uxjyga8ie7" path="res://Scripts/UI/level_ui.gd" id="1_xjiw8"]
 [ext_resource type="Texture2D" uid="uid://br7yept073wjd" path="res://Assets/Sprites/Pickup/Heart/Sewer_s Heart 8.png" id="2_m0wgp"]
@@ -13,6 +13,18 @@ colors = PackedColorArray(0, 0, 0, 0.8)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_haw25"]
 gradient = SubResource("Gradient_m0wgp")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_haw25"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_307ub"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_46n82"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fc7jj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_urbh0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3e4nl"]
 
 [node name="LevelUI" type="CanvasLayer"]
 script = ExtResource("1_xjiw8")
@@ -150,6 +162,7 @@ stretch_mode = 4
 
 [node name="Pause" type="Control" parent="."]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -206,26 +219,54 @@ mouse_filter = 2
 
 [node name="Continue" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 0
 theme_override_fonts/font = ExtResource("3_vk2nj")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
 text = "Continue"
 
 [node name="Settings" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 0
 theme_override_fonts/font = ExtResource("3_vk2nj")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
 text = "Settings"
 
 [node name="Cosmetics" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 0
 theme_override_fonts/font = ExtResource("3_vk2nj")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
 text = "Cosmetics"
 
 [node name="ExitLevel" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 0
 theme_override_fonts/font = ExtResource("3_vk2nj")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
 text = "Exit Level"
 
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
