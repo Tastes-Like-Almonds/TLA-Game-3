@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="TLA-Game-3"
+config/version="1.0.0-prealpha"
 config/tags=PackedStringArray("ogpc", "platformer")
 run/main_scene="uid://birc57pmi5hwh"
 config/features=PackedStringArray("4.5", "Forward Plus")
@@ -28,6 +29,7 @@ LevelRegistry="*res://Scripts/Global/level_registry.gd"
 LevelLoader="*res://Scripts/Global/level_loader.gd"
 Sfx="*res://Scripts/Global/sfx.gd"
 Lobby="*res://Scripts/Global/Lobby.gd"
+PersistentData="*res://Scripts/Global/persistent_data.gd"
 
 [debug]
 

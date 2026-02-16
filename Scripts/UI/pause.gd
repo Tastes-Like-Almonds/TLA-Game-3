@@ -5,6 +5,7 @@ func _toggle() -> void:
 
 func _ready() -> void:
 	SignalBus.PauseToggled.connect(_toggle)
+	$MarginContainer/version.text = ProjectSettings.get_setting("application/config/version")
 	_toggle()
 
 func _on_continue_pressed() -> void:
