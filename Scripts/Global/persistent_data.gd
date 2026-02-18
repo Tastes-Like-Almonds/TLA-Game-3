@@ -1,12 +1,15 @@
 # Saves/loads player data via JSON.
 extends Node
 
+signal DataLoaded
+
 const SAVE_PATH : String = "user://tla-3.save"
 const TEMP_SAVE_PATH : String = "user://tla-3.save.tmp"
 
 @onready var version : String = ProjectSettings.get_setting("application/config/version")
 
 var loaded_data : Dictionary
+var is_loaded : bool = false
 
 #region Helper
 ## Returns the default template for save data.
@@ -22,6 +25,9 @@ func _get_base_data() -> Dictionary:
 func _typeify(target:Variant) -> Variant:
 	
 	if target is float:
+		return target
+	
+	elif target is bool:
 		return target
 	
 	elif target is String:
@@ -109,6 +115,8 @@ func load_game(path:String=SAVE_PATH) -> void:
 		current_loaded_data = _get_base_data()
 	
 	loaded_data = current_loaded_data
+	DataLoaded.emit()
+	is_loaded = true
 
 ## Saves all game data to disk.
 func save_game(path:String=SAVE_PATH) -> void:
@@ -127,7 +135,7 @@ func save_game(path:String=SAVE_PATH) -> void:
 	
 	save_file.close()
 
-## Gets all loaded save data.
+## Gets all loaded save data. Opt for more specific methods unless neccessary.
 func get_all_save_data() -> Dictionary:
 	return loaded_data
 
@@ -136,6 +144,7 @@ func get_all_save_data() -> Dictionary:
 #region Inherited
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
+	load_game()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:

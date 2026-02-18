@@ -6,7 +6,8 @@ class_name SoundData extends Resource
 @export var pitch_scale : float = 1.0
 @export var bus : StringName = &"Master"
 
-func _init(path : String="", vol_linear : float = 0.5, pitch : float = 1.0) -> void:
+func _init(path : String="", vol_linear : float = 0.5, pitch : float = 1.0, sound_bus := &"SFX") -> void:
 	sound_string = path
 	volume_linear = vol_linear
 	pitch_scale = pitch
+	bus = sound_bus

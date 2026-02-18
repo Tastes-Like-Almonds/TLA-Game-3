@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://birc57pmi5hwh"]
+[gd_scene load_steps=48 format=3 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="Theme" uid="uid://1q4kixjfk3u0" path="res://Resource/Theme/dev_panel.tres" id="1_344ge"]
 [ext_resource type="Script" uid="uid://bt4l1nsa4vgma" path="res://Scripts/main.gd" id="1_d1ilt"]
@@ -7,7 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://cduiqyk45vxko" path="res://Scenes/Debug/DevPanel/Level/level_dev_category.tscn" id="5_6iyac"]
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="6_6bp64"]
 [ext_resource type="PackedScene" uid="uid://tu5stt8xu3fx" path="res://Scenes/UI/level_select.tscn" id="6_21xkr"]
+[ext_resource type="Script" uid="uid://5wfsq48wet5m" path="res://Scripts/settings.gd" id="7_hptm8"]
 [ext_resource type="Shader" uid="uid://c4528t06wn63w" path="res://Resource/testing.gdshader" id="7_ynf5e"]
+[ext_resource type="Script" uid="uid://562e2ilbpowh" path="res://Scripts/UI/Settings/fullscreen_toggle.gd" id="8_6iyac"]
+[ext_resource type="Script" uid="uid://v3hd4cjj2lyr" path="res://Scripts/UI/Settings/crt_toggle.gd" id="8_d1ilt"]
+[ext_resource type="Script" uid="uid://bkbihwm040snb" path="res://Scripts/UI/Settings/sfx_slider.gd" id="8_fdnlq"]
+[ext_resource type="Script" uid="uid://bhudyvex8bwnh" path="res://Scripts/UI/crt.gd" id="8_hptm8"]
 
 [sub_resource type="Gradient" id="Gradient_kry3j"]
 colors = PackedColorArray(0.7647408, 0.80606586, 0.87960994, 0.15294118, 1, 1, 1, 0)
@@ -72,11 +77,128 @@ _data = {
 &"fade_to_black": SubResource("Animation_6bp64")
 }
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_344ge"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ynf5e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hptm8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d1ilt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6iyac"]
+
+[sub_resource type="Gradient" id="Gradient_ynf5e"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.662452, 0.66245246, 0.66245204, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hptm8"]
+gradient = SubResource("Gradient_ynf5e")
+width = 16
+height = 16
+
+[sub_resource type="Gradient" id="Gradient_d1ilt"]
+offsets = PackedFloat32Array(0.99415207)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6iyac"]
+gradient = SubResource("Gradient_d1ilt")
+width = 16
+height = 16
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_d1ilt"]
+color = Color(0.6627451, 0.6627451, 0.6627451, 1)
+grow_begin = -4.0
+grow_end = 0.0
+thickness = 8
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_6iyac"]
+color = Color(1, 1, 1, 1)
+grow_begin = -4.0
+grow_end = 0.0
+thickness = 8
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_fdnlq"]
+grow_begin = -4.0
+grow_end = -5.0
+thickness = 8
+
+[sub_resource type="Gradient" id="Gradient_fdnlq"]
+offsets = PackedFloat32Array(0.9766082, 1)
+colors = PackedColorArray(0.98234254, 0.9823423, 0.9823424, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wsu2k"]
+gradient = SubResource("Gradient_fdnlq")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_6iyac"]
+offsets = PackedFloat32Array(0.9766082, 1)
+colors = PackedColorArray(0.63375676, 0.6337568, 0.63375676, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jkdf5"]
+gradient = SubResource("Gradient_6iyac")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [sub_resource type="Theme" id="Theme_344ge"]
 default_font = ExtResource("6_6bp64")
+default_font_size = 60
+Button/colors/font_hover_color = Color(0.683077, 0.68307734, 0.68307805, 1)
+Button/styles/disabled = SubResource("StyleBoxEmpty_344ge")
+Button/styles/focus = SubResource("StyleBoxEmpty_ynf5e")
+Button/styles/hover = SubResource("StyleBoxEmpty_hptm8")
+Button/styles/normal = SubResource("StyleBoxEmpty_d1ilt")
+Button/styles/pressed = SubResource("StyleBoxEmpty_6iyac")
+HSlider/icons/grabber = SubResource("GradientTexture2D_hptm8")
+HSlider/icons/grabber_highlight = SubResource("GradientTexture2D_6iyac")
+HSlider/styles/grabber_area = SubResource("StyleBoxLine_d1ilt")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxLine_6iyac")
+HSlider/styles/slider = SubResource("StyleBoxLine_fdnlq")
+PopupMenu/font_sizes/font_size = 40
+PopupMenu/icons/checked = SubResource("GradientTexture2D_wsu2k")
+PopupMenu/icons/checked_disabled = SubResource("GradientTexture2D_jkdf5")
+PopupMenu/icons/radio_checked = SubResource("GradientTexture2D_wsu2k")
+PopupMenu/icons/radio_checked_disabled = SubResource("GradientTexture2D_jkdf5")
+PopupMenu/icons/radio_unchecked = SubResource("GradientTexture2D_jkdf5")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bp64"]
-bg_color = Color(0.16206557, 0.1620656, 0.16206548, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_344ge"]
+bg_color = Color(0.14767182, 0.14767182, 0.14767176, 0.95686275)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_344ge"]
+size = Vector2(48, 48)
+
+[sub_resource type="Gradient" id="Gradient_344ge"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.64, 0.64, 0.64, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ynf5e"]
+gradient = SubResource("Gradient_344ge")
+width = 24
+height = 24
+
+[sub_resource type="Gradient" id="Gradient_hptm8"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.3, 0.3, 0.3, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d1ilt"]
+gradient = SubResource("Gradient_hptm8")
+width = 24
+height = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ynf5e"]
+bg_color = Color(0.09620472, 0.09620475, 0.09620469, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hptm8"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d1ilt"]
+bg_color = Color(0.16, 0.16, 0.16, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_344ge"]
 shader = ExtResource("7_ynf5e")
@@ -199,7 +321,8 @@ libraries = {
 }
 
 [node name="Settings" type="Control" parent="UI"]
-visible = false
+process_mode = 3
+z_index = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -208,6 +331,17 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = SubResource("Theme_344ge")
+script = ExtResource("7_hptm8")
+
+[node name="Panel" type="Panel" parent="UI/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_344ge")
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/Settings"]
 layout_mode = 1
@@ -222,23 +356,129 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="TabContainer" type="TabContainer" parent="UI/Settings/MarginContainer"]
+[node name="title" type="Label" parent="UI/Settings/MarginContainer"]
 layout_mode = 2
-theme_override_constants/tab_separation = 4
-theme_override_font_sizes/font_size = 48
-theme_override_styles/panel = SubResource("StyleBoxFlat_6bp64")
-current_tab = 0
+size_flags_vertical = 0
+text = "Settings"
+horizontal_alignment = 1
 
-[node name="Audio" type="Control" parent="UI/Settings/MarginContainer/TabContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Settings/MarginContainer"]
 layout_mode = 2
-metadata/_tab_index = 0
 
-[node name="Keybinds" type="Control" parent="UI/Settings/MarginContainer/TabContainer"]
+[node name="Control2" type="Control" parent="UI/Settings/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="Resolution" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
-metadata/_tab_index = 1
+theme_override_constants/separation = 40
+alignment = 1
 
-[node name="Overlay" type="Control" parent="UI"]
+[node name="OptionButton" type="OptionButton" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Resolution"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+selected = 0
+item_count = 2
+popup/item_0/text = "1920x1080"
+popup/item_0/id = 0
+popup/item_1/text = "1920x1080"
+popup/item_1/id = 1
+
+[node name="Button" type="Button" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Resolution"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Apply"
+
+[node name="Music" type="HSplitContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+dragging_enabled = false
+
+[node name="TextureRect" type="TextureRect" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music"]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_344ge")
+
+[node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="SFX" type="HSplitContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+dragging_enabled = false
+
+[node name="TextureRect" type="TextureRect" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX"]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_344ge")
+
+[node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("8_fdnlq")
+
+[node name="Fullscreen" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Fullscreen"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Fullscreen"
+
+[node name="CheckBox" type="CheckBox" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Fullscreen"]
+layout_mode = 2
+theme_override_icons/checked = SubResource("GradientTexture2D_ynf5e")
+theme_override_icons/unchecked = SubResource("GradientTexture2D_d1ilt")
+script = ExtResource("8_6iyac")
+
+[node name="CRT" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/CRT"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Disable CRT"
+
+[node name="CheckBox" type="CheckBox" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/CRT"]
+layout_mode = 2
+theme_override_icons/checked = SubResource("GradientTexture2D_ynf5e")
+theme_override_icons/unchecked = SubResource("GradientTexture2D_d1ilt")
+script = ExtResource("8_d1ilt")
+
+[node name="Keybinds" type="Button" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_ynf5e")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hptm8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_d1ilt")
+text = "Edit keybinds..."
+
+[node name="Apply" type="Button" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 50
+text = "Apply"
+
+[node name="Control" type="Control" parent="UI/Settings/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CRT" type="Control" parent="UI"]
 z_index = 5
 layout_mode = 3
 anchors_preset = 15
@@ -247,8 +487,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("8_hptm8")
 
-[node name="ColorRect" type="ColorRect" parent="UI/Overlay"]
+[node name="ColorRect" type="ColorRect" parent="UI/CRT"]
 material = SubResource("ShaderMaterial_344ge")
 layout_mode = 1
 anchors_preset = 15

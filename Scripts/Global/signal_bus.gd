@@ -37,6 +37,13 @@ signal PauseToggled()
 signal RequestUnpause()
 #endregion
 
+#region UI Requests
+
+## Opens the settings menu.
+@warning_ignore("unused_signal")
+signal OpenSettings()
+#endregion
+
 func _ready() -> void:
 	var tree : SceneTree = get_tree()
 	tree.node_added.connect(

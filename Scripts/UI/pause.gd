@@ -13,3 +13,6 @@ func _on_continue_pressed() -> void:
 
 func _on_exit_level_pressed() -> void:
 	get_tree().quit()
+
+func _on_settings_pressed() -> void:
+	SignalBus.OpenSettings.emit()

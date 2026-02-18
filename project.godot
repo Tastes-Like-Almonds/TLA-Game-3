@@ -30,6 +30,7 @@ LevelLoader="*res://Scripts/Global/level_loader.gd"
 Sfx="*res://Scripts/Global/sfx.gd"
 Lobby="*res://Scripts/Global/Lobby.gd"
 PersistentData="*res://Scripts/Global/persistent_data.gd"
+GameSettings="*res://Scripts/Global/game_settings.gd"
 
 [debug]
 

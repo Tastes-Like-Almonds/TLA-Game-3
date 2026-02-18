@@ -34,9 +34,9 @@ enum MovementMode {
 
 var property_modifiers : Dictionary[String, Array]
 
-@export var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0)
-@export var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0)
-@export var refresh_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Refresh Short.wav", 0.7, 1.0)
+@export var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0, &"SFX")
+@export var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0, &"SFX")
+@export var refresh_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Refresh Short.wav", 0.7, 1.0, &"SFX")
 
 #endregion
 
