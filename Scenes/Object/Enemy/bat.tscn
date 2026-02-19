@@ -18,18 +18,21 @@
 [sub_resource type="Resource" id="Resource_dhqts"]
 script = ExtResource("2_tuwcp")
 sound_string = "res://Assets/Sound/SFX/Enemy/Bat/Bat Hit.wav"
+volume_linear = 0.3
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Resource" id="Resource_omse7"]
 script = ExtResource("2_tuwcp")
 sound_string = "res://Assets/Sound/SFX/Enemy/Bat/Bat Death.wav"
+volume_linear = 0.3
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Resource" id="Resource_22w8g"]
 script = ExtResource("2_tuwcp")
 sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Alert.wav"
+volume_linear = 0.3
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
@@ -111,6 +114,7 @@ notifier = NodePath("VisibleOnScreenNotifier2D")
 hit_sound = SubResource("Resource_dhqts")
 death_sound = SubResource("Resource_omse7")
 alert_sound = SubResource("Resource_22w8g")
+hit_time = 0.2
 health = 6.0
 max_hit_kb = 1000.0
 respawn = false

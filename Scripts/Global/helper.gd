@@ -4,6 +4,10 @@ var _debug_dots : Dictionary[String, DebugDot]
 
 var debug_dot_scn : PackedScene = preload("res://Scenes/Debug/debug_dot.tscn")
 
+# Cached values for performance (Trust me, it helps)
+var viewport:Viewport
+var camera:Camera2D
+
 ## Returns all descendants of a node.
 func get_all_descendants(node : Node) -> Array[Node]:
 	var descendants: Array[Node] = []
@@ -43,9 +47,10 @@ func get_all_players() -> Array[Player]:
 
 ## Returns the vector between the center of the screen and the mouse.
 func get_mouse_vec_from_center() -> Vector2:
-	var center := get_viewport().get_mouse_position()
+	var center := viewport.get_mouse_position()
+	
 	var size := get_viewport_rect().size
-	return (center - Vector2(size.x, size.y)/2)/get_viewport().get_camera_2d().zoom
+	return (center - Vector2(size.x, size.y)/2)/camera.zoom
 
 ## Returns true if the line between start and end moves past the target point's x or y position.
 func line_passes_point_horizontally_or_vertically(start: Vector2, end: Vector2, point: Vector2) -> bool:
@@ -143,3 +148,7 @@ func debug_dot(parent:Node, pos : Vector2, id : String, color : Color = Color.WH
 	
 	_debug_dots.set(id, dot)
 	
+func _ready() -> void:
+	viewport = get_viewport()
+	camera = viewport.get_camera_2d()
+	SignalBus.CameraChanged.connect(func(cam:Camera2D) -> void: camera = cam)

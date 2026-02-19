@@ -5,6 +5,12 @@ func _toggle_pause() -> void:
 	var paused := get_tree().paused
 	
 	get_tree().paused = !paused
+	
+	if !paused:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+	
 	SignalBus.PauseToggled.emit()
 
 func _input(event: InputEvent) -> void:

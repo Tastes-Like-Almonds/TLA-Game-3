@@ -36,10 +36,14 @@ func _make_camera() -> GameCamera:
 func _make_player() -> Player:
 	return load("res://Scenes/Player/player.tscn").instantiate()
 
+func _get_default_player_weapon() -> Weapon:
+	return SwordWeapon.new()
+
 ## Setup the camera. Should only be overidden if specific functionality is needed. Otherwise,
 ## use _make_camera.
 func _setup_camera() -> void:
 	var camera := _make_camera()
+	SignalBus.CameraChanged.emit(camera)
 	add_child(camera)
 
 ## Setup the player. Should only be overidden if specific functionality is needed. Otherwise,
@@ -49,6 +53,7 @@ func _setup_player() -> Player:
 	var spawn := _get_first_spawn()
 	if is_instance_valid(spawn): 
 		player.get_player_body().global_position = _get_first_spawn().global_position
+		player.properties.starting_weapon = _get_default_player_weapon()
 		add_child(player)
 		player.get_player_sword().body.global_position = player.get_player_body().global_position
 	return player

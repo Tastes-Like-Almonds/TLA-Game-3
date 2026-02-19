@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://caj0mx5twqcfe"]
+[gd_scene load_steps=16 format=3 uid="uid://caj0mx5twqcfe"]
 
 [ext_resource type="Script" uid="uid://l7uxjyga8ie7" path="res://Scripts/UI/level_ui.gd" id="1_xjiw8"]
 [ext_resource type="Texture2D" uid="uid://br7yept073wjd" path="res://Assets/Sprites/Pickup/Heart/Sewer_s Heart 8.png" id="2_m0wgp"]
@@ -7,12 +7,27 @@
 [ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Sprites/Placeholder/sword.png" id="4_tk1ol"]
 [ext_resource type="Script" uid="uid://wvajojoabnsk" path="res://Scripts/UI/pause.gd" id="6_haw25"]
 
+[sub_resource type="Theme" id="Theme_haw25"]
+Button/colors/font_hover_color = Color(0.69, 0.69, 0.69, 1)
+
 [sub_resource type="Gradient" id="Gradient_m0wgp"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(0, 0, 0, 0.8)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_haw25"]
 gradient = SubResource("Gradient_m0wgp")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_haw25"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_307ub"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_46n82"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fc7jj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_urbh0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3e4nl"]
 
 [node name="LevelUI" type="CanvasLayer"]
 script = ExtResource("1_xjiw8")
@@ -156,6 +171,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_haw25")
 script = ExtResource("6_haw25")
 
 [node name="TextureRect" type="TextureRect" parent="Pause"]
@@ -175,6 +192,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -206,27 +224,57 @@ mouse_filter = 2
 
 [node name="Continue" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_constants/h_separation = 0
 theme_override_fonts/font = ExtResource("3_vk2nj")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
 text = "Continue"
 
 [node name="Settings" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 0
 theme_override_fonts/font = ExtResource("3_vk2nj")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
 text = "Settings"
 
 [node name="Cosmetics" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 0
 theme_override_fonts/font = ExtResource("3_vk2nj")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
 text = "Cosmetics"
 
 [node name="ExitLevel" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/h_separation = 0
 theme_override_fonts/font = ExtResource("3_vk2nj")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
 text = "Exit Level"
 
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitLevel" to="Pause" method="_on_exit_level_pressed"]

@@ -35,6 +35,17 @@ signal PauseToggled()
 ## Request the game to be paused. Called from the pause menu to pause_manager.gd to avoid coupling.
 @warning_ignore("unused_signal")
 signal RequestUnpause()
+
+## Called when the camera changes.
+@warning_ignore("unused_signal")
+signal CameraChanged(camera:Camera2D)
+#endregion
+
+#region UI Requests
+
+## Opens the settings menu.
+@warning_ignore("unused_signal")
+signal OpenSettings()
 #endregion
 
 func _ready() -> void:
