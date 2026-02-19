@@ -7,12 +7,16 @@ const sample_dict = {
 	"float": 1.02,
 	"int": 5,
 	"str": "Hello, world!",
-	"array": [1,2,3.3,"test",{"str2": "MyString"}],
+	"false": false,
+	"true": true,
+	"array": [1,2, true, false, 3.3,"test",{"str2": "MyString"}],
 	"dict": {
 		"float": 1.02,
 		"int": 5,
 		"str": "Hello, world!",
 		"array": [1,2,3.3,"test",{"str2": "MyString"}],
+		"false": false,
+		"true": true,
 	}
 }
 

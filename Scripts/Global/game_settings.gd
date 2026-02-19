@@ -15,7 +15,6 @@ func _signal_settings() -> void:
 	var data : Dictionary = get_settings_data()
 	
 	for setting:String in data.keys():
-		print("Emit " + setting + " (" + str(data[setting]) + ")")
 		SettingChanged.emit(setting, data[setting])
 
 func get_settings_data() -> Dictionary:
@@ -56,6 +55,6 @@ func set_setting(key:String, value:Variant) -> void:
 func _ready() -> void:
 	if !PersistentData.is_loaded:
 		await PersistentData.DataLoaded
-	print("Doing it")
 	PersistentData.DataLoaded.connect(_signal_settings)
+	print(get_settings_data())
 	_signal_settings()

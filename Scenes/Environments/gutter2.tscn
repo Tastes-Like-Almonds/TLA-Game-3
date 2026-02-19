@@ -1,4 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://bl3ttxw1muura"]
+[gd_scene load_steps=15 format=3 uid="uid://bl3ttxw1muura"]
+
+[ext_resource type="Script" uid="uid://bytykcs62pxn5" path="res://Scripts/Environments/gutter_2.gd" id="1_jl21p"]
 
 [sub_resource type="Gradient" id="Gradient_bn6cp"]
 offsets = PackedFloat32Array(1)
@@ -79,6 +81,7 @@ color_ramp = SubResource("Gradient_p84su")
 seamless = true
 
 [node name="Gutter2Env" type="Node2D"]
+script = ExtResource("1_jl21p")
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -93,7 +96,7 @@ offset = Vector2(1.845315, -10.547034)
 modulate = Color(1, 1, 1, 0.40784314)
 z_index = -7
 position = Vector2(-1432.9999, -31.999998)
-scale = Vector2(5, 5)
+scale = Vector2(9.148695, 9.148695)
 texture = SubResource("GradientTexture2D_3hcw5")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Background"]

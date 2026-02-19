@@ -12,7 +12,7 @@ func _on_continue_pressed() -> void:
 	SignalBus.RequestUnpause.emit()
 
 func _on_exit_level_pressed() -> void:
-	get_tree().quit()
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 
 func _on_settings_pressed() -> void:
 	SignalBus.OpenSettings.emit()

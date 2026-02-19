@@ -122,6 +122,7 @@ func load_game(path:String=SAVE_PATH) -> void:
 func save_game(path:String=SAVE_PATH) -> void:
 	
 	print("Saving game...")
+	print(loaded_data)
 	
 	if (!loaded_data):
 		load_game() # Will create base data if needed
