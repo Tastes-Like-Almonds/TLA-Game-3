@@ -31,7 +31,7 @@ func use(charge_time : float) -> void:
 	if _wielder.get_player_body().is_on_floor(): return
 	super(charge_time)
 
-func on_use(charge_time : float) -> void:
+func on_use(_charge_time : float) -> void:
 	if not is_instance_valid(_wielder): return
 	current_touch_cooldown = 0.0
 	can_use = false

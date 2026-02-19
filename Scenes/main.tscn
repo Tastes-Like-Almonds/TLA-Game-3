@@ -231,6 +231,7 @@ layer = 2
 [node name="DevPanel" type="Control" parent="UI"]
 unique_name_in_owner = true
 visible = false
+z_index = 4
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -239,6 +240,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 theme = ExtResource("1_344ge")
 script = ExtResource("2_ynf5e")
 
@@ -249,6 +251,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -256,16 +259,20 @@ theme_override_constants/margin_bottom = 8
 
 [node name="HSplitContainer" type="HSplitContainer" parent="UI/DevPanel/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 split_offset = 1080
 
 [node name="Control" type="Control" parent="UI/DevPanel/MarginContainer/HSplitContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
@@ -273,11 +280,13 @@ theme_override_constants/margin_bottom = 12
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2"]
 layout_mode = 2
@@ -371,6 +380,7 @@ layout_mode = 2
 [node name="Control2" type="Control" parent="UI/Settings/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -501,6 +511,7 @@ text = "Apply"
 [node name="Control" type="Control" parent="UI/Settings/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="CRT" type="Control" parent="UI"]
 z_index = 5

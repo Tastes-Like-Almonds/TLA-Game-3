@@ -34,13 +34,37 @@ enum MovementMode {
 
 var property_modifiers : Dictionary[String, Array]
 
+# Cache modified properties for perfomance. Not doing so costs about 5ms frame time (on my machine)
+var property_modifier_cache : Dictionary[String, Variant]
+
+# Dirtied properties have not yet had their values cached
+var dirty_properties : Dictionary[String, bool]
+
 @export var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0, &"SFX")
 @export var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0, &"SFX")
 @export var refresh_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Refresh Short.wav", 0.7, 1.0, &"SFX")
 
 #endregion
 
+func dirty_property(property: String) -> void:
+	dirty_properties[property] = true
+	
+	# size_scale screws with other properties, so erase everything if it changes.
+	if property == "size_scale":
+		dirty_properties.clear()
+
+## Gets a player's stat with respect to all modifiers.
 func get_modified_property(property: String) -> Variant:
+	
+	# NOTE: If at any point a property changes, ensure that dirty_properties[property] is set to
+	# true afterward.
+	
+	# Get value from the cache if it hasn't been changed.
+	if property not in dirty_properties: dirty_properties[property] = true
+	if !dirty_properties[property]:
+		return property_modifier_cache[property]
+	
+	#...Otherwise, recalculate.
 	
 	var arr : Array[PropertyModifier] = []
 	if property in property_modifiers:
@@ -60,7 +84,12 @@ func get_modified_property(property: String) -> Variant:
 	if property != "size_scale":
 		size_scale = get_size_scale()
 	
-	return properties.get_modified(property, arr, size_scale)
+	var modified : Variant = properties.get_modified(property, arr, size_scale)
+	
+	dirty_properties[property] = false
+	property_modifier_cache[property] = modified
+	
+	return modified
 
 #region Properties
 ## The amount of time the player has triggered their M1 ability
@@ -601,6 +630,8 @@ func add_modifier(mod : PropertyModifier, stat:String) -> void:
 				property_modifiers[stat].erase(current_mod)
 		property_modifiers.get(stat).append(mod)
 	
+	dirty_property(stat)
+	
 	# Make modifier display for timed modifications
 	if mod.timer > 0:
 		var color : Color = Color.WHITE
@@ -619,6 +650,7 @@ func remove_modifier_by_id(id : String, stat:String) -> void:
 	for mod : PropertyModifier in property_modifiers[stat]:
 		if mod.id == id:
 			property_modifiers[stat].erase(mod)
+			dirty_property(stat)
 
 ## Update all of the player's property modifiers.
 func _update_modifiers(delta : float) -> void:
@@ -628,6 +660,7 @@ func _update_modifiers(delta : float) -> void:
 			if not value.is_active():
 				var last_size : float = get_size_scale()
 				property_modifiers[key].erase(value)
+				dirty_property(key)
 				if key == "size_scale":
 					teleport_to(get_player_body().global_position/(get_size_scale()/last_size))
 
@@ -668,6 +701,7 @@ func _ready() -> void:
 	add_weapon(get_modified_property("starting_weapon"))
 	equip_weapon_slot(0)
 	sprite.play("idle")
+	
 	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.

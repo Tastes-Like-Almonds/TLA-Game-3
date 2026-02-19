@@ -6,6 +6,7 @@ signal SettingChanged(key:String, value:Variant)
 const DEFAULTS = {
 	"music_volume_perc" = 0.5,
 	"sfx_volume_perc" = 0.5,
+	"brightness" = 0.5,
 	"disable_crt" = false,
 	"fullscreen" = false
 }

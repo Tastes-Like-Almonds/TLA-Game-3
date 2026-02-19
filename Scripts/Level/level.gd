@@ -43,6 +43,7 @@ func _get_default_player_weapon() -> Weapon:
 ## use _make_camera.
 func _setup_camera() -> void:
 	var camera := _make_camera()
+	SignalBus.CameraChanged.emit(camera)
 	add_child(camera)
 
 ## Setup the player. Should only be overidden if specific functionality is needed. Otherwise,

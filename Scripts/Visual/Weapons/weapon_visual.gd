@@ -110,6 +110,7 @@ func _update_sparks() -> void:
 	var sparks : GPUParticles2D = _get_spark_particles()
 	sparks.emitting = _is_dragging(spark_threshold)
 	
+	if !sparks.emitting: return
 	var vel := player.get_player_sword().get_last_sword_velocity()
 	var speed := vel.length()
 	if player.get_player_sword().is_on_cable():
