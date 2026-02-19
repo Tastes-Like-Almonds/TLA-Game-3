@@ -21,7 +21,7 @@ script = ExtResource("1_q52lv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -10
-position = Vector2(-1318.0001, 4708)
+position = Vector2(-1043, 5330)
 scale = Vector2(505.0625, 248.3948)
 texture = SubResource("GradientTexture2D_0t62c")
 offset = Vector2(-6.73976, -3.8326082)
@@ -67,7 +67,7 @@ position = Vector2(2409, 2296)
 position = Vector2(2274, 2309)
 
 [node name="Diseased Wretch3" parent="." instance=ExtResource("5_opktl")]
-position = Vector2(-10938, 5644)
+position = Vector2(-10856, 5627)
 
 [node name="ExplosionOrb" parent="." instance=ExtResource("6_dby0c")]
 position = Vector2(-9150, 5728)
@@ -76,7 +76,32 @@ position = Vector2(-9150, 5728)
 position = Vector2(-8627, 5835)
 
 [node name="RatFinalized" type="Sprite2D" parent="."]
-position = Vector2(-7497.0005, 5776.0005)
+position = Vector2(-7383.0005, 5755)
+scale = Vector2(6.7499924, 5.5625)
+texture = ExtResource("7_dby0c")
+
+[node name="RatFinalized2" type="Sprite2D" parent="."]
+position = Vector2(-3162, 2688)
+scale = Vector2(6.7499924, 5.5625)
+texture = ExtResource("7_dby0c")
+
+[node name="RatFinalized5" type="Sprite2D" parent="."]
+position = Vector2(-3315, 2687)
+scale = Vector2(6.7499924, 5.5625)
+texture = ExtResource("7_dby0c")
+
+[node name="RatFinalized6" type="Sprite2D" parent="."]
+position = Vector2(-2978, 2679)
+scale = Vector2(6.7499924, 5.5625)
+texture = ExtResource("7_dby0c")
+
+[node name="RatFinalized3" type="Sprite2D" parent="."]
+position = Vector2(-3407, 2681)
+scale = Vector2(6.7499924, 5.5625)
+texture = ExtResource("7_dby0c")
+
+[node name="RatFinalized4" type="Sprite2D" parent="."]
+position = Vector2(-2888, 2681)
 scale = Vector2(6.7499924, 5.5625)
 texture = ExtResource("7_dby0c")
 

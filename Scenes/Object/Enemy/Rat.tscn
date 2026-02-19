@@ -61,7 +61,7 @@ linear_accel_max = -2.2351742e-06
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_upkqw"]
 size = Vector2(32, 11.5)
 
-[node name="Diseased Wretch" type="AnimatableBody2D" node_paths=PackedStringArray("walk_sound", "notifier") groups=["EnemyBody"]]
+[node name="Rat" type="AnimatableBody2D" node_paths=PackedStringArray("walk_sound", "notifier") groups=["EnemyBody"]]
 position = Vector2(0, 1)
 collision_layer = 0
 collision_mask = 17
