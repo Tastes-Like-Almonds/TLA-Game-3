@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_pdo4d"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="4_7gm2p"]
 [ext_resource type="PackedScene" uid="uid://qragv60k75mq" path="res://Scenes/Object/Enemy/Rat.tscn" id="5_38iw5"]
-[ext_resource type="PackedScene" path="res://Scenes/Object/Enemy/infested_cockroach.tscn" id="8_ba2ag"]
+[ext_resource type="PackedScene" uid="uid://sye5w3jy5qfu" path="res://Scenes/Object/Enemy/infested_cockroach.tscn" id="8_ba2ag"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -31,10 +31,10 @@ tile_map_data = PackedByteArray("AAC6/qX/AQACAAAAAAC7/qX/AQACAAAAAAC8/qX/AQACAAA
 tile_set = ExtResource("2_11a84")
 
 [node name="PlayerSpawn" parent="." instance=ExtResource("3_pdo4d")]
-position = Vector2(-9693, 3027)
+position = Vector2(-15550, -4495)
 
 [node name="CameraSetter" parent="." instance=ExtResource("4_7gm2p")]
-position = Vector2(-9694, 3028)
+position = Vector2(-15550, -4495)
 track_player = true
 
 [node name="Diseased Wretch" parent="." instance=ExtResource("5_38iw5")]

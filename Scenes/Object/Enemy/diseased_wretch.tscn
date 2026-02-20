@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://twrvxmncf1tq"]
+[gd_scene load_steps=18 format=3 uid="uid://twrvxmncf1tq"]
 
-[ext_resource type="Script" path="res://Scripts/Object/Enemy/infested_cockroach.gd" id="1_i7r4a"]
+[ext_resource type="Script" uid="uid://d0bvnnccjcow" path="res://Scripts/Object/Enemy/infested_cockroach.gd" id="1_i7r4a"]
 [ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_57f7c"]
+[ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="3_4i0xq"]
 [ext_resource type="Texture2D" uid="uid://dd5rvo0oubtwe" path="res://Assets/Sprites/Enemy/Diseased Wretch/Diseased Wretch 1.png" id="3_8a6q3"]
 [ext_resource type="Texture2D" uid="uid://djye3l874e7fi" path="res://Assets/Sprites/Enemy/Diseased Wretch/Diseased Wretch 2.png" id="4_4i0xq"]
 [ext_resource type="Script" uid="uid://bt4s0eko6axeb" path="res://Scripts/Object/Enemy/Component/hitbox.gd" id="7_v8sec"]
@@ -65,12 +66,13 @@ linear_accel_max = -2.2351742e-06
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_upkqw"]
 size = Vector2(54, 72.5)
 
-[node name="Diseased Wretch" type="AnimatableBody2D" node_paths=PackedStringArray("walk_sound", "notifier") groups=["EnemyBody"]]
+[node name="Diseased Wretch" type="AnimatableBody2D" node_paths=PackedStringArray("walk_sound", "sprite", "notifier") groups=["EnemyBody"]]
 collision_layer = 0
 collision_mask = 17
 sync_to_physics = false
 script = ExtResource("1_i7r4a")
 walk_sound = NodePath("Walking")
+sprite = NodePath("AnimatedSprite2D")
 notifier = NodePath("VisibleOnScreenNotifier2D")
 hit_sound = SubResource("Resource_2lw46")
 death_sound = SubResource("Resource_fokgr")
@@ -84,6 +86,7 @@ metadata/_edit_vertical_guides_ = [-61.0]
 shape = SubResource("RectangleShape2D_o6sep")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("3_4i0xq")
 position = Vector2(7.6293945e-06, -0.5000057)
 scale = Vector2(1.6250001, 1.7749999)
 sprite_frames = SubResource("SpriteFrames_i7r4a")
