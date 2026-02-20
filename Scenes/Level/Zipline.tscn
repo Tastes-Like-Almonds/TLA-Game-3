@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://7v0n5ibld2fj"]
+[gd_scene load_steps=17 format=4 uid="uid://7v0n5ibld2fj"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_uvgno"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_igegf"]
@@ -39,6 +39,12 @@ _data = {
 }
 point_count = 7
 
+[sub_resource type="Curve2D" id="Curve2D_nih2k"]
+_data = {
+"points": PackedVector2Array(118.55777, 41.7409, -118.55777, -41.7409, -10042, 1655, 142.28633, -72.7495, -142.28633, 72.7495, -10351, 1664, 23.579483, -68.3805, -23.579483, 68.3805, -10605, 1833, -33.011276, -40.08512, 33.011276, 40.08512, -10568, 2145, -169.10358, 35.431225, 169.10358, -35.431225, -10158, 2236, 1.6105102, 125.6198, -1.6105102, -125.6198, -9803, 2035, 310.82846, 152.99847, -310.82846, -152.99847, -10042, 1655)
+}
+point_count = 7
+
 [node name="DevLevel2" type="Node2D"]
 script = ExtResource("1_uvgno")
 
@@ -76,7 +82,7 @@ texture = SubResource("GradientTexture2D_7ktlv")
 texture_scale = 4.88
 
 [node name="Gutter2Env" parent="." instance=ExtResource("7_7csbb")]
-position = Vector2(79, -62)
+position = Vector2(90, -36)
 scale = Vector2(4, 4)
 
 [node name="ProximityText3" parent="." instance=ExtResource("11_ct6yc")]
@@ -98,3 +104,6 @@ curve = SubResource("Curve2D_qjb36")
 
 [node name="Cablev3" parent="." instance=ExtResource("9_nk8f4")]
 curve = SubResource("Curve2D_nk8f4")
+
+[node name="Cablev4" parent="." instance=ExtResource("9_nk8f4")]
+curve = SubResource("Curve2D_nih2k")
