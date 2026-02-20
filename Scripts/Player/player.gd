@@ -385,9 +385,9 @@ func equip_weapon(weapon : Weapon) -> void:
 	_clear_visuals()
 	loadout_changed.emit()
 	
-	var scn : PackedScene = CosmeticLoader.get_weapon_visual(weapon)
+	var scn : WeaponVisual = CosmeticLoader.get_weapon_visual(weapon)
 	if scn:
-		weapon_visual = scn.instantiate()
+		weapon_visual = scn
 		weapon_visual.set_player(self)
 		add_child(weapon_visual)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://birc57pmi5hwh"]
+[gd_scene load_steps=53 format=3 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="Theme" uid="uid://1q4kixjfk3u0" path="res://Resource/Theme/dev_panel.tres" id="1_344ge"]
 [ext_resource type="Script" uid="uid://bt4l1nsa4vgma" path="res://Scripts/main.gd" id="1_d1ilt"]
@@ -13,6 +13,9 @@
 [ext_resource type="Script" uid="uid://v3hd4cjj2lyr" path="res://Scripts/UI/Settings/crt_toggle.gd" id="8_d1ilt"]
 [ext_resource type="Script" uid="uid://bkbihwm040snb" path="res://Scripts/UI/Settings/sfx_slider.gd" id="8_fdnlq"]
 [ext_resource type="Script" uid="uid://bhudyvex8bwnh" path="res://Scripts/UI/crt.gd" id="8_hptm8"]
+[ext_resource type="Texture2D" uid="uid://c06jm23bgejvc" path="res://Assets/Sprites/UI/Music on.png" id="8_k12tt"]
+[ext_resource type="Texture2D" uid="uid://b108worvdf5j2" path="res://Assets/Sprites/UI/sfx on.png" id="9_h1bgf"]
+[ext_resource type="Script" uid="uid://c7uo040b3xeih" path="res://Scripts/UI/Settings/SFX.gd" id="10_b3802"]
 [ext_resource type="Shader" uid="uid://tf2ffx1gvv16" path="res://Resource/Shader/testing.gdshader" id="13_jkdf5"]
 [ext_resource type="Script" uid="uid://txhwpq51hhdr" path="res://Scripts/UI/brightness.gd" id="14_wsu2k"]
 
@@ -413,10 +416,10 @@ text = "Apply"
 layout_mode = 2
 dragging_enabled = false
 
-[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music"]
+[node name="TextureRect" type="TextureRect" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music"]
+custom_minimum_size = Vector2(60, 61)
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "Music      "
+texture = ExtResource("8_k12tt")
 
 [node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music"]
 layout_mode = 2
@@ -428,10 +431,10 @@ value = 50.0
 layout_mode = 2
 dragging_enabled = false
 
-[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX"]
+[node name="TextureRect" type="TextureRect" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX"]
+custom_minimum_size = Vector2(60, 61)
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "SFX         "
+texture = ExtResource("9_h1bgf")
 
 [node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX"]
 layout_mode = 2
@@ -440,7 +443,7 @@ size_flags_vertical = 4
 max_value = 1.0
 step = 0.05
 value = 1.0
-script = ExtResource("8_fdnlq")
+script = ExtResource("10_b3802")
 
 [node name="Brightness" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2

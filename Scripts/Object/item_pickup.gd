@@ -28,7 +28,7 @@ var current_cooldown : float = 0.0
 func _reset_weapon_visual() -> void:
 	if is_instance_valid(weapon_visual):
 		weapon_visual.queue_free()
-	weapon_visual = CosmeticLoader.get_weapon_visual(weapon).instantiate()
+	weapon_visual = CosmeticLoader.get_weapon_visual(weapon)
 	add_child(weapon_visual) 
 
 ## Give the weapon to the passed player
