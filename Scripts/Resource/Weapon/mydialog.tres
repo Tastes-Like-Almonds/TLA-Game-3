@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="DialogTree" load_steps=6 format=3 uid="uid://b5k8y6nth6k8a"]
+
+[ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="1_dtayr"]
+[ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="2_6yuc4"]
+
+[sub_resource type="Resource" id="Resource_dtayr"]
+script = ExtResource("2_6yuc4")
+text = "You fool! What have you done!"
+name = "[wave]Billy, the Great Destroyer"
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_gae5f"]
+script = ExtResource("2_6yuc4")
+text = "The boss won't be happy with this one... Quick, this way!"
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_6yuc4"]
+script = ExtResource("2_6yuc4")
+text = "[color=red][shake]We'll get away one way or another..."
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[resource]
+script = ExtResource("1_dtayr")
+lines = Array[ExtResource("2_6yuc4")]([SubResource("Resource_dtayr"), SubResource("Resource_gae5f"), SubResource("Resource_6yuc4")])
+metadata/_custom_type_script = "uid://dj5qjnk7vxan4"

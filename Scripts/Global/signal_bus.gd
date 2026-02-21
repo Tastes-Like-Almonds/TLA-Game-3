@@ -39,6 +39,10 @@ signal RequestUnpause()
 ## Called when the camera changes.
 @warning_ignore("unused_signal")
 signal CameraChanged(camera:Camera2D)
+
+## Called when the level is fully loaded and any transition animations complete.
+@warning_ignore("unused_signal")
+signal TransitionFinished()
 #endregion
 
 #region UI Requests

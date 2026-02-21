@@ -2,6 +2,7 @@
 @abstract class_name Enemy extends AnimatableBody2D
 
 signal Killed
+signal Hit(damage:float)
 
 @onready var alert_pos : Node2D = null
 
@@ -22,8 +23,12 @@ signal Killed
 
 # --- #
 @export_group("Health and Damage")
-## The time it takes before the bat can be hit again.
-@export var hit_time : float = 0.5
+
+## If true, the enemy can take damage but never die.
+@export var invincible : bool = false
+
+## The time it takes before the enemy can be hit again.
+@export var hit_time : float = 0.2
 
 ## The max health of the bat. Does not regen.
 @export var health : float = 5.0
@@ -98,12 +103,16 @@ func deal_damage(damage: float) -> bool:
 	
 	if time_since_last_hit < hit_time: return false
 	
-	health -= damage
+	if !invincible:
+		health -= damage
+	
 	time_since_last_hit = 0.0
 	
 	# Damage display
 	var color := get_current_hit_color()
 	sprite.material.set_shader_parameter("solid_color", color + Vector4(0,0,0,1))
+	
+	Hit.emit(damage)
 	
 	if health <= 0:
 		_kill()

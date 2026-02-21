@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://birc57pmi5hwh"]
+[gd_scene load_steps=56 format=3 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="Theme" uid="uid://1q4kixjfk3u0" path="res://Resource/Theme/dev_panel.tres" id="1_344ge"]
 [ext_resource type="Script" uid="uid://bt4l1nsa4vgma" path="res://Scripts/main.gd" id="1_d1ilt"]
@@ -18,6 +18,8 @@
 [ext_resource type="Script" uid="uid://c7uo040b3xeih" path="res://Scripts/UI/Settings/SFX.gd" id="10_b3802"]
 [ext_resource type="Shader" uid="uid://tf2ffx1gvv16" path="res://Resource/Shader/testing.gdshader" id="13_jkdf5"]
 [ext_resource type="Script" uid="uid://txhwpq51hhdr" path="res://Scripts/UI/brightness.gd" id="14_wsu2k"]
+[ext_resource type="Texture2D" uid="uid://dd82e11xhkmne" path="res://Assets/Sprites/Enemy/dummy/Dummy Idle.png" id="18_fevyy"]
+[ext_resource type="Script" uid="uid://cmdsxaysqgg3f" path="res://Scripts/UI/dialog.gd" id="18_hibaj"]
 
 [sub_resource type="Gradient" id="Gradient_kry3j"]
 colors = PackedColorArray(0.7647408, 0.80606586, 0.87960994, 0.15294118, 1, 1, 1, 0)
@@ -222,6 +224,17 @@ shader_parameter/pixel_strength = -2.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wsu2k"]
 shader = ExtResource("13_jkdf5")
 shader_parameter/brightness = 0.670000031825
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3802"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.0885599, 0.08855992, 0.08855986, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
 
 [node name="main" type="Node"]
 script = ExtResource("1_d1ilt")
@@ -547,5 +560,100 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("14_wsu2k")
+
+[node name="Dialog" type="Control" parent="UI"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("18_hibaj")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Dialog"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="TextDisplay" type="VBoxContainer" parent="UI/Dialog/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="UI/Dialog/MarginContainer/TextDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Control2" type="Control" parent="UI/Dialog/MarginContainer/TextDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Dialog/MarginContainer/TextDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="NamePanel" type="PanelContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b3802")
+
+[node name="Name" type="RichTextLabel" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/NamePanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("6_6bp64")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "Name"
+fit_content = true
+autowrap_mode = 0
+visible_characters = 29
+
+[node name="DialogPanel" type="PanelContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b3802")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="Text" type="RichTextLabel" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("6_6bp64")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[color=red]You fool! What have you [shake]done!"
+visible_characters = 29
+
+[node name="TextureRect" type="TextureRect" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("18_fevyy")
+expand_mode = 2
 
 [node name="LevelSelect" parent="." instance=ExtResource("6_21xkr")]

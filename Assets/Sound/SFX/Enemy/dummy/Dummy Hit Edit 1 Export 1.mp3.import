@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ddo375xhps83a"
+path="res://.godot/imported/Dummy Hit Edit 1 Export 1.mp3-5747912012734e5b2db260936d55998e.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Enemy/dummy/Dummy Hit Edit 1 Export 1.mp3"
+dest_files=["res://.godot/imported/Dummy Hit Edit 1 Export 1.mp3-5747912012734e5b2db260936d55998e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
