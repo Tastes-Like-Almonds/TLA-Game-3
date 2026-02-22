@@ -563,6 +563,7 @@ script = ExtResource("14_wsu2k")
 
 [node name="Dialog" type="Control" parent="UI"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -622,6 +623,7 @@ text = "Name"
 fit_content = true
 autowrap_mode = 0
 visible_characters = 29
+visible_ratio = 7.25
 
 [node name="DialogPanel" type="PanelContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer"]
 layout_mode = 2

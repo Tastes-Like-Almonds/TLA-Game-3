@@ -39,8 +39,6 @@ func get_setting(key:String) -> Variant:
 	
 	if (data):
 		if (key in data): val = data[key]
-	else:
-		push_warning("Settings data not present in PersistentData!")
 		
 	return val
 

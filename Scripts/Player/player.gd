@@ -46,12 +46,15 @@ var dirty_properties : Dictionary[String, bool]
 
 #endregion
 
+func dirty_all_properties() -> void:
+	dirty_properties.clear()
+
 func dirty_property(property: String) -> void:
 	dirty_properties[property] = true
 	
 	# size_scale screws with other properties, so erase everything if it changes.
 	if property == "size_scale":
-		dirty_properties.clear()
+		dirty_all_properties()
 
 ## Gets a player's stat with respect to all modifiers.
 func get_modified_property(property: String) -> Variant:
@@ -384,6 +387,7 @@ func equip_weapon(weapon : Weapon) -> void:
 	
 	_clear_visuals()
 	loadout_changed.emit()
+	dirty_all_properties()
 	
 	var scn : WeaponVisual = CosmeticLoader.get_weapon_visual(weapon)
 	if scn:

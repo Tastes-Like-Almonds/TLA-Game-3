@@ -35,6 +35,7 @@ func test_add_weapon() -> void:
 	assert_false(player.held_weapons.size() < 1, "Adding player weapon in excess should not clear array")
 	
 	player.properties.max_equip = 2
+	player.dirty_property("max_equip")
 	player.add_weapon(other_weapon)
 	assert_eq(player.held_weapons.size(), 2, "Adding a second weapon should result in two weapons in held_items")
 
