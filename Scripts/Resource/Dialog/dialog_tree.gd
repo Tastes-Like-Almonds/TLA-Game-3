@@ -1,16 +1,16 @@
 class_name DialogTree extends Resource
 
 ## Default time between characters displayed
-const DEFAULT_SPEED: float = 0.12
+const DEFAULT_SPEED: float = 0.05
 
 ## Multipliers applied to specific symbols when displaying text; e.g. "." being set to 2 would mean
 ## it pauses for twice the time.
 const SYMBOL_COEFS: Dictionary[String, float] = {
-	".": 3,
-	"!": 3,
-	"?": 3,
-	",": 2,
-	";": 2
+	".": 6,
+	"!": 4,
+	"?": 4,
+	",": 3,
+	";": 3
 }
 
 ## An array of dialog lines to be displayed sequentially.

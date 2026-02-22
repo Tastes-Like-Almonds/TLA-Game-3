@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="DialogTree" load_steps=6 format=3 uid="uid://b5k8y6nth6k8a"]
+[gd_resource type="Resource" script_class="DialogTree" load_steps=11 format=3 uid="uid://b5k8y6nth6k8a"]
 
 [ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="1_dtayr"]
 [ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="2_6yuc4"]
+[ext_resource type="Texture2D" uid="uid://ddw28q8ijph6" path="res://Assets/Sprites/Player/Damaged Sewer Guy 1.png" id="3_gae5f"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="4_12yya"]
 
 [sub_resource type="Resource" id="Resource_dtayr"]
 script = ExtResource("2_6yuc4")
@@ -16,10 +18,32 @@ metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
 [sub_resource type="Resource" id="Resource_6yuc4"]
 script = ExtResource("2_6yuc4")
-text = "[color=red][shake]We'll get away one way or another..."
+text = "[color=red][shake]We'll get away one way or anot-"
+auto = true
+name = "Other guy"
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_4gq53"]
+script = ExtResource("4_12yya")
+sound_string = "res://Assets/Sound/SFX/Player/Sword/Use end.wav"
+bus = &"Dialog"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_qtt8a"]
+script = ExtResource("2_6yuc4")
+text = "Interruption!"
+name = "Interruptor dude"
+icon = ExtResource("3_gae5f")
+sound = SubResource("Resource_4gq53")
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_12yya"]
+script = ExtResource("2_6yuc4")
+text = "It's time to play... a [playsound sound=\"res://Assets/Sound/SFX/Enemy/Bat/Bat Death.wav\"][screenshake 0.2]sound! "
+name = "SOUND GUY WOOOOT"
 metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
 [resource]
 script = ExtResource("1_dtayr")
-lines = Array[ExtResource("2_6yuc4")]([SubResource("Resource_dtayr"), SubResource("Resource_gae5f"), SubResource("Resource_6yuc4")])
+lines = Array[ExtResource("2_6yuc4")]([SubResource("Resource_dtayr"), SubResource("Resource_gae5f"), SubResource("Resource_6yuc4"), SubResource("Resource_qtt8a"), SubResource("Resource_12yya")])
 metadata/_custom_type_script = "uid://dj5qjnk7vxan4"

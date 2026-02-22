@@ -9,8 +9,15 @@ func _cycle_queue() -> void:
 	if queue.size() > 0:
 		play_dialog_tree(queue[0])
 
-func get_char_delay(tree:DialogTree, line_idx:int, char_idx:int) -> float:
-	return DialogTree.DEFAULT_SPEED # TODO
+func get_char_delay(line:DialogLine, character:String) -> float:
+	var speed := DialogTree.DEFAULT_SPEED
+	if line.speed:
+		speed = line.speed
+	
+	if character in DialogTree.SYMBOL_COEFS:
+		speed *= DialogTree.SYMBOL_COEFS[character]
+	
+	return speed
 
 ## Play a dialog tree. This overrides a
 func play_dialog_tree(dialog_tree:DialogTree) -> void: 

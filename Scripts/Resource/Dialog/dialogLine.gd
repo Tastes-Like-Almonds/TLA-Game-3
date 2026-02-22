@@ -20,6 +20,8 @@ enum SoundType {
 ## Icon to be displayed. If not set, nothing is shown.
 @export var icon: Texture2D
 
+## Delay between each character
+@export var speed:float
 
 @export_category("Audio")
 
