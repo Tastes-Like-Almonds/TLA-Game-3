@@ -655,7 +655,7 @@ shape = SubResource("RectangleShape2D_26fll")
 [node name="LevelTransition" parent="." instance=ExtResource("14_26fll")]
 position = Vector2(-102, -1242)
 scale = Vector2(39.164894, 15.791585)
-load_level = "res://Scenes/Level/dash_other.tscn"
+load_level = "res://Scenes/Level/IdkSomething.tscn"
 
 [node name="Fadeout" type="Sprite2D" parent="."]
 position = Vector2(-398, -1244)
