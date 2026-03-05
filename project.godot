@@ -32,6 +32,7 @@ Lobby="*res://Scripts/Global/Lobby.gd"
 PersistentData="*res://Scripts/Global/persistent_data.gd"
 GameSettings="*res://Scripts/Global/game_settings.gd"
 DialogLoader="*res://Scripts/Global/dialog_loader.gd"
+Music="*res://Scripts/Global/music.gd"
 
 [debug]
 

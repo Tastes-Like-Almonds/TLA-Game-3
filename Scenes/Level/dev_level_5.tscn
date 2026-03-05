@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=4 uid="uid://caaxff2gr7scy"]
+[gd_scene load_steps=24 format=4 uid="uid://caaxff2gr7scy"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ex82n"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_7brat"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="2_cvvtj"]
+[ext_resource type="Script" uid="uid://b6h82msp0laej" path="res://Scripts/Resource/Sound/song_data.gd" id="2_tj5jg"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="3_7brat"]
 [ext_resource type="PackedScene" uid="uid://bd62nj7nj3ak5" path="res://Scenes/Object/BoostOrb/gravity_orb.tscn" id="4_2hpmh"]
 [ext_resource type="PackedScene" uid="uid://cks0qs8xg7v0r" path="res://Scenes/Object/Element/velocity_influencer.tscn" id="5_fnk1r"]
@@ -16,6 +17,11 @@
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="12_f6l6f"]
 [ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="13_cvvtj"]
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="16_fnk1r"]
+
+[sub_resource type="Resource" id="Resource_acrr7"]
+script = ExtResource("2_tj5jg")
+path = &"res://Assets/Sound/Music/maybe this perchance.wav"
+metadata/_custom_type_script = "uid://b6h82msp0laej"
 
 [sub_resource type="Gradient" id="Gradient_fnk1r"]
 offsets = PackedFloat32Array(0, 0.044444446, 0.2488889, 0.51111114, 1)
@@ -39,8 +45,9 @@ gradient = SubResource("Gradient_tj5jg")
 fill_from = Vector2(0.47435898, 0.115384616)
 fill_to = Vector2(0.47975078, 1)
 
-[node name="DevLevel2" type="Node2D"]
+[node name="DevLevel5" type="Node2D"]
 script = ExtResource("1_ex82n")
+starting_track = SubResource("Resource_acrr7")
 
 [node name="Gutter2Env" parent="." instance=ExtResource("2_7brat")]
 
@@ -480,10 +487,10 @@ position = Vector2(-4012, -3813)
 position = Vector2(-3070, -3802)
 
 [connection signal="body_entered" from="Level/Tiles/Ground/Saw" to="Level/Tiles/Ground/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40606" to="Level/Tiles/Ground/@Area2D@40606" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40607" to="Level/Tiles/Ground/@Area2D@40607" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40608" to="Level/Tiles/Ground/@Area2D@40608" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40609" to="Level/Tiles/Ground/@Area2D@40609" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40610" to="Level/Tiles/Ground/@Area2D@40610" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40611" to="Level/Tiles/Ground/@Area2D@40611" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@40612" to="Level/Tiles/Ground/@Area2D@40612" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27288" to="Level/Tiles/Ground/@Area2D@27288" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27289" to="Level/Tiles/Ground/@Area2D@27289" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27290" to="Level/Tiles/Ground/@Area2D@27290" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27291" to="Level/Tiles/Ground/@Area2D@27291" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27292" to="Level/Tiles/Ground/@Area2D@27292" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27293" to="Level/Tiles/Ground/@Area2D@27293" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27294" to="Level/Tiles/Ground/@Area2D@27294" method="_on_body_entered"]

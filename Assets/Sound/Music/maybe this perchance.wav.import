@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://qur61b70808i"
+path="res://.godot/imported/maybe this perchance.wav-7003842fd12a19e9d98576687b7cfe71.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/Music/maybe this perchance.wav"
+dest_files=["res://.godot/imported/maybe this perchance.wav-7003842fd12a19e9d98576687b7cfe71.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=44099
+edit/loop_end=1411199
+compress/mode=2
