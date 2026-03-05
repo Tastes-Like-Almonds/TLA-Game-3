@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene load_steps=41 format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
@@ -17,9 +17,13 @@
 [ext_resource type="Texture2D" uid="uid://c4g75rwy1qnv3" path="res://Assets/Sprites/Player/Sewer Guy Idle 3.png" id="9_ks1b7"]
 [ext_resource type="Texture2D" uid="uid://bnto80x30sd76" path="res://Assets/Sprites/Player/Sewer Guy Idle 4.png" id="10_hnuln"]
 [ext_resource type="Script" uid="uid://4383yqbiu0iv" path="res://Scripts/Player/animator.gd" id="14_7g0yx"]
+[ext_resource type="Texture2D" uid="uid://qraff530dmne" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141432.png" id="14_rqdc0"]
 [ext_resource type="Script" uid="uid://h2etf8462ck0" path="res://Scripts/Player/cosmetic_container.gd" id="15_h8ma5"]
 [ext_resource type="Texture2D" uid="uid://dpcxsu7nurdap" path="res://Assets/Sprites/Cosmetic/Hat/Tricorn Hat.png" id="15_hnuln"]
+[ext_resource type="Texture2D" uid="uid://svvl12nvhtae" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141435.png" id="15_qr1w5"]
 [ext_resource type="Script" uid="uid://oksvaahqx7ou" path="res://Scripts/Resource/Cosmetic/body_cosmetic.gd" id="16_eksi1"]
+[ext_resource type="Texture2D" uid="uid://di542m153ro1b" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141436.png" id="16_ythyg"]
+[ext_resource type="Texture2D" uid="uid://dai2n7ghbhlah" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141437.png" id="17_bmb2s"]
 
 [sub_resource type="GDScript" id="GDScript_dd0ac"]
 script/source = "extends Resource
@@ -180,10 +184,22 @@ animations = [{
 "name": &"idle",
 "speed": 4.0
 }, {
-"frames": [],
-"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_rqdc0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_qr1w5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ythyg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_bmb2s")
+}],
+"loop": false,
 "name": &"spawn",
-"speed": 5.0
+"speed": 6.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_06tpx"]
@@ -260,7 +276,9 @@ shape = SubResource("RectangleShape2D_tugb3")
 material = ExtResource("4_0u5uq")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_aqm4k")
-animation = &"airborne"
+animation = &"spawn"
+frame = 3
+frame_progress = 1.0
 
 [node name="ModifierDisplayManager" type="Node2D" parent="playerBody"]
 script = ExtResource("2_06tpx")

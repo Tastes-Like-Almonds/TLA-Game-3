@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bx05lwlejhqqc"]
+[gd_scene load_steps=12 format=3 uid="uid://bx05lwlejhqqc"]
 
 [ext_resource type="Script" uid="uid://dxnf3hgwxytok" path="res://Scripts/Visual/Weapons/Sword/sword_basic_visual.gd" id="1_wwsnl"]
 [ext_resource type="Texture2D" uid="uid://be5d4l178k1d6" path="res://Assets/Sprites/Player/Sword Icon.png" id="2_47q6j"]
@@ -44,12 +44,6 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_dod1f"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
 
-[sub_resource type="Gradient" id="Gradient_58q71"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_sdpqg"]
-gradient = SubResource("Gradient_58q71")
-
 [node name="SwordBasicVisual" type="Node2D"]
 show_behind_parent = true
 script = ExtResource("1_wwsnl")
@@ -81,4 +75,3 @@ points = PackedVector2Array(0, 0, 51, 29, 78, 78, 90, 103, 141, 74, 124, 41, 169
 width = 60.0
 width_curve = SubResource("Curve_47q6j")
 gradient = SubResource("Gradient_dod1f")
-texture = SubResource("GradientTexture1D_sdpqg")

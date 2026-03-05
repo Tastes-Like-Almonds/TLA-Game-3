@@ -17,6 +17,15 @@ func _get_level(target:Node) -> Level:
 func call_loader(_x: Variant) -> void:
 	LevelLoader.load_level(load_level, Globals.get_level_load_node())
 
+func _unfade(_x: Variant) -> void:
+	Globals.main.transiton_overlay_player.play("fade_from_black")
+	Globals.main.transiton_overlay_player.animation_finished.disconnect(call_loader)
+	SignalBus.LevelPathLoaded.disconnect(_unfade)
+
+func _emit_finished(_x: Variant) -> void:
+	SignalBus.TransitionFinished.emit()
+	Globals.main.transiton_overlay_player.animation_finished.disconnect(_emit_finished)
+
 ## Load load_level via LevelLoader.gd.
 func transition() -> void:
 	print("Transition.")
@@ -28,8 +37,18 @@ func transition() -> void:
 	# be sure to change it probably via finding it in level.gd.
 	_get_level(self).hide_ui()
 	Globals.main.transiton_overlay_player.play("fade_to_black")
+	
+	# NOTE: This is a bit ugly, but functions are offloaded to non-lambdas so they can be disconnected.
+	# They should not be called in any other context.
+	
+	# Load level when the screen is fully black
 	Globals.main.transiton_overlay_player.animation_finished.connect(call_loader)
-	SignalBus.LevelPathLoaded.connect(func(_x:Variant) -> void: Globals.main.transiton_overlay_player.play("fade_from_black"))
+	
+	# Unfade transition only when the level is finished loading
+	SignalBus.LevelPathLoaded.connect(_unfade)
+	
+	# Emit signal when the transition is fully over.
+	Globals.main.transiton_overlay_player.animation_finished.connect(_emit_finished)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is PlayerBody:

@@ -1,0 +1,128 @@
+[gd_scene load_steps=15 format=3 uid="uid://csqp4qm74tvoe"]
+
+[ext_resource type="Script" uid="uid://b512pwspngler" path="res://Scripts/Object/Enemy/target_dummy.gd" id="1_yxqju"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_2kuc3"]
+[ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="3_1efb1"]
+[ext_resource type="Texture2D" uid="uid://dd82e11xhkmne" path="res://Assets/Sprites/Enemy/dummy/Dummy Idle.png" id="4_arxo4"]
+[ext_resource type="Texture2D" uid="uid://criwmrs0px7kk" path="res://Assets/Sprites/Enemy/dummy/Attacked Dummy.png" id="5_dyh2q"]
+[ext_resource type="Script" uid="uid://bt4s0eko6axeb" path="res://Scripts/Object/Enemy/Component/hitbox.gd" id="14_2gx28"]
+[ext_resource type="AudioStream" uid="uid://do1lx75avuihy" path="res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Walk Edit 1 Export 1(3).mp3" id="16_drltb"]
+
+[sub_resource type="Resource" id="Resource_comci"]
+script = ExtResource("2_2kuc3")
+sound_string = "res://Assets/Sound/SFX/Enemy/dummy/Dummy Hit Edit 1 Export 1.mp3"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6sep"]
+size = Vector2(48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v4fcd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_arxo4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_dyh2q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_arxo4")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_arxo4")
+}],
+"loop": false,
+"name": &"spawn",
+"speed": 10.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_6un6e"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.5686275, 0.5686275, 0.24705882, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gnly0"]
+gradient = SubResource("Gradient_6un6e")
+width = 8
+height = 8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tuwcp"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+gravity = Vector3(0, 2000, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upkqw"]
+size = Vector2(42.96991, 44)
+
+[node name="Target Dummy" type="AnimatableBody2D" node_paths=PackedStringArray("sprite", "notifier") groups=["EnemyBody"]]
+collision_layer = 0
+collision_mask = 17
+sync_to_physics = false
+script = ExtResource("1_yxqju")
+sprite = NodePath("AnimatedSprite2D")
+notifier = NodePath("VisibleOnScreenNotifier2D")
+hit_sound = SubResource("Resource_comci")
+invincible = true
+max_hit_kb = 400.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 49)
+shape = SubResource("RectangleShape2D_o6sep")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("3_1efb1")
+position = Vector2(0, 22)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_v4fcd")
+animation = &"spawn"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(2, -57)
+emitting = false
+amount = 16
+texture = SubResource("GradientTexture2D_gnly0")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_tuwcp")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+top_level = true
+position = Vector2(2, 48.999996)
+scale = Vector2(1.6249493, 0.77130425)
+rect = Rect2(-35, -134, 65, 168)
+
+[node name="Hitbox" type="Area2D" parent="." groups=["BladeHitable"]]
+position = Vector2(2, 49)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("14_2gx28")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(5.960466e-08, -36)
+scale = Vector2(0.8883075, 1.8834884)
+shape = SubResource("RectangleShape2D_upkqw")
+debug_color = Color(0.98, 0.08819997, 0.31115, 0.39607844)
+
+[node name="Walking" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(2, 49)
+stream = ExtResource("16_drltb")
+volume_db = 5.579
+
+[node name="AlertPos" type="Node2D" parent="."]
+position = Vector2(0, -85)

@@ -3,6 +3,10 @@ extends WeaponVisual
 @export var sword_length : float = 60
 
 @onready var line2D : Line2D = $Line2D
+
+@export var texture : Texture
+@export var trail_color : Color = Color.WHITE
+
 var line_curve := Curve2D.new()
 
 var point_wait_delay : float = 0.05
@@ -43,5 +47,9 @@ func _ready() -> void:
 	super()
 	line2D.points = []
 	line_curve.bake_interval = 1
+	line2D.modulate = trail_color
+	$Sprite2D/GPUParticles2D.modulate = trail_color
 	if is_instance_valid(player):
 		line2D.width = sword_length*player.get_size_scale()
+	if (texture):
+		$Sprite2D.texture = texture

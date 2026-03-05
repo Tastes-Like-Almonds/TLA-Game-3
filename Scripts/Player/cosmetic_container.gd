@@ -13,6 +13,12 @@ const frame_offsets = {
 		Vector2(0,-9),
 		Vector2(0,-9),
 		Vector2(0,-9)
+	],
+	"spawn": [
+		Vector2(0,69),
+		Vector2(0,51),
+		Vector2(0,20),
+		Vector2(0,0),
 	]
 }
 

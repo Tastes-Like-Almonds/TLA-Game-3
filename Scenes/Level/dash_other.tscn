@@ -589,4 +589,4 @@ scale = Vector2(16.03278, 7.6054325)
 load_level = "res://Scenes/Level/orbs.tscn"
 
 [connection signal="body_entered" from="Level/Tiles/Ground/Saw" to="Level/Tiles/Ground/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@71750" to="Level/Tiles/Ground/@Area2D@71750" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@23290" to="Level/Tiles/Ground/@Area2D@23290" method="_on_body_entered"]
