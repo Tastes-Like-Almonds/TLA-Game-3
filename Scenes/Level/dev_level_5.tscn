@@ -1,9 +1,9 @@
-[gd_scene load_steps=24 format=4 uid="uid://caaxff2gr7scy"]
+[gd_scene load_steps=30 format=4 uid="uid://caaxff2gr7scy"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ex82n"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_7brat"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="2_cvvtj"]
-[ext_resource type="Script" uid="uid://b6h82msp0laej" path="res://Scripts/Resource/Sound/song_data.gd" id="2_tj5jg"]
+[ext_resource type="Script" path="res://Scripts/Resource/Sound/song_data.gd" id="2_tj5jg"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="3_7brat"]
 [ext_resource type="PackedScene" uid="uid://bd62nj7nj3ak5" path="res://Scenes/Object/BoostOrb/gravity_orb.tscn" id="4_2hpmh"]
 [ext_resource type="PackedScene" uid="uid://cks0qs8xg7v0r" path="res://Scenes/Object/Element/velocity_influencer.tscn" id="5_fnk1r"]
@@ -12,8 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="7_acrr7"]
 [ext_resource type="PackedScene" uid="uid://sye5w3jy5qfu" path="res://Scenes/Object/Enemy/infested_cockroach.tscn" id="8_mvs8r"]
 [ext_resource type="PackedScene" uid="uid://c32ukwj524sxi" path="res://Scenes/Object/Zone/kill_barrier.tscn" id="9_6hw2k"]
+[ext_resource type="PackedScene" uid="uid://byaojnvcyv5ng" path="res://Scenes/Object/Dialog/dialog_prompt.tscn" id="9_acrr7"]
+[ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="10_6hw2k"]
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="10_vsrqb"]
 [ext_resource type="PackedScene" uid="uid://c6cqn4qbed04l" path="res://Scenes/Object/checkpoint.tscn" id="11_j5hc7"]
+[ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="11_vsrqb"]
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="12_f6l6f"]
 [ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="13_cvvtj"]
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="16_fnk1r"]
@@ -22,6 +25,20 @@
 script = ExtResource("2_tj5jg")
 path = &"res://Assets/Sound/Music/maybe this perchance.wav"
 metadata/_custom_type_script = "uid://b6h82msp0laej"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_6hw2k"]
+
+[sub_resource type="Resource" id="Resource_vsrqb"]
+script = ExtResource("11_vsrqb")
+text = "Hello there, traveller! How are you doing?"
+name = "Fella"
+icon = SubResource("PlaceholderTexture2D_6hw2k")
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_j5hc7"]
+script = ExtResource("10_6hw2k")
+lines = Array[ExtResource("11_vsrqb")]([SubResource("Resource_vsrqb")])
+metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
 
 [sub_resource type="Gradient" id="Gradient_fnk1r"]
 offsets = PackedFloat32Array(0, 0.044444446, 0.2488889, 0.51111114, 1)
@@ -99,6 +116,10 @@ process_mode = 4
 
 [node name="ExplosionOrb" parent="Level/Tiles" instance=ExtResource("7_2hpmh")]
 position = Vector2(132, -2488)
+
+[node name="DialogPrompt" parent="Level/Tiles" instance=ExtResource("9_acrr7")]
+position = Vector2(-3946, 2703)
+dialog = SubResource("Resource_j5hc7")
 
 [node name="Decor" type="Node2D" parent="Level"]
 
@@ -487,10 +508,10 @@ position = Vector2(-4012, -3813)
 position = Vector2(-3070, -3802)
 
 [connection signal="body_entered" from="Level/Tiles/Ground/Saw" to="Level/Tiles/Ground/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27288" to="Level/Tiles/Ground/@Area2D@27288" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27289" to="Level/Tiles/Ground/@Area2D@27289" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27290" to="Level/Tiles/Ground/@Area2D@27290" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27291" to="Level/Tiles/Ground/@Area2D@27291" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27292" to="Level/Tiles/Ground/@Area2D@27292" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27293" to="Level/Tiles/Ground/@Area2D@27293" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@27294" to="Level/Tiles/Ground/@Area2D@27294" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35113" to="Level/Tiles/Ground/@Area2D@35113" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35114" to="Level/Tiles/Ground/@Area2D@35114" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35115" to="Level/Tiles/Ground/@Area2D@35115" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35116" to="Level/Tiles/Ground/@Area2D@35116" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35117" to="Level/Tiles/Ground/@Area2D@35117" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35118" to="Level/Tiles/Ground/@Area2D@35118" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35119" to="Level/Tiles/Ground/@Area2D@35119" method="_on_body_entered"]

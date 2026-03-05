@@ -50,6 +50,14 @@ signal TransitionFinished()
 ## Opens the settings menu.
 @warning_ignore("unused_signal")
 signal OpenSettings()
+
+## Fires when the dialog queue ends.
+@warning_ignore("unused_signal")
+signal DialogStart
+
+## Fires when the dialog queue is no longer empty.
+@warning_ignore("unused_signal")
+signal DialogEnd
 #endregion
 
 func _ready() -> void:

@@ -53,11 +53,12 @@ func _tree_ended() -> void:
 	hide()
 	displaying_characters = false
 	current_tree = null
+	SignalBus.DialogEnd.emit() # NOTE: Change if the below is added.
 	# TODO Add choice system (If ever needed)
 
 ## Handles user input when "next_dialog" triggers. Either skips or proceeds to the next dialog.
 func _next_dialog() -> void:
-	if (!current_tree): return
+	if (!current_tree) or char_idx <= 1: return
 	if char_idx < current_tree.lines[line_idx].text.length():
 		char_idx = current_tree.lines[line_idx].text.length()-1
 		_next_char()
@@ -206,6 +207,6 @@ func _input(event: InputEvent) -> void:
 			if event.is_action("next_dialog"):
 				_next_dialog()
 
-# Testing only
-func _ready() -> void:
-	play_dialog_tree(load("res://Scripts/Resource/Weapon/mydialog.tres"))
+## Testing only
+#func _ready() -> void:
+	#play_dialog_tree(load("res://Scripts/Resource/Weapon/mydialog.tres"))

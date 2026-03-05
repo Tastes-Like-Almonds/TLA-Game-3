@@ -19,14 +19,14 @@ func get_char_delay(line:DialogLine, character:String) -> float:
 	
 	return speed
 
-## Play a dialog tree. This overrides a
+## Play a dialog tree. This overrides any currently playing one.
 func play_dialog_tree(dialog_tree:DialogTree) -> void: 
 	var dialog_node : Control = Globals.main.get_node("%Dialog")
 	
 	if dialog_node:
+		if (queue.size() == 0):
+			SignalBus.DialogStart.emit()
 		dialog_node.play_dialog_tree(dialog_tree)
-	
-	_cycle_queue()
 
 ## Queues a DialogTree to play after the current one(s) are finished. Plays immediately if the queue
 ## is empty.
@@ -36,3 +36,6 @@ func queue_dialog_tree(dialog_tree:DialogTree) -> void:
 ## Clears all dialog in the queue.
 func clear_queue() -> void:
 	queue.clear()
+
+func _ready() -> void:
+	SignalBus.DialogEnd.connect(_cycle_queue)
