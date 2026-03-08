@@ -16,6 +16,8 @@ signal on_load
 var level_config : LevelConfig
 
 var loaded : bool = false
+@export var starting_ambience:SongData = null
+@export var starting_track:SongData = null
 
 @export_group("Files")
 @export_file_path("*.tscn") var level_ui_path : String = "res://Scenes/UI/level_ui.tscn"
@@ -103,4 +105,10 @@ func _ready() -> void:
 	# Delegate pausing to separate node as to ensure level gets paused, as well.
 	var pause_man : Node = load("res://Scenes/Component/pause_manager.tscn").instantiate()
 	add_child(pause_man)
+	
+	# Start tracks if set
+	if starting_ambience:
+		Music.start_track(Music.TrackLayer.AMBIENT, starting_ambience)
+	if starting_track:
+		Music.start_track(Music.TrackLayer.MUSIC, starting_track)
 #endregion

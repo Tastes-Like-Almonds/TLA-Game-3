@@ -14,6 +14,9 @@ enum ControlMode {
 @onready var body_shape : CollisionShape2D = $AnimatableBody2D/CollisionShape2D
 @onready var blade : BladeArea = $Area2D
 
+@export var normal_hit_sound:SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Sword/small hit (1).wav",0.1,1.0,&"SFX")
+@export var max_hit_sound:SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Sword/large hit.wav",0.8,1.0,&"SFX")
+
 @export var control_mode : ControlMode = ControlMode.GLOBAL_MOUSE
 
 var last_sword_velocity : Vector2
@@ -79,12 +82,21 @@ func _update_blade(_delta : float) -> void:
 	var result := blade.get_overlapping_bodies()
 	result.append_array(blade.get_overlapping_areas())
 	
+	var enemy_was_hit:bool = false
 	for hit in result:
 		if hit in last_result: continue; # Prevent multiple hits while colliding
 		if hit.is_in_group("BladeHitable"):
 			if hit.has_method("on_sword_hit"):
 				hit.call("on_sword_hit", player)
+				if hit is EnemyHitbox:
+					enemy_was_hit = true
 				SignalBus.BladeHit.emit(hit)
+	
+	if enemy_was_hit:
+		if player.get_blade_damage_perc() >= 1:
+			Sfx.play_sound(max_hit_sound)
+		#else:
+			#Sfx.play_sound(normal_hit_sound)
 	
 	last_result = result
 

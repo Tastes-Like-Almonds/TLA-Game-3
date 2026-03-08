@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://birc57pmi5hwh"]
+[gd_scene load_steps=61 format=3 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="Theme" uid="uid://1q4kixjfk3u0" path="res://Resource/Theme/dev_panel.tres" id="1_344ge"]
 [ext_resource type="Script" uid="uid://bt4l1nsa4vgma" path="res://Scripts/main.gd" id="1_d1ilt"]
@@ -14,10 +14,15 @@
 [ext_resource type="Script" uid="uid://bkbihwm040snb" path="res://Scripts/UI/Settings/sfx_slider.gd" id="8_fdnlq"]
 [ext_resource type="Script" uid="uid://bhudyvex8bwnh" path="res://Scripts/UI/crt.gd" id="8_hptm8"]
 [ext_resource type="Texture2D" uid="uid://c06jm23bgejvc" path="res://Assets/Sprites/UI/Music on.png" id="8_k12tt"]
+[ext_resource type="Script" path="res://Scenes/music_slider.gd" id="9_gt3je"]
 [ext_resource type="Texture2D" uid="uid://b108worvdf5j2" path="res://Assets/Sprites/UI/sfx on.png" id="9_h1bgf"]
-[ext_resource type="Script" uid="uid://c7uo040b3xeih" path="res://Scripts/UI/Settings/SFX.gd" id="10_b3802"]
+[ext_resource type="Script" path="res://Scripts/UI/Settings/SFX.gd" id="10_b3802"]
 [ext_resource type="Shader" uid="uid://tf2ffx1gvv16" path="res://Resource/Shader/testing.gdshader" id="13_jkdf5"]
 [ext_resource type="Script" uid="uid://txhwpq51hhdr" path="res://Scripts/UI/brightness.gd" id="14_wsu2k"]
+[ext_resource type="Texture2D" uid="uid://dd82e11xhkmne" path="res://Assets/Sprites/Enemy/dummy/Dummy Idle.png" id="18_fevyy"]
+[ext_resource type="Script" uid="uid://cmdsxaysqgg3f" path="res://Scripts/UI/dialog.gd" id="18_hibaj"]
+[ext_resource type="Script" uid="uid://brl4aacjvmi05" path="res://Scripts/Resource/Dialog/Tags/play_sound.gd" id="19_pdsj5"]
+[ext_resource type="Script" uid="uid://d1ymyf6lkf00o" path="res://Scripts/Resource/Dialog/Tags/screen_shake.gd" id="20_ee4r6"]
 
 [sub_resource type="Gradient" id="Gradient_kry3j"]
 colors = PackedColorArray(0.7647408, 0.80606586, 0.87960994, 0.15294118, 1, 1, 1, 0)
@@ -223,6 +228,25 @@ shader_parameter/pixel_strength = -2.0
 shader = ExtResource("13_jkdf5")
 shader_parameter/brightness = 0.670000031825
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3802"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.0885599, 0.08855992, 0.08855986, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_gt3je"]
+script = ExtResource("19_pdsj5")
+metadata/_custom_type_script = "uid://brl4aacjvmi05"
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_3pmx8"]
+script = ExtResource("20_ee4r6")
+metadata/_custom_type_script = "uid://d1ymyf6lkf00o"
+
 [node name="main" type="Node"]
 script = ExtResource("1_d1ilt")
 autoload_level = ""
@@ -426,7 +450,10 @@ texture = ExtResource("8_k12tt")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-value = 50.0
+max_value = 1.0
+step = 0.0
+value = 0.5
+script = ExtResource("9_gt3je")
 
 [node name="SFX" type="HSplitContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -547,5 +574,103 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("14_wsu2k")
+
+[node name="Dialog" type="Control" parent="UI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("18_hibaj")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Dialog"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="TextDisplay" type="VBoxContainer" parent="UI/Dialog/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="UI/Dialog/MarginContainer/TextDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Control2" type="Control" parent="UI/Dialog/MarginContainer/TextDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Dialog/MarginContainer/TextDisplay"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="NamePanel" type="PanelContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b3802")
+
+[node name="Name" type="RichTextLabel" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/NamePanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("6_6bp64")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "Name"
+fit_content = true
+autowrap_mode = 0
+visible_characters = 29
+visible_ratio = 7.25
+
+[node name="DialogPanel" type="PanelContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b3802")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="Text" type="RichTextLabel" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("6_6bp64")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[color=red]You fool! What have you [shake]done!"
+custom_effects = [SubResource("RichTextEffect_gt3je"), SubResource("RichTextEffect_3pmx8")]
+visible_characters = 29
+
+[node name="TextureRect" type="TextureRect" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("18_fevyy")
+expand_mode = 2
 
 [node name="LevelSelect" parent="." instance=ExtResource("6_21xkr")]

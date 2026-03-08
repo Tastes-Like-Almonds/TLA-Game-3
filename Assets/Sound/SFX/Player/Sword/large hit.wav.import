@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bh3ui3ks2fuv7"
+path="res://.godot/imported/large hit.wav-980858a0a8337e6ff7b414a32946d4e9.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Player/Sword/large hit.wav"
+dest_files=["res://.godot/imported/large hit.wav-980858a0a8337e6ff7b414a32946d4e9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
