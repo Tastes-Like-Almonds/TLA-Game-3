@@ -216,8 +216,9 @@ func _process(delta: float) -> void:
 		return
 
 func _ready() -> void:
-	notifier.screen_entered.connect(_check_respawn)
-	notifier.global_position = global_position
+	if notifier:
+		notifier.screen_entered.connect(_check_respawn)
+		notifier.global_position = global_position
 	start_pos = global_position
 	sprite.play("default")
 	start_health = health

@@ -1,16 +1,18 @@
-[gd_scene load_steps=10 format=4 uid="uid://d1dpv8hj66ish"]
+[gd_scene load_steps=11 format=4 uid="uid://wykr401fo8ac"]
 
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="1_4muu2"]
+[ext_resource type="Script" uid="uid://cyie1nihhq0e7" path="res://Scripts/Level/basic_level.gd" id="1_mafip"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="1_u32fo"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_q5peu"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="3_q5peu"]
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="3_u32fo"]
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="4_mafip"]
-[ext_resource type="PackedScene" uid="uid://qragv60k75mq" path="res://Scenes/Object/Enemy/Rat.tscn" id="5_dhe6y"]
-[ext_resource type="PackedScene" uid="uid://bw4oxah3cpd40" path="res://Scenes/Object/Enemy/Roach.tscn" id="6_a1ug4"]
+[ext_resource type="PackedScene" path="res://Scenes/Object/Enemy/Rat.tscn" id="5_dhe6y"]
+[ext_resource type="PackedScene" path="res://Scenes/Object/Enemy/Roach.tscn" id="6_a1ug4"]
 [ext_resource type="PackedScene" uid="uid://j43ke12vh6s6" path="res://Scenes/Object/BoostOrb/explosion_orb.tscn" id="7_1t1wm"]
 
 [node name="Tutor" type="Node2D"]
+script = ExtResource("1_mafip")
 
 [node name="Gutter2Env" parent="." instance=ExtResource("1_4muu2")]
 position = Vector2(-11539, -2919)
@@ -26,6 +28,7 @@ position = Vector2(-7431, 252)
 
 [node name="CameraSetter" parent="." instance=ExtResource("3_q5peu")]
 position = Vector2(-7434, 251)
+track_player = true
 
 [node name="TeleportZone" parent="." instance=ExtResource("3_u32fo")]
 position = Vector2(-4202, 1090)

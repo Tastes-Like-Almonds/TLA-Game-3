@@ -15,6 +15,8 @@ signal on_load
 
 var level_config : LevelConfig
 
+var loaded : bool = false
+
 @export_group("Files")
 @export_file_path("*.tscn") var level_ui_path : String = "res://Scenes/UI/level_ui.tscn"
 
@@ -87,6 +89,8 @@ func initialize(config : LevelConfig = null) -> void:
 	register_ui(player)
 	
 	on_load.emit()
+	SignalBus.LevelLoaded.emit()
+	loaded = true
 	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 
 static func get_level_data() -> void:

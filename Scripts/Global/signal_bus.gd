@@ -28,6 +28,10 @@ signal PlayerRemoved()
 @warning_ignore("unused_signal")
 signal LevelPathLoaded(level: Level)
 
+## Fires when a level is fully loaded.
+@warning_ignore("unused_signal")
+signal LevelLoaded()
+
 ## Firest when the game is paused/unpaused.
 @warning_ignore("unused_signal")
 signal PauseToggled()
