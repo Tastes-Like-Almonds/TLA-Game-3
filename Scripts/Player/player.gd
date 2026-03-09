@@ -671,7 +671,6 @@ func _update_modifiers(delta : float) -> void:
 #endregion
 
 func _process(delta: float) -> void:
-	
 	last_hit_time += delta
 	
 	if current_weapon:
@@ -704,8 +703,6 @@ func _ready() -> void:
 	lives = get_modified_property("max_lives")
 	add_weapon(get_modified_property("starting_weapon"))
 	equip_weapon_slot(0)
-	
-	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.
 func set_last_collision(collision:KinematicCollision2D) -> void:

@@ -9,6 +9,9 @@ func _cycle_queue() -> void:
 	if queue.size() > 0:
 		play_dialog_tree(queue[0])
 
+func is_playing_dialog() -> bool:
+	return queue.size() > 0
+
 func get_char_delay(line:DialogLine, character:String) -> float:
 	var speed := DialogTree.DEFAULT_SPEED
 	if line.speed:
@@ -26,6 +29,7 @@ func play_dialog_tree(dialog_tree:DialogTree) -> void:
 	if dialog_node:
 		if (queue.size() == 0):
 			SignalBus.DialogStart.emit()
+		queue.insert(0, dialog_tree)
 		dialog_node.play_dialog_tree(dialog_tree)
 
 ## Queues a DialogTree to play after the current one(s) are finished. Plays immediately if the queue

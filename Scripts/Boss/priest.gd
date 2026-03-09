@@ -8,6 +8,7 @@ enum Phase {
 }
 
 @export var target_start_pos : Node2D
+@export var dialog : DialogTree
 var phase : Phase
 var phase_ended : bool = false
 
@@ -37,6 +38,8 @@ func _movement(delta : float) -> void:
 			return
 		Phase.INTRO:
 			_intro(delta)
+			if !DialogLoader.is_playing_dialog() and phase_ended:
+				change_phase(Phase.FIGHT)
 		Phase.FIGHT:
 			return
 		Phase.DEATH: 
@@ -58,7 +61,9 @@ func change_phase(p:Phase) -> void:
 		Phase.INTRO:
 			if cam:
 				cam.set_target_node(self)
+			DialogLoader.play_dialog_tree(dialog)
 		Phase.FIGHT:
+			sprite.z_index = 5
 			for player:Player in get_tree().get_nodes_in_group(&"Player"):
 				cam.set_target_node(player.get_player_body())
 		Phase.DEATH: 

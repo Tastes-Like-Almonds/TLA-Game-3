@@ -20,7 +20,7 @@
 [ext_resource type="Shader" uid="uid://tf2ffx1gvv16" path="res://Resource/Shader/testing.gdshader" id="13_jkdf5"]
 [ext_resource type="Script" uid="uid://txhwpq51hhdr" path="res://Scripts/UI/brightness.gd" id="14_wsu2k"]
 [ext_resource type="Texture2D" uid="uid://dd82e11xhkmne" path="res://Assets/Sprites/Enemy/dummy/Dummy Idle.png" id="18_fevyy"]
-[ext_resource type="Script" uid="uid://cmdsxaysqgg3f" path="res://Scripts/UI/dialog.gd" id="18_hibaj"]
+[ext_resource type="Script" path="res://Scripts/UI/dialog.gd" id="18_hibaj"]
 [ext_resource type="Script" uid="uid://brl4aacjvmi05" path="res://Scripts/Resource/Dialog/Tags/play_sound.gd" id="19_pdsj5"]
 [ext_resource type="Script" uid="uid://d1ymyf6lkf00o" path="res://Scripts/Resource/Dialog/Tags/screen_shake.gd" id="20_ee4r6"]
 
@@ -249,7 +249,7 @@ metadata/_custom_type_script = "uid://d1ymyf6lkf00o"
 
 [node name="main" type="Node"]
 script = ExtResource("1_d1ilt")
-autoload_level = ""
+autoload_level = "res://Scenes/Level/get_sword.tscn"
 
 [node name="UI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

@@ -93,7 +93,6 @@ func initialize(config : LevelConfig = null) -> void:
 	on_load.emit()
 	SignalBus.LevelLoaded.emit()
 	loaded = true
-	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 
 static func get_level_data() -> void:
 	pass

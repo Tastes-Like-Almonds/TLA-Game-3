@@ -1,0 +1,137 @@
+[gd_scene load_steps=17 format=3 uid="uid://lmdaa6dfai2i"]
+
+[ext_resource type="Script" uid="uid://neist3cvkvet" path="res://Scripts/Object/Enemy/possessed_sword.gd" id="1_n8jwi"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_toqun"]
+[ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="3_7b82f"]
+[ext_resource type="Texture2D" uid="uid://dva4baob733av" path="res://Scenes/Visual/Weapons/Sword/Sword Icon.png" id="4_4k1j5"]
+[ext_resource type="Texture2D" uid="uid://be5d4l178k1d6" path="res://Assets/Sprites/Player/Sword Icon.png" id="4_gtmdc"]
+
+[sub_resource type="Resource" id="Resource_qpu00"]
+script = ExtResource("2_toqun")
+sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Spawn 2.wav"
+volume_linear = 1.0
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_lma17"]
+script = ExtResource("2_toqun")
+sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Charge 2.wav"
+volume_linear = 0.8
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_60yu1"]
+script = ExtResource("2_toqun")
+sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Dash 1.wav"
+volume_linear = 0.8
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_gtmdc"]
+script = ExtResource("2_toqun")
+sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Hit 1.wav"
+volume_linear = 0.7
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_grdlm"]
+script = ExtResource("2_toqun")
+sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Death Edit 1 Export 1.mp3"
+volume_linear = 0.6
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n8jwi"]
+size = Vector2(100, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v4fcd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_4k1j5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_4k1j5")
+}],
+"loop": false,
+"name": &"spawn",
+"speed": 10.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_6un6e"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0.015686275, 0.2509804, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gnly0"]
+gradient = SubResource("Gradient_6un6e")
+width = 8
+height = 8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tuwcp"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+gravity = Vector3(0, 2000, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+
+[sub_resource type="Gradient" id="Gradient_4k1j5"]
+colors = PackedColorArray(1, 1, 1, 0.4509804, 0, 0, 0, 0)
+
+[node name="PossessedSword" type="AnimatableBody2D" node_paths=PackedStringArray("sprite", "notifier") groups=["BladeHitable", "EnemyBody"]]
+collision_layer = 8
+collision_mask = 10
+sync_to_physics = false
+script = ExtResource("1_n8jwi")
+sound_spawn = SubResource("Resource_qpu00")
+sound_charge = SubResource("Resource_lma17")
+sound_dash = SubResource("Resource_60yu1")
+sprite = NodePath("AnimatedSprite2D")
+notifier = NodePath("VisibleOnScreenNotifier2D")
+hit_sound = SubResource("Resource_gtmdc")
+death_sound = SubResource("Resource_grdlm")
+health = 40.0
+max_hit_kb = 900.0
+knockback_coef = 1.0
+movement_speed = 1600.0
+aggro_range = 100.0
+respawn = false
+only_respawn_on_screen = false
+spawn_dead = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_n8jwi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("3_7b82f")
+rotation = 0.7853982
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_v4fcd")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+texture = SubResource("GradientTexture2D_gnly0")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_tuwcp")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+top_level = true
+rect = Rect2(-32, -32, 60, 60)
+
+[node name="AlertPos" type="Node2D" parent="."]
+position = Vector2(-1, -30)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+z_index = 1
+rotation = 0.7853982
+texture = ExtResource("4_gtmdc")
+particle_flag_align_y = true
+gravity = Vector2(0, 0)
+scale_amount_min = 3.0
+scale_amount_max = 3.0
+color_ramp = SubResource("Gradient_4k1j5")

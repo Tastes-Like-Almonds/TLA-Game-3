@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://bom207eoe00gn"]
+[gd_scene load_steps=36 format=4 uid="uid://bom207eoe00gn"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ra547"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_2l1rg"]
@@ -10,6 +10,8 @@
 [ext_resource type="Shader" uid="uid://b3w52kvg34c4c" path="res://Resource/Shader/bat.gdshader" id="9_3cxce"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="9_iis5v"]
 [ext_resource type="Texture2D" uid="uid://ddw28q8ijph6" path="res://Assets/Sprites/Player/Damaged Sewer Guy 1.png" id="9_pj625"]
+[ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="9_xerla"]
+[ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="10_n35ia"]
 
 [sub_resource type="Gradient" id="Gradient_7au3u"]
 offsets = PackedFloat32Array(0)
@@ -90,6 +92,30 @@ colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 gradient = SubResource("Gradient_fnk1r")
 fill_from = Vector2(0.47435898, 0.115384616)
 fill_to = Vector2(0.47975078, 1)
+
+[sub_resource type="Resource" id="Resource_ln7dv"]
+script = ExtResource("10_n35ia")
+text = "PLACEHOLDER DIALOG"
+name = "???"
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_ra547"]
+script = ExtResource("10_n35ia")
+text = "DIALOG LINE 2"
+name = "The Priest"
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_vprxk"]
+script = ExtResource("10_n35ia")
+text = "[color=red]FINAL DIALOG"
+name = "The Priest"
+speed = 0.15
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_2l1rg"]
+script = ExtResource("9_xerla")
+lines = Array[ExtResource("10_n35ia")]([SubResource("Resource_ln7dv"), SubResource("Resource_ra547"), SubResource("Resource_vprxk")])
+metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3cxce"]
 shader = ExtResource("9_3cxce")
@@ -290,11 +316,16 @@ texture = SubResource("GradientTexture2D_7au3u")
 position = Vector2(529, 0)
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="Priest" node_paths=PackedStringArray("target_start_pos", "sprite")]
+collision_layer = 8
+collision_mask = 10
 sync_to_physics = false
 script = ExtResource("8_krtai")
 target_start_pos = NodePath("../StartPos")
+dialog = SubResource("Resource_2l1rg")
 sprite = NodePath("AnimatedSprite2D")
 health = 100.0
+max_hit_kb = 1000.0
+knockback_coef = 1.5
 max_kb = 0.0
 respawn = false
 only_respawn_on_screen = false

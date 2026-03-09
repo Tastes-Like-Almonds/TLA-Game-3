@@ -12,7 +12,7 @@ var current_player_animation : StringName
 var spawning: bool = false
 
 func finish_spawn() -> void:
-	spawning = true
+	spawning = false
 	player_sprite.animation_finished.disconnect(finish_spawn)
 
 func _ready() -> void:

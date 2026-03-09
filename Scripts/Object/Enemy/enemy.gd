@@ -74,6 +74,8 @@ signal Hit(damage:float)
 ## The time it takes to respawn if enabled, in seconds.
 @export var respawn_time : float = 3.0
 
+var do_flip : bool = true
+
 var movement_delay : float = 1.0
 
 var respawn_cooldown : float = 0.0
@@ -216,7 +218,8 @@ func _process(delta: float) -> void:
 	var color : Vector4 = get_current_hit_color()
 	sprite.material.set_shader_parameter("solid_color", Vector4(color.x,color.y,color.z,max(0,color.w-delta/hit_time)))
 	
-	sprite.flip_h = !(target_point.x < global_position.x)
+	if do_flip:
+		sprite.flip_h = !(target_point.x < global_position.x)
 	
 	if respawning:
 		respawn_cooldown += delta
