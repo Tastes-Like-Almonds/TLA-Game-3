@@ -7,7 +7,11 @@ enum ControlMode {
 	GLOBAL_MOUSE,
 	
 	## Follows the mouse relative to the center of the screen
-	LOCAL_MOUSE
+	LOCAL_MOUSE,
+	
+	## Confines the mouse to the center, but simulates its movement for sword
+	## positioning.
+	VIRTUAL_MOUSE
 }
 
 @onready var body : AnimatableBody2D = $AnimatableBody2D
@@ -35,6 +39,19 @@ var vel_perc : float
 
 var speed_value : float = 0.0
 
+## Simulated position of the mouse relative to the player
+var virtual_mouse : Vector2
+
+func _input(event: InputEvent) -> void:
+	var player := _get_player()
+	if not player: return
+	if event is InputEventMouse:
+		if event is InputEventMouseMotion:
+			virtual_mouse += event.relative
+			var dist := player.get_max_distance()
+			if dist < virtual_mouse.length():
+				virtual_mouse = virtual_mouse.normalized()*dist
+
 func _get_player() -> Player:
 	if get_parent() is Player:
 		return get_parent()
@@ -59,10 +76,15 @@ func _get_target_pos() -> Vector2:
 	var distance := player.get_max_distance()
 	
 	var mouse_vec : Vector2 = Vector2.ZERO
+	
 	if control_mode == ControlMode.LOCAL_MOUSE:
 		mouse_vec = Helper.get_mouse_vec_from_center()
+	
 	elif control_mode == ControlMode.GLOBAL_MOUSE:
 		mouse_vec = get_global_mouse_position() - player_pos
+	
+	elif control_mode == ControlMode.VIRTUAL_MOUSE:
+		mouse_vec = virtual_mouse
 	
 	# Limit the sword distance
 	if mouse_vec.length() < player.get_max_distance():
@@ -101,7 +123,6 @@ func _update_blade(_delta : float) -> void:
 	last_result = result
 
 func _physics_process(delta: float) -> void:
-	
 	last_delta = delta
 	current_cable_cooldown = clampf(current_cable_cooldown + delta, 0, cable_cooldown)
 	

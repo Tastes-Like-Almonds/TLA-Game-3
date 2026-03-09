@@ -301,7 +301,7 @@ autoload_cosmetic = SubResource("Resource_jincj")
 
 [node name="Sword" type="Node2D" parent="."]
 script = ExtResource("3_htcer")
-control_mode = 1
+control_mode = 2
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="Sword"]
 position = Vector2(0, 50)
