@@ -562,10 +562,11 @@ func clear_respawn_modifiers() -> void:
 
 func _respawn() -> void:
 	
-	teleport_to(respawn_pos)
+	
 	get_player_sword().on_cable = null
 	
 	clear_respawn_modifiers()
+	teleport_to(respawn_pos)
 	
 	time_respawning = 0
 	last_hit_time = get_invincibility_time()*-2
@@ -579,6 +580,7 @@ func _death() -> void:
 	get_player_sword().on_cable = null
 	Sfx.play_sound_2d(death_sound, get_player_position(), false)
 	dead = true
+	SignalBus.PlayerKilled.emit(self)
 
 ## Kill the player.
 func kill() -> void:

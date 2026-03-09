@@ -47,6 +47,10 @@ signal CameraChanged(camera:Camera2D)
 ## Called when the level is fully loaded and any transition animations complete.
 @warning_ignore("unused_signal")
 signal TransitionFinished()
+
+## Called when any player dies.
+@warning_ignore("unused_signal")
+signal PlayerKilled(player : Player)
 #endregion
 
 #region UI Requests

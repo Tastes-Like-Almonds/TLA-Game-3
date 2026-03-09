@@ -22,5 +22,6 @@ func hit_effect(player : Player) -> void:
 	super(player)
 	$GPUParticles2D.emitting = true
 	var mod : PropertyModifier = PropertyModifier.new(size_scale, PropertyModifier.ModiferType.MULTIPLY, time)
+	mod.reset_on_respawn = false
 	mod.set_id("gravity_orb")
 	player.add_modifier(mod, "size_scale")

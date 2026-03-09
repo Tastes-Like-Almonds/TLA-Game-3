@@ -180,19 +180,24 @@ func _check_respawn() -> void:
 		respawning = false
 		_respawn()
 
-## Called with the *player* is hit by the enemy
-func on_hit(collider : PhysicsBody2D) -> void:
-	if not collider: return
-	if respawning: return
+## Called with the *player* is hit by the enemy. Returns true if fatal.
+func on_hit(collider : PhysicsBody2D) -> bool:
+	if not collider: return false
+	if respawning: return false
 	if collider is PlayerBody and is_instance_valid(collider):
 		
 		var player_body := collider as PlayerBody
 		var player : Player = player_body.get_player()
 		
-		if not is_instance_valid(player): return
+		if not is_instance_valid(player): return false
 		elif time_since_last_hit > hit_time:
 			if player.deal_damage(2.6): # Only KB if the hit lands
 				player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
+		
+		return not player.is_alive()
+	
+	return false
+		
 #endregion
 
 #region Sound

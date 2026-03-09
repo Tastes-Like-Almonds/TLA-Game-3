@@ -55,6 +55,8 @@ var last_time : float = 0.0
 var sword_velocity : Vector2 = Vector2.ZERO
 var dash_direction : Vector2 = Vector2.ZERO
 
+var start_rotation : float = 0.0
+
 func _kill() -> void:
 	super()
 	$GPUParticles2D.emitting = true
@@ -73,6 +75,22 @@ func _respawn() -> void:
 	super()
 	sprite.play("spawn")
 
+## Reset the enemy to its starting state.
+func _reset() -> void:
+	# I had no idea this function would be so long, but here we are.
+	enraged = false
+	awakened = false
+	awakening = false
+	attack_progress = 0.0
+	awaken_time = 0.0
+	target_player = null
+	global_position = start_pos
+	rotation = start_rotation
+	velocity = Vector2.ZERO
+	sword_velocity = Vector2.ZERO
+	health = start_health
+	sprite.material.set_shader_parameter("time", 1.57)
+	
 # Starts an attack immediately. Used when enraged.
 func _enraged_reset() -> void:
 	attack_progress = hover_time
@@ -188,7 +206,9 @@ func _movement(delta : float) -> void:
 		if result:
 			if result.get_collider() is PlayerBody:
 				if time_since_last_hit > hit_time:
-					on_hit(result.get_collider())
+					if on_hit(result.get_collider()): # Fatal
+						_reset()
+				
 	
 	# End of loop; reset to beginning with random offset
 	else:
@@ -215,3 +235,7 @@ func _ready() -> void:
 	super()
 	do_flip = false # Disable sprite flipping
 	notifier.rect = collision_shape.shape.get_rect()
+	start_rotation = rotation
+	
+	# Reset upon any player death.
+	SignalBus.PlayerKilled.connect(func(_p:Player) -> void: _reset())
