@@ -374,6 +374,12 @@ func _visual_process(delta : float) -> void:
 func get_current_weapon_index() -> int:
 	return held_weapons.find(current_weapon)
 
+## Replace the player's currently held weapon with another.
+func replace_weapon(weapon : Weapon) -> void:
+	var idx := get_current_weapon_index()
+	held_weapons[idx] = weapon
+	equip_weapon_slot(idx)
+
 ## Equip the passed weapon
 func equip_weapon(weapon : Weapon) -> void:
 	
@@ -464,9 +470,11 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	
 	elif event.is_action_pressed("noclip"):
 		if get_movement_mode() == MovementMode.NOCLIP:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			set_movement_mode(MovementMode.SWORD_ORBIT)
 		else:
-			get_player_sword().on_cable = null       
+			get_player_sword().on_cable = null
+			Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 			set_movement_mode(MovementMode.NOCLIP)
 	
 	elif event is InputEventKey:
@@ -550,6 +558,7 @@ func clear_respawn_modifiers() -> void:
 		for modifier:PropertyModifier in property_modifiers[stat]:
 			if modifier.reset_on_respawn:
 				property_modifiers[stat].erase(modifier)
+	dirty_all_properties()
 
 func _respawn() -> void:
 	

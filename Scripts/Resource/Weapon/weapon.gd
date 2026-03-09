@@ -18,7 +18,7 @@ var can_use : bool = true:
 		if _wielder.get_player_body().ray_is_on_floor(): return false
 		return can_use
 
-var MAX_CHARGE: float
+var MAX_CHARGE: float = 1.0
 
 ## Returns true if the weapon has a valid wielder.
 func _has_wielder() -> bool:

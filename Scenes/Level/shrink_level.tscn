@@ -198,4 +198,4 @@ texture = SubResource("GradientTexture2D_n0y01")
 [node name="LevelTransition" parent="." instance=ExtResource("5_rjh2q")]
 position = Vector2(-1393, 66.00006)
 scale = Vector2(24.15099, 10.26658)
-load_level = "res://Scenes/Level/dash_other.tscn"
+load_level = "res://Scenes/Level/get_sword.tscn"

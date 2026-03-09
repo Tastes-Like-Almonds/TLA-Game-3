@@ -47,7 +47,7 @@ func _input(event: InputEvent) -> void:
 	if not player: return
 	if event is InputEventMouse:
 		if event is InputEventMouseMotion:
-			virtual_mouse += event.relative
+			virtual_mouse += event.relative*player.get_size_scale()
 			var dist := player.get_max_distance()
 			if dist < virtual_mouse.length():
 				virtual_mouse = virtual_mouse.normalized()*dist

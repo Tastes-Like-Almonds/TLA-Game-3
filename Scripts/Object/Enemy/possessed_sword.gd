@@ -27,25 +27,44 @@ class_name PossessedSword extends Enemy
 ## The speed in radians which the sword rotates around the player.
 @export var rotation_speed : float = 2.0
 
+## At this health, the sword will become enraged.
+@export var enrage_treshold : float = 20.0
+
+## If true, will give all players the sword upon death. This replaces their
+## held weapon.
+@export var give_sword_on_death : bool = false
+
 @export_category("Sound")
 
 @export var sound_spawn : SoundData
 @export var sound_charge : SoundData
 @export var sound_dash : SoundData
 
+# States
 var awakened := false
 var awakening := false
+var enraged := false
+
+# Internal stuff
 var awaken_time : float = 0.0
 var attack_progress : float = 1.0
 var hover_rad : float = 0.0 # Rotation around the player to be hovering
 var last_time : float = 0.0
 
+# Movement
 var sword_velocity : Vector2 = Vector2.ZERO
 var dash_direction : Vector2 = Vector2.ZERO
 
 func _kill() -> void:
 	super()
 	$GPUParticles2D.emitting = true
+	
+	GameCamera.set_current_camera_shake(get_viewport(), 0.35)
+	
+	if give_sword_on_death:
+		for player : Player in get_tree().get_nodes_in_group(&"Player"):
+			player.replace_weapon(SwordWeapon.new())
+	
 	if !respawn:
 		if !$GPUParticles2D.is_connected("finished", queue_free):
 			$GPUParticles2D.finished.connect(queue_free)
@@ -54,15 +73,35 @@ func _respawn() -> void:
 	super()
 	sprite.play("spawn")
 
+# Starts an attack immediately. Used when enraged.
+func _enraged_reset() -> void:
+	attack_progress = hover_time
+	hover_rad = randf_range(0.0,2.0*PI)
+	var dest := target_point + Vector2(cos(hover_rad), sin(hover_rad))*hover_distance
+	global_position = dest
+	Sfx.play_sound_2d(sound_charge, global_position, false)
+	sprite.material.set_shader_parameter("time", 0)
+
 func on_sword_hit(_player : Player) -> void:
 	if awakened:
-		attack_progress = 0.0 - randf_range(0, hover_variation)
+		if enraged:
+			_enraged_reset()
+		else:
+			attack_progress = 0.0 - randf_range(0, hover_variation)
 		super(_player)
 	else:
 		awaken()
+	
+	if not enraged and (health <= enrage_treshold):
+		enraged = true
+		movement_speed *= 1.5
+		dash_time /= 1.5
+		warn_time *= 0.8
+		_enraged_reset()
 
 func _movement(delta : float) -> void:
 	
+	$CPUParticles2D.emitting = not enraged
 	last_time = attack_progress
 	
 	if awakening:
@@ -113,6 +152,10 @@ func _movement(delta : float) -> void:
 	
 	# Spinning stage
 	elif attack_progress < hover_time + warn_time:
+		
+		if enraged:
+			sprite.material.set_shader_parameter("time", 1.57*pow((attack_progress-hover_time)/warn_time, 2))
+		
 		if (last_time < hover_time):
 			Sfx.play_sound_2d(sound_charge, global_position, false)
 		
@@ -132,6 +175,11 @@ func _movement(delta : float) -> void:
 	# Dashing stage (deals damage)
 	elif attack_progress < (hover_time + warn_time + dash_time):
 		
+		if enraged:
+			var prog : float = (attack_progress - hover_time - warn_time) / dash_time
+			sprite.material.set_shader_parameter("time", 1.57*(1-prog))
+			
+		
 		if (last_time < hover_time + warn_time):
 			Sfx.play_sound_2d(sound_dash, global_position, false)
 		
@@ -144,8 +192,11 @@ func _movement(delta : float) -> void:
 	
 	# End of loop; reset to beginning with random offset
 	else:
-		attack_progress = -randf_range(0, hover_variation)
-		hover_rad = target_point.angle_to(global_position)
+		if enraged:
+			_enraged_reset()
+		else:
+			attack_progress = -randf_range(0, hover_variation)
+			hover_rad = target_point.angle_to(global_position)
 	
 	if result:
 		move_and_collide(result.get_remainder().slide(result.get_normal()))
@@ -154,7 +205,6 @@ func awaken() -> void:
 	if awakening: return
 	GameCamera.set_current_camera_shake(get_viewport(), 0.2)
 	awakening = true
-	alert()
 	Sfx.play_sound_2d(sound_spawn, global_position, false)
 
 func _physics_process(delta: float) -> void:

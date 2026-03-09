@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cpky76a6i7ebn" path="res://Assets/Sprites/Player/Airborne/Airborne 1.png" id="13_26fll"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="13_bywm7"]
 [ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="14_26fll"]
-[ext_resource type="Script" uid="uid://y6l8uofkwg8j" path="res://Scripts/Level/autoplay.gd" id="14_71x6g"]
+[ext_resource type="Script" path="res://Scripts/Level/autoplay.gd" id="14_71x6g"]
 [ext_resource type="Texture2D" uid="uid://dva4baob733av" path="res://Scenes/Visual/Weapons/Sword/Sword Icon.png" id="14_c8ny0"]
 
 [sub_resource type="Gradient" id="Gradient_bn6cp"]
@@ -103,6 +103,33 @@ gradient = SubResource("Gradient_26fll")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c8ny0"]
 shader = ExtResource("12_bywm7")
 
+[sub_resource type="Animation" id="Animation_lkqar"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1830.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_71x6g"]
 resource_name = "new"
 length = 1.7
@@ -130,33 +157,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, 25), Vector2(0, 25), Vector2(0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_lkqar"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1830.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g004e"]
@@ -646,9 +646,9 @@ position = Vector2(-22.96812, 61.95048)
 shape = SubResource("RectangleShape2D_26fll")
 
 [node name="LevelTransition" parent="." instance=ExtResource("14_26fll")]
-position = Vector2(-102, -1242)
+position = Vector2(444.99994, -1283)
 scale = Vector2(39.164894, 15.791585)
-load_level = "res://Scenes/Level/dash_other.tscn"
+load_level = "res://Scenes/Level/shrink_level.tscn"
 
 [node name="Fadeout" type="Sprite2D" parent="."]
 position = Vector2(-398, -1244)
