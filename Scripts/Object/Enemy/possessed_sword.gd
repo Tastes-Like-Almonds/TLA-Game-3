@@ -90,7 +90,22 @@ func _reset() -> void:
 	sword_velocity = Vector2.ZERO
 	health = start_health
 	sprite.material.set_shader_parameter("time", 1.57)
-	
+
+func get_movement_speed() -> float:
+	if enraged:
+		return movement_speed * 1.5
+	return movement_speed
+
+func get_dash_time() -> float:
+	if enraged:
+		return dash_time / 1.5
+	return dash_time
+
+func get_warn_time() -> float:
+	if enraged:
+		return warn_time * 0.8
+	return warn_time
+
 # Starts an attack immediately. Used when enraged.
 func _enraged_reset() -> void:
 	attack_progress = hover_time
@@ -112,9 +127,6 @@ func on_sword_hit(_player : Player) -> void:
 	
 	if not enraged and (health <= enrage_treshold):
 		enraged = true
-		movement_speed *= 1.5
-		dash_time /= 1.5
-		warn_time *= 0.8
 		_enraged_reset()
 
 func _movement(delta : float) -> void:
@@ -169,10 +181,10 @@ func _movement(delta : float) -> void:
 		rotation = global_position.direction_to(target_point).angle()
 	
 	# Spinning stage
-	elif attack_progress < hover_time + warn_time:
+	elif attack_progress < hover_time + get_warn_time():
 		
 		if enraged:
-			sprite.material.set_shader_parameter("time", 1.57*pow((attack_progress-hover_time)/warn_time, 2))
+			sprite.material.set_shader_parameter("time", 1.57*pow((attack_progress-hover_time)/get_warn_time(), 2))
 		
 		if (last_time < hover_time):
 			Sfx.play_sound_2d(sound_charge, global_position, false)
@@ -180,7 +192,7 @@ func _movement(delta : float) -> void:
 		# Spin for the duration of cooldown
 		rotation = global_position.direction_to(target_point).angle()
 		
-		rotation += 2*PI*pow((attack_progress-hover_time)/warn_time,1.0/3)
+		rotation += 2*PI*pow((attack_progress-hover_time)/get_warn_time(),1.0/3)
 		
 		# Prep dash direction for next step (when it occurs)
 		dash_direction = global_position.direction_to(target_point)
@@ -191,17 +203,17 @@ func _movement(delta : float) -> void:
 		result = move_and_collide((movement + sword_velocity)*delta)
 	
 	# Dashing stage (deals damage)
-	elif attack_progress < (hover_time + warn_time + dash_time):
+	elif attack_progress < (hover_time + get_warn_time() + get_dash_time()):
 		
 		if enraged:
-			var prog : float = (attack_progress - hover_time - warn_time) / dash_time
+			var prog : float = (attack_progress - hover_time - get_warn_time()) / get_dash_time()
 			sprite.material.set_shader_parameter("time", 1.57*(1-prog))
 			
 		
-		if (last_time < hover_time + warn_time):
+		if (last_time < hover_time + get_warn_time()):
 			Sfx.play_sound_2d(sound_dash, global_position, false)
 		
-		result = move_and_collide(dash_direction*movement_speed*delta)
+		result = move_and_collide(dash_direction*get_movement_speed()*delta)
 		
 		if result:
 			if result.get_collider() is PlayerBody:

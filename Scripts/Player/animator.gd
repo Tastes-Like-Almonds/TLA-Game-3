@@ -15,6 +15,12 @@ func finish_spawn() -> void:
 	spawning = false
 	player_sprite.animation_finished.disconnect(finish_spawn)
 
+func play_spawn() -> void:
+	spawning = true
+	player_sprite.frame = 0
+	player_sprite.play("spawn")
+	player_sprite.animation_finished.connect(finish_spawn)
+
 func _ready() -> void:
 	var parent : Node = get_parent()
 	
@@ -34,9 +40,7 @@ func _ready() -> void:
 	if body_particles:
 		body_particles_offset = body_particles.position
 	
-	player_sprite.frame = 0
-	player_sprite.play("spawn")
-	player_sprite.animation_finished.connect(finish_spawn)
+	play_spawn()
 	
 func _process(_delta: float) -> void:
 	if body_particles:

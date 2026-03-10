@@ -41,13 +41,14 @@ var speed_value : float = 0.0
 
 ## Simulated position of the mouse relative to the player
 var virtual_mouse : Vector2
+var mouse_sens : float = 1.0
 
 func _input(event: InputEvent) -> void:
 	var player := _get_player()
 	if not player: return
 	if event is InputEventMouse:
 		if event is InputEventMouseMotion:
-			virtual_mouse += event.relative*player.get_size_scale()
+			virtual_mouse += event.relative*player.get_size_scale()*mouse_sens
 			var dist := player.get_max_distance()
 			if dist < virtual_mouse.length():
 				virtual_mouse = virtual_mouse.normalized()*dist
@@ -301,3 +302,10 @@ func exit_cable() -> void:
 
 func teleport_to_target_pos() -> void:
 	body.global_position = _get_target_pos()
+
+func _ready() -> void:
+	GameSettings.SettingChanged.connect(func(key:String, val:Variant) -> void:
+		if key == "mouse_sens":
+			mouse_sens = val
+	)
+	mouse_sens = GameSettings.get_setting("mouse_sens")

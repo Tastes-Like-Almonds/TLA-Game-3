@@ -573,6 +573,7 @@ func _respawn() -> void:
 	lives -= 1
 	health = get_modified_property("max_health")
 	dead = false
+	$Animator.play_spawn()
 
 ## Handle the death of the player.
 func _death() -> void:

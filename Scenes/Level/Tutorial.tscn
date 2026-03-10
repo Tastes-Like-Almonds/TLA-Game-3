@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cpky76a6i7ebn" path="res://Assets/Sprites/Player/Airborne/Airborne 1.png" id="13_26fll"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="13_bywm7"]
 [ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="14_26fll"]
-[ext_resource type="Script" path="res://Scripts/Level/autoplay.gd" id="14_71x6g"]
+[ext_resource type="Script" uid="uid://y6l8uofkwg8j" path="res://Scripts/Level/autoplay.gd" id="14_71x6g"]
 [ext_resource type="Texture2D" uid="uid://dva4baob733av" path="res://Scenes/Visual/Weapons/Sword/Sword Icon.png" id="14_c8ny0"]
 
 [sub_resource type="Gradient" id="Gradient_bn6cp"]
@@ -51,7 +51,7 @@ fill_to = Vector2(0.47975078, 1)
 
 [sub_resource type="Gradient" id="Gradient_7j8as"]
 offsets = PackedFloat32Array(0, 0.3116279)
-colors = PackedColorArray(0.31173578, 0.45934063, 0.14966008, 0, 0.30821064, 0.7191204, 1.347661e-06, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_71x6g"]
 gradient = SubResource("Gradient_7j8as")
@@ -570,7 +570,7 @@ damage = 1.0
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
 position = Vector2(-4224.75, -64.375046)
-scale = Vector2(69.11719, 9.644531)
+scale = Vector2(76.75513, 13.477916)
 texture = SubResource("GradientTexture2D_71x6g")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
