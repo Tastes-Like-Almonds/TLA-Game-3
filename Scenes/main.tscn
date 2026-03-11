@@ -365,6 +365,7 @@ libraries = {
 
 [node name="Settings" type="Control" parent="UI"]
 process_mode = 3
+visible = false
 z_index = 2
 layout_mode = 3
 anchors_preset = 15
@@ -484,7 +485,7 @@ label = NodePath("../Label")
 [node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-text = " 1.0x"
+text = "0.05"
 
 [node name="MouseSensitivity" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2

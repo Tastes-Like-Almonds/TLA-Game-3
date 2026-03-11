@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=4 uid="uid://bom207eoe00gn"]
+[gd_scene load_steps=38 format=4 uid="uid://bom207eoe00gn"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ra547"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_2l1rg"]
@@ -15,7 +15,7 @@
 
 [sub_resource type="Gradient" id="Gradient_7au3u"]
 offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.35, 0.35, 0.35, 1)
+colors = PackedColorArray(0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_d3xlu"]
 gradient = SubResource("Gradient_7au3u")
@@ -134,6 +134,13 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d3xlu"]
 size = Vector2(32, 32)
+
+[sub_resource type="Gradient" id="Gradient_xerla"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.002516305, 3.008172e-09, 0.0726688, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n35ia"]
+gradient = SubResource("Gradient_xerla")
 
 [node name="GutterBoss" type="Node2D"]
 script = ExtResource("1_ra547")
@@ -342,3 +349,9 @@ shape = SubResource("RectangleShape2D_d3xlu")
 
 [node name="StartPos" type="Node2D" parent="Priest"]
 position = Vector2(0, -386)
+
+[node name="Ground Cover" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.13725491)
+position = Vector2(502.99997, 1115.0001)
+scale = Vector2(11.109375, 1888.5)
+texture = SubResource("GradientTexture1D_n35ia")
