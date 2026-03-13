@@ -129,15 +129,15 @@ func on_sword_hit(player : Player) -> void:
 	if respawning : return
 	if time_since_last_hit < hit_time: return
 	
-	var damage := player.get_blade_damage()
+	var sword_damage := player.get_blade_damage()
 	var vel := player.get_player_sword().get_last_sword_velocity()
 	
-	if deal_damage(damage): # If killed
-		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized(), Color.RED, 1.5)
+	if deal_damage(sword_damage): # If killed
+		TextDisplay.damage_display(get_parent(), global_position, str(round(sword_damage*100)/100), vel.normalized(), Color.RED, 1.5)
 	else:
 		if hit_sound:
 			Sfx.play_sound(hit_sound)
-		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized())
+		TextDisplay.damage_display(get_parent(), global_position, str(round(sword_damage*100)/100), vel.normalized())
 	
 	var player_body := player.get_player_body()
 	
