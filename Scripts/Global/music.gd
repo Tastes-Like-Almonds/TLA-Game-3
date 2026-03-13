@@ -8,8 +8,14 @@ enum TrackLayer {
 
 var tracks : Dictionary[TrackLayer, SongData]
 
-func start_track(track:TrackLayer, song:SongData, _fade_time:float=1.0) -> void:
+func start_track(track:TrackLayer, song:SongData, fade_time:float=0.0) -> void:
 	if not song: return
+	
+	if song == tracks[track]: return
+	
+	if tracks[track]:
+		stop_track(track, fade_time)
+	
 	tracks[track] = song
 	
 	song.node_ref = AudioStreamPlayer.new()
@@ -23,7 +29,15 @@ func start_track(track:TrackLayer, song:SongData, _fade_time:float=1.0) -> void:
 	song.node_ref.play()
 
 func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
-	pass
+	if !tracks.has(track): return
+	var song := tracks[track]
+	
+	if fade_time <= 0.0:
+		song.node_ref.queue_free()
+		tracks[track] = null
+	else:
+		# TODO
+		var fade_tween := Tween.new()
 
 func _ready() -> void:
 	for track:int in TrackLayer.values():

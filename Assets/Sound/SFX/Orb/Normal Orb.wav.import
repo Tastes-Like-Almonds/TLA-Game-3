@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dedj1milxnw83"
+path="res://.godot/imported/Normal Orb.wav-5e9abf86a2e024c6ed5768c4d983f3b1.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Orb/Normal Orb.wav"
+dest_files=["res://.godot/imported/Normal Orb.wav-5e9abf86a2e024c6ed5768c4d983f3b1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

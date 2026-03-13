@@ -1,6 +1,7 @@
-[gd_scene load_steps=39 format=4 uid="uid://cyemvticywuop"]
+[gd_scene load_steps=40 format=4 uid="uid://cyemvticywuop"]
 
 [ext_resource type="Script" uid="uid://uiluux5htxr4" path="res://Scripts/Level/tutorial.gd" id="1_bywm7"]
+[ext_resource type="Resource" uid="uid://biec8c3hvnxmv" path="res://Resource/SongData/gutter_song.tres" id="2_71x6g"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_c8ny0"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_71x6g"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="4_lkqar"]
@@ -167,6 +168,7 @@ _data = {
 
 [node name="DevLevel2" type="Node2D"]
 script = ExtResource("1_bywm7")
+starting_track = ExtResource("2_71x6g")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 z_index = -12

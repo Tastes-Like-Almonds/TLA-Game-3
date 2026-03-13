@@ -34,6 +34,9 @@ class_name PossessedSword extends Enemy
 ## held weapon.
 @export var give_sword_on_death : bool = false
 
+@export var song : SongData
+@export var end_song : SongData
+
 @export_category("Sound")
 
 @export var sound_spawn : SoundData
@@ -62,6 +65,7 @@ func _kill() -> void:
 	$GPUParticles2D.emitting = true
 	
 	GameCamera.set_current_camera_shake(get_viewport(), 0.35)
+	check_end_song()
 	
 	if give_sword_on_death:
 		for player : Player in get_tree().get_nodes_in_group(&"Player"):
@@ -74,6 +78,12 @@ func _kill() -> void:
 func _respawn() -> void:
 	super()
 	sprite.play("spawn")
+
+func check_end_song() -> void:
+	if song:
+		Music.stop_track(Music.TrackLayer.MUSIC, 0.0)
+		if end_song:
+			Music.start_track(Music.TrackLayer.MUSIC, end_song)
 
 ## Reset the enemy to its starting state.
 func _reset() -> void:
@@ -90,6 +100,7 @@ func _reset() -> void:
 	sword_velocity = Vector2.ZERO
 	health = start_health
 	sprite.material.set_shader_parameter("time", 1.57)
+	check_end_song()
 
 func get_movement_speed() -> float:
 	if enraged:
@@ -105,6 +116,11 @@ func get_warn_time() -> float:
 	if enraged:
 		return warn_time * 0.8
 	return warn_time
+
+func get_damage() -> float:
+	if enraged:
+		return damage * 0.5
+	return damage
 
 # Starts an attack immediately. Used when enraged.
 func _enraged_reset() -> void:
@@ -144,6 +160,8 @@ func _movement(delta : float) -> void:
 		
 		if awaken_time >= spawn_time:
 			awakened = true
+			if song:
+				Music.start_track(Music.TrackLayer.MUSIC, song)
 			awakening = false
 			last_time = 0
 			attack_progress = hover_time
@@ -218,7 +236,7 @@ func _movement(delta : float) -> void:
 		if result:
 			if result.get_collider() is PlayerBody:
 				if time_since_last_hit > hit_time:
-					if on_hit(result.get_collider()): # Fatal
+					if on_hit(result.get_collider(), get_damage()): # Fatal
 						_reset()
 				
 	
@@ -238,6 +256,7 @@ func awaken() -> void:
 	GameCamera.set_current_camera_shake(get_viewport(), 0.2)
 	awakening = true
 	Sfx.play_sound_2d(sound_spawn, global_position, false)
+	Music.stop_track(Music.TrackLayer.MUSIC, 0.0)
 
 func _physics_process(delta: float) -> void:
 	super(delta)

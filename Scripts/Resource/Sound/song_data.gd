@@ -10,7 +10,7 @@ class_name SongData extends Resource
 @export var vol_linear:float = 0.6
 
 ## Reference to audio stream node; used internally in Music.gd.
-var node_ref:Node
+var node_ref:AudioStreamPlayer
 
 func _ready() -> void:
 	assert(FileAccess.file_exists(path), "Song path '" + path + "' not found!")
