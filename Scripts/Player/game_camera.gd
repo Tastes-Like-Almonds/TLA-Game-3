@@ -86,6 +86,7 @@ func set_target_node(node : Node2D) -> void:
 	target_node = node
 	target_mode = TargetMode.TARGET_NODE_2D
 	if target_node is Player: target_player = target_node
+	elif target_node is PlayerBody: target_player = target_node.get_player()
 
 func _physics_process(delta: float) -> void:
 	
@@ -116,6 +117,9 @@ func _physics_process(delta: float) -> void:
 		
 		# Ensure zoom doesn't stretch the camera
 		current_target_zoom *= Vector2(speed_target_zoom, speed_target_zoom)
+		
+	if target_player:
+		current_target_zoom /= target_player.get_size_scale()
 	
 	if smooth_zoom:
 		zoom = zoom.move_toward(current_target_zoom, zoom_speed*zoom.distance_to(current_target_zoom)*delta)

@@ -38,4 +38,4 @@ func _process(_delta: float) -> void:
 		var timer : SceneTreeTimer = display.get_meta(&"timer")
 		var start_time : float = display.get_meta(&"start_time")
 		display.value = 100 * timer.time_left / start_time
-		display.global_position = global_position - (display.texture_progress.get_size()*display.scale)/2
+		display.global_position = global_position - (display.texture_progress.get_size()*display.scale*global_scale)/2

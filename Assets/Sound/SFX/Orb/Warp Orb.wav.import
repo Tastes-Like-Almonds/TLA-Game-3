@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bbfyrqrhuju6w"
+path="res://.godot/imported/Warp Orb.wav-78e1747f9fdfe9c0bde8ff2d9139b1ba.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Orb/Warp Orb.wav"
+dest_files=["res://.godot/imported/Warp Orb.wav-78e1747f9fdfe9c0bde8ff2d9139b1ba.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

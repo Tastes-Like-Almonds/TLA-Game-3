@@ -49,6 +49,8 @@ func on_loadout_update() -> void:
 			player.held_weapons,
 			player.get_current_weapon_index()
 		)
+		hotbar.visible = len(player.held_weapons) > 1
+	
 
 func on_health_update(new : float) -> void:
 	health_bar.value = clampf(new/player.get_max_health(), 0.0, 1.0)

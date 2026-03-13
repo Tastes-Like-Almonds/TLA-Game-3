@@ -12,7 +12,14 @@ func _kill() -> void:
 		if !$GPUParticles2D.is_connected("finished", queue_free):
 			$GPUParticles2D.finished.connect(queue_free)
 
+func _respawn() -> void:
+	super()
+	sprite.play("spawn")
+	#sprite.animation_finished.connect(func(_x:Variant) -> void: respawning = false)
+
 func _movement(delta : float) -> void:
+	if sprite.animation == &"spawn" and sprite.is_playing():
+		return
 	
 	velocity *= pow(0.2, delta) # Drag
 	
@@ -32,7 +39,7 @@ func _movement(delta : float) -> void:
 			target_point = global_position + Vector2(randf_range(-300,300), 0) # Random pos if no players
 			var nearest_player : Player = Helper.get_closest_player(global_position, aggro_range)
 			if nearest_player:
-				play_alert_sound()
+				alert()
 				target_player = nearest_player
 	
 	if not target_player:
@@ -58,12 +65,18 @@ func _movement(delta : float) -> void:
 		
 		#print(velocity.y)
 		
-		#var og_pos := global_position
-		var total_movement := movement+velocity
-		var result := move_and_collide((total_movement)*delta)
-		if result:
-			move_and_collide(total_movement.slide(result.get_normal())*delta)
+		if movement != Vector2.ZERO:
+			if sprite.animation != "default":
+				sprite.play("default")
 		
+		#var og_pos := global_position
+		var result := move_and_collide((movement+velocity)*delta)
+		if result:
+			if ray_is_on_floor(3): # Hit ground
+				velocity.y = -result.get_remainder().y*0.2
+			move_and_collide(((movement+velocity).slide(result.get_normal()))*delta)
+		$DamageArea.check_hits()
+
 		# If not moving, stop the walking sound. Otherwise, play it.
 		#if respawning or (absf(global_position.x - og_pos.x) > move_speed*delta): walk_sound.stop()
 		#elif not walk_sound.playing: walk_sound.play() ; print("START")

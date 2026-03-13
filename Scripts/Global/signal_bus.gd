@@ -27,6 +27,45 @@ signal PlayerRemoved()
 ## Fired when a level is loaded via LevelLoader.gd. Passes the string path of the level.
 @warning_ignore("unused_signal")
 signal LevelPathLoaded(level: Level)
+
+## Fires when a level is fully loaded.
+@warning_ignore("unused_signal")
+signal LevelLoaded()
+
+## Firest when the game is paused/unpaused.
+@warning_ignore("unused_signal")
+signal PauseToggled()
+
+## Request the game to be paused. Called from the pause menu to pause_manager.gd to avoid coupling.
+@warning_ignore("unused_signal")
+signal RequestUnpause()
+
+## Called when the camera changes.
+@warning_ignore("unused_signal")
+signal CameraChanged(camera:Camera2D)
+
+## Called when the level is fully loaded and any transition animations complete.
+@warning_ignore("unused_signal")
+signal TransitionFinished()
+
+## Called when any player dies.
+@warning_ignore("unused_signal")
+signal PlayerKilled(player : Player)
+#endregion
+
+#region UI Requests
+
+## Opens the settings menu.
+@warning_ignore("unused_signal")
+signal OpenSettings()
+
+## Fires when the dialog queue ends.
+@warning_ignore("unused_signal")
+signal DialogStart
+
+## Fires when the dialog queue is no longer empty.
+@warning_ignore("unused_signal")
+signal DialogEnd
 #endregion
 
 func _ready() -> void:

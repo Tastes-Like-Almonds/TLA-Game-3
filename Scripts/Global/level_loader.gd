@@ -19,8 +19,7 @@ func clear_levels(parent : Node) -> void:
 			child.queue_free()
 
 ## Loads a level and parents it to `parent`. 
-func load_level(path : String, parent: Node, config : LevelConfig = null) -> LoadLevelStatus: # TODO Dynamically test levels as they are added.
-	
+func load_level(path : String, parent: Node, config : LevelConfig = null, clear_others:bool = true) -> LoadLevelStatus: # TODO Dynamically test levels as they are added.
 	if not is_instance_valid(parent): return LoadLevelStatus.INVALID_PARENT
 	if not path: return LoadLevelStatus.INVALID_LEVEL
 	
@@ -29,6 +28,9 @@ func load_level(path : String, parent: Node, config : LevelConfig = null) -> Loa
 	
 	var loaded := scn.instantiate()
 	if loaded is not Level: loaded.free() ; return LoadLevelStatus.LEVEL_IS_NOT_LEVEL
+	
+	if clear_others:
+		clear_levels(parent)
 	
 	parent.add_child(loaded)
 	loaded.initialize(config)

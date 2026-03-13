@@ -147,7 +147,7 @@ process_material = SubResource("ParticleProcessMaterial_s5biv")
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="Visual"]
 modulate = Color(0.7366762, 0.42621613, 0.928359, 1)
 texture = SubResource("GradientTexture2D_1dkb7")
-lifetime = 1.3800000000000001
+lifetime = 1.38
 process_material = SubResource("ParticleProcessMaterial_4onkn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

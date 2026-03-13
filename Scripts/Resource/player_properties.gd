@@ -26,11 +26,15 @@ class_name PlayerProperties extends Resource
 ## The base damage of the sword.
 @export var sword_damage : float = 6
 
-## The speed of the sword required to reach max damage.
-@export var sword_speed_damage : float = 3000.0
+## The shortest amount of time needed to reach maximum damage; higher values will require
+## longer swings to deal max damage.
+@export var max_damage_time : float = 0.3
 
 # --- #
 @export_group("Sword")
+
+## Max knockback dealt to enemies on hit
+@export var knockback : float = 1600.0
 
 ## Speed at which the sword moves. This also affects its strength of pushing.
 @export var sword_speed : float = 3000
@@ -106,7 +110,7 @@ static func _get_modifiers_of_type(type : PropertyModifier.ModiferType, modifier
 	return all
 
 ## Gets the target property, accounting for modifiers.
-func get_modified(property : String , modifiers : Array[PropertyModifier]) -> Variant:
+func get_modified(property : String , modifiers : Array[PropertyModifier], scale_override:float=size_scale) -> Variant:
 	var p : Variant = get(property)
 	
 	for type_key:String in PropertyModifier.ModiferType.keys():
@@ -115,15 +119,17 @@ func get_modified(property : String , modifiers : Array[PropertyModifier]) -> Va
 		if p is float:
 			p = PropertyModifier.apply_all(typed_mods, p)
 	
+	# Yes, this is ugly. I didn't really consider size scale when making this system though, so
+	# this is the best we will get.
 	if property == "max_distance":
-		p*=size_scale
-	if property == "min_distance":
-		p*=size_scale
-	if property == "gravity":
-		p*=size_scale
-	if property == "sword_speed":
-		p*=size_scale
-	if property == "cable_gravity":
-		p*=size_scale
+		p*=scale_override
+	elif property == "min_distance":
+		p*=scale_override
+	elif property == "gravity":
+		p*=scale_override
+	elif property == "sword_speed":
+		p*=scale_override
+	elif property == "cable_gravity":
+		p*=scale_override
 	
 	return p

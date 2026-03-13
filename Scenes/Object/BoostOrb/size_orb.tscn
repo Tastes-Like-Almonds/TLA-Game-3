@@ -1,0 +1,172 @@
+[gd_scene load_steps=26 format=3 uid="uid://ciumwj1vwabti"]
+
+[ext_resource type="Script" uid="uid://da601aursrya5" path="res://Scripts/Object/BoostOrb/size_orb.gd" id="1_kfdxb"]
+[ext_resource type="Texture2D" uid="uid://bp6wdluy32oil" path="res://Assets/Sprites/Orbs/ShrinkOrb.png" id="2_f866v"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_w5wny"]
+
+[sub_resource type="Resource" id="Resource_rikhv"]
+script = ExtResource("2_w5wny")
+sound_string = "res://Assets/Sound/SFX/Orb/Shrink Orb.wav"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_axct4"]
+script = ExtResource("2_w5wny")
+sound_string = "res://Assets/Sound/SFX/Orb/Grow Orb.wav"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_f866v"]
+script = ExtResource("2_w5wny")
+sound_string = "res://Assets/Sound/SFX/Orb/Normal Orb.wav"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Gradient" id="Gradient_do7bd"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4onkn"]
+gradient = SubResource("Gradient_do7bd")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_aab8x"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9187817, 1), 0.0, 0.0, 0, 0, Vector2(0.9898477, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_yv1qj"]
+curve = SubResource("Curve_aab8x")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g0kd0"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(16, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 20.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_yv1qj")
+
+[sub_resource type="Gradient" id="Gradient_posbj"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w5wny"]
+gradient = SubResource("Gradient_posbj")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_41md6"]
+offsets = PackedFloat32Array(0.4, 0.7162791, 0.9162791, 0.95348835)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.03137255, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2c2vr"]
+gradient = SubResource("Gradient_41md6")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="Curve" id="Curve_41md6"]
+_data = [Vector2(0, 0.94382024), 0.0, 0.0, 0, 0, Vector2(0.7461929, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2c2vr"]
+curve = SubResource("Curve_41md6")
+
+[sub_resource type="Curve" id="Curve_v3c6e"]
+_limits = [0.0, 10.0, 0.0, 1.0]
+_data = [Vector2(0.00507614, 2.9213486), 0.0, 0.0, 0, 0, Vector2(1, 10), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_caxdj"]
+curve = SubResource("Curve_v3c6e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s5biv"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_caxdj")
+alpha_curve = SubResource("CurveTexture_2c2vr")
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1dkb7"]
+gradient = SubResource("Gradient_do7bd")
+width = 4
+height = 8
+
+[sub_resource type="Curve" id="Curve_4onkn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.6395939, 0.8089888), 0.0, 0.0, 0, 0, Vector2(0.9898477, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_aab8x"]
+curve = SubResource("Curve_4onkn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4onkn"]
+resource_local_to_scene = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(16, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_aab8x")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_41md6"]
+radius = 40.04997
+
+[node name="SizeOrb" type="StaticBody2D" groups=["BladeHitable"]]
+collision_layer = 8
+script = ExtResource("1_kfdxb")
+time = 0.0
+sound_shrink = SubResource("Resource_rikhv")
+sound_grow = SubResource("Resource_axct4")
+sound_normal = SubResource("Resource_f866v")
+shrink_image = "res://Assets/Sprites/Orbs/ShrinkOrb.png"
+grow_image = "res://Assets/Sprites/Orbs/GrowOrb.png"
+normal_image = "res://Assets/Sprites/Orbs/NormalOrb.png"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(0.7366762, 0.42621613, 0.928359, 1)
+emitting = false
+amount = 20
+texture = SubResource("GradientTexture2D_4onkn")
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.78
+process_material = SubResource("ParticleProcessMaterial_g0kd0")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Glow" type="Sprite2D" parent="Visual"]
+modulate = Color(0.40010625, 0.60875666, 0.9449542, 1)
+scale = Vector2(7, 7)
+texture = SubResource("GradientTexture2D_w5wny")
+
+[node name="Sprite" type="Sprite2D" parent="Visual"]
+scale = Vector2(4, 4)
+texture = ExtResource("2_f866v")
+offset = Vector2(0.5, 0.5)
+
+[node name="Particles" type="GPUParticles2D" parent="Visual"]
+self_modulate = Color(0.54760194, 0.6121088, 1, 1)
+emitting = false
+amount = 1
+texture = SubResource("GradientTexture2D_2c2vr")
+lifetime = 0.5
+one_shot = true
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_s5biv")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Visual"]
+visible = false
+modulate = Color(0.41073737, 0.5776914, 0.93661237, 1)
+texture = SubResource("GradientTexture2D_1dkb7")
+lifetime = 1.38
+process_material = SubResource("ParticleProcessMaterial_4onkn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_41md6")

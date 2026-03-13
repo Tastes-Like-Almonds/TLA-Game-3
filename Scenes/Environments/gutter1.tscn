@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgk4u6n3tybsh"]
+
+[sub_resource type="Environment" id="Environment_k85jp"]
+background_mode = 3
+tonemap_exposure = 0.62
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 5.6
+glow_strength = 1.49
+glow_bloom = 0.8
+glow_map_strength = 1.0
+adjustment_enabled = true
+adjustment_brightness = 0.94
+adjustment_contrast = 1.13
+adjustment_saturation = 0.93
+
+[sub_resource type="Gradient" id="Gradient_p84su"]
+colors = PackedColorArray(1, 0.54999995, 0.39999998, 0, 0, 0.65, 0.18416664, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vbji5"]
+noise_type = 0
+frequency = 0.0036
+fractal_octaves = 2
+fractal_lacunarity = 1.5
+fractal_weighted_strength = 0.21
+domain_warp_fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jxrps"]
+width = 1024
+height = 1024
+noise = SubResource("FastNoiseLite_vbji5")
+color_ramp = SubResource("Gradient_p84su")
+seamless = true
+
+[node name="Environment" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_k85jp")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.6956838, 0.7442727, 0.2992836, 1)
+
+[node name="Fog" type="Node2D" parent="."]
+process_priority = 15
+
+[node name="Parallax2D" type="Parallax2D" parent="Fog"]
+modulate = Color(1, 1, 1, 0.23529412)
+scale = Vector2(4, 4)
+repeat_size = Vector2(3072, 1024)
+autoscroll = Vector2(120, -5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Fog/Parallax2D"]
+scale = Vector2(3, 1)
+texture = SubResource("NoiseTexture2D_jxrps")

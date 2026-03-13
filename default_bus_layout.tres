@@ -7,6 +7,7 @@ damping = 0.2
 hipass = 0.49
 
 [resource]
+bus/0/volume_db = 2.053728
 bus/1/name = &"Music"
 bus/1/solo = false
 bus/1/mute = false
@@ -17,7 +18,13 @@ bus/2/name = &"SFX"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
-bus/2/volume_db = 0.0
+bus/2/volume_db = 0.06726074
 bus/2/send = &"Master"
 bus/2/effect/0/effect = SubResource("AudioEffectReverb_j3pel")
 bus/2/effect/0/enabled = true
+bus/3/name = &"Dialog"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Master"

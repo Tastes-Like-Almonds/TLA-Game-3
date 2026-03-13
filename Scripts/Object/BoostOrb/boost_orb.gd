@@ -12,6 +12,9 @@ class_name BoostOrb extends StaticBody2D
 ## Calls reset_weapon_use() on the player when the orb is activated.
 @export var reset_weapon_on_hit : bool = true
 
+## If true, the orb cannot be struck.
+@export var disabled : bool = false
+
 @export var sound : SoundData = null
 
 ## The current time spent in the bob animation, resets after 2PI
@@ -29,6 +32,7 @@ func hit_effect(_player : Player) -> void:
 
 func on_sword_hit(player : Player) -> void:
 	if not alive: return
+	if disabled: return
 	alive = false
 	
 	hit_effect(player)
@@ -53,8 +57,10 @@ func _process(delta: float) -> void:
 		bob_time = fmod(bob_time, 2*PI)
 		visual.position.y = bob_dist * sin(bob_time)
 	
-		if alive:
+		if alive and not disabled:
 			visual.modulate.a = 1.0
+		elif disabled:
+			visual.modulate.a = 0.3
 		else:
 			visual.modulate.a = current_respawn_time*0.3 / respawn_time
 
