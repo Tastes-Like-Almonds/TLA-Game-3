@@ -258,6 +258,39 @@ func is_on_floor() -> bool:
 	
 	return result.size() > 0
 
+## Determines if the sword body is on the wall via raycasting. Only collides with collision layer 1.
+func is_on_left_wall() -> bool:
+	var space_state := get_world_2d().direct_space_state
+	
+	var parameters := PhysicsRayQueryParameters2D.new()
+	parameters.from = body.global_position
+	
+	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
+	parameters.to = parameters.from + Vector2.LEFT * body_shape.shape.get_rect().size.y
+	
+	parameters.collision_mask = 1
+	var result := space_state.intersect_ray(parameters)
+	
+	return result.size() > 0
+
+## Determines if the sword body is on the wall via raycasting. Only collides with collision layer 1.
+func is_on_right_wall() -> bool:
+	var space_state := get_world_2d().direct_space_state
+	
+	var parameters := PhysicsRayQueryParameters2D.new()
+	parameters.from = body.global_position
+	
+	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
+	parameters.to = parameters.from + Vector2.RIGHT * body_shape.shape.get_rect().size.y
+	
+	parameters.collision_mask = 1
+	var result := space_state.intersect_ray(parameters)
+	
+	return result.size() > 0
+
+func is_on_wall() -> bool:
+	return is_on_left_wall() or is_on_right_wall()
+
 ## Similar to is_on_floor, but uses the player's gravity direction to calculate the ground.
 func is_on_ground() -> bool:
 	var player := _get_player()

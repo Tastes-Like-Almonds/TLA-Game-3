@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://cir20byqhq8f8"]
+
+[ext_resource type="Script" uid="uid://uiluux5htxr4" path="res://Scripts/Level/tutorial.gd" id="1_h7tbn"]
+[ext_resource type="Resource" uid="uid://biec8c3hvnxmv" path="res://Resource/SongData/gutter_song.tres" id="2_8wbuy"]
+[ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="3_wao2k"]
+[ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="4_fuw06"]
+[ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="5_tlgtu"]
+[ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="10_fs1sl"]
+
+[node name="DevLevel2" type="Node2D"]
+script = ExtResource("1_h7tbn")
+starting_track = ExtResource("2_8wbuy")
+
+[node name="Gutter2Env" parent="." instance=ExtResource("3_wao2k")]
+
+[node name="PlayerSpawn" parent="." instance=ExtResource("4_fuw06")]
+position = Vector2(-4274, 2517)
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Tiles" type="Node2D" parent="Level"]
+
+[node name="Bg2" type="TileMapLayer" parent="Level/Tiles"]
+z_index = -7
+position = Vector2(0, 1)
+scale = Vector2(3, 3)
+tile_set = ExtResource("5_tlgtu")
+
+[node name="Bg" type="TileMapLayer" parent="Level/Tiles"]
+z_index = -7
+position = Vector2(0, 1)
+scale = Vector2(3, 3)
+tile_set = ExtResource("5_tlgtu")
+
+[node name="Ground" type="TileMapLayer" parent="Level/Tiles"]
+z_index = -2
+position = Vector2(0, 1)
+scale = Vector2(3, 3)
+tile_set = ExtResource("5_tlgtu")
+
+[node name="OverPlayer" type="TileMapLayer" parent="Level/Tiles"]
+z_index = 6
+position = Vector2(0, 1)
+scale = Vector2(3, 3)
+tile_set = ExtResource("5_tlgtu")
+
+[node name="Over" type="TileMapLayer" parent="Level/Tiles"]
+z_index = -2
+position = Vector2(0, 1)
+scale = Vector2(3, 3)
+tile_set = ExtResource("5_tlgtu")
+
+[node name="Decor" type="Node2D" parent="Level"]
+
+[node name="CameraSetter" parent="Level" instance=ExtResource("10_fs1sl")]
+visible = false
+position = Vector2(-4273.9995, 2597)
+scale = Vector2(5.6665125, 5.698169)
+track_player = true
