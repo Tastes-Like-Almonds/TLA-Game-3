@@ -86,6 +86,8 @@ func _untypeify(target:Variant) -> Variant:
 
 func _load_from_json(json:String) -> Dictionary:
 	var data : Variant = JSON.parse_string(json)
+	if not data:
+		data = _get_base_data()
 	assert(data is Dictionary, "Passed JSON data is not a dictionary!")
 	return _untypeify(data)
 
