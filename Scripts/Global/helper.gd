@@ -4,7 +4,7 @@ var _debug_dots : Dictionary[String, DebugDot]
 
 var debug_dot_scn : PackedScene = preload("res://Scenes/Debug/debug_dot.tscn")
 
-# Cached values for performance (Trust me, it helps)
+# Cached values for performance (it helps so much)
 var viewport:Viewport
 var camera:Camera2D
 
@@ -47,15 +47,15 @@ func get_all_players() -> Array[Player]:
 
 ## Returns the vector between the center of the screen and the mouse.
 func get_mouse_vec_from_center() -> Vector2:
-	var center := viewport.get_mouse_position()
+	var mouse := viewport.get_mouse_position()
 	
 	var size := get_viewport_rect().size
-	return (center - Vector2(size.x, size.y)/2)/camera.zoom
+	return (mouse - Vector2(size.x, size.y)/2)/camera.zoom
 
 ## Returns true if the line between start and end moves past the target point's x or y position.
 func line_passes_point_horizontally_or_vertically(start: Vector2, end: Vector2, point: Vector2) -> bool:
 	
-	# Yes, there is probably a more elegrant solution, but it will work.
+	# Yes, there is probably a more elegant solution, but it will work.
 	if start.y > point.y and end.y < point.y:
 		return true
 	if start.y < point.y and end.y > point.y:

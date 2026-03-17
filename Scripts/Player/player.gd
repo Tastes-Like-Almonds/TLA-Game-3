@@ -42,16 +42,19 @@ var dirty_properties : Dictionary[String, bool]
 
 @export var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0, &"SFX")
 @export var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0, &"SFX")
-@export var refresh_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Refresh Short.wav", 0.7, 1.0, &"SFX")
+@export var refresh_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Refresh Short.wav", 0.0, 1.0, &"SFX")
 
 #endregion
+
+func dirty_all_properties() -> void:
+	dirty_properties.clear()
 
 func dirty_property(property: String) -> void:
 	dirty_properties[property] = true
 	
 	# size_scale screws with other properties, so erase everything if it changes.
 	if property == "size_scale":
-		dirty_properties.clear()
+		dirty_all_properties()
 
 ## Gets a player's stat with respect to all modifiers.
 func get_modified_property(property: String) -> Variant:
@@ -371,6 +374,12 @@ func _visual_process(delta : float) -> void:
 func get_current_weapon_index() -> int:
 	return held_weapons.find(current_weapon)
 
+## Replace the player's currently held weapon with another.
+func replace_weapon(weapon : Weapon) -> void:
+	var idx := get_current_weapon_index()
+	held_weapons[idx] = weapon
+	equip_weapon_slot(idx)
+
 ## Equip the passed weapon
 func equip_weapon(weapon : Weapon) -> void:
 	
@@ -384,10 +393,11 @@ func equip_weapon(weapon : Weapon) -> void:
 	
 	_clear_visuals()
 	loadout_changed.emit()
+	dirty_all_properties()
 	
-	var scn : PackedScene = CosmeticLoader.get_weapon_visual(weapon)
+	var scn : WeaponVisual = CosmeticLoader.get_weapon_visual(weapon)
 	if scn:
-		weapon_visual = scn.instantiate()
+		weapon_visual = scn
 		weapon_visual.set_player(self)
 		add_child(weapon_visual)
 
@@ -460,9 +470,11 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	
 	elif event.is_action_pressed("noclip"):
 		if get_movement_mode() == MovementMode.NOCLIP:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			set_movement_mode(MovementMode.SWORD_ORBIT)
 		else:
-			get_player_sword().on_cable = null       
+			get_player_sword().on_cable = null
+			Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 			set_movement_mode(MovementMode.NOCLIP)
 	
 	elif event is InputEventKey:
@@ -546,19 +558,22 @@ func clear_respawn_modifiers() -> void:
 		for modifier:PropertyModifier in property_modifiers[stat]:
 			if modifier.reset_on_respawn:
 				property_modifiers[stat].erase(modifier)
+	dirty_all_properties()
 
 func _respawn() -> void:
 	
-	teleport_to(respawn_pos)
+	
 	get_player_sword().on_cable = null
 	
 	clear_respawn_modifiers()
+	teleport_to(respawn_pos)
 	
 	time_respawning = 0
 	last_hit_time = get_invincibility_time()*-2
 	lives -= 1
 	health = get_modified_property("max_health")
 	dead = false
+	$Animator.play_spawn()
 
 ## Handle the death of the player.
 func _death() -> void:
@@ -566,6 +581,7 @@ func _death() -> void:
 	get_player_sword().on_cable = null
 	Sfx.play_sound_2d(death_sound, get_player_position(), false)
 	dead = true
+	SignalBus.PlayerKilled.emit(self)
 
 ## Kill the player.
 func kill() -> void:
@@ -667,7 +683,6 @@ func _update_modifiers(delta : float) -> void:
 #endregion
 
 func _process(delta: float) -> void:
-	
 	last_hit_time += delta
 	
 	if current_weapon:
@@ -700,9 +715,6 @@ func _ready() -> void:
 	lives = get_modified_property("max_lives")
 	add_weapon(get_modified_property("starting_weapon"))
 	equip_weapon_slot(0)
-	sprite.play("idle")
-	
-	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.
 func set_last_collision(collision:KinematicCollision2D) -> void:

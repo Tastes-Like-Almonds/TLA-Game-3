@@ -108,7 +108,6 @@ position = Vector2(-6682.003, 4779.9995)
 scale = Vector2(365.12518, 8.42273)
 
 [node name="Gutter2Env" parent="." instance=ExtResource("7_ph1vs")]
-scale = Vector2(4, 4)
 
 [node name="Checkpoint" parent="." instance=ExtResource("8_ph1vs")]
 position = Vector2(-8519, -1480)

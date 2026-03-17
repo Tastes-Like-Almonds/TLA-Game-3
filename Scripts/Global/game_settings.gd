@@ -7,6 +7,7 @@ const DEFAULTS = {
 	"music_volume_perc" = 0.5,
 	"sfx_volume_perc" = 0.5,
 	"brightness" = 0.5,
+	"mouse_sens" = 1.0,
 	"disable_crt" = false,
 	"fullscreen" = false
 }
@@ -39,8 +40,6 @@ func get_setting(key:String) -> Variant:
 	
 	if (data):
 		if (key in data): val = data[key]
-	else:
-		push_warning("Settings data not present in PersistentData!")
 		
 	return val
 

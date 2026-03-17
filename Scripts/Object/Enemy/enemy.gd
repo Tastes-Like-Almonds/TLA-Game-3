@@ -2,6 +2,7 @@
 @abstract class_name Enemy extends AnimatableBody2D
 
 signal Killed
+signal Hit(damage:float)
 
 @onready var alert_pos : Node2D = null
 
@@ -22,14 +23,20 @@ signal Killed
 
 # --- #
 @export_group("Health and Damage")
-## The time it takes before the bat can be hit again.
-@export var hit_time : float = 0.5
+
+## If true, the enemy can take damage but never die.
+@export var invincible : bool = false
+
+## The time it takes before the enemy can be hit again.
+@export var hit_time : float = 0.2
 
 ## The max health of the bat. Does not regen.
 @export var health : float = 5.0
 
 ## If false, the enemy will use its physics body as a damage hitbox.
 @export var disable_physics_hitbox : bool = false
+
+@export var damage:float = 2.6
 
 # --- #
 @export_group("Knockback")
@@ -69,6 +76,8 @@ signal Killed
 ## The time it takes to respawn if enabled, in seconds.
 @export var respawn_time : float = 3.0
 
+var do_flip : bool = true
+
 var movement_delay : float = 1.0
 
 var respawn_cooldown : float = 0.0
@@ -98,12 +107,16 @@ func deal_damage(damage: float) -> bool:
 	
 	if time_since_last_hit < hit_time: return false
 	
-	health -= damage
+	if !invincible:
+		health -= damage
+	
 	time_since_last_hit = 0.0
 	
 	# Damage display
 	var color := get_current_hit_color()
 	sprite.material.set_shader_parameter("solid_color", color + Vector4(0,0,0,1))
+	
+	Hit.emit(damage)
 	
 	if health <= 0:
 		_kill()
@@ -116,15 +129,15 @@ func on_sword_hit(player : Player) -> void:
 	if respawning : return
 	if time_since_last_hit < hit_time: return
 	
-	var damage := player.get_blade_damage()
+	var sword_damage := player.get_blade_damage()
 	var vel := player.get_player_sword().get_last_sword_velocity()
 	
-	if deal_damage(damage): # If killed
-		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized(), Color.RED, 1.5)
+	if deal_damage(sword_damage): # If killed
+		TextDisplay.damage_display(get_parent(), global_position, str(round(sword_damage*100)/100), vel.normalized(), Color.RED, 1.5)
 	else:
 		if hit_sound:
 			Sfx.play_sound(hit_sound)
-		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized())
+		TextDisplay.damage_display(get_parent(), global_position, str(round(sword_damage*100)/100), vel.normalized())
 	
 	var player_body := player.get_player_body()
 	
@@ -169,19 +182,25 @@ func _check_respawn() -> void:
 		respawning = false
 		_respawn()
 
-## Called with the *player* is hit by the enemy
-func on_hit(collider : PhysicsBody2D) -> void:
-	if not collider: return
-	if respawning: return
+## Called with the *player* is hit by the enemy. Returns true if fatal.
+func on_hit(collider : PhysicsBody2D, damage_val : float = -1) -> bool:
+	if not collider: return false
+	if respawning: return false
+	if damage_val == -1: damage_val = damage
 	if collider is PlayerBody and is_instance_valid(collider):
 		
 		var player_body := collider as PlayerBody
 		var player : Player = player_body.get_player()
 		
-		if not is_instance_valid(player): return
+		if not is_instance_valid(player): return false
 		elif time_since_last_hit > hit_time:
-			if player.deal_damage(2.6): # Only KB if the hit lands
+			if player.deal_damage(damage_val): # Only KB if the hit lands
 				player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
+		
+		return not player.is_alive()
+	
+	return false
+		
 #endregion
 
 #region Sound
@@ -207,7 +226,8 @@ func _process(delta: float) -> void:
 	var color : Vector4 = get_current_hit_color()
 	sprite.material.set_shader_parameter("solid_color", Vector4(color.x,color.y,color.z,max(0,color.w-delta/hit_time)))
 	
-	sprite.flip_h = !(target_point.x < global_position.x)
+	if do_flip:
+		sprite.flip_h = !(target_point.x < global_position.x)
 	
 	if respawning:
 		respawn_cooldown += delta
@@ -216,8 +236,9 @@ func _process(delta: float) -> void:
 		return
 
 func _ready() -> void:
-	notifier.screen_entered.connect(_check_respawn)
-	notifier.global_position = global_position
+	if notifier:
+		notifier.screen_entered.connect(_check_respawn)
+		notifier.global_position = global_position
 	start_pos = global_position
 	sprite.play("default")
 	start_health = health

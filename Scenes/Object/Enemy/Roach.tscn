@@ -1,0 +1,160 @@
+[gd_scene load_steps=20 format=3 uid="uid://bw4oxah3cpd40"]
+
+[ext_resource type="Script" uid="uid://d0bvnnccjcow" path="res://Scripts/Object/Enemy/infested_cockroach.gd" id="1_d3rbb"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_aq2fx"]
+[ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="3_rnfiw"]
+[ext_resource type="Texture2D" uid="uid://bik3gmsic20wn" path="res://Assets/Sprites/Enemy/Roach!!/Roach Walk 1.png" id="4_1onoc"]
+[ext_resource type="Texture2D" uid="uid://0johnuuey7qq" path="res://Assets/Sprites/Enemy/Roach!!/Roach Walk 2.png" id="5_xf2i6"]
+[ext_resource type="Texture2D" uid="uid://b4f20ompmehqh" path="res://Assets/Sprites/Enemy/Roach!!/Roach 1.png" id="6_h5hlw"]
+[ext_resource type="Texture2D" uid="uid://bwas8vw32qqmw" path="res://Assets/Sprites/Enemy/Roach!!/Roach 2.png" id="7_hx87x"]
+[ext_resource type="Script" uid="uid://bt4s0eko6axeb" path="res://Scripts/Object/Enemy/Component/hitbox.gd" id="14_nqfja"]
+[ext_resource type="Script" uid="uid://c8qvuoapglubu" path="res://Scripts/Object/Enemy/Component/damage_area.gd" id="15_k14uk"]
+[ext_resource type="AudioStream" uid="uid://do1lx75avuihy" path="res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Walk Edit 1 Export 1(3).mp3" id="16_chu7y"]
+
+[sub_resource type="Resource" id="Resource_2lw46"]
+script = ExtResource("2_aq2fx")
+sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Hit Edit 1 Export 1.mp3"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_fokgr"]
+script = ExtResource("2_aq2fx")
+sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Death Edit 1 Export 1.mp3"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_paiv5"]
+script = ExtResource("2_aq2fx")
+sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Alert.wav"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6sep"]
+size = Vector2(100.75, 63.75)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v4fcd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_1onoc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xf2i6")
+}],
+"loop": false,
+"name": &"Walk",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_h5hlw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hx87x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_6un6e"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.5686275, 0.5686275, 0.24705882, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gnly0"]
+gradient = SubResource("Gradient_6un6e")
+width = 8
+height = 8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tuwcp"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+gravity = Vector3(0, 2000, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upkqw"]
+size = Vector2(70, 50)
+
+[node name="Roach" type="AnimatableBody2D" node_paths=PackedStringArray("walk_sound", "sprite", "notifier") groups=["EnemyBody"]]
+position = Vector2(-3, -3)
+collision_layer = 0
+collision_mask = 17
+sync_to_physics = false
+script = ExtResource("1_d3rbb")
+walk_sound = NodePath("Walking")
+sprite = NodePath("AnimatedSprite2D")
+notifier = NodePath("VisibleOnScreenNotifier2D")
+hit_sound = SubResource("Resource_2lw46")
+death_sound = SubResource("Resource_fokgr")
+alert_sound = SubResource("Resource_paiv5")
+hit_time = 0.2
+health = 12.0
+max_hit_kb = 1000.0
+knockback = 500.0
+max_kb = 2500.0
+aggro_range = 800.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(43, 2)
+shape = SubResource("RectangleShape2D_o6sep")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("3_rnfiw")
+position = Vector2(44, -1)
+scale = Vector2(3.6000001, 3.0999994)
+sprite_frames = SubResource("SpriteFrames_v4fcd")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(2, -57)
+emitting = false
+amount = 16
+texture = SubResource("GradientTexture2D_gnly0")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_tuwcp")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+top_level = true
+position = Vector2(36, -17)
+rect = Rect2(-35, -12, 80, 56)
+
+[node name="Hitbox" type="Area2D" parent="." groups=["BladeHitable"]]
+position = Vector2(2, 49)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("14_nqfja")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(41, -45)
+shape = SubResource("RectangleShape2D_upkqw")
+debug_color = Color(0.98, 0.08819997, 0.31115, 0.39607844)
+
+[node name="DamageArea" type="Area2D" parent="." groups=["BladeHitable"]]
+visible = false
+position = Vector2(2, 49)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("15_k14uk")
+call_on_hit = false
+check_on_process = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(-2.2897284, -49)
+scale = Vector2(0.85128075, 3.3593059)
+shape = SubResource("RectangleShape2D_upkqw")
+debug_color = Color(0.98, 0.08819997, 0.31115, 0.39607844)
+
+[node name="Walking" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-2, -1)
+stream = ExtResource("16_chu7y")
+volume_db = 5.579
+
+[node name="AlertPos" type="Node2D" parent="."]
+position = Vector2(0, -85)
+
+[connection signal="body_entered" from="DamageArea" to="DamageArea" method="_on_body_entered"]
