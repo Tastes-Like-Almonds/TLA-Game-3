@@ -285,9 +285,8 @@ scale = Vector2(6.56673, 19.09383)
 links = [NodePath("../Bat"), NodePath("../Bat2")]
 
 [node name="KillBarrier2" parent="." node_paths=PackedStringArray("links") instance=ExtResource("11_0ghox")]
-position = Vector2(1631.0001, -1416)
-rotation = 1.5707964
-scale = Vector2(6.56673, 11.989208)
+position = Vector2(1631, -1415)
+scale = Vector2(12.075118, 6.8292084)
 links = [NodePath("../Bat3"), NodePath("../Bat4"), NodePath("../Bat5")]
 
 [node name="Bat" parent="." instance=ExtResource("12_8nakg")]
