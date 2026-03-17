@@ -1,7 +1,23 @@
-[gd_scene load_steps=22 format=3 uid="uid://ciumwj1vwabti"]
+[gd_scene load_steps=26 format=3 uid="uid://ciumwj1vwabti"]
 
 [ext_resource type="Script" uid="uid://da601aursrya5" path="res://Scripts/Object/BoostOrb/size_orb.gd" id="1_kfdxb"]
 [ext_resource type="Texture2D" uid="uid://bp6wdluy32oil" path="res://Assets/Sprites/Orbs/ShrinkOrb.png" id="2_f866v"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_w5wny"]
+
+[sub_resource type="Resource" id="Resource_rikhv"]
+script = ExtResource("2_w5wny")
+sound_string = "res://Assets/Sound/SFX/Orb/Shrink Orb.wav"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_axct4"]
+script = ExtResource("2_w5wny")
+sound_string = "res://Assets/Sound/SFX/Orb/Grow Orb.wav"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_f866v"]
+script = ExtResource("2_w5wny")
+sound_string = "res://Assets/Sound/SFX/Orb/Normal Orb.wav"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Gradient" id="Gradient_do7bd"]
 offsets = PackedFloat32Array(1)
@@ -105,8 +121,12 @@ radius = 40.04997
 collision_layer = 8
 script = ExtResource("1_kfdxb")
 time = 0.0
+sound_shrink = SubResource("Resource_rikhv")
+sound_grow = SubResource("Resource_axct4")
+sound_normal = SubResource("Resource_f866v")
 shrink_image = "res://Assets/Sprites/Orbs/ShrinkOrb.png"
 grow_image = "res://Assets/Sprites/Orbs/GrowOrb.png"
+normal_image = "res://Assets/Sprites/Orbs/NormalOrb.png"
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 modulate = Color(0.7366762, 0.42621613, 0.928359, 1)

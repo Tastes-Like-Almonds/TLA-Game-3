@@ -13,6 +13,7 @@ func hit_effect(player : Player) -> void:
 	$GPUParticles2D.emitting = true
 	if reverse:
 		var mod : PropertyModifier = PropertyModifier.new(-1, PropertyModifier.ModiferType.MULTIPLY, time)
+		mod.reset_on_respawn = true
 		mod.set_id("gravity_orb")
 		player.add_modifier(mod, "gravity")
 		

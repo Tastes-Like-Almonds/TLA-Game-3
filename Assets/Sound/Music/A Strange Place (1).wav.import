@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c78bia7alc6af"
+path="res://.godot/imported/A Strange Place (1).wav-a698074ebca14ded1c3a0d5514483819.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/Music/A Strange Place (1).wav"
+dest_files=["res://.godot/imported/A Strange Place (1).wav-a698074ebca14ded1c3a0d5514483819.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=1219047
+edit/loop_end=-1
+compress/mode=2

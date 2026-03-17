@@ -7,12 +7,19 @@ enum ControlMode {
 	GLOBAL_MOUSE,
 	
 	## Follows the mouse relative to the center of the screen
-	LOCAL_MOUSE
+	LOCAL_MOUSE,
+	
+	## Confines the mouse to the center, but simulates its movement for sword
+	## positioning.
+	VIRTUAL_MOUSE
 }
 
 @onready var body : AnimatableBody2D = $AnimatableBody2D
 @onready var body_shape : CollisionShape2D = $AnimatableBody2D/CollisionShape2D
 @onready var blade : BladeArea = $Area2D
+
+@export var normal_hit_sound:SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Sword/small hit (1).wav",0.1,1.0,&"SFX")
+@export var max_hit_sound:SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Sword/large hit.wav",0.8,1.0,&"SFX")
 
 @export var control_mode : ControlMode = ControlMode.GLOBAL_MOUSE
 
@@ -31,6 +38,20 @@ var current_cable_cooldown : float = 0.0
 var vel_perc : float
 
 var speed_value : float = 0.0
+
+## Simulated position of the mouse relative to the player
+var virtual_mouse : Vector2
+var mouse_sens : float = 1.0
+
+func _input(event: InputEvent) -> void:
+	var player := _get_player()
+	if not player: return
+	if event is InputEventMouse:
+		if event is InputEventMouseMotion:
+			virtual_mouse += event.relative*player.get_size_scale()*mouse_sens
+			var dist := player.get_max_distance()
+			if dist < virtual_mouse.length():
+				virtual_mouse = virtual_mouse.normalized()*dist
 
 func _get_player() -> Player:
 	if get_parent() is Player:
@@ -56,10 +77,15 @@ func _get_target_pos() -> Vector2:
 	var distance := player.get_max_distance()
 	
 	var mouse_vec : Vector2 = Vector2.ZERO
+	
 	if control_mode == ControlMode.LOCAL_MOUSE:
 		mouse_vec = Helper.get_mouse_vec_from_center()
+	
 	elif control_mode == ControlMode.GLOBAL_MOUSE:
 		mouse_vec = get_global_mouse_position() - player_pos
+	
+	elif control_mode == ControlMode.VIRTUAL_MOUSE:
+		mouse_vec = virtual_mouse
 	
 	# Limit the sword distance
 	if mouse_vec.length() < player.get_max_distance():
@@ -79,17 +105,25 @@ func _update_blade(_delta : float) -> void:
 	var result := blade.get_overlapping_bodies()
 	result.append_array(blade.get_overlapping_areas())
 	
+	var enemy_was_hit:bool = false
 	for hit in result:
 		if hit in last_result: continue; # Prevent multiple hits while colliding
 		if hit.is_in_group("BladeHitable"):
 			if hit.has_method("on_sword_hit"):
 				hit.call("on_sword_hit", player)
+				if hit is EnemyHitbox:
+					enemy_was_hit = true
 				SignalBus.BladeHit.emit(hit)
+	
+	if enemy_was_hit:
+		if player.get_blade_damage_perc() >= 1:
+			Sfx.play_sound(max_hit_sound)
+		#else:
+			#Sfx.play_sound(normal_hit_sound)
 	
 	last_result = result
 
 func _physics_process(delta: float) -> void:
-	
 	last_delta = delta
 	current_cable_cooldown = clampf(current_cable_cooldown + delta, 0, cable_cooldown)
 	
@@ -224,6 +258,39 @@ func is_on_floor() -> bool:
 	
 	return result.size() > 0
 
+## Determines if the sword body is on the wall via raycasting. Only collides with collision layer 1.
+func is_on_left_wall() -> bool:
+	var space_state := get_world_2d().direct_space_state
+	
+	var parameters := PhysicsRayQueryParameters2D.new()
+	parameters.from = body.global_position
+	
+	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
+	parameters.to = parameters.from + Vector2.LEFT * body_shape.shape.get_rect().size.y
+	
+	parameters.collision_mask = 1
+	var result := space_state.intersect_ray(parameters)
+	
+	return result.size() > 0
+
+## Determines if the sword body is on the wall via raycasting. Only collides with collision layer 1.
+func is_on_right_wall() -> bool:
+	var space_state := get_world_2d().direct_space_state
+	
+	var parameters := PhysicsRayQueryParameters2D.new()
+	parameters.from = body.global_position
+	
+	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
+	parameters.to = parameters.from + Vector2.RIGHT * body_shape.shape.get_rect().size.y
+	
+	parameters.collision_mask = 1
+	var result := space_state.intersect_ray(parameters)
+	
+	return result.size() > 0
+
+func is_on_wall() -> bool:
+	return is_on_left_wall() or is_on_right_wall()
+
 ## Similar to is_on_floor, but uses the player's gravity direction to calculate the ground.
 func is_on_ground() -> bool:
 	var player := _get_player()
@@ -268,3 +335,10 @@ func exit_cable() -> void:
 
 func teleport_to_target_pos() -> void:
 	body.global_position = _get_target_pos()
+
+func _ready() -> void:
+	GameSettings.SettingChanged.connect(func(key:String, val:Variant) -> void:
+		if key == "mouse_sens":
+			mouse_sens = val
+	)
+	mouse_sens = GameSettings.get_setting("mouse_sens")

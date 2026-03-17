@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bl3ttxw1muura"]
+[gd_scene load_steps=17 format=3 uid="uid://bl3ttxw1muura"]
 
 [ext_resource type="Script" uid="uid://bytykcs62pxn5" path="res://Scripts/Environments/gutter_2.gd" id="1_jl21p"]
 
@@ -80,6 +80,13 @@ noise = SubResource("FastNoiseLite_vbji5")
 color_ramp = SubResource("Gradient_p84su")
 seamless = true
 
+[sub_resource type="Gradient" id="Gradient_jl21p"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.02833333, 0.05, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rrqrp"]
+gradient = SubResource("Gradient_jl21p")
+
 [node name="Gutter2Env" type="Node2D"]
 script = ExtResource("1_jl21p")
 
@@ -96,7 +103,7 @@ offset = Vector2(1.845315, -10.547034)
 modulate = Color(1, 1, 1, 0.40784314)
 z_index = -7
 position = Vector2(-1432.9999, -31.999998)
-scale = Vector2(9.148695, 9.148695)
+scale = Vector2(50, 50)
 texture = SubResource("GradientTexture2D_3hcw5")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Background"]
@@ -121,11 +128,117 @@ color = Color(0.62856215, 0.7361342, 0.6613292, 1)
 [node name="Fog" type="Node2D" parent="."]
 
 [node name="Parallax2D" type="Parallax2D" parent="Fog"]
-modulate = Color(1, 1, 1, 0.10980392)
 scale = Vector2(4, 4)
 repeat_size = Vector2(3072, 1024)
 autoscroll = Vector2(120, -5)
 
 [node name="Sprite2D" type="Sprite2D" parent="Fog/Parallax2D"]
+self_modulate = Color(1, 1, 1, 0.05490196)
 scale = Vector2(3, 1)
 texture = SubResource("NoiseTexture2D_vwpxu")
+
+[node name="Parallax2D2" type="Parallax2D" parent="Fog"]
+modulate = Color(1, 1, 1, 0.33333334)
+scale = Vector2(4, 4)
+scroll_scale = Vector2(0.6, 0.7)
+scroll_offset = Vector2(2400, 0)
+repeat_size = Vector2(6000, 8000)
+repeat_times = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D2"]
+z_index = -10
+position = Vector2(-846.75006, -37.000008)
+rotation = 2.3561945
+scale = Vector2(-0.98262453, 104.02569)
+texture = SubResource("GradientTexture2D_rrqrp")
+
+[node name="Parallax2D8" type="Parallax2D" parent="Fog"]
+scale = Vector2(4, 4)
+scroll_scale = Vector2(0.6, 0.7)
+scroll_offset = Vector2(16000, 0)
+repeat_size = Vector2(6000, 8000)
+repeat_times = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D8"]
+z_index = -10
+position = Vector2(-846.75006, -37.000008)
+rotation = 3.6651917
+scale = Vector2(-0.98262453, 104.02569)
+texture = SubResource("GradientTexture2D_rrqrp")
+
+[node name="Parallax2D3" type="Parallax2D" parent="Fog"]
+scale = Vector2(4, 4)
+scroll_scale = Vector2(0.8, 0.7)
+scroll_offset = Vector2(6000, 0)
+repeat_size = Vector2(6000, 8000)
+repeat_times = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D3"]
+z_index = -10
+position = Vector2(-846.75006, -37.000008)
+rotation = 3.403392
+scale = Vector2(-0.29301253, 105.929886)
+texture = SubResource("GradientTexture2D_rrqrp")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Fog/Parallax2D3"]
+z_index = -10
+position = Vector2(-804.9999, -18.999983)
+rotation = 3.403392
+scale = Vector2(-0.29301253, 105.929886)
+texture = SubResource("GradientTexture2D_rrqrp")
+
+[node name="Parallax2D6" type="Parallax2D" parent="Fog"]
+scale = Vector2(4, 4)
+scroll_scale = Vector2(0.7, 0.7)
+scroll_offset = Vector2(12000, 0)
+repeat_size = Vector2(5000, 8000)
+repeat_times = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D6"]
+z_index = -10
+position = Vector2(-846.75006, -37.000008)
+rotation = 2.8797934
+scale = Vector2(-0.29301253, 105.929886)
+texture = SubResource("GradientTexture2D_rrqrp")
+
+[node name="Parallax2D4" type="Parallax2D" parent="Fog"]
+scale = Vector2(4, 4)
+scroll_scale = Vector2(0.7, 0.7)
+scroll_offset = Vector2(2000, 0)
+repeat_size = Vector2(5000, 1024)
+repeat_times = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D4"]
+z_index = -10
+position = Vector2(-846.75006, -37.000008)
+rotation = 2.8797934
+scale = Vector2(-0.7225662, 106.09949)
+texture = SubResource("GradientTexture2D_rrqrp")
+
+[node name="Parallax2D5" type="Parallax2D" parent="Fog"]
+scale = Vector2(4, 4)
+scroll_scale = Vector2(0.7, 0.7)
+scroll_offset = Vector2(8000, 0)
+repeat_size = Vector2(8000, 1024)
+repeat_times = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D5"]
+z_index = -10
+position = Vector2(-846.75006, -37.000008)
+rotation = 4.4505897
+scale = Vector2(-0.7225662, 106.09949)
+texture = SubResource("GradientTexture2D_rrqrp")
+
+[node name="Parallax2D7" type="Parallax2D" parent="Fog"]
+scale = Vector2(4, 4)
+scroll_scale = Vector2(0.7, 0.7)
+scroll_offset = Vector2(8000, 3000)
+repeat_size = Vector2(4000, 3000)
+repeat_times = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D7"]
+z_index = -10
+position = Vector2(-846.75006, -37.000008)
+rotation = 4.9741883
+scale = Vector2(-0.7225662, 106.09949)
+texture = SubResource("GradientTexture2D_rrqrp")

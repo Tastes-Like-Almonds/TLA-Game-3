@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://m7m6o4sfci1v"
+path="res://.godot/imported/Shrink Orb.wav-3694e356faec0020a2c19a8d405a4f4f.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Orb/Shrink Orb.wav"
+dest_files=["res://.godot/imported/Shrink Orb.wav-3694e356faec0020a2c19a8d405a4f4f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

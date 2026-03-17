@@ -114,7 +114,6 @@ notifier = NodePath("VisibleOnScreenNotifier2D")
 hit_sound = SubResource("Resource_dhqts")
 death_sound = SubResource("Resource_omse7")
 alert_sound = SubResource("Resource_22w8g")
-hit_time = 0.2
 health = 6.0
 max_hit_kb = 1000.0
 respawn = false
