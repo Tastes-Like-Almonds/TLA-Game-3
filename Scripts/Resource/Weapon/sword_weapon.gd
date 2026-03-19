@@ -38,10 +38,16 @@ func use(charge_time : float) -> void:
 	if _wielder.get_player_body().is_on_floor(): return
 	super(charge_time)
 
-func on_use(charge_time : float) -> void:
+func on_use(_charge_time : float) -> void:
 	if not is_instance_valid(_wielder): return
 	GameCamera.set_current_camera_shake(_wielder.get_viewport(), 0.06)
-	_wielder.set_velocity(get_dir()*(min(MAX_CHARGE,charge_time)/MAX_CHARGE)*1800*_wielder.get_size_scale())
+	
+	var push_vec : Vector2 = get_dir()
+	#push_vec *= (min(MAX_CHARGE,charge_time)/MAX_CHARGE) # Account for sword charge (Deprecated)
+	push_vec *= 1800 # Sword dash speed
+	push_vec *= _wielder.get_size_scale() # Account for size
+	
+	_wielder.set_velocity(push_vec)
 	current_touch_cooldown = 0.0
 	can_use = false
 

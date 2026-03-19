@@ -235,6 +235,16 @@ func get_sword_damage() -> float:
 func get_sword_speed() -> float:
 	return get_modified_property("sword_speed")
 
+## Gets the speed at which the mouse must be moving (px/s) to produce maximum movement.
+func get_mouse_max_speed() -> float:
+	return get_modified_property("mouse_max_speed")
+
+## Returns true if the player can propel themselves horizontally from the ceiling
+## with respect to gravity. This value shouldn't change throughout gameplay,
+## but might if a weapon's functionality requires it.
+func can_push_off_ceiling() -> bool:
+	return false
+
 ## Returns the speed the sword must travel to deal maximum damage.
 #func get_sword_speed_damage() -> float:
 	#return get_modified_property("sword_speed_damage")

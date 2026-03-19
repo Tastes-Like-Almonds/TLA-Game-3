@@ -66,6 +66,10 @@ func _apply_drag(vel : Vector2, delta : float) -> Vector2:
 		# Accounts for friction and such
 		drag.x = Helper.get_slide_from_collision(collision, last_slide, offset)
 		
+		if !player.can_push_off_ceiling():
+			if player.get_player_sword().is_on_ceiling():
+				drag.x = 1
+		
 		# Store last value in case the tile data can't be found
 		last_slide = drag.x
 		vel.x *= pow(drag.x, delta/player.get_friction_time())
@@ -140,6 +144,10 @@ func _physics_process(delta: float) -> void:
 					velocity.x = 0
 				if velocity.x > 0 and sword.is_on_right_wall():
 					velocity.x = 0
+				
+				if !player.can_push_off_ceiling():
+					if sword.is_on_ceiling():
+						push.x *= 0
 				
 				velocity += push
 			else: # Only apply gravity if the sword isn't pushing
