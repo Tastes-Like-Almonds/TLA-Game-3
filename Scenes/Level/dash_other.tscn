@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://bgrtnk481hd0t"]
+[gd_scene load_steps=24 format=4 uid="uid://bgrtnk481hd0t"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_tl0su"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_ge3c4"]
@@ -13,8 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://dh2sqypdgd61a" path="res://Assets/Sprites/Placeholder/Ceiling lantern placeholder.png" id="9_g1s5c"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="9_maa0b"]
 [ext_resource type="PackedScene" uid="uid://c32ukwj524sxi" path="res://Scenes/Object/Zone/kill_barrier.tscn" id="11_v42fn"]
-[ext_resource type="PackedScene" uid="uid://dtslq1erjqgho" path="res://Scenes/Visual/proximity_text.tscn" id="12_7rxl2"]
-[ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="13_jylkm"]
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="14_jylkm"]
 
 [sub_resource type="Gradient" id="Gradient_ihtgo"]
@@ -567,19 +565,6 @@ shape = SubResource("RectangleShape2D_ybt7e")
 position = Vector2(-1967, -165)
 scale = Vector2(4.9900956, 17.124996)
 links = [NodePath("../Level/Tiles/Bat2"), NodePath("../Level/Tiles/Bat"), NodePath("../Level/Tiles/Bat3")]
-
-[node name="ProximityText9" parent="." instance=ExtResource("12_7rxl2")]
-offset_left = -3259.0
-offset_top = 2168.0
-offset_right = -2915.0
-offset_bottom = 2302.0
-theme_override_colors/font_shadow_color = Color(0.24913332, 0.37, 0.24049999, 0.14117648)
-theme_override_constants/shadow_outline_size = 10
-theme_override_fonts/normal_font = ExtResource("13_jylkm")
-theme_override_font_sizes/normal_font_size = 66
-text = "Click while in mid-air to dash."
-fit_content = true
-horizontal_alignment = 1
 
 [node name="TeleportZone2" parent="." instance=ExtResource("14_jylkm")]
 position = Vector2(957, 2375)
