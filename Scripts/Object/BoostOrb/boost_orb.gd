@@ -41,6 +41,14 @@ func on_sword_hit(player : Player) -> void:
 	if sound != null:
 		Sfx.play_sound_2d(sound, global_position)
 
+func _modulate() -> void:
+	if alive and not disabled:
+		visual.modulate.a = 1.0
+	elif disabled:
+		visual.modulate.a = 0.3
+	else:
+		visual.modulate.a = current_respawn_time*0.3 / respawn_time
+
 func _process(delta: float) -> void:
 	
 	if not alive:
@@ -57,12 +65,7 @@ func _process(delta: float) -> void:
 		bob_time = fmod(bob_time, 2*PI)
 		visual.position.y = bob_dist * sin(bob_time)
 	
-		if alive and not disabled:
-			visual.modulate.a = 1.0
-		elif disabled:
-			visual.modulate.a = 0.3
-		else:
-			visual.modulate.a = current_respawn_time*0.3 / respawn_time
+		_modulate()
 
 func _ready() -> void:
 	var visual_node := get_node_or_null("Visual")

@@ -130,7 +130,21 @@ func get_tile_pos_from_collision(collision : KinematicCollision2D) -> Vector2:
 		var coords : Vector2i = collider.local_to_map(collider.to_local(collision.get_position()))
 		return map.to_global(map.map_to_local(coords))
 	return collision.get_position()
+
+## Cast a ray to detect collisions. Returns ray result.
+func cast_world_ray(start:Vector2, dir:Vector2) -> Dictionary:
+	var space_state := get_world_2d().direct_space_state
 	
+	var parameters := PhysicsRayQueryParameters2D.new()
+	parameters.from = start
+	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
+	parameters.to = parameters.from + dir
+	
+	parameters.collision_mask = 1 # World layer
+	var result := space_state.intersect_ray(parameters)
+	
+	return result
+
 ## Creates a visual dot at the given position. It lasts for three seconds or until overidden.
 ## A debug dot is overidden if a new one is created with the same ID.
 func debug_dot(parent:Node, pos : Vector2, id : String, color : Color = Color.WHITE) -> void:

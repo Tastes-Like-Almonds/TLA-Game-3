@@ -37,6 +37,9 @@ var current_cable_cooldown : float = 0.0
 ## The percentage of velocity the sword is at to its maximum.
 var vel_perc : float
 
+## The speed of the mouse since the last input.
+var mouse_speed : float
+
 var speed_value : float = 0.0
 
 ## Simulated position of the mouse relative to the player
@@ -48,7 +51,9 @@ func _input(event: InputEvent) -> void:
 	if not player: return
 	if event is InputEventMouse:
 		if event is InputEventMouseMotion:
-			virtual_mouse += event.relative*player.get_size_scale()*mouse_sens
+			var new_mouse : Vector2 = virtual_mouse + event.relative*player.get_size_scale()*mouse_sens
+			mouse_speed = (new_mouse - virtual_mouse).length()
+			virtual_mouse = new_mouse 
 			var dist := player.get_max_distance()
 			if dist < virtual_mouse.length():
 				virtual_mouse = virtual_mouse.normalized()*dist
@@ -180,8 +185,14 @@ func _physics_process(delta: float) -> void:
 				
 				if collision:
 					var friction := _get_slide_from_last_collision()
-					if collision.get_collider() is AnimatableBody2D:
+					
+					if !player.can_push_off_ceiling():
+						if is_on_ceiling():
+							friction = 1
+					
+					if collision.get_collider() is AnimatableBody2D: # Moving platforms
 						body.global_position += collision.get_collider().constant_linear_velocity
+					
 					body.move_and_collide(collision.get_remainder().slide(collision.get_normal()) * friction)
 		
 		player.MovementMode.PLAYER_ORBIT: # No use as of now.
@@ -192,6 +203,9 @@ func _physics_process(delta: float) -> void:
 			
 			if player.get_last_collision():
 				drag = player.get_ground_drag()
+				if !player.can_push_off_ceiling():
+					if is_on_ceiling():
+						drag.x = 1
 			else:
 				drag = player.get_air_drag()
 			
@@ -209,12 +223,12 @@ func _physics_process(delta: float) -> void:
 	
 	_update_blade(delta)
 
-
 ## Gets the velocity which should be applied to the player each frame 
 ## in respect to the sword's movement.
 func get_push() -> Vector2:
 	
 	var player := _get_player()
+	var player_body := player.get_player_body()
 	var collision := player.get_last_collision()
 	var vel := Vector2.ZERO
 
@@ -227,7 +241,16 @@ func get_push() -> Vector2:
 		# Acount for slide direction in push
 		var slide_vel := (collision.get_remainder() + collision.get_travel()).slide(collision.get_normal()) * _get_slide_from_last_collision()
 		vel += (collision.get_remainder() + collision.get_travel() + slide_vel) * player.get_strength() * -1 # Reverse velocity of sword
-
+	
+	if (mouse_speed) > 0 and vel.normalized().dot(player_body.velocity.normalized()) > 0.5:
+		var mult := clampf(mouse_speed/(player.get_mouse_max_speed()*last_delta)+0.1,0,1) 
+		#mult *= 1-vel.normalized().dot(player_body.velocity.normalized())
+		vel *= mult
+	else:
+		vel *= 1
+	
+	#Helper.debug_dot(body,Vector2.ZERO+vel, "VEL")
+	
 	return vel
 
 ## Gets the global position of the sword's tip.
@@ -245,49 +268,50 @@ func is_on_cable() -> bool:
 
 ## Determines if the sword body is on the ground via raycasting. Only collides with collision layer 1.
 func is_on_floor() -> bool:
-	var space_state := get_world_2d().direct_space_state
-	
-	var parameters := PhysicsRayQueryParameters2D.new()
-	parameters.from = body.global_position
-	
-	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
-	parameters.to = parameters.from + Vector2.DOWN * body_shape.shape.get_rect().size.y
-	
-	parameters.collision_mask = 1
-	var result := space_state.intersect_ray(parameters)
-	
+	var dir := Vector2.DOWN * body_shape.shape.get_rect().size.y
+	var result := Helper.cast_world_ray(
+		body.global_position,
+		dir
+	)
 	return result.size() > 0
+
+## Determines if the sword body is on the wall via raycasting. Only collides with collision layer 1.
+func is_on_left_wall() -> bool:
+	var dir := Vector2.LEFT * body_shape.shape.get_rect().size.x
+	var result := Helper.cast_world_ray(
+		body.global_position,
+		dir
+	)
+	return result.size() > 0
+
+## Determines if the sword body is on the wall via raycasting. Only collides with collision layer 1.
+func is_on_right_wall() -> bool:
+	var dir := Vector2.RIGHT * body_shape.shape.get_rect().size.x
+	var result := Helper.cast_world_ray(
+		body.global_position,
+		dir
+	)
+	return result.size() > 0
+
+func is_on_wall() -> bool:
+	return is_on_left_wall() or is_on_right_wall()
 
 ## Similar to is_on_floor, but uses the player's gravity direction to calculate the ground.
 func is_on_ground() -> bool:
-	var player := _get_player()
-	if not player: return false # Can't be on the ground if the player doesn't exist
-	var space_state := get_world_2d().direct_space_state
-	
-	var parameters := PhysicsRayQueryParameters2D.new()
-	parameters.from = body.global_position
-	
-	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
-	parameters.to = parameters.from + _get_player().get_gravity_direction() * body_shape.shape.get_rect().size.y
-	
-	parameters.collision_mask = 1
-	var result := space_state.intersect_ray(parameters)
-	
+	var dir := _get_player().get_gravity_direction() * body_shape.shape.get_rect().size.y
+	var result := Helper.cast_world_ray(
+		body.global_position,
+		dir
+	)
 	return result.size() > 0
 
 ## Determines if the sword body is on the ceiling via raycasting. Only collides with collision layer 1.
 func is_on_ceiling() -> bool:
-	var space_state := get_world_2d().direct_space_state
-	
-	var parameters := PhysicsRayQueryParameters2D.new()
-	parameters.from = body.global_position
-	
-	# Theoretically only half the rect's size is needed, but in practice physics doesn't work out perfectly.
-	parameters.to = parameters.from + Vector2.UP * body_shape.shape.get_rect().size.y
-	
-	parameters.collision_mask = 1
-	var result := space_state.intersect_ray(parameters)
-	
+	var dir := _get_player().get_gravity_direction().rotated(PI) * body_shape.shape.get_rect().size.y
+	var result := Helper.cast_world_ray(
+		body.global_position,
+		dir
+	)
 	return result.size() > 0
 
 ## Enter the passed cable.

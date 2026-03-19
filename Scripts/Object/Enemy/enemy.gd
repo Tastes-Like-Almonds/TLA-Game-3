@@ -36,6 +36,8 @@ signal Hit(damage:float)
 ## If false, the enemy will use its physics body as a damage hitbox.
 @export var disable_physics_hitbox : bool = false
 
+@export var damage:float = 2.6
+
 # --- #
 @export_group("Knockback")
 ## Maximum knockback dealt to the player when they hit the bat.
@@ -127,15 +129,15 @@ func on_sword_hit(player : Player) -> void:
 	if respawning : return
 	if time_since_last_hit < hit_time: return
 	
-	var damage := player.get_blade_damage()
+	var sword_damage := player.get_blade_damage()
 	var vel := player.get_player_sword().get_last_sword_velocity()
 	
-	if deal_damage(damage): # If killed
-		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized(), Color.RED, 1.5)
+	if deal_damage(sword_damage): # If killed
+		TextDisplay.damage_display(get_parent(), global_position, str(round(sword_damage*100)/100), vel.normalized(), Color.RED, 1.5)
 	else:
 		if hit_sound:
 			Sfx.play_sound(hit_sound)
-		TextDisplay.damage_display(get_parent(), global_position, str(round(damage*100)/100), vel.normalized())
+		TextDisplay.damage_display(get_parent(), global_position, str(round(sword_damage*100)/100), vel.normalized())
 	
 	var player_body := player.get_player_body()
 	
@@ -181,9 +183,10 @@ func _check_respawn() -> void:
 		_respawn()
 
 ## Called with the *player* is hit by the enemy. Returns true if fatal.
-func on_hit(collider : PhysicsBody2D) -> bool:
+func on_hit(collider : PhysicsBody2D, damage_val : float = -1) -> bool:
 	if not collider: return false
 	if respawning: return false
+	if damage_val == -1: damage_val = damage
 	if collider is PlayerBody and is_instance_valid(collider):
 		
 		var player_body := collider as PlayerBody
@@ -191,7 +194,7 @@ func on_hit(collider : PhysicsBody2D) -> bool:
 		
 		if not is_instance_valid(player): return false
 		elif time_since_last_hit > hit_time:
-			if player.deal_damage(2.6): # Only KB if the hit lands
+			if player.deal_damage(damage_val): # Only KB if the hit lands
 				player.deal_knockback(global_position.direction_to(player.get_player_position())*knockback*Vector2(1,-1))
 		
 		return not player.is_alive()

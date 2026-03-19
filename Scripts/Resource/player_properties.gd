@@ -39,6 +39,9 @@ class_name PlayerProperties extends Resource
 ## Speed at which the sword moves. This also affects its strength of pushing.
 @export var sword_speed : float = 3000
 
+## Speed at which the mouse must be moving (px/s) to produce maximum movement.
+@export var mouse_max_speed : float = 1500
+
 ## The maximum distance from the sword tip to the player (Soft limit)
 @export var max_distance : float = 160.0
 
