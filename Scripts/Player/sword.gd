@@ -174,7 +174,7 @@ func _physics_process(delta: float) -> void:
 			#print(speed_value)
 			# End speed value block
 			
-			last_sword_velocity = movement # Get velocity per second as opposed to the frame
+			last_sword_velocity = movement/delta # Get velocity per second as opposed to the frame
 			last_frame_pos = body.global_position
 			
 			# Cables move the sword manually, so don't do physics here.
@@ -184,7 +184,6 @@ func _physics_process(delta: float) -> void:
 				_get_player().set_last_collision(collision)
 				
 				if collision:
-					last_sword_velocity = collision.get_travel()
 					var friction := _get_slide_from_last_collision()
 					
 					if !player.can_push_off_ceiling():
@@ -194,11 +193,7 @@ func _physics_process(delta: float) -> void:
 					if collision.get_collider() is AnimatableBody2D: # Moving platforms
 						body.global_position += collision.get_collider().constant_linear_velocity
 					
-					var slide := body.move_and_collide(collision.get_remainder().slide(collision.get_normal()) * friction)
-					if slide:
-						last_sword_velocity += slide.get_travel()
-			
-			last_sword_velocity /= delta
+					body.move_and_collide(collision.get_remainder().slide(collision.get_normal()) * friction)
 		
 		player.MovementMode.PLAYER_ORBIT: # No use as of now.
 			
@@ -228,12 +223,12 @@ func _physics_process(delta: float) -> void:
 	
 	_update_blade(delta)
 
-
 ## Gets the velocity which should be applied to the player each frame 
 ## in respect to the sword's movement.
 func get_push() -> Vector2:
 	
 	var player := _get_player()
+	var player_body := player.get_player_body()
 	var collision := player.get_last_collision()
 	var vel := Vector2.ZERO
 
@@ -247,10 +242,14 @@ func get_push() -> Vector2:
 		var slide_vel := (collision.get_remainder() + collision.get_travel()).slide(collision.get_normal()) * _get_slide_from_last_collision()
 		vel += (collision.get_remainder() + collision.get_travel() + slide_vel) * player.get_strength() * -1 # Reverse velocity of sword
 	
-	if (mouse_speed) > 0:
-		vel *= clampf(mouse_speed/(player.get_mouse_max_speed()*last_delta)+0.1,0,1)
+	if (mouse_speed) > 0 and vel.normalized().dot(player_body.velocity.normalized()) > 0.5:
+		var mult := clampf(mouse_speed/(player.get_mouse_max_speed()*last_delta)+0.1,0,1) 
+		#mult *= 1-vel.normalized().dot(player_body.velocity.normalized())
+		vel *= mult
 	else:
 		vel *= 1
+	
+	#Helper.debug_dot(body,Vector2.ZERO+vel, "VEL")
 	
 	return vel
 
