@@ -142,8 +142,10 @@ func _physics_process(delta: float) -> void:
 				# Reset x velocity if hitting wall as to prevent bounce
 				if velocity.x < 0 and sword.is_on_left_wall():
 					velocity.x = 0
+					push.x = 0
 				if velocity.x > 0 and sword.is_on_right_wall():
 					velocity.x = 0
+					push.x = 0
 				
 				if !player.can_push_off_ceiling():
 					if sword.is_on_ceiling():

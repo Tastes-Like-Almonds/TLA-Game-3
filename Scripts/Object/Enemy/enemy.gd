@@ -103,12 +103,12 @@ func get_current_hit_color() -> Vector4:
 	return sprite.material.get_shader_parameter("solid_color")
 
 ## Deals the target damage to the enemy. Returns true if killed.
-func deal_damage(damage: float) -> bool:
+func deal_damage(amt: float) -> bool:
 	
 	if time_since_last_hit < hit_time: return false
 	
 	if !invincible:
-		health -= damage
+		health -= amt
 	
 	time_since_last_hit = 0.0
 	
@@ -116,7 +116,7 @@ func deal_damage(damage: float) -> bool:
 	var color := get_current_hit_color()
 	sprite.material.set_shader_parameter("solid_color", color + Vector4(0,0,0,1))
 	
-	Hit.emit(damage)
+	Hit.emit(amt)
 	
 	if health <= 0:
 		_kill()

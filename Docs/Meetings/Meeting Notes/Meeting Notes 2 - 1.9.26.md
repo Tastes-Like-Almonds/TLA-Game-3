@@ -7,9 +7,9 @@ title: Game Development Club
 query: #members
 - [[Aidan Wignall]], "Present", ""
 - [[Mizuki Wong]], "Present", ""
-- [[Anton Nemkov]], "Excused", ""
+- [[Anton Nemkov]], "Absent", ""
 - [[Zachary Cluff]], "Present", ""
-- [[Evan Gould]], "Present", ""
+- [[Evan Gould]], "Absent", ""
 ```
 
 ## Topics to Cover

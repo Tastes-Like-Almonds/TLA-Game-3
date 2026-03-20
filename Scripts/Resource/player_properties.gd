@@ -40,7 +40,7 @@ class_name PlayerProperties extends Resource
 @export var sword_speed : float = 3000
 
 ## Speed at which the mouse must be moving (px/s) to produce maximum movement.
-@export var mouse_max_speed : float = 1500
+@export var mouse_max_speed : float = 1000
 
 ## The maximum distance from the sword tip to the player (Soft limit)
 @export var max_distance : float = 160.0
@@ -77,7 +77,7 @@ class_name PlayerProperties extends Resource
 @export_range(0.1,5,0.1) var size_scale : float = 1.0
 
 ## The speed which the player falls.
-@export_range(0,3000, 1.0) var gravity : float = 3000.0
+@export_range(0,3000, 1.0) var gravity : float = 3500.0
 
 ## Gravity used for cable speed only.
 @export_range(0,200) var cable_gravity : float = 70.0
