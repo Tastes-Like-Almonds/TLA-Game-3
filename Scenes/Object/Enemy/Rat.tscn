@@ -60,7 +60,7 @@ linear_accel_min = -2.2351742e-06
 linear_accel_max = -2.2351742e-06
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_upkqw"]
-size = Vector2(32, 14.75)
+size = Vector2(29, 12)
 
 [node name="Rat" type="AnimatableBody2D" node_paths=PackedStringArray("walk_sound", "sprite", "notifier") groups=["EnemyBody"]]
 position = Vector2(0, 1)
@@ -75,7 +75,7 @@ hit_sound = SubResource("Resource_2lw46")
 death_sound = SubResource("Resource_fokgr")
 alert_sound = SubResource("Resource_paiv5")
 health = 4.0
-knockback = 500.0
+knockback = 200.0
 aggro_range = 800.0
 metadata/_edit_vertical_guides_ = [-61.0]
 
@@ -111,7 +111,7 @@ collision_mask = 0
 script = ExtResource("5_ia02j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(-2, -26.625)
+position = Vector2(-1.5, -26)
 shape = SubResource("RectangleShape2D_upkqw")
 debug_color = Color(0.98, 0.08819997, 0.31115, 0.39607844)
 
