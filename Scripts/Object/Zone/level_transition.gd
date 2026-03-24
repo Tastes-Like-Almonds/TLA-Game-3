@@ -28,7 +28,6 @@ func _emit_finished(_x: Variant) -> void:
 
 ## Load load_level via LevelLoader.gd.
 func transition() -> void:
-	print("Transition.")
 	
 	if transitioning == true: return
 	transitioning = true

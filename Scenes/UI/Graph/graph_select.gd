@@ -1,4 +1,6 @@
-extends MarginContainer
+class_name GraphSelect extends MarginContainer
+
+signal level_selected(level:LevelNodeData)
 
 @onready var segment_parent : HBoxContainer = $HBoxContainer
 
@@ -13,7 +15,7 @@ const LINE_THICKNESS : float = 4.0
 var loaded_sids : Dictionary [String,LevelNode] = {}
 
 func _on_level_selected(node:LevelNodeData) -> void:
-	print(node.level_data.title)
+	level_selected.emit(node)
 
 func load_world(world:WorldData) -> void:
 	
@@ -97,6 +99,7 @@ func _can_open_level(level_sid:String, link:LevelLink) -> bool:
 
 # This is perhaps the ugliest code to ever be written. Behold!
 func _draw() -> void:
+	if not loaded_world: return
 	var line_color := loaded_world.line_unlocked_color
 	var segments := _get_segments()
 	var seg_offset : Vector2 = Vector2.ZERO
@@ -185,10 +188,13 @@ func _draw() -> void:
 	#queue_redraw()
 
 func _ready() -> void:
-	load_world(load("res://Resource/World/testing_world.tres"))
+	#load_world(load("res://Resource/World/testing_world.tres"))
 	
 	# Redraw when size changes
-	resized.connect(call_deferred.bind("queue_redraw"))
+	resized.connect(func() -> void:
+		await get_tree().process_frame
+		queue_redraw()
+	)
 	get_viewport().size_changed.connect(func() -> void:
 		await get_tree().process_frame
 		queue_redraw()

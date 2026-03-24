@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cipi6kc6rwuyb"]
+[gd_scene load_steps=7 format=3 uid="uid://cipi6kc6rwuyb"]
 
 [ext_resource type="Script" uid="uid://dmu8tqg3q7d7f" path="res://Scenes/UI/Graph/level_node.gd" id="1_v2sta"]
 
@@ -6,6 +6,24 @@
 content_margin_left = 4.0
 content_margin_right = 4.0
 bg_color = Color(0.11, 0.11, 0.11, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhfec"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0.08468998, 0.08468991, 0.08468992, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_486st"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0.18717614, 0.18717614, 0.18717614, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -21,8 +39,13 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.8, 0.8, 0.8, 0.6431373)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wcnr1"]
+
 [node name="LevelNode2" type="Button"]
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_bhfec")
+theme_override_styles/hover = SubResource("StyleBoxFlat_486st")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_v2sta")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wcnr1")
 text = "1.1"
 script = ExtResource("1_v2sta")

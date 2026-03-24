@@ -202,10 +202,8 @@ func _process(delta: float) -> void:
 			current_delay = 0
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		if event.pressed:
-			if event.is_action("next_dialog"):
-				_next_dialog()
+	if event.is_action_pressed("next_dialog"):
+		_next_dialog()
 
 ## Testing only
 #func _ready() -> void:
