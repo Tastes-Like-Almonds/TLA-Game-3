@@ -23,6 +23,7 @@ script = ExtResource("3_l7wek")
 sid = "1.1"
 level_data = SubResource("Resource_j7cvt")
 links = Array[ExtResource("5_mvwjb")]([SubResource("Resource_s4hcf")])
+always_playable = true
 metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
 
 [sub_resource type="Resource" id="Resource_a5slf"]
@@ -117,5 +118,7 @@ metadata/_custom_type_script = "uid://cgg14ym78f0wv"
 
 [resource]
 script = ExtResource("1_laln2")
+name = "MyWorld"
 segments = Array[ExtResource("2_dydh3")]([SubResource("Resource_a5slf"), SubResource("Resource_e8nbq"), SubResource("Resource_gljry"), SubResource("Resource_o7sk2")])
+line_locked_color = Color(1, 1, 1, 0.45490196)
 metadata/_custom_type_script = "uid://b2agbg1ytt17w"

@@ -9,6 +9,7 @@ func load_segment(segment:WorldSegmentData) -> void:
 		var new_node : LevelNode = scn_node.instantiate()
 		new_node.node_data = level
 		new_node.pressed.connect(LevelSelected.emit.bind(level))
+		new_node.disabled = true
 		add_child(new_node)
 
 func get_nodes() -> Array[LevelNode]:

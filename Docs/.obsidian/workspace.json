@@ -11,14 +11,17 @@
             "id": "c5189ac6e154e344",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "Meetings/Meeting Notes/Meeting Notes 2 - 3.19.26.md",
-                "mode": "source",
-                "source": false
+                "file": "Planning/Programming/Level Selector/V2 Level selector diagram.canvas",
+                "viewState": {
+                  "x": -79,
+                  "y": 7.42656249999996,
+                  "zoom": 0
+                }
               },
-              "icon": "lucide-file",
-              "title": "Meeting Notes 2 - 3.19.26"
+              "icon": "lucide-layout-dashboard",
+              "title": "V2 Level selector diagram"
             }
           }
         ]
@@ -171,8 +174,9 @@
   },
   "active": "c5189ac6e154e344",
   "lastOpenFiles": [
-    "Meetings/Meeting Notes/Meeting Notes 2 - 1.9.26.md",
     "Meetings/Meeting Notes/Meeting Notes 2 - 3.19.26.md",
+    "Planning/Programming/Level Selector/V2 Level selector diagram.canvas",
+    "Meetings/Meeting Notes/Meeting Notes 2 - 1.9.26.md",
     "Meetings/Meeting Notes/Meeting Notes - 12.19.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 12.5.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 11.20.25.md",

@@ -161,7 +161,11 @@ func debug_dot(parent:Node, pos : Vector2, id : String, color : Color = Color.WH
 	parent.add_child(dot)
 	
 	_debug_dots.set(id, dot)
-	
+
+func print_dict_as_json(data: Dictionary) -> void:
+	var json_string := JSON.stringify(data, "\t") # "\t" = tab indentation
+	print(json_string)
+
 func _ready() -> void:
 	viewport = get_viewport()
 	camera = viewport.get_camera_2d()

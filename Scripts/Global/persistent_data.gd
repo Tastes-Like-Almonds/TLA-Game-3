@@ -1,4 +1,4 @@
-# Saves/loads player data via JSON.
+## Saves/loads player data via JSON.
 extends Node
 
 signal DataLoaded
@@ -114,6 +114,7 @@ func load_game(path:String=SAVE_PATH) -> void:
 		save_file.close() # Not neccessary but it feels weird not writing it
 		
 	else:
+		print_debug("Save data not found, loading default...")
 		current_loaded_data = _get_base_data()
 	
 	loaded_data = current_loaded_data

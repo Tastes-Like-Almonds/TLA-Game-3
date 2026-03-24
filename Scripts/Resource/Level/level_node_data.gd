@@ -8,3 +8,7 @@ class_name LevelNodeData extends Resource
 
 ## The levels which this node links to.
 @export var links:Array[LevelLink]
+
+## If true, no links are required for the level to be played. Neccessary
+## for the first level of sequences, or independent "bonus" levels.
+@export var always_playable : bool = false
