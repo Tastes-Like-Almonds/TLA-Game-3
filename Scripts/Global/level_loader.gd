@@ -18,6 +18,19 @@ func clear_levels(parent : Node) -> void:
 		if child is Level:
 			child.queue_free()
 
+## Loads the level selector. By default, parents it to Globals.main.
+func load_selector(parent : Node = null) -> void:
+	
+	if not parent:
+		if not Globals.has_main():
+			return
+		parent = Globals.main
+	
+	clear_levels(parent)
+	var selector : Node = load("res://Scenes/UI/graph_level_select.tscn").instantiate()
+	selector.ready.connect(SignalBus.SelectorLoaded.emit)
+	parent.add_child(selector)
+
 ## Loads a level and parents it to `parent`. 
 func load_level(path : String, parent: Node, config : LevelConfig = null, clear_others:bool = true) -> LoadLevelStatus: # TODO Dynamically test levels as they are added.
 	if not is_instance_valid(parent): return LoadLevelStatus.INVALID_PARENT

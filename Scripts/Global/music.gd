@@ -32,12 +32,28 @@ func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
 	if !tracks.has(track): return
 	var song := tracks[track]
 	
+	if not song: return
 	if fade_time <= 0.0:
 		song.node_ref.queue_free()
 		tracks[track] = null
 	else:
-		# TODO
-		var fade_tween := Tween.new()
+		var fade_tween := create_tween()
+		
+		# Fade to zero volume
+		fade_tween.tween_property(
+			song.node_ref,
+			"volume_linear",
+			0,
+			fade_time
+		)
+		
+		# Delete node reference upon fade completion
+		fade_tween.tween_callback(func() -> void:
+			song.node_ref.queue_free()
+			tracks[track] = null
+		)
+		
+		fade_tween.play()
 
 func _ready() -> void:
 	for track:int in TrackLayer.values():

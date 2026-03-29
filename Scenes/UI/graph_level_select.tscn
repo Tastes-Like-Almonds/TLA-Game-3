@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://51rjllq0cxd7"]
+[gd_scene load_steps=23 format=3 uid="uid://51rjllq0cxd7"]
 
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="1_41t8j"]
 [ext_resource type="Script" uid="uid://bvwefjhtywxdb" path="res://Scenes/UI/Graph/graph_select.gd" id="2_m12fl"]
@@ -6,8 +6,7 @@
 [ext_resource type="Script" uid="uid://co1xqltsed07e" path="res://Scripts/UI/world_display.gd" id="2_xn7jd"]
 [ext_resource type="PackedScene" uid="uid://1k3qhyt5fg0k" path="res://Scenes/UI/Graph/world_segment.tscn" id="3_m12fl"]
 [ext_resource type="Script" uid="uid://b2agbg1ytt17w" path="res://Scripts/Resource/Level/world_data.gd" id="3_si5c8"]
-[ext_resource type="Resource" uid="uid://bpvlprfxtavej" path="res://Resource/World/testing_world.tres" id="4_qotok"]
-[ext_resource type="Resource" uid="uid://bs5p1lov34mi7" path="res://Resource/World/testing_world_2.tres" id="5_mvclr"]
+[ext_resource type="Resource" uid="uid://bymv74j5nth1r" path="res://Resource/World/gutter.tres" id="4_si5c8"]
 [ext_resource type="Script" uid="uid://dj1hrla3y6xpi" path="res://Scripts/UI/level_display.gd" id="9_qotok"]
 
 [sub_resource type="Theme" id="Theme_8h3cm"]
@@ -74,7 +73,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme = SubResource("Theme_8h3cm")
 script = ExtResource("2_v7ump")
-worlds = Array[ExtResource("3_si5c8")]([ExtResource("4_qotok"), ExtResource("5_mvclr")])
+worlds = Array[ExtResource("3_si5c8")]([ExtResource("4_si5c8")])
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1

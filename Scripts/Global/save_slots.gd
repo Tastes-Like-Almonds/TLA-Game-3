@@ -119,6 +119,6 @@ func _ready() -> void:
 		create_slot()
 	
 	set_slot(0)
-	add_level_completion("MyWorld", "1.1", CompletionData.new())
+	#add_level_completion("MyWorld", "1.1", CompletionData.new())
 	Helper.print_dict_as_json(get_current_slot())
 #endregion

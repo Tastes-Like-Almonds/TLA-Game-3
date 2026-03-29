@@ -32,6 +32,10 @@ signal LevelPathLoaded(level: Level)
 @warning_ignore("unused_signal")
 signal LevelLoaded()
 
+## Fires when the level selector is loaded.
+@warning_ignore("unused_signal")
+signal SelectorLoaded()
+
 ## Firest when the game is paused/unpaused.
 @warning_ignore("unused_signal")
 signal PauseToggled()

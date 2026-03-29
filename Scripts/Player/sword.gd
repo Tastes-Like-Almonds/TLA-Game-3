@@ -242,12 +242,12 @@ func get_push() -> Vector2:
 		var slide_vel := (collision.get_remainder() + collision.get_travel()).slide(collision.get_normal()) * _get_slide_from_last_collision()
 		vel += (collision.get_remainder() + collision.get_travel() + slide_vel) * player.get_strength() * -1 # Reverse velocity of sword
 	
-	if (mouse_speed) > 0 and vel.normalized().dot(player_body.velocity.normalized()) > 0.5:
-		var mult := clampf(mouse_speed/(player.get_mouse_max_speed()*last_delta)+0.1,0,1) 
-		#mult *= 1-vel.normalized().dot(player_body.velocity.normalized())
-		vel *= mult
-	else:
-		vel *= 1
+		if (mouse_speed) > 0 and vel.normalized().dot(player_body.velocity.normalized()) > 0.5:
+			var mult := clampf(mouse_speed/(player.get_mouse_max_speed()*last_delta)+0.1,0,1) 
+			#mult *= 1-vel.normalized().dot(player_body.velocity.normalized())
+			vel *= mult
+		else:
+			vel *= 1
 	
 	#Helper.debug_dot(body,Vector2.ZERO+vel, "VEL")
 	

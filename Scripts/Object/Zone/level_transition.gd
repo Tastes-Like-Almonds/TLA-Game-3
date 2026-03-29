@@ -3,6 +3,11 @@ extends Area2D
 ## The level to be loaded upon contact
 @export_file_path("*.tscn") var load_level:String
 
+## If true, the transition will instead load the level selector.
+@export var go_to_selector : bool = true
+
+@export var exit : StringName = "main"
+
 ## True if level is not blank; that's all.
 var valid_level:bool = false
 
@@ -15,7 +20,19 @@ func _get_level(target:Node) -> Level:
 	return target
 
 func call_loader(_x: Variant) -> void:
-	LevelLoader.load_level(load_level, Globals.get_level_load_node())
+	
+	if not go_to_selector:
+		LevelLoader.load_level(load_level, Globals.get_level_load_node())
+		SignalBus.LevelPathLoaded.connect(_unfade)
+		return
+	
+	var level := _get_level(self)
+	if not level:
+		push_warning("Level transition is not descendant of a level!")
+		return
+	
+	level.complete()
+
 
 func _unfade(_x: Variant) -> void:
 	Globals.main.transiton_overlay_player.play("fade_from_black")
@@ -28,6 +45,9 @@ func _emit_finished(_x: Variant) -> void:
 
 ## Load load_level via LevelLoader.gd.
 func transition() -> void:
+	
+	_get_level(self).complete()
+	return
 	
 	if transitioning == true: return
 	transitioning = true
@@ -42,9 +62,6 @@ func transition() -> void:
 	
 	# Load level when the screen is fully black
 	Globals.main.transiton_overlay_player.animation_finished.connect(call_loader)
-	
-	# Unfade transition only when the level is finished loading
-	SignalBus.LevelPathLoaded.connect(_unfade)
 	
 	# Emit signal when the transition is fully over.
 	Globals.main.transiton_overlay_player.animation_finished.connect(_emit_finished)
