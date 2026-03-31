@@ -1,13 +1,20 @@
 class_name GraphSelect extends MarginContainer
 
 signal level_selected(level:LevelNodeData)
+signal level_played(level:LevelNodeData)
 
 @onready var segment_parent : HBoxContainer = $HBoxContainer
+
+@onready var hover_sound : AudioStreamPlayer = $HoverSound
+@onready var click_sound : AudioStreamPlayer = $ClickSound
 
 var scn_segment : PackedScene = preload("res://Scenes/UI/Graph/world_segment.tscn")
 var scn_node_line : PackedScene = preload("res://Scenes/UI/Graph/level_node_line.tscn")
 
 var loaded_world : WorldData
+
+var last_clicked : LevelNodeData
+var last_click_time : float = 0.0
 
 const LINE_THICKNESS : float = 4.0
 
@@ -15,7 +22,13 @@ const LINE_THICKNESS : float = 4.0
 var loaded_sids : Dictionary [String,LevelNode] = {}
 
 func _on_level_selected(node:LevelNodeData) -> void:
-	level_selected.emit(node)
+	if last_click_time < 0.2 and last_clicked == node:
+		level_played.emit(node)
+	else:
+		last_click_time = 0.0
+		last_clicked = node
+		click_sound.play()
+		level_selected.emit(node)
 
 func load_world(world:WorldData) -> void:
 	
@@ -48,10 +61,16 @@ func load_world(world:WorldData) -> void:
 
 			if level.node_data.always_playable:
 				level.disabled = false
+				if not level.mouse_entered.is_connected(hover_sound.play):
+					level.mouse_entered.connect(hover_sound.play)
 			
 			for link in level.node_data.links:
 				if _can_open_level(level.node_data.sid, link):
 					loaded_sids[link.sid].disabled = false
+					if not loaded_sids[link.sid].mouse_entered.is_connected(hover_sound.play):
+						loaded_sids[link.sid].mouse_entered.connect(hover_sound.play)
+			
+			
 
 ## Get all level segments in the currently loaded world.
 func _get_segments() -> Array[LevelSegment]:
@@ -184,8 +203,8 @@ func _draw() -> void:
 					
 					temp_i += 1;
 
-#func _process(_delta: float) -> void:
-	#queue_redraw()
+func _process(delta: float) -> void:
+	last_click_time += delta
 
 func _ready() -> void:
 	#load_world(load("res://Resource/World/testing_world.tres"))

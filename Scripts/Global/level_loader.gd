@@ -26,6 +26,11 @@ func load_selector(parent : Node = null) -> void:
 			return
 		parent = Globals.main
 	
+	for child in parent.get_children():
+		if child is GraphLevelSelect:
+			push_warning("Duplicate level selector found! Deleting original...")
+			child.queue_free()
+	
 	clear_levels(parent)
 	var selector : Node = load("res://Scenes/UI/graph_level_select.tscn").instantiate()
 	selector.ready.connect(SignalBus.SelectorLoaded.emit)

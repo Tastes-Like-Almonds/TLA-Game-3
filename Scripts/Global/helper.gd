@@ -166,6 +166,10 @@ func print_dict_as_json(data: Dictionary) -> void:
 	var json_string := JSON.stringify(data, "\t") # "\t" = tab indentation
 	print(json_string)
 
+## Safely saves and closes the game.
+func close_game() -> void:
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+
 func _ready() -> void:
 	viewport = get_viewport()
 	camera = viewport.get_camera_2d()

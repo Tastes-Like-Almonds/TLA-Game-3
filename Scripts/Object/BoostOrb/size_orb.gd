@@ -8,6 +8,8 @@ extends BoostOrb
 @export var sound_grow : SoundData
 @export var sound_normal : SoundData
 
+@export var reset_on_respawn : bool = false
+
 @export_category("Image Paths")
 @export_file_path("*.png") var shrink_image : String
 @export_file_path("*.png") var grow_image : String
@@ -35,8 +37,8 @@ func hit_effect(player : Player) -> void:
 	super(player)
 	$GPUParticles2D.emitting = true
 	var mod : PropertyModifier = PropertyModifier.new(size_scale, PropertyModifier.ModiferType.MULTIPLY, time)
-	mod.reset_on_respawn = false
-	mod.set_id("gravity_orb")
+	mod.set_id("size_orb")
+	mod.reset_on_respawn = reset_on_respawn
 	player.add_modifier(mod, "size_scale")
 	
 	if size_scale < 1:

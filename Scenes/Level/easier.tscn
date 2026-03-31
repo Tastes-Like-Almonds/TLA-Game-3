@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://bbeueyk3mi0sj"]
+[gd_scene load_steps=28 format=4 uid="uid://bbeueyk3mi0sj"]
 
 [ext_resource type="Script" uid="uid://uiluux5htxr4" path="res://Scripts/Level/tutorial.gd" id="1_utato"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_ppo3h"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://c6cqn4qbed04l" path="res://Scenes/Object/checkpoint.tscn" id="5_hkeig"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="7_6g5t3"]
 [ext_resource type="PackedScene" uid="uid://csqp4qm74tvoe" path="res://Scenes/Object/Enemy/target_dummy.tscn" id="7_ppo3h"]
-[ext_resource type="PackedScene" uid="uid://c32ukwj524sxi" path="res://Scenes/Object/Zone/kill_barrier.tscn" id="8_gk6v2"]
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="9_cp482"]
 [ext_resource type="Script" uid="uid://bjshbhm6ow5ln" path="res://Scripts/Level/damage_display.gd" id="10_ppo3h"]
 
@@ -211,9 +210,6 @@ position = Vector2(0, 1)
 scale = Vector2(3, 3)
 tile_set = ExtResource("4_s75fc")
 
-[node name="Checkpoint2" parent="Level/Tiles" instance=ExtResource("5_hkeig")]
-position = Vector2(-3309, 3443)
-
 [node name="Sprite2D3" type="Sprite2D" parent="Level/Tiles"]
 z_index = 100
 position = Vector2(3038, 2922)
@@ -282,11 +278,6 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyWall3"]
 position = Vector2(-22.96812, 61.95048)
 shape = SubResource("RectangleShape2D_ybt7e")
-
-[node name="KillBarrier" parent="." node_paths=PackedStringArray("links") instance=ExtResource("8_gk6v2")]
-position = Vector2(-1967, -165)
-scale = Vector2(4.9900956, 17.124996)
-links = [null, null, null]
 
 [node name="Sprite2D7" type="Sprite2D" parent="."]
 z_index = 100
@@ -376,3 +367,6 @@ texture = SubResource("GradientTexture2D_s75fc")
 position = Vector2(17167, -615)
 scale = Vector2(39.164894, 15.791585)
 load_level = "res://Scenes/Level/snake_tutor.tscn"
+
+[connection signal="body_entered" from="Level/Tiles/Ground/Saw" to="Level/Tiles/Ground/Saw" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@114513" to="Level/Tiles/Ground/@Area2D@114513" method="_on_body_entered"]

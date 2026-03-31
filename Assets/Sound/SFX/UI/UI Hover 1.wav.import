@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ccwiuovt03cbw"
+path="res://.godot/imported/UI Hover 1.wav-bad19e18b6273690a8d5170a92e0f4bd.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/UI/UI Hover 1.wav"
+dest_files=["res://.godot/imported/UI Hover 1.wav-bad19e18b6273690a8d5170a92e0f4bd.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

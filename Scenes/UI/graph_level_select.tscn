@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://51rjllq0cxd7"]
+[gd_scene load_steps=33 format=3 uid="uid://51rjllq0cxd7"]
 
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="1_41t8j"]
 [ext_resource type="Script" uid="uid://bvwefjhtywxdb" path="res://Scenes/UI/Graph/graph_select.gd" id="2_m12fl"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://1k3qhyt5fg0k" path="res://Scenes/UI/Graph/world_segment.tscn" id="3_m12fl"]
 [ext_resource type="Script" uid="uid://b2agbg1ytt17w" path="res://Scripts/Resource/Level/world_data.gd" id="3_si5c8"]
 [ext_resource type="Resource" uid="uid://bymv74j5nth1r" path="res://Resource/World/gutter.tres" id="4_si5c8"]
+[ext_resource type="AudioStream" uid="uid://ccwiuovt03cbw" path="res://Assets/Sound/SFX/UI/UI Hover 1.wav" id="8_qotok"]
+[ext_resource type="AudioStream" uid="uid://d3px4b7kvg5td" path="res://Assets/Sound/SFX/UI/UI Click 1.wav" id="9_mvclr"]
 [ext_resource type="Script" uid="uid://dj1hrla3y6xpi" path="res://Scripts/UI/level_display.gd" id="9_qotok"]
 
 [sub_resource type="Theme" id="Theme_8h3cm"]
@@ -21,6 +23,48 @@ gradient = SubResource("Gradient_m12fl")
 width = 256
 height = 256
 fill_to = Vector2(0.5710594, 1)
+
+[sub_resource type="Gradient" id="Gradient_si5c8"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 0.5176471)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qotok"]
+gradient = SubResource("Gradient_si5c8")
+width = 16
+height = 16
+
+[sub_resource type="Curve" id="Curve_mvclr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9540984, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_dgc3b"]
+curve = SubResource("Curve_mvclr")
+
+[sub_resource type="Curve" id="Curve_si5c8"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.1120689), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_qotok"]
+curve = SubResource("Curve_si5c8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mvclr"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1500, 1, 1)
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+direction = Vector3(0, -1, 0)
+spread = 5.0
+initial_velocity_min = 80.0
+initial_velocity_max = 150.0
+angular_velocity_min = -405.91
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 0, 0)
+scale_over_velocity_min = 373.16998
+scale_over_velocity_max = 633.52997
+scale_over_velocity_curve = SubResource("CurveTexture_qotok")
+alpha_curve = SubResource("CurveTexture_dgc3b")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xn7jd"]
 bg_color = Color(0.18000486, 0.1800049, 0.18000478, 1)
@@ -63,6 +107,8 @@ bg_color = Color(0, 0, 0, 0.24313726)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m12fl"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mvclr"]
+
 [node name="GraphLevelSelect" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -85,14 +131,16 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_xn7jd")
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 1
-offset_right = 140.0
-offset_bottom = 42.0
-mouse_filter = 2
-theme_override_colors/font_color = Color(0.72882265, 0.7288217, 0.728822, 1)
-text = "Exit to Menu"
-flat = true
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(0, 0.6500179, 0.054843403, 1)
+position = Vector2(927, 1232)
+amount = 100
+texture = SubResource("GradientTexture2D_qotok")
+lifetime = 12.0
+preprocess = 12.0
+speed_scale = 0.3
+visibility_rect = Rect2(-500, -500, 1000, 1000)
+process_material = SubResource("ParticleProcessMaterial_mvclr")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -144,6 +192,7 @@ mouse_filter = 2
 [node name="WorldDisplay" type="HBoxContainer" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 22
 script = ExtResource("2_xn7jd")
 
@@ -323,6 +372,12 @@ mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
+[node name="HoverSound" type="AudioStreamPlayer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect"]
+stream = ExtResource("8_qotok")
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect"]
+stream = ExtResource("9_mvclr")
+
 [node name="Control3" type="Control" parent="HSplitContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -407,6 +462,16 @@ flat = true
 [node name="Control2" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Exit" type="Button" parent="."]
+z_index = 5
+layout_mode = 1
+offset_right = 140.0
+offset_bottom = 42.0
+theme_override_colors/font_color = Color(0.72882265, 0.7288217, 0.728822, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mvclr")
+text = "Exit to Menu"
+flat = true
 
 [connection signal="pressed" from="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/Left" to="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" method="_previous_world"]
 [connection signal="pressed" from="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/Right" to="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" method="_next_world"]

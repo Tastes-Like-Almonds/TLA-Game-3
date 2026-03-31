@@ -11,6 +11,16 @@ enum Difficulty {
 	INSANE
 }
 
+## A type of event which influences the CompletionData for the level, such as damage taken,
+## Kills, etc.
+enum CompletionEvent {
+	PLAYER_TAKEN_DAMAGE, # Float
+	PLAYER_DEALT_DAMAGE, # Float
+	PLAYER_DEATH,        # None
+	PLAYER_KILL,         # None
+	PLAYER_DASHED        # None
+}
+
 signal on_load
 
 @export var starting_ambience:SongData = null
@@ -67,7 +77,25 @@ func _setup_player() -> Player:
 func _setup_ui() -> void:
 	current_ui = load(level_ui_path).instantiate()
 	add_child(current_ui)
+
+func _handle_completion_event(event:CompletionEvent, val:Variant) -> void:
 	
+	match event:
+		CompletionEvent.PLAYER_TAKEN_DAMAGE:
+			completion_data.damage_taken += val
+		
+		CompletionEvent.PLAYER_DEALT_DAMAGE:
+			completion_data.damage_dealt += val
+		
+		CompletionEvent.PLAYER_DEATH:
+			completion_data.deaths += 1
+		
+		CompletionEvent.PLAYER_KILL:
+			completion_data.kills += 1
+		
+		CompletionEvent.PLAYER_DASHED:
+			completion_data.dashes += 1
+		
 #endregion
 
 #region Public

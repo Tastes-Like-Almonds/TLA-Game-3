@@ -288,6 +288,9 @@ position = Vector2(7469, 3073)
 [node name="Checkpoint2" parent="." instance=ExtResource("9_65sdv")]
 position = Vector2(18370, 2982)
 
+[node name="Checkpoint3" parent="." instance=ExtResource("9_65sdv")]
+position = Vector2(23789, 7202)
+
 [node name="WarpOrb" parent="." node_paths=PackedStringArray("dest") instance=ExtResource("10_0i5ig")]
 position = Vector2(13518, 2880)
 dest = NodePath("../WarpOrb2")
@@ -321,6 +324,7 @@ reverse = false
 [node name="GravityOrb3" parent="." instance=ExtResource("13_xtki5")]
 position = Vector2(19872, 6077)
 size_scale = 0.4
+reset_on_respawn = true
 
 [node name="GravityOrb4" parent="." instance=ExtResource("13_xtki5")]
 position = Vector2(25000, 6915)
@@ -331,30 +335,30 @@ position = Vector2(25703, 6862.9995)
 scale = Vector2(16.332533, 25.925913)
 
 [connection signal="body_entered" from="Level/Tiles/Ground/Saw" to="Level/Tiles/Ground/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137477" to="Level/Tiles/Ground/@Area2D@137477" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137478" to="Level/Tiles/Ground/@Area2D@137478" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137479" to="Level/Tiles/Ground/@Area2D@137479" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137480" to="Level/Tiles/Ground/@Area2D@137480" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137481" to="Level/Tiles/Ground/@Area2D@137481" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137482" to="Level/Tiles/Ground/@Area2D@137482" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137483" to="Level/Tiles/Ground/@Area2D@137483" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137484" to="Level/Tiles/Ground/@Area2D@137484" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137485" to="Level/Tiles/Ground/@Area2D@137485" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137486" to="Level/Tiles/Ground/@Area2D@137486" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137487" to="Level/Tiles/Ground/@Area2D@137487" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137488" to="Level/Tiles/Ground/@Area2D@137488" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137489" to="Level/Tiles/Ground/@Area2D@137489" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137490" to="Level/Tiles/Ground/@Area2D@137490" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137491" to="Level/Tiles/Ground/@Area2D@137491" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137492" to="Level/Tiles/Ground/@Area2D@137492" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137493" to="Level/Tiles/Ground/@Area2D@137493" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137494" to="Level/Tiles/Ground/@Area2D@137494" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137495" to="Level/Tiles/Ground/@Area2D@137495" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137496" to="Level/Tiles/Ground/@Area2D@137496" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137497" to="Level/Tiles/Ground/@Area2D@137497" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137498" to="Level/Tiles/Ground/@Area2D@137498" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137499" to="Level/Tiles/Ground/@Area2D@137499" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@137500" to="Level/Tiles/Ground/@Area2D@137500" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@140413" to="Level/Tiles/Ground/@Area2D@140413" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@140414" to="Level/Tiles/Ground/@Area2D@140414" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@140420" to="Level/Tiles/Ground/@Area2D@140420" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41920" to="Level/Tiles/Ground/@Area2D@41920" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41921" to="Level/Tiles/Ground/@Area2D@41921" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41922" to="Level/Tiles/Ground/@Area2D@41922" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41923" to="Level/Tiles/Ground/@Area2D@41923" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41924" to="Level/Tiles/Ground/@Area2D@41924" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41925" to="Level/Tiles/Ground/@Area2D@41925" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41926" to="Level/Tiles/Ground/@Area2D@41926" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41927" to="Level/Tiles/Ground/@Area2D@41927" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41928" to="Level/Tiles/Ground/@Area2D@41928" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41929" to="Level/Tiles/Ground/@Area2D@41929" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41930" to="Level/Tiles/Ground/@Area2D@41930" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41931" to="Level/Tiles/Ground/@Area2D@41931" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41932" to="Level/Tiles/Ground/@Area2D@41932" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41933" to="Level/Tiles/Ground/@Area2D@41933" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41934" to="Level/Tiles/Ground/@Area2D@41934" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41935" to="Level/Tiles/Ground/@Area2D@41935" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41936" to="Level/Tiles/Ground/@Area2D@41936" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41937" to="Level/Tiles/Ground/@Area2D@41937" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41938" to="Level/Tiles/Ground/@Area2D@41938" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41939" to="Level/Tiles/Ground/@Area2D@41939" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41940" to="Level/Tiles/Ground/@Area2D@41940" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41941" to="Level/Tiles/Ground/@Area2D@41941" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41942" to="Level/Tiles/Ground/@Area2D@41942" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41943" to="Level/Tiles/Ground/@Area2D@41943" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41974" to="Level/Tiles/Ground/@Area2D@41974" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41975" to="Level/Tiles/Ground/@Area2D@41975" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41976" to="Level/Tiles/Ground/@Area2D@41976" method="_on_body_entered"]

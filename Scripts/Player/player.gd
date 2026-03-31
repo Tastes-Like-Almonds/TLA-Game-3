@@ -5,6 +5,8 @@ class_name Player extends Node2D
 @warning_ignore("unused_signal")
 signal sword_collision(collision : KinematicCollision2D)
 
+signal CompletionEvent(type:Level.CompletionEvent, value:Variant)
+
 ## Fired when the player's repsawn point is updated to a **different** value.
 signal respawn_point_changed(new : Vector2)
 

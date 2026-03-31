@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WorldData" load_steps=25 format=3 uid="uid://bymv74j5nth1r"]
+[gd_resource type="Resource" script_class="WorldData" load_steps=36 format=3 uid="uid://bymv74j5nth1r"]
 
 [ext_resource type="Script" uid="uid://b2agbg1ytt17w" path="res://Scripts/Resource/Level/world_data.gd" id="1_mtrh6"]
 [ext_resource type="Script" uid="uid://cgg14ym78f0wv" path="res://Scripts/Resource/Level/world_segment_data.gd" id="2_d7bqh"]
@@ -113,10 +113,16 @@ difficulty = 2
 level_path = "res://Scenes/Level/get_sword.tscn"
 metadata/_custom_type_script = "uid://3mlju2v7jhxa"
 
+[sub_resource type="Resource" id="Resource_pka6t"]
+script = ExtResource("5_vqfuo")
+sid = "1.6"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
 [sub_resource type="Resource" id="Resource_8d8g1"]
 script = ExtResource("3_pjky0")
 sid = "1.5"
 level_data = SubResource("Resource_vdm4o")
+links = Array[ExtResource("5_vqfuo")]([SubResource("Resource_pka6t")])
 metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
 
 [sub_resource type="Resource" id="Resource_ycm85"]
@@ -124,9 +130,72 @@ script = ExtResource("2_d7bqh")
 levels = Array[ExtResource("3_pjky0")]([SubResource("Resource_8d8g1")])
 metadata/_custom_type_script = "uid://cgg14ym78f0wv"
 
+[sub_resource type="Resource" id="Resource_ccp8r"]
+script = ExtResource("4_pqf2p")
+title = "Hack n' Dash"
+description = "Dashing allows for longer distance and more controlled movement. Now put it to use!"
+difficulty = 2
+level_path = "res://Scenes/Level/dash_other.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_0sbxv"]
+script = ExtResource("5_vqfuo")
+sid = "1.7-A"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
+[sub_resource type="Resource" id="Resource_6ymgr"]
+script = ExtResource("5_vqfuo")
+sid = "1.7-B"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
+[sub_resource type="Resource" id="Resource_x3pnj"]
+script = ExtResource("3_pjky0")
+sid = "1.6"
+level_data = SubResource("Resource_ccp8r")
+links = Array[ExtResource("5_vqfuo")]([SubResource("Resource_0sbxv"), SubResource("Resource_6ymgr")])
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_r7xny"]
+script = ExtResource("2_d7bqh")
+levels = Array[ExtResource("3_pjky0")]([SubResource("Resource_x3pnj")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
+[sub_resource type="Resource" id="Resource_kpcmc"]
+script = ExtResource("4_pqf2p")
+title = "Spiky Surfaces"
+description = "Countless blades and saws line these hallways, capable of ripping you apart easily. It's a good thing your sword is immune."
+difficulty = 2
+level_path = "res://Scenes/Level/spikes.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_d4byu"]
+script = ExtResource("3_pjky0")
+sid = "1.7-A"
+level_data = SubResource("Resource_kpcmc")
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_wysiu"]
+script = ExtResource("4_pqf2p")
+title = "Cable Conundrum"
+description = "These conveniently-placed cables offer rapid movement, but may be difficult to control."
+difficulty = 2
+level_path = "res://Scenes/Level/cable_gutter.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_imk0d"]
+script = ExtResource("3_pjky0")
+sid = "1.7-B"
+level_data = SubResource("Resource_wysiu")
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_1hw26"]
+script = ExtResource("2_d7bqh")
+levels = Array[ExtResource("3_pjky0")]([SubResource("Resource_d4byu"), SubResource("Resource_imk0d")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
 [resource]
 script = ExtResource("1_mtrh6")
-name = "MyWorld"
-segments = Array[ExtResource("2_d7bqh")]([SubResource("Resource_a5slf"), SubResource("Resource_pqf2p"), SubResource("Resource_f3h5l"), SubResource("Resource_5w6jk"), SubResource("Resource_ycm85")])
+name = "World 1 - The Gutter"
+segments = Array[ExtResource("2_d7bqh")]([SubResource("Resource_a5slf"), SubResource("Resource_pqf2p"), SubResource("Resource_f3h5l"), SubResource("Resource_5w6jk"), SubResource("Resource_ycm85"), SubResource("Resource_r7xny"), SubResource("Resource_1hw26")])
 line_locked_color = Color(1, 1, 1, 0.45490196)
 metadata/_custom_type_script = "uid://b2agbg1ytt17w"

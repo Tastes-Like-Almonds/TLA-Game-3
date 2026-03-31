@@ -1,6 +1,6 @@
 class_name Main extends Node
 
-@export_file_path("*.tscn") var autoload_level : String = "res://Scenes/Level/dev_level_3.tscn"
+@export_file_path("*.tscn") var autoload_level : String = ""
 
 @onready var transition_overlay : Control = $UI/TransitionOverlay
 @onready var transiton_overlay_player : AnimationPlayer = $UI/TransitionOverlay/AnimationPlayer
