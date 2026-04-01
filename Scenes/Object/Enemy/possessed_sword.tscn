@@ -39,6 +39,7 @@ metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 size = Vector2(100, 20)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gtmdc"]
+resource_local_to_scene = true
 shader = ExtResource("1_grdlm")
 shader_parameter/solid_color = Vector4(1, 0, 0, 1)
 shader_parameter/time = 1.57000005245209

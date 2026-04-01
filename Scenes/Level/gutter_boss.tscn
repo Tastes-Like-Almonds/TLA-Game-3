@@ -1,9 +1,8 @@
-[gd_scene load_steps=47 format=4 uid="uid://bom207eoe00gn"]
+[gd_scene load_steps=55 format=4 uid="uid://bom207eoe00gn"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ra547"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_2l1rg"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="4_phb8p"]
-[ext_resource type="Texture2D" uid="uid://dva4baob733av" path="res://Scenes/Visual/Weapons/Sword/Sword Icon.png" id="4_ucbf7"]
 [ext_resource type="PackedScene" uid="uid://dyc1y7waemn5m" path="res://Scenes/Object/BoostOrb/warp_orb.tscn" id="6_7au3u"]
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="6_d3xlu"]
 [ext_resource type="Script" uid="uid://ea6yh4jpja5v" path="res://Scripts/Boss/priest.gd" id="8_krtai"]
@@ -16,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://e8m4n08qr3hv" path="res://Assets/Sprites/Enemy/wizard/Wizard 2.png" id="13_2l1rg"]
 [ext_resource type="Texture2D" uid="uid://48vjy2a45uic" path="res://Assets/Sprites/Enemy/wizard/Wizard 3.png" id="14_phb8p"]
 [ext_resource type="Texture2D" uid="uid://ds2bcc2qgsfyk" path="res://Assets/Sprites/Enemy/wizard/Wizard 4.png" id="15_41ujw"]
+[ext_resource type="PackedScene" uid="uid://lmdaa6dfai2i" path="res://Scenes/Object/Enemy/possessed_sword.tscn" id="17_2l1rg"]
 
 [sub_resource type="Gradient" id="Gradient_7au3u"]
 offsets = PackedFloat32Array(0)
@@ -135,6 +135,20 @@ volume_linear = 0.4
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
+[sub_resource type="Resource" id="Resource_l3ipi"]
+script = ExtResource("11_vprxk")
+sound_string = "res://Assets/Sound/SFX/Enemy/Priest/Shield Deflect.wav"
+volume_linear = 0.8
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_j13eh"]
+script = ExtResource("11_vprxk")
+sound_string = "res://Assets/Sound/SFX/Enemy/Priest/Shield Restore.wav"
+volume_linear = 0.7
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
 [sub_resource type="Resource" id="Resource_phb8p"]
 script = ExtResource("11_vprxk")
 sound_string = "res://Assets/Sound/SFX/Enemy/Priest/Priest Hit.wav"
@@ -180,6 +194,162 @@ height = 100
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Animation" id="Animation_vprxk"]
+resource_name = "shield_damage"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shield2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666668, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shield2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(6, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_2l1rg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shield2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shield2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 3)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Shield:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 3)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Shield:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_phb8p"]
+resource_name = "shield_break"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shield2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shield2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(6, 6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Shield:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(12, 12)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Shield:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_41ujw"]
+resource_name = "shield_restore"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shield:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_phb8p"]
+_data = {
+&"RESET": SubResource("Animation_2l1rg"),
+&"shield_break": SubResource("Animation_phb8p"),
+&"shield_damage": SubResource("Animation_vprxk"),
+&"shield_restore": SubResource("Animation_41ujw")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vprxk"]
+radius = 131.00381
 
 [sub_resource type="Gradient" id="Gradient_xerla"]
 offsets = PackedFloat32Array(0)
@@ -255,20 +425,6 @@ preprocess = 50.0
 visibility_rect = Rect2(-2000, -100, 4000, 1500)
 process_material = SubResource("ParticleProcessMaterial_d3xlu")
 
-[node name="SwordIcon" type="Sprite2D" parent="Level/Tiles"]
-z_index = -7
-position = Vector2(-296.99997, 114.999985)
-rotation = 1.8325958
-scale = Vector2(3.0000002, 3.0000002)
-texture = ExtResource("4_ucbf7")
-
-[node name="SwordIcon2" type="Sprite2D" parent="Level/Tiles"]
-z_index = -7
-position = Vector2(1539, 129)
-rotation = 2.8797934
-scale = Vector2(3.0000002, 3.0000002)
-texture = ExtResource("4_ucbf7")
-
 [node name="Ground" type="TileMapLayer" parent="Level/Tiles"]
 z_index = -2
 position = Vector2(0, 1)
@@ -283,9 +439,10 @@ scale = Vector2(3, 3)
 tile_set = ExtResource("4_phb8p")
 
 [node name="OverPlayer" type="TileMapLayer" parent="Level/Tiles"]
-z_index = 6
+z_index = 8
 position = Vector2(0, 1)
 scale = Vector2(3, 3)
+tile_map_data = PackedByteArray("AAD5/wMAAQACAAAAAAD6/wMAAQACAAAAAAAfAAMAAQACAAAAAAAgAAMAAQACAAAAAAA=")
 tile_set = ExtResource("4_phb8p")
 
 [node name="Decor" type="Node2D" parent="Level"]
@@ -364,16 +521,19 @@ texture = SubResource("GradientTexture2D_7au3u")
 [node name="Priest" type="Node2D" parent="."]
 position = Vector2(529, 0)
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="Priest" node_paths=PackedStringArray("target_start_pos", "sprite")]
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="Priest" node_paths=PackedStringArray("swords", "target_start_pos", "sprite")]
 position = Vector2(4, 395)
 collision_layer = 72
 collision_mask = 2
 sync_to_physics = false
 script = ExtResource("8_krtai")
+swords = [NodePath("../../PossessedSword"), NodePath("../../PossessedSword2")]
 target_start_pos = NodePath("../StartPos")
 dialog = SubResource("Resource_2l1rg")
 shield_damage_sound = SubResource("Resource_41ujw")
 shield_break_sound = SubResource("Resource_0g85x")
+shield_deflect_sound = SubResource("Resource_l3ipi")
+shield_restore_sound = SubResource("Resource_j13eh")
 sprite = NodePath("AnimatedSprite2D")
 hit_sound = SubResource("Resource_phb8p")
 health = 100.0
@@ -396,9 +556,29 @@ scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_d3xlu")
 
 [node name="Shield" type="Sprite2D" parent="Priest/AnimatableBody2D"]
+modulate = Color(1, 1, 1, 0)
 z_index = -10
 scale = Vector2(3, 3)
 texture = SubResource("GradientTexture2D_vprxk")
+
+[node name="Shield2" type="Sprite2D" parent="Priest/AnimatableBody2D"]
+modulate = Color(1, 1, 1, 0)
+z_index = -10
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture2D_vprxk")
+
+[node name="ShieldAnimator" type="AnimationPlayer" parent="Priest/AnimatableBody2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_phb8p")
+}
+speed_scale = 3.0
+
+[node name="ShieldWall" type="AnimatableBody2D" parent="Priest/AnimatableBody2D"]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Priest/AnimatableBody2D/ShieldWall"]
+shape = SubResource("CircleShape2D_vprxk")
+disabled = true
 
 [node name="StartPos" type="Node2D" parent="Priest"]
 position = Vector2(0, -386)
@@ -408,3 +588,20 @@ visible = false
 position = Vector2(526, 1133.125)
 scale = Vector2(5.1875005, 1852.2501)
 texture = SubResource("GradientTexture1D_n35ia")
+
+[node name="PossessedSword" parent="." instance=ExtResource("17_2l1rg")]
+position = Vector2(-298, 115.000015)
+rotation = 1.0471976
+enrage_treshold = 5.0
+awaken_on_hit = false
+health = 30.0
+damage = 2.0
+
+[node name="PossessedSword2" parent="." instance=ExtResource("17_2l1rg")]
+position = Vector2(1537, 132)
+rotation = 2.0943952
+rotation_speed = -2.0
+enrage_treshold = 5.0
+awaken_on_hit = false
+health = 30.0
+damage = 2.0

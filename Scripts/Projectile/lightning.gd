@@ -39,6 +39,8 @@ func _strike() -> void:
 func _ready() -> void:
 	get_tree().create_timer(warn_time, false).timeout.connect(_strike)
 	Sfx.play_sound_2d(spark_sound,global_position)
+	$AnimationPlayer.speed_scale = 1/warn_time
+	$AnimationPlayer.play("warn")
 	strike_sprite.stop()
 	strike_sprite.hide()
 	strike_sprite.animation_finished.connect(queue_free)

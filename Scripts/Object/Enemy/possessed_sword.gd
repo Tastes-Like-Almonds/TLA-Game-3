@@ -30,6 +30,8 @@ class_name PossessedSword extends Enemy
 ## At this health, the sword will become enraged.
 @export var enrage_treshold : float = 20.0
 
+@export var awaken_on_hit : bool = true
+
 ## If true, will give all players the sword upon death. This replaces their
 ## held weapon.
 @export var give_sword_on_death : bool = false
@@ -138,7 +140,7 @@ func on_sword_hit(_player : Player) -> void:
 		else:
 			attack_progress = 0.0 - randf_range(0, hover_variation)
 		super(_player)
-	else:
+	elif awaken_on_hit:
 		awaken()
 	
 	if not enraged and (health <= enrage_treshold):
@@ -216,7 +218,7 @@ func _movement(delta : float) -> void:
 		dash_direction = global_position.direction_to(target_point)
 		
 		# Move backwards
-		var movement := dash_direction * -hover_speed
+		var movement : Vector2 = dash_direction * -abs(hover_speed)
 		
 		result = move_and_collide((movement + sword_velocity)*delta)
 	

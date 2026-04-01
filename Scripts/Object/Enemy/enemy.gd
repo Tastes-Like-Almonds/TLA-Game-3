@@ -102,6 +102,9 @@ var velocity : Vector2 = Vector2.ZERO
 func get_current_hit_color() -> Vector4:
 	return sprite.material.get_shader_parameter("solid_color")
 
+func is_invincible() -> bool:
+	return invincible
+
 ## Deals the target damage to the enemy. Returns true if killed.
 func deal_damage(amt: float) -> bool:
 	

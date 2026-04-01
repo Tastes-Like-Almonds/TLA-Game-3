@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bvoxmvklt3y3x"]
+[gd_scene load_steps=20 format=3 uid="uid://bvoxmvklt3y3x"]
 
 [ext_resource type="Script" uid="uid://icdfmq36nqgw" path="res://Scripts/Projectile/lightning.gd" id="1_27x3p"]
 [ext_resource type="Texture2D" uid="uid://b8em5lto5p53f" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 1.png" id="1_m0qf2"]
@@ -7,6 +7,18 @@
 [ext_resource type="Texture2D" uid="uid://clbvwpedcm38t" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 4.png" id="4_jo2kc"]
 [ext_resource type="Texture2D" uid="uid://b78etj3seoyhh" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 5.png" id="5_moy4r"]
 [ext_resource type="Texture2D" uid="uid://dp4vye0uls0l3" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 6.png" id="6_hpxk6"]
+
+[sub_resource type="Gradient" id="Gradient_27x3p"]
+offsets = PackedFloat32Array(0.95356035, 1)
+colors = PackedColorArray(1, 1, 0.26, 1, 1, 0.9333334, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dl6pc"]
+gradient = SubResource("Gradient_27x3p")
+width = 50
+height = 50
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
 [sub_resource type="Gradient" id="Gradient_44mpx"]
 offsets = PackedFloat32Array(1)
@@ -69,8 +81,105 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_27x3p"]
 radius = 23.666666
 
+[sub_resource type="Animation" id="Animation_27x3p"]
+resource_name = "warn"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Warn2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(6, 6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Warn1:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 1, 1.2666667),
+"transitions": PackedFloat32Array(1, 1, 0.65975404, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.30980393), Color(1, 1, 1, 0.30980393), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Warn2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 1.2333333),
+"transitions": PackedFloat32Array(1, 0.3789293, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.30980393), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dl6pc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Warn2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Warn1:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.30980393)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Warn2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.30980393)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jo2kc"]
+_data = {
+&"RESET": SubResource("Animation_dl6pc"),
+&"warn": SubResource("Animation_27x3p")
+}
+
 [node name="Lightning" type="Node2D"]
 script = ExtResource("1_27x3p")
+
+[node name="Warn1" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.30980393)
+position = Vector2(17, -120)
+scale = Vector2(6, 6)
+texture = SubResource("GradientTexture2D_dl6pc")
+
+[node name="Warn2" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.30980393)
+position = Vector2(17, -120)
+scale = Vector2(1e-05, 1e-05)
+texture = SubResource("GradientTexture2D_dl6pc")
 
 [node name="Spark" type="GPUParticles2D" parent="."]
 amount = 4
@@ -88,6 +197,7 @@ frame_progress = 0.8271585
 offset = Vector2(0, -48)
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -95,3 +205,8 @@ collision_mask = 2
 position = Vector2(17, -120)
 scale = Vector2(6, 6)
 shape = SubResource("CircleShape2D_27x3p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_jo2kc")
+}
