@@ -18,6 +18,7 @@ signal loadout_changed
 signal health_changed(new : float)
 
 var last_collision : KinematicCollision2D = null
+var last_ground_position : Vector2
 
 enum MovementMode {
 	SWORD_ORBIT, # The sword orbits the player
@@ -732,6 +733,8 @@ func _ready() -> void:
 func set_last_collision(collision:KinematicCollision2D) -> void:
 	sword_collision.emit(collision)
 	last_collision = collision
+	if collision:
+		last_ground_position = collision.get_position()
 
 ## Returns the global position of the player.
 func get_player_position() -> Vector2:

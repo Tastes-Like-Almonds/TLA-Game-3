@@ -139,6 +139,7 @@ texture = SubResource("GradientTexture2D_qotok")
 lifetime = 12.0
 preprocess = 12.0
 speed_scale = 0.3
+fixed_fps = 60
 visibility_rect = Rect2(-500, -500, 1000, 1000)
 process_material = SubResource("ParticleProcessMaterial_mvclr")
 

@@ -1,0 +1,97 @@
+[gd_scene load_steps=15 format=3 uid="uid://bvoxmvklt3y3x"]
+
+[ext_resource type="Script" uid="uid://icdfmq36nqgw" path="res://Scripts/Projectile/lightning.gd" id="1_27x3p"]
+[ext_resource type="Texture2D" uid="uid://b8em5lto5p53f" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 1.png" id="1_m0qf2"]
+[ext_resource type="Texture2D" uid="uid://cdqm6chx3jwjn" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 2.png" id="2_27x3p"]
+[ext_resource type="Texture2D" uid="uid://bbftsb82re03a" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 3.png" id="3_dl6pc"]
+[ext_resource type="Texture2D" uid="uid://clbvwpedcm38t" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 4.png" id="4_jo2kc"]
+[ext_resource type="Texture2D" uid="uid://b78etj3seoyhh" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 5.png" id="5_moy4r"]
+[ext_resource type="Texture2D" uid="uid://dp4vye0uls0l3" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 6.png" id="6_hpxk6"]
+
+[sub_resource type="Gradient" id="Gradient_44mpx"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.8439, 0.87, 0.348, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ehaha"]
+gradient = SubResource("Gradient_44mpx")
+width = 8
+height = 16
+
+[sub_resource type="Curve" id="Curve_ajmi3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0590164, 1), 0.0, 0.0, 0, 0, Vector2(0.895082, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_nj5hy"]
+curve = SubResource("Curve_ajmi3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u1ntf"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(20, 0, 1)
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 400.0
+gravity = Vector3(0, 500, 0)
+alpha_curve = SubResource("CurveTexture_nj5hy")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r3x87"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_m0qf2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_27x3p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_dl6pc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_jo2kc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_moy4r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hpxk6")
+}],
+"loop": false,
+"name": &"strike",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_27x3p"]
+radius = 23.666666
+
+[node name="Lightning" type="Node2D"]
+script = ExtResource("1_27x3p")
+
+[node name="Spark" type="GPUParticles2D" parent="."]
+amount = 4
+texture = SubResource("GradientTexture2D_ehaha")
+lifetime = 0.55
+speed_scale = 2.05
+process_material = SubResource("ParticleProcessMaterial_u1ntf")
+
+[node name="Strike" type="AnimatedSprite2D" parent="."]
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_r3x87")
+animation = &"strike"
+frame = 2
+frame_progress = 0.8271585
+offset = Vector2(0, -48)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(17, -120)
+scale = Vector2(6, 6)
+shape = SubResource("CircleShape2D_27x3p")

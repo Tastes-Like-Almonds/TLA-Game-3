@@ -123,6 +123,11 @@ func deal_damage(amt: float) -> bool:
 		return true
 	return false
 
+## Called externally by projectile upon collision.
+## Currently only used by priest.gd.
+func on_projectile_hit(_projectile : Node) -> void:
+	pass
+
 ## When a sword strikes the enemy. Called from player.gd.
 func on_sword_hit(player : Player) -> void:
 	

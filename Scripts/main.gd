@@ -15,6 +15,7 @@ func get_dev_panel() -> DevPanel:
 func _ready() -> void:
 	Globals.main = self
 	if autoload_level:
+		$GraphLevelSelect.queue_free()
 		LevelLoader.load_level(autoload_level, self)
 		$LevelSelect.hide()
 	

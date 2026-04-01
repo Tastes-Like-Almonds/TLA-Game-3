@@ -264,7 +264,7 @@ script = ExtResource("1_xpcdj")
 properties = SubResource("Resource_jlvik")
 
 [node name="playerBody" type="CharacterBody2D" parent="." groups=["PlayerBody"]]
-collision_layer = 2
+collision_layer = 130
 platform_wall_layers = 256
 script = ExtResource("1_uvnfx")
 

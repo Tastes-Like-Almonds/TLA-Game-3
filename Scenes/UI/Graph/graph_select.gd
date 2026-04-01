@@ -22,7 +22,7 @@ const LINE_THICKNESS : float = 4.0
 var loaded_sids : Dictionary [String,LevelNode] = {}
 
 func _on_level_selected(node:LevelNodeData) -> void:
-	if last_click_time < 0.2 and last_clicked == node:
+	if last_click_time < 0.5 and last_clicked == node:
 		level_played.emit(node)
 	else:
 		last_click_time = 0.0
