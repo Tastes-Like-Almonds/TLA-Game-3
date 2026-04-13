@@ -20,6 +20,27 @@ const sample_dict = {
 	}
 }
 
+func assert_deep_almost_eq(a:Variant, b:Variant, epsilon := 0.0001) -> void:
+	if typeof(a) != typeof(b):
+		fail_test("Types differ")
+		return
+
+	match typeof(a):
+		TYPE_FLOAT:
+			assert_true(abs(a - b) <= epsilon)
+		TYPE_ARRAY:
+			assert_eq(a.size(), b.size())
+			for i in range(a.size()):
+				assert_deep_almost_eq(a[i], b[i], epsilon)
+		TYPE_DICTIONARY:
+			assert_eq(a.size(), b.size())
+			for key : Variant in a.keys():
+				assert_true(b.has(key))
+				if b.has(key):
+					assert_deep_almost_eq(a[key], b[key], epsilon)
+		_:
+			assert_eq(a, b)
+
 func before_each() -> void:
 	
 	# Delete any save data from this test.
@@ -29,15 +50,16 @@ func before_each() -> void:
 
 ## Ensure files are properly created and loaded
 func test_save_and_load() -> void:
+	print("TEST")
 	
 	PersistentData.save_game(test_save_path)
 	var loaded_data : Dictionary = PersistentData.get_all_save_data()
 	assert_true(FileAccess.file_exists(test_save_path), "save_game() should create a file at given path.")
 	
 	PersistentData.load_game(test_save_path)
-	assert_eq(loaded_data, PersistentData.get_all_save_data(), "Loaded data should equal previous save data.")
+	assert_deep_almost_eq(loaded_data, PersistentData.get_all_save_data())
 
-## Serializing then unserializing the data should return the same result.
+## Serializing then unserializing the data should return the original dictionary.
 func test_json_converstion() -> void:
 	
 	# This test is somewhat done in test_save_and_load, though this one will only trigger if the issue

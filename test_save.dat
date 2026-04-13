@@ -1,1 +1,1 @@
-{"save_version":"1.0.0-prealpha","settings":{"brightness":0.45,"disable_crt":true,"fullscreen":true,"music_volume_perc":0.630284702076631,"sfx_volume_perc":1.0},"slots":[],"val":{"_type":"int","_val":1}}
+{"save_version":"1.0.0-prealpha","settings":{"brightness":0.45,"disable_crt":true,"fullscreen":false,"mouse_sens":1.4,"music_volume_perc":2.95,"sfx_volume_perc":2.1},"slots":[{"achievements":{},"creation_time":1776094126.83043,"last_played":1776094126.83043,"name":"Save slot 1","worlds":{}}],"val":{"_type":"int","_val":1}}
