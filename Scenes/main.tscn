@@ -254,7 +254,7 @@ metadata/_custom_type_script = "uid://d1ymyf6lkf00o"
 
 [node name="main" type="Node"]
 script = ExtResource("1_d1ilt")
-autoload_level = "res://Scenes/Level/gutter_boss.tscn"
+autoload_level = "res://Scenes/Level/get_sword.tscn"
 
 [node name="UI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

@@ -55,9 +55,13 @@ func load_world(world:WorldData) -> void:
 			else:
 				loaded_sids[sid] = child
 	
-	# Enable playable levels
+	# Enable playable levels + Load visuals for each
 	for segment in segment_parent.get_children():
 		for level:LevelNode in segment.get_nodes():
+
+			level.modulate = loaded_world.level_color
+			if level.node_data.level_data.is_boss:
+				level.modulate = loaded_world.level_boss_color
 
 			if level.node_data.always_playable:
 				level.disabled = false
@@ -69,8 +73,6 @@ func load_world(world:WorldData) -> void:
 					loaded_sids[link.sid].disabled = false
 					if not loaded_sids[link.sid].mouse_entered.is_connected(hover_sound.play):
 						loaded_sids[link.sid].mouse_entered.connect(hover_sound.play)
-			
-			
 
 ## Get all level segments in the currently loaded world.
 func _get_segments() -> Array[LevelSegment]:

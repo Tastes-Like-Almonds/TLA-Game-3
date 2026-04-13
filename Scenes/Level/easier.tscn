@@ -1,12 +1,16 @@
-[gd_scene load_steps=28 format=4 uid="uid://bbeueyk3mi0sj"]
+[gd_scene load_steps=36 format=4 uid="uid://bbeueyk3mi0sj"]
 
 [ext_resource type="Script" uid="uid://uiluux5htxr4" path="res://Scripts/Level/tutorial.gd" id="1_utato"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_ppo3h"]
 [ext_resource type="Resource" uid="uid://biec8c3hvnxmv" path="res://Resource/SongData/gutter_song.tres" id="2_s75fc"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_0a2br"]
 [ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="3_s75fc"]
+[ext_resource type="Texture2D" uid="uid://oee4dgw5j7su" path="res://Assets/Sprites/Tilemap/Moldy Sign.png" id="4_6g5t3"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="4_s75fc"]
+[ext_resource type="PackedScene" uid="uid://byaojnvcyv5ng" path="res://Scenes/Object/Dialog/dialog_prompt.tscn" id="5_gk6v2"]
 [ext_resource type="PackedScene" uid="uid://c6cqn4qbed04l" path="res://Scenes/Object/checkpoint.tscn" id="5_hkeig"]
+[ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="6_cp482"]
+[ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="7_1si3b"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="7_6g5t3"]
 [ext_resource type="PackedScene" uid="uid://csqp4qm74tvoe" path="res://Scenes/Object/Enemy/target_dummy.tscn" id="7_ppo3h"]
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="9_cp482"]
@@ -78,6 +82,30 @@ colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_s75fc"]
 gradient = SubResource("Gradient_0a2br")
+
+[sub_resource type="Resource" id="Resource_6g5t3"]
+script = ExtResource("7_1si3b")
+text = "Spikes hurt, but fortunately your sword is immune!"
+name = "Sign"
+icon = ExtResource("4_6g5t3")
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_gk6v2"]
+script = ExtResource("6_cp482")
+lines = Array[ExtResource("7_1si3b")]([SubResource("Resource_6g5t3")])
+metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
+
+[sub_resource type="Resource" id="Resource_cp482"]
+script = ExtResource("7_1si3b")
+text = "Make a large, powerful swing to clear the barrier."
+name = "Sign"
+icon = ExtResource("4_6g5t3")
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_1si3b"]
+script = ExtResource("6_cp482")
+lines = Array[ExtResource("7_1si3b")]([SubResource("Resource_cp482")])
+metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
 
 [node name="EasierTutorial" type="Node2D"]
 script = ExtResource("1_utato")
@@ -227,7 +255,7 @@ texture = SubResource("GradientTexture2D_utato")
 position = Vector2(1484, 2452)
 
 [node name="Checkpoint4" parent="Level/Tiles" instance=ExtResource("5_hkeig")]
-position = Vector2(5383, 1398)
+position = Vector2(5383, 1394)
 
 [node name="Checkpoint3" parent="Level/Tiles" instance=ExtResource("5_hkeig")]
 position = Vector2(2415, 2451)
@@ -368,5 +396,25 @@ position = Vector2(17167, -615)
 scale = Vector2(39.164894, 15.791585)
 load_level = "res://Scenes/Level/snake_tutor.tscn"
 
+[node name="MoldySign" type="Sprite2D" parent="."]
+position = Vector2(5533, 1395)
+scale = Vector2(3, 3)
+texture = ExtResource("4_6g5t3")
+
+[node name="DialogPrompt" parent="MoldySign" instance=ExtResource("5_gk6v2")]
+position = Vector2(0, -29.333332)
+scale = Vector2(0.3, 0.3)
+dialog = SubResource("Resource_gk6v2")
+
+[node name="MoldySign2" type="Sprite2D" parent="."]
+position = Vector2(11816, 340)
+scale = Vector2(3, 3)
+texture = ExtResource("4_6g5t3")
+
+[node name="DialogPrompt" parent="MoldySign2" instance=ExtResource("5_gk6v2")]
+position = Vector2(0, -29.333332)
+scale = Vector2(0.3, 0.3)
+dialog = SubResource("Resource_1si3b")
+
 [connection signal="body_entered" from="Level/Tiles/Ground/Saw" to="Level/Tiles/Ground/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@114513" to="Level/Tiles/Ground/@Area2D@114513" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@59250" to="Level/Tiles/Ground/@Area2D@59250" method="_on_body_entered"]

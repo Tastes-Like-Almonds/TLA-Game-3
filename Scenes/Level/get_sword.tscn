@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://culc16afcmbkm"]
+[gd_scene load_steps=29 format=4 uid="uid://culc16afcmbkm"]
 
 [ext_resource type="Script" uid="uid://uiluux5htxr4" path="res://Scripts/Level/tutorial.gd" id="1_6yrjd"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_8ry1u"]
@@ -11,10 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="9_mw3mo"]
 [ext_resource type="PackedScene" uid="uid://lmdaa6dfai2i" path="res://Scenes/Object/Enemy/possessed_sword.tscn" id="10_6yrjd"]
 [ext_resource type="PackedScene" uid="uid://c32ukwj524sxi" path="res://Scenes/Object/Zone/kill_barrier.tscn" id="11_magfh"]
-[ext_resource type="PackedScene" uid="uid://dtslq1erjqgho" path="res://Scenes/Visual/proximity_text.tscn" id="14_0b4jp"]
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="14_lhbfg"]
 [ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="15_3gsi0"]
-[ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="15_8ry1u"]
+[ext_resource type="Texture2D" uid="uid://oee4dgw5j7su" path="res://Assets/Sprites/Tilemap/Moldy Sign.png" id="16_tbfg1"]
+[ext_resource type="PackedScene" uid="uid://byaojnvcyv5ng" path="res://Scenes/Object/Dialog/dialog_prompt.tscn" id="17_hld2g"]
+[ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="18_0l623"]
+[ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="19_opyuo"]
 
 [sub_resource type="Resource" id="Resource_bir1g"]
 script = ExtResource("2_142cx")
@@ -56,6 +58,18 @@ colors = PackedColorArray(0.023391666, 0.07, 0.010499998, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_6yrjd"]
 gradient = SubResource("Gradient_ihtgo")
+
+[sub_resource type="Resource" id="Resource_vu4tg"]
+script = ExtResource("19_opyuo")
+text = "With this upgraded sword, you can [wave]left-click[/wave] to dash!"
+name = "Sign"
+icon = ExtResource("16_tbfg1")
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_er2og"]
+script = ExtResource("18_0l623")
+lines = Array[ExtResource("19_opyuo")]([SubResource("Resource_vu4tg")])
+metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
 
 [node name="DevLevel3" type="Node2D"]
 script = ExtResource("1_6yrjd")
@@ -192,15 +206,12 @@ rotation = -1.3089972
 scale = Vector2(57.003185, -0.8518614)
 texture = SubResource("GradientTexture2D_6yrjd")
 
-[node name="ProximityText9" parent="." instance=ExtResource("14_0b4jp")]
-offset_left = -8955.0
-offset_top = 2317.0
-offset_right = -8611.0
-offset_bottom = 2451.0
-theme_override_colors/font_shadow_color = Color(0.24913332, 0.37, 0.24049999, 0.14117648)
-theme_override_constants/shadow_outline_size = 10
-theme_override_fonts/normal_font = ExtResource("15_8ry1u")
-theme_override_font_sizes/normal_font_size = 66
-text = "Click while in mid-air to dash."
-fit_content = true
-horizontal_alignment = 1
+[node name="MoldySign" type="Sprite2D" parent="."]
+position = Vector2(-8205, 2549)
+scale = Vector2(3, 3)
+texture = ExtResource("16_tbfg1")
+
+[node name="DialogPrompt" parent="MoldySign" instance=ExtResource("17_hld2g")]
+position = Vector2(0, -29.333332)
+scale = Vector2(0.3, 0.3)
+dialog = SubResource("Resource_er2og")

@@ -1,5 +1,7 @@
 class_name BoostOrb extends StaticBody2D
 
+signal Hit()
+
 ## The time before the orb regenerates after use.
 @export var respawn_time : float = 1.0
 
@@ -35,6 +37,7 @@ func on_sword_hit(player : Player) -> void:
 	if disabled: return
 	alive = false
 	
+	Hit.emit()
 	hit_effect(player)
 	if reset_weapon_on_hit: player.reset_weapon_use()
 	

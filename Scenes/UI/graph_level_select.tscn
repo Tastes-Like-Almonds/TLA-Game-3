@@ -236,7 +236,6 @@ text = ">"
 flat = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/HBoxContainer"]
-modulate = Color(0.46365002, 0.66, 0.32340002, 1)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2

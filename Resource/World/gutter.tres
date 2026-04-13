@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WorldData" load_steps=36 format=3 uid="uid://bymv74j5nth1r"]
+[gd_resource type="Resource" script_class="WorldData" load_steps=41 format=3 uid="uid://bymv74j5nth1r"]
 
 [ext_resource type="Script" uid="uid://b2agbg1ytt17w" path="res://Scripts/Resource/Level/world_data.gd" id="1_mtrh6"]
 [ext_resource type="Script" uid="uid://cgg14ym78f0wv" path="res://Scripts/Resource/Level/world_segment_data.gd" id="2_d7bqh"]
@@ -111,6 +111,7 @@ title = "The Magic Sword"
 description = "Finally! An upgrade! And it's conveniently placed in this large room to be collected!"
 difficulty = 2
 level_path = "res://Scenes/Level/get_sword.tscn"
+is_boss = true
 metadata/_custom_type_script = "uid://3mlju2v7jhxa"
 
 [sub_resource type="Resource" id="Resource_pka6t"]
@@ -168,10 +169,16 @@ difficulty = 2
 level_path = "res://Scenes/Level/spikes.tscn"
 metadata/_custom_type_script = "uid://3mlju2v7jhxa"
 
+[sub_resource type="Resource" id="Resource_c2msq"]
+script = ExtResource("5_vqfuo")
+sid = "1-B"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
 [sub_resource type="Resource" id="Resource_d4byu"]
 script = ExtResource("3_pjky0")
 sid = "1.7-A"
 level_data = SubResource("Resource_kpcmc")
+links = Array[ExtResource("5_vqfuo")]([SubResource("Resource_c2msq")])
 metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
 
 [sub_resource type="Resource" id="Resource_wysiu"]
@@ -182,10 +189,16 @@ difficulty = 2
 level_path = "res://Scenes/Level/cable_gutter.tscn"
 metadata/_custom_type_script = "uid://3mlju2v7jhxa"
 
+[sub_resource type="Resource" id="Resource_tax1r"]
+script = ExtResource("5_vqfuo")
+sid = "1-B"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
 [sub_resource type="Resource" id="Resource_imk0d"]
 script = ExtResource("3_pjky0")
 sid = "1.7-B"
 level_data = SubResource("Resource_wysiu")
+links = Array[ExtResource("5_vqfuo")]([SubResource("Resource_tax1r")])
 metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
 
 [sub_resource type="Resource" id="Resource_1hw26"]
@@ -193,9 +206,32 @@ script = ExtResource("2_d7bqh")
 levels = Array[ExtResource("3_pjky0")]([SubResource("Resource_d4byu"), SubResource("Resource_imk0d")])
 metadata/_custom_type_script = "uid://cgg14ym78f0wv"
 
+[sub_resource type="Resource" id="Resource_tty60"]
+script = ExtResource("4_pqf2p")
+title = "The Surface"
+description = "After traversing tens of tunnels in the gutter, the light of the surface reveals itself. Continuing further will not be easy, however..."
+difficulty = 3
+level_path = "res://Scenes/Level/gutter_boss.tscn"
+is_boss = true
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_ovj51"]
+script = ExtResource("3_pjky0")
+sid = "1-B"
+level_data = SubResource("Resource_tty60")
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_yid4w"]
+script = ExtResource("2_d7bqh")
+levels = Array[ExtResource("3_pjky0")]([SubResource("Resource_ovj51")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
 [resource]
 script = ExtResource("1_mtrh6")
 name = "World 1 - The Gutter"
-segments = Array[ExtResource("2_d7bqh")]([SubResource("Resource_a5slf"), SubResource("Resource_pqf2p"), SubResource("Resource_f3h5l"), SubResource("Resource_5w6jk"), SubResource("Resource_ycm85"), SubResource("Resource_r7xny"), SubResource("Resource_1hw26")])
-line_locked_color = Color(1, 1, 1, 0.45490196)
+segments = Array[ExtResource("2_d7bqh")]([SubResource("Resource_a5slf"), SubResource("Resource_pqf2p"), SubResource("Resource_f3h5l"), SubResource("Resource_5w6jk"), SubResource("Resource_ycm85"), SubResource("Resource_r7xny"), SubResource("Resource_1hw26"), SubResource("Resource_yid4w")])
+line_unlocked_color = Color(0.12299998, 0.82, 0.1694666, 1)
+line_locked_color = Color(0.12299998, 0.82, 0.1694666, 0.45490196)
+level_color = Color(0.33324996, 0.93, 0.279, 1)
+level_boss_color = Color(0.73, 0.42583337, 0, 1)
 metadata/_custom_type_script = "uid://b2agbg1ytt17w"

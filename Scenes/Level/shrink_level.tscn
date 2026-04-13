@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://bv8653ivjqkg8"]
+[gd_scene load_steps=28 format=4 uid="uid://bv8653ivjqkg8"]
 
 [ext_resource type="Script" uid="uid://uiluux5htxr4" path="res://Scripts/Level/tutorial.gd" id="1_n0y01"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_ogdus"]
@@ -13,6 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="8_u8ws7"]
 [ext_resource type="Texture2D" uid="uid://dh2sqypdgd61a" path="res://Assets/Sprites/Placeholder/Ceiling lantern placeholder.png" id="9_lbib6"]
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="11_n0y01"]
+[ext_resource type="Texture2D" uid="uid://oee4dgw5j7su" path="res://Assets/Sprites/Tilemap/Moldy Sign.png" id="14_lbib6"]
+[ext_resource type="PackedScene" uid="uid://byaojnvcyv5ng" path="res://Scenes/Object/Dialog/dialog_prompt.tscn" id="15_xuaqb"]
+[ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="16_ci6wk"]
+[ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="17_725i5"]
 
 [sub_resource type="Gradient" id="Gradient_ihtgo"]
 offsets = PackedFloat32Array(0.9911894)
@@ -49,6 +53,18 @@ colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 gradient = SubResource("Gradient_fnk1r")
 fill_from = Vector2(0.47435898, 0.115384616)
 fill_to = Vector2(0.47975078, 1)
+
+[sub_resource type="Resource" id="Resource_lbib6"]
+script = ExtResource("17_725i5")
+text = "The [wave]sword[/wave] lingers nearby..."
+name = "Sign"
+icon = ExtResource("14_lbib6")
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_xuaqb"]
+script = ExtResource("16_ci6wk")
+lines = Array[ExtResource("17_725i5")]([SubResource("Resource_lbib6")])
+metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
 
 [node name="DevLevel2" type="Node2D"]
 script = ExtResource("1_n0y01")
@@ -250,3 +266,13 @@ texture = SubResource("GradientTexture2D_n0y01")
 position = Vector2(-1393, 66.00006)
 scale = Vector2(24.15099, 10.26658)
 load_level = "res://Scenes/Level/get_sword.tscn"
+
+[node name="MoldySign" type="Sprite2D" parent="."]
+position = Vector2(-2460, 2597)
+scale = Vector2(3, 3)
+texture = ExtResource("14_lbib6")
+
+[node name="DialogPrompt" parent="MoldySign" instance=ExtResource("15_xuaqb")]
+position = Vector2(0, -29.333332)
+scale = Vector2(0.3, 0.3)
+dialog = SubResource("Resource_xuaqb")

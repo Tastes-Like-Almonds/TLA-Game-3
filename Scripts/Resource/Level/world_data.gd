@@ -7,6 +7,8 @@ class_name WorldData extends Resource
 ## of a level from a previous column.
 @export var segments:Array[WorldSegmentData]
 
-@export_group("Selector Colors")
+@export_group("Colors")
 @export var line_unlocked_color : Color = Color.WHITE
 @export var line_locked_color   : Color = Color.RED
+@export var level_color         : Color = Color.WHITE
+@export var level_boss_color    : Color = Color.RED

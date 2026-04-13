@@ -145,6 +145,9 @@ func _next_line() -> void:
 	if line.name:
 		speaker_name = line.name
 	
+	if line.icon:
+		icon_node.texture = line.icon
+	
 	name_node.text = speaker_name
 	
 	text_node.text = line.text

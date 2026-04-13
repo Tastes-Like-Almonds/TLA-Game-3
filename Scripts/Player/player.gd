@@ -17,6 +17,8 @@ signal loadout_changed
 ## Fires when the player's health is set to a different value through any means.
 signal health_changed(new : float)
 
+signal killed
+
 var last_collision : KinematicCollision2D = null
 var last_ground_position : Vector2
 
@@ -591,6 +593,7 @@ func _respawn() -> void:
 ## Handle the death of the player.
 func _death() -> void:
 	if dead: return
+	killed.emit()
 	get_player_sword().on_cable = null
 	Sfx.play_sound_2d(death_sound, get_player_position(), false)
 	dead = true
