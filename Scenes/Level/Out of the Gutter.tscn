@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://0rteah7m342b"]
+[gd_scene load_steps=16 format=4 uid="uid://0rteah7m342b"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_q52lv"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_6w88s"]
@@ -11,10 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="8_q52lv"]
 [ext_resource type="PackedScene" uid="uid://qragv60k75mq" path="res://Scenes/Object/Enemy/Rat.tscn" id="9_6w88s"]
 [ext_resource type="PackedScene" uid="uid://bw4oxah3cpd40" path="res://Scenes/Object/Enemy/Roach.tscn" id="10_nfhax"]
-[ext_resource type="PackedScene" uid="uid://byaojnvcyv5ng" path="res://Scenes/Object/Dialog/dialog_prompt.tscn" id="11_rj3wc"]
-[ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="12_hcuqx"]
 [ext_resource type="PackedScene" uid="uid://c6cqn4qbed04l" path="res://Scenes/Object/checkpoint.tscn" id="12_nkocp"]
-[ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="13_xanqd"]
 [ext_resource type="PackedScene" uid="uid://chqabge4gl3tl" path="res://Scenes/Object/Decor/ceiling_lantern.tscn" id="15_xanqd"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
@@ -24,18 +21,6 @@ colors = PackedColorArray(0.0873481, 0.11979169, 0.11979169, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0t62c"]
 gradient = SubResource("Gradient_bo1nx")
 
-[sub_resource type="Resource" id="Resource_yuotj"]
-script = ExtResource("13_xanqd")
-text = "[color=red]
-[
-HOLINESS awaits.... "
-metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
-
-[sub_resource type="Resource" id="Resource_ngkwf"]
-script = ExtResource("12_hcuqx")
-lines = Array[ExtResource("13_xanqd")]([SubResource("Resource_yuotj")])
-metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
-
 [node name="OutoftheGutter" type="Node2D"]
 script = ExtResource("1_q52lv")
 
@@ -44,7 +29,7 @@ position = Vector2(-9343, 1333)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -10
-position = Vector2(1759.0002, 5190)
+position = Vector2(2290, 5580)
 scale = Vector2(505.0625, 248.3948)
 texture = SubResource("GradientTexture2D_0t62c")
 offset = Vector2(-6.73976, -3.8326082)
@@ -211,10 +196,6 @@ position = Vector2(-2252, 2688)
 
 [node name="Roach5" parent="." instance=ExtResource("10_nfhax")]
 position = Vector2(-1907, 2684)
-
-[node name="DialogPrompt" parent="." instance=ExtResource("11_rj3wc")]
-position = Vector2(-3676, 2648)
-dialog = SubResource("Resource_ngkwf")
 
 [node name="Checkpoint" parent="." instance=ExtResource("12_nkocp")]
 position = Vector2(-3876, 2690)
