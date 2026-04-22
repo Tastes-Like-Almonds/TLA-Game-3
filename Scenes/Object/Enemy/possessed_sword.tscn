@@ -10,29 +10,34 @@
 script = ExtResource("2_toqun")
 sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Spawn 2.wav"
 volume_linear = 1.0
+bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Resource" id="Resource_lma17"]
 script = ExtResource("2_toqun")
 sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Charge 2.wav"
 volume_linear = 0.8
+bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Resource" id="Resource_60yu1"]
 script = ExtResource("2_toqun")
 sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Dash 1.wav"
 volume_linear = 0.8
+bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Resource" id="Resource_gtmdc"]
 script = ExtResource("2_toqun")
 sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Hit 1.wav"
+bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Resource" id="Resource_grdlm"]
 script = ExtResource("2_toqun")
-sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Death Edit 1 Export 1.mp3"
+sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Enemy Death Edit 1 Export 1.mp3"
 volume_linear = 0.6
+bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n8jwi"]

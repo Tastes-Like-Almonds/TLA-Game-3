@@ -63,7 +63,19 @@ func _play_level(level_data : LevelNodeData) -> void:
 		print_debug("Globals.main not present; cannot load level.")
 
 func _exit() -> void:
-	Helper.close_game()
+	Globals.main.transiton_overlay_player.play("fade_to_black")
+	
+	Globals.main.transiton_overlay_player.animation_finished.connect(func(_x:Variant) -> void:
+		
+		SignalBus.LevelLoaded.connect(func() -> void:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			Globals.main.transiton_overlay_player.play("fade_from_black")
+			queue_free()
+		
+		,CONNECT_ONE_SHOT)
+		LevelLoader.load_level("res://Scenes/Level/menu.tscn", Globals.get_level_load_node())
+		
+	,CONNECT_ONE_SHOT)
 
 func _ready() -> void:
 	world_display.world_changed.connect(_load_world)

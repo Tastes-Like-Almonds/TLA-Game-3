@@ -1,4 +1,4 @@
-class_name BodyCosmetic extends Resource
+class_name BodyCosmetic extends Cosmetic
 
 enum SpriteType {
 	TEXTURE,
@@ -11,9 +11,10 @@ enum SpriteType {
 @export var offset : Vector2 = Vector2.ZERO
 
 @export_group("Sprite")
-@export var sprite_type : SpriteType = SpriteType.TEXTURE
-@export var texture : Texture2D = null
-@export var sprite_frames : SpriteFrames = null
+@export var sprite_type    : SpriteType   = SpriteType.TEXTURE
+@export var texture        : Texture2D    = null
+@export var texture_behind : Texture2D    = null
+@export var sprite_frames  : SpriteFrames = null
 
 func _init() -> void:
 	

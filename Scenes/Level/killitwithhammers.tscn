@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://dw3f8pkuvsufl"]
+[gd_scene load_steps=10 format=4 uid="uid://dw3f8pkuvsufl"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ba2ag"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_11a84"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_pdo4d"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="4_7gm2p"]
 [ext_resource type="PackedScene" uid="uid://qragv60k75mq" path="res://Scenes/Object/Enemy/Rat.tscn" id="5_38iw5"]
+[ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="7_y76n3"]
 [ext_resource type="PackedScene" uid="uid://sye5w3jy5qfu" path="res://Scenes/Object/Enemy/infested_cockroach.tscn" id="8_ba2ag"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
@@ -336,3 +337,7 @@ position = Vector2(-3567, 963)
 
 [node name="Infested Cockroach" parent="." instance=ExtResource("8_ba2ag")]
 position = Vector2(8774, 8704)
+
+[node name="LevelTransition" parent="." instance=ExtResource("7_y76n3")]
+position = Vector2(-1039, 921)
+scale = Vector2(-39.4407, 45.840332)

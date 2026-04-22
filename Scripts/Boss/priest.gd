@@ -51,6 +51,12 @@ enum Attack {
 @export var shield_deflect_sound : SoundData
 @export var shield_restore_sound : SoundData
 
+@export_group("Music")
+@export var intro_song : SongData
+@export var loop_1     : SongData
+@export var loop_2     : SongData
+@export var loop_3     : SongData
+
 var phase       : Phase
 var phase_ended : bool = false
 
@@ -161,6 +167,7 @@ func _damage_shield() -> void:
 
 #region Helper
 func _reset() -> void:
+	Music.stop_track(Music.TrackLayer.MUSIC)
 	environment_anim.play("default")
 	shield_animator.play("shield_break")
 	shield_wall.disabled = true
@@ -321,12 +328,14 @@ func _movement(delta : float) -> void:
 				
 				if phase_timer - delta < phase_time*2:
 					environment_anim.play("fire")
+					Music.start_track(Music.TrackLayer.MUSIC, loop_3, true)
 				_move_to_center(delta)
 				if attack_cooldown > 1.0:
 					_attack(Attack.FIREBALL)
 					attack_cooldown = 0.0
 			
 			else:
+				Music.start_track(Music.TrackLayer.MUSIC, loop_2, true)
 				phase_timer = 0.0
 		
 		Phase.HURT:
@@ -362,10 +371,11 @@ func change_phase(p:Phase) -> void:
 		Phase.INTRO:
 			if cam:
 				cam.set_target_node(self)
+			Music.start_track(Music.TrackLayer.MUSIC, intro_song)
 			DialogLoader.play_dialog_tree(dialog)
 		
 		Phase.SWORD:
-			
+			Music.start_track(Music.TrackLayer.MUSIC, loop_1)
 			for player in get_tree().get_nodes_in_group("Player"):
 				cam.set_target_node(player.get_player_body())
 			cam.set_target_zoom(Vector2(0.7,0.7))
@@ -388,8 +398,11 @@ func change_phase(p:Phase) -> void:
 			
 			if swords_left == 0:
 				change_phase(Phase.FIGHT)
+		Phase.HURT:
+			Music.start_track(Music.TrackLayer.MUSIC, loop_1, true)
 		
 		Phase.FIGHT:
+			Music.start_track(Music.TrackLayer.MUSIC, loop_2, true)
 			_restore_shield()
 			attack_cooldown = -1
 			sprite.z_index = 5

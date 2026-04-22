@@ -118,6 +118,7 @@ func load_game(path:String=SAVE_PATH) -> void:
 		current_loaded_data = _get_base_data()
 	
 	loaded_data = current_loaded_data
+	loaded_data["equipped"] = {} # FIXME
 	DataLoaded.emit()
 	is_loaded = true
 
@@ -126,6 +127,8 @@ func save_game(path:String=SAVE_PATH) -> void:
 	
 	print("Saving game...")
 	print(loaded_data)
+	
+	loaded_data["equipped"] = {} # FIXME
 	
 	if (!loaded_data):
 		load_game() # Will create base data if needed

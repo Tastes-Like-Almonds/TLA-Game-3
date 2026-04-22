@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://buagg1qaj8yyq"]
+[gd_scene load_steps=15 format=4 uid="uid://buagg1qaj8yyq"]
 
 [ext_resource type="Script" uid="uid://cptwx6a87rlgq" path="res://Scripts/Level/testing_level.gd" id="1_2630a"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_2630a"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c6v3xg31w6tg1" path="res://Scenes/Object/ItemPickup.tscn" id="6_2tbx8"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="7_qvxf0"]
 [ext_resource type="PackedScene" uid="uid://bemlchhq0hubh" path="res://Scenes/Object/BoostOrb/push_orb.tscn" id="8_dwb8t"]
+[ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="9_3g4uv"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -119,3 +120,7 @@ rotation = 5.482442
 [node name="PushOrb3" parent="." instance=ExtResource("8_dwb8t")]
 position = Vector2(-1196, -1519.9999)
 rotation = 6.550067
+
+[node name="LevelTransition" parent="." instance=ExtResource("9_3g4uv")]
+position = Vector2(-554, -4370)
+scale = Vector2(16.56742, 16.441214)

@@ -63,3 +63,5 @@ func _ready() -> void:
 			target = null
 			_death()
 		)
+	
+	SignalBus.PlayerKilled.connect(func(_p:Variant) -> void: _death())

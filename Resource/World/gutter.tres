@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WorldData" load_steps=41 format=3 uid="uid://bymv74j5nth1r"]
+[gd_resource type="Resource" script_class="WorldData" load_steps=44 format=3 uid="uid://bymv74j5nth1r"]
 
 [ext_resource type="Script" uid="uid://b2agbg1ytt17w" path="res://Scripts/Resource/Level/world_data.gd" id="1_mtrh6"]
 [ext_resource type="Script" uid="uid://cgg14ym78f0wv" path="res://Scripts/Resource/Level/world_segment_data.gd" id="2_d7bqh"]
@@ -93,11 +93,16 @@ script = ExtResource("5_vqfuo")
 sid = "1.5"
 metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
 
+[sub_resource type="Resource" id="Resource_nmypg"]
+script = ExtResource("5_vqfuo")
+sid = "1.5-O"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
 [sub_resource type="Resource" id="Resource_ubv2o"]
 script = ExtResource("3_pjky0")
 sid = "1.4"
 level_data = SubResource("Resource_uiuy4")
-links = Array[ExtResource("5_vqfuo")]([SubResource("Resource_0s5b5")])
+links = Array[ExtResource("5_vqfuo")]([SubResource("Resource_0s5b5"), SubResource("Resource_nmypg")])
 metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
 
 [sub_resource type="Resource" id="Resource_5w6jk"]
@@ -126,9 +131,23 @@ level_data = SubResource("Resource_vdm4o")
 links = Array[ExtResource("5_vqfuo")]([SubResource("Resource_pka6t")])
 metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
 
+[sub_resource type="Resource" id="Resource_lujh2"]
+script = ExtResource("4_pqf2p")
+title = "Up and Down"
+description = "A test of your wooden-sword-manuvering skills. "
+difficulty = 3
+level_path = "res://Scenes/Level/IdkSomething.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_llvyg"]
+script = ExtResource("3_pjky0")
+sid = "1.5-O"
+level_data = SubResource("Resource_lujh2")
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
 [sub_resource type="Resource" id="Resource_ycm85"]
 script = ExtResource("2_d7bqh")
-levels = Array[ExtResource("3_pjky0")]([SubResource("Resource_8d8g1")])
+levels = Array[ExtResource("3_pjky0")]([SubResource("Resource_8d8g1"), SubResource("Resource_llvyg")])
 metadata/_custom_type_script = "uid://cgg14ym78f0wv"
 
 [sub_resource type="Resource" id="Resource_ccp8r"]

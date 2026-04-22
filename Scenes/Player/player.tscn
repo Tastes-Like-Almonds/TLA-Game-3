@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene load_steps=38 format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
@@ -19,9 +19,7 @@
 [ext_resource type="Script" uid="uid://4383yqbiu0iv" path="res://Scripts/Player/animator.gd" id="14_7g0yx"]
 [ext_resource type="Texture2D" uid="uid://qraff530dmne" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141432.png" id="14_rqdc0"]
 [ext_resource type="Script" uid="uid://h2etf8462ck0" path="res://Scripts/Player/cosmetic_container.gd" id="15_h8ma5"]
-[ext_resource type="Texture2D" uid="uid://dpcxsu7nurdap" path="res://Assets/Sprites/Cosmetic/Hat/Tricorn Hat.png" id="15_hnuln"]
 [ext_resource type="Texture2D" uid="uid://svvl12nvhtae" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141435.png" id="15_qr1w5"]
-[ext_resource type="Script" uid="uid://oksvaahqx7ou" path="res://Scripts/Resource/Cosmetic/body_cosmetic.gd" id="16_eksi1"]
 [ext_resource type="Texture2D" uid="uid://di542m153ro1b" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141436.png" id="16_ythyg"]
 [ext_resource type="Texture2D" uid="uid://dai2n7ghbhlah" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141437.png" id="17_bmb2s"]
 
@@ -237,13 +235,6 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
-[sub_resource type="Resource" id="Resource_jincj"]
-script = ExtResource("16_eksi1")
-default_flip_h = true
-offset = Vector2(0, -48)
-texture = ExtResource("15_hnuln")
-metadata/_custom_type_script = "uid://oksvaahqx7ou"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvnfx"]
 size = Vector2(4, 4)
 
@@ -297,7 +288,6 @@ texture = SubResource("GradientTexture2D_dey5f")
 
 [node name="Cosmetics" type="Node2D" parent="playerBody"]
 script = ExtResource("15_h8ma5")
-autoload_cosmetic = SubResource("Resource_jincj")
 
 [node name="Sword" type="Node2D" parent="."]
 script = ExtResource("3_htcer")

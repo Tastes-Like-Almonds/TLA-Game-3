@@ -39,9 +39,26 @@ func load_cosmetic(cosmetic : BodyCosmetic) -> void:
 	var new_cosmetic : Node2D
 	
 	match cosmetic.sprite_type:
+		
 		BodyCosmetic.SpriteType.TEXTURE:
-			new_cosmetic = Sprite2D.new()
-			new_cosmetic.texture = cosmetic.texture
+			
+			new_cosmetic = SpriteContainer.new()
+			
+			# Above texture
+			if cosmetic.texture:
+				var above := Sprite2D.new()
+				above.texture = cosmetic.texture
+				new_cosmetic.add_child(above)
+			
+			# Below texture
+			if cosmetic.texture_behind:
+				var below := Sprite2D.new()
+				below.show_behind_parent = true
+				below.z_index -= 1
+				below.texture = cosmetic.texture_behind
+				new_cosmetic.add_child(below)
+			
+		
 		BodyCosmetic.SpriteType.ANIMATED:
 			new_cosmetic = AnimatedSprite2D.new()
 			new_cosmetic.sprite_frames = cosmetic.sprite_frames
@@ -50,6 +67,18 @@ func load_cosmetic(cosmetic : BodyCosmetic) -> void:
 	new_cosmetic.set_meta("cosmetic_data", cosmetic)
 	
 	add_child(new_cosmetic)
+
+func _reload() -> void:
+
+	for child in get_children():
+		child.queue_free()
+	
+	if autoload_cosmetic:
+		load_cosmetic(autoload_cosmetic)
+	
+	for cosmetic in CosmeticLoader.get_body_cosmetics():
+		load_cosmetic(cosmetic)
+
 #endregion
 
 #region Private
@@ -59,7 +88,7 @@ func _player_frame_changed() -> void:
 	if player_sprite.animation in frame_offsets:
 		if len(frame_offsets[player_sprite.animation]) -1 >= player_sprite.frame:
 			animation_offset = frame_offsets[player_sprite.animation][player_sprite.frame]
-	
+
 #endregion
 
 #region Inherited
@@ -77,11 +106,9 @@ func _ready() -> void:
 		player_sprite.frame_changed.connect(_player_frame_changed)
 		player_sprite.animation_changed.connect(_player_frame_changed)
 	
-	if autoload_cosmetic:
-		load_cosmetic(autoload_cosmetic)
+	SignalBus.ReloadCosmetics.connect(_reload)
 	
-	for cosmetic in CosmeticLoader.get_body_cosmetics():
-		load_cosmetic(cosmetic)
+	_reload()
 
 func _process(_delta: float) -> void:
 	

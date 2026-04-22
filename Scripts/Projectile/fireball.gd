@@ -91,6 +91,8 @@ func _physics_process(delta: float) -> void:
 	var result := move_and_collide(movement)
 	var direction := movement.normalized()
 	
+	rotation = direction.angle() - PI/2
+	
 	if dying: return
 	if result:
 		var collider : Object = result.get_collider()

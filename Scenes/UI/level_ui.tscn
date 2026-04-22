@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://caj0mx5twqcfe"]
+[gd_scene load_steps=19 format=3 uid="uid://caj0mx5twqcfe"]
 
 [ext_resource type="Script" uid="uid://l7uxjyga8ie7" path="res://Scripts/UI/level_ui.gd" id="1_xjiw8"]
 [ext_resource type="Texture2D" uid="uid://dr3fx4as1q5if" path="res://Assets/Sprites/Placeholder/Heart Placeholder.png" id="2_haw25"]
@@ -28,6 +28,42 @@ gradient = SubResource("Gradient_m0wgp")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_urbh0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3e4nl"]
+
+[sub_resource type="Animation" id="Animation_haw25"]
+resource_name = "cosmetic_unlocked"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CosmeticUnlockedDisplay:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_307ub"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CosmeticUnlockedDisplay:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_307ub"]
+_data = {
+&"RESET": SubResource("Animation_307ub"),
+&"cosmetic_unlocked": SubResource("Animation_haw25")
+}
 
 [node name="LevelUI" type="CanvasLayer"]
 script = ExtResource("1_xjiw8")
@@ -301,6 +337,32 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_vk2nj")
 theme_override_font_sizes/font_size = 48
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="CosmeticUnlockedDisplay" type="Label" parent="MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 44
+text = "Cosmetic Unlocked!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer"]
+libraries = {
+&"": SubResource("AnimationLibrary_307ub")
+}
 
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]

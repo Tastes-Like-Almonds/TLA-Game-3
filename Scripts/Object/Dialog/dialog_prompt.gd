@@ -1,4 +1,4 @@
-extends Node2D
+class_name DialogPrompt extends Node2D
 
 @export var dialog:DialogTree = DialogTree.new()
 

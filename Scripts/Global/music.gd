@@ -8,12 +8,16 @@ enum TrackLayer {
 
 var tracks : Dictionary[TrackLayer, SongData]
 
-func start_track(track:TrackLayer, song:SongData, fade_time:float=0.0) -> void:
+func start_track(track:TrackLayer, song:SongData, fade_time:float=0.0, keep_time:bool=false) -> void:
 	if not song: return
 	
-	if song == tracks[track]: return
+	#Allow songs to continually play; doesn't work for some reason.
+	#if song.path == tracks[track].path: return
 	
+	var start_time : float = 0.0
 	if tracks[track]:
+		if keep_time:
+			start_time = tracks[track].node_ref.get_playback_position()
 		stop_track(track, fade_time)
 	
 	tracks[track] = song
@@ -25,8 +29,9 @@ func start_track(track:TrackLayer, song:SongData, fade_time:float=0.0) -> void:
 
 	# TODO Add fading + Stop track implementation
 
+	print("NODE  CREATED")
 	add_child(song.node_ref)
-	song.node_ref.play()
+	song.node_ref.play(start_time)
 
 func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
 	if !tracks.has(track): return
@@ -34,8 +39,8 @@ func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
 	
 	if not song: return
 	if fade_time <= 0.0:
-		song.node_ref.queue_free()
-		tracks[track] = null
+		if is_instance_valid(song.node_ref):
+			song.node_ref.queue_free()
 	else:
 		var fade_tween := create_tween()
 		
@@ -49,8 +54,10 @@ func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
 		
 		# Delete node reference upon fade completion
 		fade_tween.tween_callback(func() -> void:
-			song.node_ref.queue_free()
-			tracks[track] = null
+			if song.node_ref and song.node_ref.is_node_ready() and is_instance_valid(song.node_ref):
+				print(song.path)
+				print(song.node_ref)
+				song.node_ref.queue_free()
 		)
 		
 		fade_tween.play()

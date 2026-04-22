@@ -61,7 +61,7 @@ gradient = SubResource("Gradient_ihtgo")
 
 [sub_resource type="Resource" id="Resource_vu4tg"]
 script = ExtResource("19_opyuo")
-text = "With this upgraded sword, you can [wave]left-click[/wave] to dash!"
+text = "With this upgraded sword, you can [wave]left-click[/wave] while in mid-air to dash!"
 name = "Sign"
 icon = ExtResource("16_tbfg1")
 metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=4 uid="uid://bom207eoe00gn"]
+[gd_scene load_steps=77 format=4 uid="uid://bom207eoe00gn"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ra547"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_2l1rg"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="9_iis5v"]
 [ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="9_xerla"]
 [ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="10_n35ia"]
+[ext_resource type="Script" uid="uid://b6h82msp0laej" path="res://Scripts/Resource/Sound/song_data.gd" id="11_41ujw"]
 [ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="11_vprxk"]
 [ext_resource type="Texture2D" uid="uid://1qisktf0gp3t" path="res://Assets/Sprites/Enemy/wizard/Wizard 1.png" id="12_vprxk"]
 [ext_resource type="Texture2D" uid="uid://e8m4n08qr3hv" path="res://Assets/Sprites/Enemy/wizard/Wizard 2.png" id="13_2l1rg"]
@@ -798,12 +799,12 @@ colors = PackedColorArray(0.98550004, 1, 0.13, 0, 0.989, 1, 0.33999997, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pj625"]
 gradient = SubResource("Gradient_krtai")
 
-[sub_resource type="Gradient" id="Gradient_fnk1r"]
+[sub_resource type="Gradient" id="Gradient_phb8p"]
 offsets = PackedFloat32Array(0, 0.24229075)
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_7au3u"]
-gradient = SubResource("Gradient_fnk1r")
+gradient = SubResource("Gradient_phb8p")
 fill_from = Vector2(0.47435898, 0.115384616)
 fill_to = Vector2(0.47975078, 1)
 
@@ -816,13 +817,12 @@ metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 [sub_resource type="Resource" id="Resource_ra547"]
 script = ExtResource("10_n35ia")
 text = "DIALOG LINE 2"
-name = "The Priest"
+name = "The Wizard"
 metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
 [sub_resource type="Resource" id="Resource_vprxk"]
 script = ExtResource("10_n35ia")
 text = "[color=red][shake]FINAL DIALOG"
-name = "The Priest"
 speed = 0.15
 metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
@@ -858,6 +858,26 @@ sound_string = "res://Assets/Sound/SFX/Enemy/Priest/Shield Restore.wav"
 volume_linear = 0.7
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_hbkia"]
+script = ExtResource("11_41ujw")
+path = &"res://Assets/Sound/Music/GutterBoss/intro dialouge.wav"
+metadata/_custom_type_script = "uid://b6h82msp0laej"
+
+[sub_resource type="Resource" id="Resource_gpv5u"]
+script = ExtResource("11_41ujw")
+path = &"res://Assets/Sound/Music/GutterBoss/loop 1.wav"
+metadata/_custom_type_script = "uid://b6h82msp0laej"
+
+[sub_resource type="Resource" id="Resource_mlaub"]
+script = ExtResource("11_41ujw")
+path = &"res://Assets/Sound/Music/GutterBoss/loop 2.wav"
+metadata/_custom_type_script = "uid://b6h82msp0laej"
+
+[sub_resource type="Resource" id="Resource_qei7m"]
+script = ExtResource("11_41ujw")
+path = &"res://Assets/Sound/Music/GutterBoss/loop 3.wav"
+metadata/_custom_type_script = "uid://b6h82msp0laej"
 
 [sub_resource type="Resource" id="Resource_phb8p"]
 script = ExtResource("11_vprxk")
@@ -1302,6 +1322,10 @@ shield_damage_sound = SubResource("Resource_41ujw")
 shield_break_sound = SubResource("Resource_0g85x")
 shield_deflect_sound = SubResource("Resource_l3ipi")
 shield_restore_sound = SubResource("Resource_j13eh")
+intro_song = SubResource("Resource_hbkia")
+loop_1 = SubResource("Resource_gpv5u")
+loop_2 = SubResource("Resource_mlaub")
+loop_3 = SubResource("Resource_qei7m")
 sprite = NodePath("AnimatedSprite2D")
 hit_sound = SubResource("Resource_phb8p")
 health = 100.0

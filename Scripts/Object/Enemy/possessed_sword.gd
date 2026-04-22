@@ -258,7 +258,8 @@ func awaken() -> void:
 	GameCamera.set_current_camera_shake(get_viewport(), 0.2)
 	awakening = true
 	Sfx.play_sound_2d(sound_spawn, global_position, false)
-	Music.stop_track(Music.TrackLayer.MUSIC, 0.0)
+	if song:
+		Music.stop_track(Music.TrackLayer.MUSIC, 0.0)
 
 func _physics_process(delta: float) -> void:
 	super(delta)

@@ -9,6 +9,9 @@ static var warn_time : float = 0.5
 @export var damage    : float = 3.0
 @export var knockback : float = 1500
 
+@export var respawn      : bool = false
+@export var respawn_time : float = 1.0
+
 @export var spark_sound  := SoundData.new(
 	"res://Assets/Sound/SFX/Projectile/Lightning/Lightning Spark.mp3",  
 	0.15, 1.0, &"SFX"
@@ -35,12 +38,21 @@ func _strike() -> void:
 		
 		player.deal_damage(damage)
 		player.deal_knockback(dir*knockback)
+	
+	if respawn:
+		get_tree().create_timer(respawn_time, false).timeout.connect(_start)
 
-func _ready() -> void:
+func _start() -> void:
 	get_tree().create_timer(warn_time, false).timeout.connect(_strike)
 	Sfx.play_sound_2d(spark_sound,global_position)
+	
 	$AnimationPlayer.speed_scale = 1/warn_time
 	$AnimationPlayer.play("warn")
+	
 	strike_sprite.stop()
 	strike_sprite.hide()
-	strike_sprite.animation_finished.connect(queue_free)
+
+func _ready() -> void:
+	_start()
+	if not respawn:
+		strike_sprite.animation_finished.connect(queue_free)

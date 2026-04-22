@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ex82n"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_7brat"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="2_cvvtj"]
-[ext_resource type="Script" path="res://Scripts/Resource/Sound/song_data.gd" id="2_tj5jg"]
+[ext_resource type="Script" uid="uid://b6h82msp0laej" path="res://Scripts/Resource/Sound/song_data.gd" id="2_tj5jg"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="3_7brat"]
 [ext_resource type="PackedScene" uid="uid://bd62nj7nj3ak5" path="res://Scenes/Object/BoostOrb/gravity_orb.tscn" id="4_2hpmh"]
 [ext_resource type="PackedScene" uid="uid://cks0qs8xg7v0r" path="res://Scenes/Object/Element/velocity_influencer.tscn" id="5_fnk1r"]
@@ -507,11 +507,15 @@ position = Vector2(-4012, -3813)
 [node name="Infested Cockroach2" parent="." instance=ExtResource("8_mvs8r")]
 position = Vector2(-3070, -3802)
 
+[node name="LevelTransition2" parent="." instance=ExtResource("13_cvvtj")]
+position = Vector2(-5756, -3887)
+scale = Vector2(-48.07517, 16.711668)
+
 [connection signal="body_entered" from="Level/Tiles/Ground/Saw" to="Level/Tiles/Ground/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35113" to="Level/Tiles/Ground/@Area2D@35113" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35114" to="Level/Tiles/Ground/@Area2D@35114" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35115" to="Level/Tiles/Ground/@Area2D@35115" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35116" to="Level/Tiles/Ground/@Area2D@35116" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35117" to="Level/Tiles/Ground/@Area2D@35117" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35118" to="Level/Tiles/Ground/@Area2D@35118" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@35119" to="Level/Tiles/Ground/@Area2D@35119" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@95432" to="Level/Tiles/Ground/@Area2D@95432" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@95433" to="Level/Tiles/Ground/@Area2D@95433" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@95434" to="Level/Tiles/Ground/@Area2D@95434" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@95435" to="Level/Tiles/Ground/@Area2D@95435" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@95436" to="Level/Tiles/Ground/@Area2D@95436" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@95437" to="Level/Tiles/Ground/@Area2D@95437" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@95438" to="Level/Tiles/Ground/@Area2D@95438" method="_on_body_entered"]

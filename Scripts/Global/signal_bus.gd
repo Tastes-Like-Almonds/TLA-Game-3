@@ -1,7 +1,7 @@
 extends Node
 ## A script for managing signals within the project.
-##
-## Not required to use, but should be done to reduce coupling.
+## The warning ignores are due to the fact this class merely holds the signals,
+## and does not work with them.
 
 ## Fired when main is fully loaded.
 @warning_ignore("unused_signal")
@@ -20,6 +20,14 @@ signal PlayerAdded(player : Player)
 ## reference is not included in the signal (null).
 @warning_ignore("unused_signal")
 signal PlayerRemoved()
+
+## Fired when a player unlocks a cosmetic.
+@warning_ignore("unused_signal")
+signal CosmeticUnlocked()
+
+## When fired, players will reload cosmetics.
+@warning_ignore("unused_signal")
+signal ReloadCosmetics()
 
 #endregion
 
