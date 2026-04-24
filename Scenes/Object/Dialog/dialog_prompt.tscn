@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://byaojnvcyv5ng"]
 
 [ext_resource type="Script" uid="uid://05sn3ysp05p0" path="res://Scripts/Object/Dialog/dialog_prompt.gd" id="1_267me"]
-[ext_resource type="Texture2D" uid="uid://ckaqp800ht6wg" path="res://Assets/Sprites/Prompt/Mouse_Right_Key_Dark.png" id="2_2psc1"]
+[ext_resource type="Texture2D" uid="uid://c10ggjgjap02u" path="res://Assets/Sprites/UI/Mouse Icon (2).png" id="2_qc62h"]
 [ext_resource type="Script" uid="uid://brg1v2wsb2qf4" path="res://Scripts/Object/Dialog/prompt_display.gd" id="3_qc62h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2psc1"]
@@ -11,8 +11,9 @@ radius = 161.0
 script = ExtResource("1_267me")
 
 [node name="Prompt" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_2psc1")
+modulate = Color(1, 1, 1, 0.75686276)
+scale = Vector2(3, 3)
+texture = ExtResource("2_qc62h")
 script = ExtResource("3_qc62h")
 
 [node name="Area2D" type="Area2D" parent="."]

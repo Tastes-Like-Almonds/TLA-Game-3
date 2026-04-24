@@ -13,13 +13,13 @@
 
 [sub_resource type="Resource" id="Resource_8x0ty"]
 script = ExtResource("2_8yn6y")
-sound_string = "res://Assets/Sound/SFX/Enemy/Bat/Bat Hit.wav"
+sound_string = "res://Assets/Sound/SFX/Enemy/Rat/Rat Hit Edit 1 Export 1.mp3"
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Resource" id="Resource_ia02j"]
 script = ExtResource("2_8yn6y")
-sound_string = "res://Assets/Sound/SFX/Enemy/Bat/Bat Death.wav"
+sound_string = "res://Assets/Sound/SFX/Enemy/Rat/Rat Death Edit 1 Export 1.mp3"
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 

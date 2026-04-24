@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://e43vka32iwlk"]
+[gd_scene load_steps=25 format=4 uid="uid://e43vka32iwlk"]
 
 [ext_resource type="Script" uid="uid://uiluux5htxr4" path="res://Scripts/Level/tutorial.gd" id="1_wrq7p"]
 [ext_resource type="Resource" uid="uid://biec8c3hvnxmv" path="res://Resource/SongData/gutter_song.tres" id="2_23nr0"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://ddmblbvhfi1td" path="res://Scenes/Object/cosmetic_prompt.tscn" id="19_rbsew"]
 [ext_resource type="Resource" uid="uid://bpxubikvn1rxp" path="res://Data/Cosmetic/tricorn_hat.tres" id="20_scnrx"]
 [ext_resource type="Resource" uid="uid://gb61e1dvigvr" path="res://Data/Cosmetic/dweller_hat.tres" id="21_hd7fa"]
+[ext_resource type="Resource" uid="uid://7v5vcesq73g" path="res://Data/Cosmetic/wizard_hat.tres" id="22_313n8"]
 
 [sub_resource type="Gradient" id="Gradient_23nr0"]
 colors = PackedColorArray(1, 0.94600004, 0.73, 0, 1, 0.94600004, 0.73, 1)
@@ -290,5 +291,9 @@ position = Vector2(-2192, -135)
 cosmetic = ExtResource("20_scnrx")
 
 [node name="CosmeticPrompt2" parent="." instance=ExtResource("19_rbsew")]
-position = Vector2(-2651, -122)
+position = Vector2(-2379, -135)
 cosmetic = ExtResource("21_hd7fa")
+
+[node name="CosmeticPrompt3" parent="." instance=ExtResource("19_rbsew")]
+position = Vector2(-2566, -135)
+cosmetic = ExtResource("22_313n8")

@@ -78,6 +78,12 @@ signal DialogStart
 ## Fires when the dialog queue is no longer empty.
 @warning_ignore("unused_signal")
 signal DialogEnd
+
+## Fires when a dialog prompt enters the player's range.
+## Used to determine the closest prompt as to ensure
+## only one gets clicked.
+@warning_ignore("unused_signal")
+signal DialogPromptEntered(prompt:DialogPrompt)
 #endregion
 
 func _ready() -> void:

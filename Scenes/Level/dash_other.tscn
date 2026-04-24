@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://bgrtnk481hd0t"]
+[gd_scene load_steps=25 format=4 uid="uid://bgrtnk481hd0t"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_tl0su"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="2_ge3c4"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c6cqn4qbed04l" path="res://Scenes/Object/checkpoint.tscn" id="8_ybt7e"]
 [ext_resource type="Texture2D" uid="uid://dh2sqypdgd61a" path="res://Assets/Sprites/Placeholder/Ceiling lantern placeholder.png" id="9_g1s5c"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="9_maa0b"]
+[ext_resource type="PackedScene" uid="uid://qragv60k75mq" path="res://Scenes/Object/Enemy/Rat.tscn" id="10_ihtgo"]
 [ext_resource type="PackedScene" uid="uid://c32ukwj524sxi" path="res://Scenes/Object/Zone/kill_barrier.tscn" id="11_v42fn"]
 [ext_resource type="PackedScene" uid="uid://c0a0cepm72jbi" path="res://Scenes/Object/Zone/teleport_zone.tscn" id="14_jylkm"]
 
@@ -286,6 +287,12 @@ position = Vector2(2135, 1300)
 
 [node name="Checkpoint2" parent="Level/Tiles" instance=ExtResource("8_ybt7e")]
 position = Vector2(-3462, 1066)
+
+[node name="Rat" parent="Level/Tiles" instance=ExtResource("10_ihtgo")]
+position = Vector2(3530, 1332)
+
+[node name="Rat2" parent="Level/Tiles" instance=ExtResource("10_ihtgo")]
+position = Vector2(4029, 1330)
 
 [node name="Decor" type="Node2D" parent="Level"]
 

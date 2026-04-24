@@ -21,6 +21,10 @@ func _ready() -> void:
 		name_label.text = cosmetic.name
 		desc_label.text = cosmetic.desc
 	
+	if cosmetic is BodyCosmetic:
+		var node_cosmetic : Node2D = cosmetic.get_node()
+		$Visual.add_child(node_cosmetic)
+	
 	prompt.Triggered.connect(_equip)
 
 func _on_area_2d_body_entered(body: Node2D) -> void:

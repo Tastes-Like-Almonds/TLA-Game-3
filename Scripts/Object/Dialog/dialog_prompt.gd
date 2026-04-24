@@ -12,6 +12,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is PlayerBody:
 		var player : Player = body.get_player()
 		if player:
+			SignalBus.DialogPromptEntered.emit(self)
 			$Prompt.open()
 			hovered = true
 
@@ -20,6 +21,7 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 		var player : Player = body.get_player()
 		if player:
 			$Prompt.close()
+			SignalBus.DialogPromptEntered.emit(null)
 			hovered = false
 
 func _input(event: InputEvent) -> void:
@@ -30,3 +32,18 @@ func _ready() -> void:
 	$Prompt.close()
 	SignalBus.DialogStart.connect(func() -> void: in_dialog = true)
 	SignalBus.DialogEnd.connect(func() -> void: in_dialog = false)
+	SignalBus.DialogPromptEntered.connect(func(prompt:DialogPrompt) -> void:
+		
+		# Prompt deselected; check if current prompt is a valid choice.
+		if prompt == null:
+			for body : Node2D in $Area2D.get_overlapping_bodies():
+				if body is PlayerBody:
+					SignalBus.DialogPromptEntered.emit(self)
+					$Prompt.open()
+					hovered = true
+		
+		# Other prompt was chosen; disable self.
+		elif prompt != self:
+			hovered = false
+			$Prompt.close()
+	)

@@ -36,36 +36,7 @@ var animation_offset : Vector2 = Vector2.ZERO
 #region Public
 func load_cosmetic(cosmetic : BodyCosmetic) -> void:
 	
-	var new_cosmetic : Node2D
-	
-	match cosmetic.sprite_type:
-		
-		BodyCosmetic.SpriteType.TEXTURE:
-			
-			new_cosmetic = SpriteContainer.new()
-			
-			# Above texture
-			if cosmetic.texture:
-				var above := Sprite2D.new()
-				above.texture = cosmetic.texture
-				new_cosmetic.add_child(above)
-			
-			# Below texture
-			if cosmetic.texture_behind:
-				var below := Sprite2D.new()
-				below.show_behind_parent = true
-				below.z_index -= 1
-				below.texture = cosmetic.texture_behind
-				new_cosmetic.add_child(below)
-			
-		
-		BodyCosmetic.SpriteType.ANIMATED:
-			new_cosmetic = AnimatedSprite2D.new()
-			new_cosmetic.sprite_frames = cosmetic.sprite_frames
-	
-	new_cosmetic.scale = Vector2(3,3)
-	new_cosmetic.set_meta("cosmetic_data", cosmetic)
-	
+	var new_cosmetic : Node2D = cosmetic.get_node()
 	add_child(new_cosmetic)
 
 func _reload() -> void:
