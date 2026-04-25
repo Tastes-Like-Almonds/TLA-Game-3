@@ -477,11 +477,18 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 			
 			# Reset trail
 			if sprite_trail.modulate.a <= 0:
+				
 				sprite_trail.restart()
-				if sprite.flip_v:
-					sprite_trail.rotation = PI
-				else:
-					sprite_trail.rotation = 0
+				
+			var size_scale : float = get_size_scale()*3
+			sprite_trail.scale_amount_min = size_scale
+			sprite_trail.scale_amount_max = size_scale
+			
+			if sprite.flip_v:
+				sprite_trail.rotation = PI
+			else:
+				sprite_trail.rotation = 0
+				
 			sprite_trail.modulate.a = 1
 	
 	#elif event.is_action_released("use"):

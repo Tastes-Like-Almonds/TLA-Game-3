@@ -27,7 +27,7 @@ enum Attack {
 @onready var shield_wall     := $ShieldWall/CollisionShape2D
 
 ## Time spent on each attacking phase
-@export var phase_time : float = 10.0
+@export var phase_time : float = 11.015
 
 ## Time spent while shield is broken before it's restored
 @export var hurt_time : float = 10.0

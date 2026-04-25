@@ -10,7 +10,7 @@ func test_not_initialized() -> void:
 	var weapon := TestWeapon.new()
 	assert_false(weapon._initialized, "Weapon falsely marked initialized")
 	assert_false(weapon._valid(), "Weapon shouldn't be valid before initialization")
-	assert_false(weapon.can_use, "Weapon shouldn't be useable before initialization")
+	assert_false(weapon.get_can_use(), "Weapon shouldn't be useable before initialization")
 
 func test_initial_cooldown_zero() -> void:
 	var weapon := TestWeapon.new()

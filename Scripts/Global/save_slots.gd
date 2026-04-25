@@ -113,7 +113,7 @@ func _ready() -> void:
 	if !PersistentData.is_loaded:
 		await PersistentData.DataLoaded
 	
-	_get_slot_data().clear()
+	#_get_slot_data().clear()
 	# TODO Remove everything below when possible.
 	if get_slot_count() == 0:
 		create_slot()

@@ -16,6 +16,8 @@ var loaded_world : WorldData
 var last_clicked : LevelNodeData
 var last_click_time : float = 0.0
 
+var loading_world : bool = false
+
 const LINE_THICKNESS : float = 4.0
 
 ## Map of SIDs to their respective LevelNode objects.
@@ -31,6 +33,8 @@ func _on_level_selected(node:LevelNodeData) -> void:
 		level_selected.emit(node)
 
 func load_world(world:WorldData) -> void:
+	
+	loading_world = true
 	
 	loaded_world = world
 	loaded_sids = {}
@@ -54,25 +58,25 @@ func load_world(world:WorldData) -> void:
 				push_warning("Duplicate SID found in loaded world: '" + sid + "'")
 			else:
 				loaded_sids[sid] = child
-	
-	# Enable playable levels + Load visuals for each
-	for segment in segment_parent.get_children():
-		for level:LevelNode in segment.get_nodes():
 
-			level.modulate = loaded_world.level_color
-			if level.node_data.level_data.is_boss:
-				level.modulate = loaded_world.level_boss_color
+	for segment : LevelSegment in segment_parent.get_children():
+		for child : LevelNode in segment.get_nodes():
+			child.modulate = loaded_world.level_color
+			if child.node_data.level_data.is_boss:
+				child.modulate = loaded_world.level_boss_color
 
-			if level.node_data.always_playable:
-				level.disabled = false
-				if not level.mouse_entered.is_connected(hover_sound.play):
-					level.mouse_entered.connect(hover_sound.play)
+			if child.node_data.always_playable:
+				child.disabled = false
+				if not child.mouse_entered.is_connected(hover_sound.play):
+					child.mouse_entered.connect(hover_sound.play)
 			
-			for link in level.node_data.links:
-				if _can_open_level(level.node_data.sid, link):
+			for link : LevelLink in child.node_data.links:
+				if _can_open_level(child.node_data.sid, link):
 					loaded_sids[link.sid].disabled = false
 					if not loaded_sids[link.sid].mouse_entered.is_connected(hover_sound.play):
 						loaded_sids[link.sid].mouse_entered.connect(hover_sound.play)
+
+	loading_world = false
 
 ## Get all level segments in the currently loaded world.
 func _get_segments() -> Array[LevelSegment]:
@@ -104,7 +108,7 @@ func _segment_has_sid(segment : LevelSegment, sid:String) -> LevelNode:
 func _get_level_from_sid(sid:String) -> LevelNode:
 	if sid in loaded_sids:
 		return loaded_sids[sid]
-	push_warning("Linked level SID '" + sid + "' not found in world!")
+	#push_warning("Linked level SID '" + sid + "' not found in world!")
 	return null
 
 ## Returns true if the player has met the requirements to access the linked level
@@ -115,11 +119,13 @@ func _can_open_level(level_sid:String, link:LevelLink) -> bool:
 		var reached_exits := SaveSlots.get_level_exits(loaded_world.name, level_sid)
 		if link.exit_requirement in reached_exits: return true
 	else:
-		push_warning("Linked level SID '" + link.sid + "' not found in world!")
+		pass
+		#push_warning("Linked level SID '" + link.sid + "' not found in world!")
 	return false
 
 # This is perhaps the ugliest code to ever be written. Behold!
 func _draw() -> void:
+	if loading_world: return
 	if not loaded_world: return
 	var line_color := loaded_world.line_unlocked_color
 	var segments := _get_segments()

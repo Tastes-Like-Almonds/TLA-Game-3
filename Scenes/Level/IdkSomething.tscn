@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=4 uid="uid://duhv31rlysn52"]
+[gd_scene load_steps=29 format=4 uid="uid://duhv31rlysn52"]
 
 [ext_resource type="Script" uid="uid://uiluux5htxr4" path="res://Scripts/Level/tutorial.gd" id="1_vhmfm"]
+[ext_resource type="Script" uid="uid://b6h82msp0laej" path="res://Scripts/Resource/Sound/song_data.gd" id="2_vhmfm"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="3_24wa6"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="4_lmooj"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="5_a6jgx"]
@@ -12,6 +13,11 @@
 [ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="12_8nakg"]
 [ext_resource type="PackedScene" uid="uid://bl3ttxw1muura" path="res://Scenes/Environments/gutter2.tscn" id="12_xvnva"]
 [ext_resource type="PackedScene" uid="uid://dpvdac33r8ith" path="res://Scenes/Object/Zone/level_transition.tscn" id="13_b43jn"]
+
+[sub_resource type="Resource" id="Resource_03oqg"]
+script = ExtResource("2_vhmfm")
+path = &"res://Assets/Sound/Music/maybe this perchance.wav"
+metadata/_custom_type_script = "uid://b6h82msp0laej"
 
 [sub_resource type="Gradient" id="Gradient_bn6cp"]
 offsets = PackedFloat32Array(1)
@@ -80,6 +86,7 @@ fill_to = Vector2(0.47975078, 1)
 
 [node name="DevLevel2" type="Node2D"]
 script = ExtResource("1_vhmfm")
+starting_track = SubResource("Resource_03oqg")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 z_index = -12
@@ -323,9 +330,9 @@ position = Vector2(-1420, 1057)
 position = Vector2(-433, 786)
 
 [connection signal="body_entered" from="TileMapLayer/Saw" to="TileMapLayer/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@80709" to="TileMapLayer/@Area2D@80709" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@80710" to="TileMapLayer/@Area2D@80710" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@80711" to="TileMapLayer/@Area2D@80711" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@80724" to="TileMapLayer/@Area2D@80724" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@80725" to="TileMapLayer/@Area2D@80725" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@80726" to="TileMapLayer/@Area2D@80726" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@138191" to="TileMapLayer/@Area2D@138191" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@138192" to="TileMapLayer/@Area2D@138192" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@138193" to="TileMapLayer/@Area2D@138193" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@138206" to="TileMapLayer/@Area2D@138206" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@138207" to="TileMapLayer/@Area2D@138207" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@138208" to="TileMapLayer/@Area2D@138208" method="_on_body_entered"]
