@@ -15,6 +15,9 @@ class WorldNode:
 @onready var world_title_label      : Label = $VBoxContainer/Title
 @onready var level_completion_label : Label = $VBoxContainer/LevelCompletion
 
+@export var hover_sound       : SoundData
+@export var world_change_sond : SoundData
+
 var worlds        : Array[WorldNode] = []
 var current_world : int              = -1
 
@@ -44,13 +47,18 @@ func _next_world() -> void:
 	if worlds.size() == 0: return
 	current_world = wrap(current_world+1, 0, worlds.size())
 	world_changed.emit(worlds[current_world].data)
+	Sfx.play_sound(world_change_sond)
 	_update_display()
 
 func _previous_world() -> void:
 	if worlds.size() == 0: return
 	current_world = wrap(current_world-1, 0, worlds.size())
 	world_changed.emit(worlds[current_world].data)
+	Sfx.play_sound(world_change_sond)
 	_update_display()
+
+func _button_hover() -> void:
+	Sfx.play_sound(hover_sound)
 #endregion
 
 #region UI

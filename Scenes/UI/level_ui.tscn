@@ -29,21 +29,6 @@ gradient = SubResource("Gradient_m0wgp")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3e4nl"]
 
-[sub_resource type="Animation" id="Animation_haw25"]
-resource_name = "cosmetic_unlocked"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CosmeticUnlockedDisplay:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_307ub"]
 length = 0.001
 tracks/0/type = "value"
@@ -57,6 +42,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_haw25"]
+resource_name = "cosmetic_unlocked"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CosmeticUnlockedDisplay:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_307ub"]
@@ -287,6 +287,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
 text = "Settings"
 
 [node name="Cosmetics" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_fonts/font = ExtResource("3_vk2nj")
@@ -311,6 +312,19 @@ theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
 text = "Exit Level"
+
+[node name="ExitGame" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
+text = "Quit Game"
 
 [node name="BossBar" type="Control" parent="."]
 visible = false
@@ -367,3 +381,5 @@ libraries = {
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitLevel" to="Pause" method="_on_exit_level_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_level_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_game_pressed"]

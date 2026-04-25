@@ -270,11 +270,12 @@ rotation = 1.5707964
 shape = SubResource("RectangleShape2D_tfbso")
 
 [node name="LevelTransition" parent="." instance=ExtResource("13_b43jn")]
+z_index = 1
 position = Vector2(2227, 4081.0005)
 scale = Vector2(65.58257, 29.78428)
-load_level = "res://Scenes/Level/dash_other.tscn"
 
 [node name="Fadeout" type="Sprite2D" parent="."]
+z_index = 14
 position = Vector2(1404, 4141)
 scale = Vector2(-47.847942, 27.835487)
 texture = SubResource("GradientTexture2D_c8ny0")
@@ -322,9 +323,9 @@ position = Vector2(-1420, 1057)
 position = Vector2(-433, 786)
 
 [connection signal="body_entered" from="TileMapLayer/Saw" to="TileMapLayer/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@169720" to="TileMapLayer/@Area2D@169720" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@169721" to="TileMapLayer/@Area2D@169721" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@169722" to="TileMapLayer/@Area2D@169722" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@169735" to="TileMapLayer/@Area2D@169735" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@169736" to="TileMapLayer/@Area2D@169736" method="_on_body_entered"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@169737" to="TileMapLayer/@Area2D@169737" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@80709" to="TileMapLayer/@Area2D@80709" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@80710" to="TileMapLayer/@Area2D@80710" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@80711" to="TileMapLayer/@Area2D@80711" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@80724" to="TileMapLayer/@Area2D@80724" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@80725" to="TileMapLayer/@Area2D@80725" method="_on_body_entered"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@80726" to="TileMapLayer/@Area2D@80726" method="_on_body_entered"]

@@ -57,7 +57,8 @@ func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
 			if song.node_ref and song.node_ref.is_node_ready() and is_instance_valid(song.node_ref):
 				print(song.path)
 				print(song.node_ref)
-				song.node_ref.queue_free()
+				print(song.node_ref.get_parent())
+				#song.node_ref.queue_free()
 		)
 		
 		fade_tween.play()

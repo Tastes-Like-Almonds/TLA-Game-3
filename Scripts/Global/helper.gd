@@ -166,6 +166,20 @@ func print_dict_as_json(data: Dictionary) -> void:
 	var json_string := JSON.stringify(data, "\t") # "\t" = tab indentation
 	print(json_string)
 
+func fade_to_selector() -> void:
+	Globals.main.transiton_overlay_player.play("fade_to_black")
+	
+	Globals.main.transiton_overlay_player.animation_finished.connect(func(_x:Variant) -> void:
+		
+		SignalBus.SelectorLoaded.connect(func() -> void:
+			Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+			Globals.main.transiton_overlay_player.play("fade_from_black")
+		
+		,CONNECT_ONE_SHOT)
+		LevelLoader.load_selector()
+		
+	,CONNECT_ONE_SHOT)
+
 ## Safely saves and closes the game.
 func close_game() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)

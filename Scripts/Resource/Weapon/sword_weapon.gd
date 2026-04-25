@@ -30,6 +30,7 @@ func get_dir() -> Vector2:
 func process_weapon(delta:float) -> void:
 	current_touch_cooldown = clampf(current_touch_cooldown+delta, 0.0, touch_ground_cooldown)
 	super(delta)
+	if !_wielder: return
 	if _wielder.get_player_body().is_on_floor() or _wielder.get_player_sword().is_on_ground():
 		if current_touch_cooldown >= touch_ground_cooldown:
 			can_use = true

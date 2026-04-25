@@ -31,6 +31,7 @@ enum MovementMode {
 # TODO Cache sword and body ref until child structure is altered
 
 @onready var sprite           : AnimatedSprite2D       = $playerBody/Sprite2D
+@onready var sprite_trail     : CPUParticles2D         = $playerBody/CPUParticles2D
 @onready var dash_animator    : AnimationPlayer        = $AnimationPlayer
 @onready var modifier_display : ModifierDisplayManager = $playerBody/ModifierDisplayManager
 
@@ -400,7 +401,7 @@ func replace_weapon(weapon : Weapon) -> void:
 func equip_weapon(weapon : Weapon) -> void:
 	
 	if not weapon: return
-	if not weapon.can_use: weapon.init_weapon(self)
+	if not weapon.get_can_use(): weapon.init_weapon(self)
 	weapon.reset()
 	weapon.on_equip()
 	
@@ -466,10 +467,22 @@ func pickup_weapon(weapon : Weapon) -> Weapon:
 func _input(event: InputEvent) -> void: # TODO Replace this with an input manager class.
 	
 	if event.is_action_pressed("use"):
-		if current_weapon and current_weapon.can_use:
+		if current_weapon and current_weapon.get_can_use():
+			
+			# Do the using
 			Sfx.play_sound_2d(current_weapon.use_end_sound, get_player_position())
 			ability_charge = current_weapon.MAX_CHARGE
 			current_weapon.use(ability_charge)
+			dash_animator.play("used_dash")
+			
+			# Reset trail
+			if sprite_trail.modulate.a <= 0:
+				sprite_trail.restart()
+				if sprite.flip_v:
+					sprite_trail.rotation = PI
+				else:
+					sprite_trail.rotation = 0
+			sprite_trail.modulate.a = 1
 	
 	#elif event.is_action_released("use"):
 		#stop_charging()
@@ -535,7 +548,7 @@ func set_movement_mode(mode : MovementMode) -> void:
 ## use their weapon's ability again
 func reset_weapon_use() -> void:
 	if current_weapon:
-		if !current_weapon.can_use:
+		if !current_weapon.get_can_use():
 			Sfx.play_sound(refresh_sound)
 		current_weapon.can_use = true
 
@@ -701,6 +714,15 @@ func _update_modifiers(delta : float) -> void:
 
 func _process(delta: float) -> void:
 	last_hit_time += delta
+	sprite_trail.modulate.a -= 3*delta
+	
+	if get_player_body().is_on_floor():
+		if dash_animator.current_animation != "cant_dash":
+			dash_animator.play("cant_dash")
+	elif current_weapon.get_can_use():
+		if dash_animator.current_animation != "has_dash":
+			dash_animator.play("has_dash")
+		
 	
 	if current_weapon:
 		current_weapon.process_weapon(delta)
@@ -708,7 +730,7 @@ func _process(delta: float) -> void:
 	charging_ability = (ability_charge > 0.0)
 	
 	if charging_ability and is_instance_valid(current_weapon):
-		if current_weapon.can_use:
+		if current_weapon.get_can_use():
 			ability_charge -= delta
 		else:
 			ability_charge = 0

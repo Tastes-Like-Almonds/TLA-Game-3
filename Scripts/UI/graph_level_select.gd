@@ -84,6 +84,7 @@ func _ready() -> void:
 	level_display.play_level_pressed.connect(_play_level)
 	exit_button.pressed.connect(_exit)
 
+	SignalBus.RequestUnpause.emit()
 	_reload()
 	
 	Music.stop_track(Music.TrackLayer.MUSIC)

@@ -12,7 +12,10 @@ func _on_continue_pressed() -> void:
 	SignalBus.RequestUnpause.emit()
 
 func _on_exit_level_pressed() -> void:
-	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+	Helper.fade_to_selector()
 
 func _on_settings_pressed() -> void:
 	SignalBus.OpenSettings.emit()
+
+func _on_exit_game_pressed() -> void:
+	Helper.close_game()

@@ -21,7 +21,7 @@ enum TargetMode {
 
 @export_group("Position")
 ## The speed at which the camera moves.
-@export var smooth_follow_speed : float = 10
+@export var smooth_follow_speed : float = 8
 
 ## If true, smoothly moves to the target position
 @export var smooth_follow : bool = true
@@ -108,12 +108,12 @@ func _physics_process(delta: float) -> void:
 		var rect := get_viewport_rect()
 		
 		var target_speed_rect := rect
-		target_speed_rect.position += speed * zoom_with_vel_time/delta
+		target_speed_rect.position -= speed * zoom_with_vel_time/delta
 		
 		# Gets the rect formed by the current and future camera position, then scales the current
 		# camera zoom to match the coverage.
 		var target_rect := get_viewport_rect().merge(target_speed_rect)
-		var speed_target_zoom :float = 1/max(target_rect.size.x/rect.size.x, target_rect.size.y/rect.size.y)
+		var speed_target_zoom : float = 1/max(target_rect.size.x/rect.size.x, target_rect.size.y/rect.size.y)
 		
 		# Ensure zoom doesn't stretch the camera
 		current_target_zoom *= Vector2(speed_target_zoom, speed_target_zoom)

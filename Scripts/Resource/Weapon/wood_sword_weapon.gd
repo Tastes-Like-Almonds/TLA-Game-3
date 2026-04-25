@@ -4,6 +4,9 @@ class_name WoodSwordWeapon extends Weapon
 var touch_ground_cooldown : float = 0.1
 var current_touch_cooldown : float = 0.0
 
+func get_can_use() -> bool:
+	return false
+
 func _init() -> void:
 	MAX_CHARGE = 1.0
 
@@ -23,6 +26,7 @@ func get_dir() -> Vector2:
 func process_weapon(delta:float) -> void:
 	current_touch_cooldown = clampf(current_touch_cooldown+delta, 0.0, touch_ground_cooldown)
 	super(delta)
+	if !_wielder: return
 	if _wielder.get_player_body().is_on_floor() or _wielder.get_player_sword().is_on_ground():
 		if current_touch_cooldown >= touch_ground_cooldown:
 			can_use = true

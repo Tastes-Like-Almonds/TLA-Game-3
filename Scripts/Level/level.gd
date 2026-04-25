@@ -125,19 +125,8 @@ func initialize(config : LevelConfig = null) -> void:
 
 ## Ends the level and returns to the level selector.
 func complete() -> void:
-	Globals.main.transiton_overlay_player.play("fade_to_black")
 	SaveSlots.add_level_completion(level_config.world, level_config.sid, completion_data)
-	
-	Globals.main.transiton_overlay_player.animation_finished.connect(func(_x:Variant) -> void:
-		
-		SignalBus.SelectorLoaded.connect(func() -> void:
-			Input.mouse_mode = Input.MOUSE_MODE_CONFINED
-			Globals.main.transiton_overlay_player.play("fade_from_black")
-		
-		,CONNECT_ONE_SHOT)
-		LevelLoader.load_selector()
-		
-	,CONNECT_ONE_SHOT)
+	Helper.fade_to_selector()
 
 static func get_level_data() -> void:
 	pass

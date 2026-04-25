@@ -12,13 +12,13 @@ var _initialized : bool = false
 var current_use_cooldown : float = 0.0
 var equipped : bool = false
 
-var can_use : bool = true:
-	get():
-		if !_valid(): return false
-		if _wielder.get_player_body().ray_is_on_floor(): return false
-		return can_use
-
+var can_use : bool = true
 var MAX_CHARGE: float = 1.0
+
+func get_can_use() -> bool:
+	if !_valid(): print("E"); return false
+	if _wielder.get_player_body().ray_is_on_floor(): return false
+	return can_use
 
 ## Returns true if the weapon has a valid wielder.
 func _has_wielder() -> bool:
@@ -52,7 +52,7 @@ func process_weapon(delta:float) -> void:
 
 ## Activates the weapon's ability
 func use(charge_time : float) -> void:
-	if !can_use: return
+	if !get_can_use(): return
 	current_use_cooldown = get_cooldown()
 	on_use(charge_time)
 	used.emit()
