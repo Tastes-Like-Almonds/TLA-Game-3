@@ -58,6 +58,17 @@ func is_level_completed(world:String, sid:String) -> bool:
 	
 	return slot_data["worlds"][world]["levels"][sid]["completions"].size() > 0
 
+func get_level_completions(world:String, sid:String) -> Array:
+	var slot_data := get_current_slot()
+	
+	if world not in slot_data["worlds"]:
+		return []
+	
+	elif sid not in slot_data["worlds"][world]["levels"]:
+		return []
+	
+	return slot_data["worlds"][world]["levels"][sid]["completions"]
+
 func get_level_exits(world:String, sid:String) -> Array:
 	if not is_level_completed(world, sid): return []
 	var slot_data := get_current_slot()

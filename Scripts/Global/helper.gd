@@ -180,6 +180,15 @@ func fade_to_selector() -> void:
 		
 	,CONNECT_ONE_SHOT)
 
+## Formats a time float into mm:ss.cs
+func format_time(time_seconds: float) -> String:
+	var total_seconds := int(time_seconds)
+	@warning_ignore("integer_division") # Shut up godot I know they are integers!
+	var minutes := total_seconds / 60
+	var seconds := total_seconds % 60
+	var centiseconds := int((time_seconds - total_seconds) * 100)
+	return "%02d:%02d.%02d" % [minutes, seconds, centiseconds]
+
 ## Safely saves and closes the game.
 func close_game() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)

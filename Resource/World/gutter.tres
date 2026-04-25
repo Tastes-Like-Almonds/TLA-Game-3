@@ -247,7 +247,8 @@ metadata/_custom_type_script = "uid://cgg14ym78f0wv"
 
 [resource]
 script = ExtResource("1_mtrh6")
-name = "World 1 - The Gutter"
+name = "the_gutter"
+display_name = "World 1 - The Gutter"
 segments = Array[ExtResource("2_d7bqh")]([SubResource("Resource_a5slf"), SubResource("Resource_pqf2p"), SubResource("Resource_f3h5l"), SubResource("Resource_5w6jk"), SubResource("Resource_ycm85"), SubResource("Resource_r7xny"), SubResource("Resource_1hw26"), SubResource("Resource_yid4w")])
 line_unlocked_color = Color(0.12299998, 0.82, 0.1694666, 1)
 line_locked_color = Color(0.12299998, 0.82, 0.1694666, 0.45490196)

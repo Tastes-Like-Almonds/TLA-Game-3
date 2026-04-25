@@ -378,8 +378,16 @@ libraries = {
 &"": SubResource("AnimationLibrary_307ub")
 }
 
+[node name="Timer" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 44
+text = "0:00"
+
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitLevel" to="Pause" method="_on_exit_level_pressed"]
-[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_level_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_game_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_level_pressed"]

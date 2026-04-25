@@ -26,7 +26,7 @@ func _load_world(world:WorldData) -> void:
 
 func _level_selected(level_node : LevelNodeData) -> void:
 	if loading_level: return
-	level_display.load_level(level_node)
+	level_display.load_level(level_node, current_world)
 
 func _play_level(level_data : LevelNodeData) -> void:
 	if loading_level: return

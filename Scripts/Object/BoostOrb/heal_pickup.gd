@@ -1,5 +1,6 @@
 extends BoostOrb
 
+## The amount the player heals upon pickup.
 @export var amt : float = 2.0
 
 func hit_effect(player : Player) -> void:

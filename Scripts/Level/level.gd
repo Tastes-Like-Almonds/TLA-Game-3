@@ -149,4 +149,5 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	completion_data.time_sec += delta
+	current_ui.set_timer_value(completion_data.time_sec)
 #endregion

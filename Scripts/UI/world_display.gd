@@ -73,7 +73,7 @@ func _update_display() -> void:
 	var node := worlds[current_world]
 	
 	# Load the title
-	world_title_label.text = node.data.name
+	world_title_label.text = node.data.display_name
 	if node.locked:
 		world_title_label.text = world_title_label.text + " - Locked"
 	

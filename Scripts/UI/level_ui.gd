@@ -4,6 +4,7 @@ class_name LevelUI extends CanvasLayer
 @onready var health_bar : TextureProgressBar = $Control/Health/HealthBar
 @onready var health_label : Label = $Control/Health/HealthBar/Label
 @onready var hotbar : Hotbar = $Control/Hotbar
+@onready var timer  : Label = $MarginContainer/Timer
 
 @export_group("Health Bar")
 
@@ -17,6 +18,19 @@ class_name LevelUI extends CanvasLayer
 var heart_animation_time: float = 0.0
 
 var player : Player
+
+#region Timer
+
+func set_timer(active:bool) -> void:
+	if active:
+		timer.visible = true
+	else:
+		timer.visible = false
+
+func set_timer_value(val : float) -> void:
+	timer.text = Helper.format_time(val)
+#endregion
+
 
 ## Returns true if the UI as a player associated.
 func has_player() -> bool:

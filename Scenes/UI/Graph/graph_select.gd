@@ -39,12 +39,20 @@ func load_world(world:WorldData) -> void:
 	loaded_world = world
 	loaded_sids = {}
 	
+	# So this is ugly, as everything in this script, but we are passing over
+	# all loaded levels several times as each pass reveals new information
+	# that is needed for the later steps.
+	
+	# Thus, don't merge the loops into one; they need to be separate.
+	
+	# Delete past segments
 	for child in segment_parent.get_children():
 		if child is LevelSegment:
 			if child.is_connected("LevelSelected", _on_level_selected):
 				child.LevelSelected.disconnect(_on_level_selected)
 			child.queue_free()
 	
+	# Load segments and register SIDs of all levels
 	for segment in world.segments:
 		var new_seg : LevelSegment = scn_segment.instantiate()
 		new_seg.load_segment(segment)
@@ -59,11 +67,12 @@ func load_world(world:WorldData) -> void:
 			else:
 				loaded_sids[sid] = child
 
+	# Connect hover sounds and find playable levels
 	for segment : LevelSegment in segment_parent.get_children():
 		for child : LevelNode in segment.get_nodes():
-			child.modulate = loaded_world.level_color
+			child.self_modulate = loaded_world.level_color
 			if child.node_data.level_data.is_boss:
-				child.modulate = loaded_world.level_boss_color
+				child.self_modulate = loaded_world.level_boss_color
 
 			if child.node_data.always_playable:
 				child.disabled = false
@@ -75,6 +84,16 @@ func load_world(world:WorldData) -> void:
 					loaded_sids[link.sid].disabled = false
 					if not loaded_sids[link.sid].mouse_entered.is_connected(hover_sound.play):
 						loaded_sids[link.sid].mouse_entered.connect(hover_sound.play)
+	
+	# Update the display for all levels based on completion
+	for segment : LevelSegment in segment_parent.get_children():
+		for child : LevelNode in segment.get_nodes():
+			if child.disabled:
+				child.set_display_state(LevelNode.DisplayState.DISABLED)
+			elif SaveSlots.get_level_exits(world.name, child.node_data.sid).size() == 0:
+				child.set_display_state(LevelNode.DisplayState.NOT_COMPLETED)
+			else:
+				child.set_display_state(LevelNode.DisplayState.COMPLETED)
 
 	loading_world = false
 

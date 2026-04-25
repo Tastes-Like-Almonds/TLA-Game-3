@@ -116,7 +116,8 @@ metadata/_custom_type_script = "uid://cgg14ym78f0wv"
 
 [resource]
 script = ExtResource("1_wuret")
-name = "Extras"
+name = "extras"
+display_name = "Extras"
 segments = Array[ExtResource("2_rsgaf")]([SubResource("Resource_ed28e"), SubResource("Resource_4pu2u"), SubResource("Resource_hycch"), SubResource("Resource_avde4")])
 line_unlocked_color = Color(0.12299998, 0.82, 0.1694666, 1)
 line_locked_color = Color(0.12299998, 0.82, 0.1694666, 0.45490196)
