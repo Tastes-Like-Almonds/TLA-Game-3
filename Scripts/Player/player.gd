@@ -30,8 +30,9 @@ enum MovementMode {
 
 # TODO Cache sword and body ref until child structure is altered
 
-@onready var sprite : AnimatedSprite2D = $playerBody/Sprite2D
-@onready var modifier_display: ModifierDisplayManager = $playerBody/ModifierDisplayManager
+@onready var sprite           : AnimatedSprite2D       = $playerBody/Sprite2D
+@onready var dash_animator    : AnimationPlayer        = $AnimationPlayer
+@onready var modifier_display : ModifierDisplayManager = $playerBody/ModifierDisplayManager
 
 #region Exports
 

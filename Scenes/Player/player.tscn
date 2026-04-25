@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene load_steps=45 format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
@@ -250,6 +250,86 @@ height = 8
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
 size = Vector2(102, 20)
 
+[sub_resource type="Gradient" id="Gradient_eksi1"]
+offsets = PackedFloat32Array(0, 0.90712076, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jincj"]
+gradient = SubResource("Gradient_eksi1")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Animation" id="Animation_jincj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DashIndicator:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.7058824)]
+}
+
+[sub_resource type="Animation" id="Animation_qr1w5"]
+resource_name = "cant_dash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DashIndicator:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.51, 0.51, 0.51, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_eksi1"]
+resource_name = "has_dash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DashIndicator:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.7058824)]
+}
+
+[sub_resource type="Animation" id="Animation_rqdc0"]
+resource_name = "used_dash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DashIndicator:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.51, 0.51, 0.51, 0.25882354)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qr1w5"]
+_data = {
+&"RESET": SubResource("Animation_jincj"),
+&"cant_dash": SubResource("Animation_qr1w5"),
+&"has_dash": SubResource("Animation_eksi1"),
+&"used_dash": SubResource("Animation_rqdc0")
+}
+
 [node name="Player" type="Node2D" groups=["Player"]]
 script = ExtResource("1_xpcdj")
 properties = SubResource("Resource_jlvik")
@@ -316,3 +396,16 @@ debug_color = Color(0.94, 0, 0.28200018, 0.5019608)
 
 [node name="Animator" type="Node" parent="."]
 script = ExtResource("14_7g0yx")
+
+[node name="DashIndicator" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.7058824)
+z_index = 1
+position = Vector2(0, -64)
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture2D_jincj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qr1w5")
+}
+playback_default_blend_time = 0.3
