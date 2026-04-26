@@ -34,6 +34,7 @@ enum MovementMode {
 @onready var sprite_trail     : CPUParticles2D         = $playerBody/CPUParticles2D
 @onready var dash_animator    : AnimationPlayer        = $AnimationPlayer
 @onready var modifier_display : ModifierDisplayManager = $playerBody/ModifierDisplayManager
+@onready var heartbeat       : AudioStreamPlayer      = $Sounds/Heartbeat
 
 #region Exports
 
@@ -125,6 +126,14 @@ var health : float = properties.max_health:
 	set(new):
 		if new != health:
 			health_changed.emit(new)
+		
+		heartbeat.playing = new < (properties.max_health*0.67)
+		heartbeat.pitch_scale = clampf(
+			0.5+(1-(new/properties.max_health))*0.6,
+			0.7,
+			1.3
+		)
+		
 		health = new
 
 ## The amount of time since damage was last taken.

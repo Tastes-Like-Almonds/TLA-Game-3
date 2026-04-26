@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BodyCosmetic" load_steps=3 format=3 uid="uid://cyb06wbqvjc74"]
+
+[ext_resource type="Script" uid="uid://oksvaahqx7ou" path="res://Scripts/Resource/Cosmetic/body_cosmetic.gd" id="1_xi0rm"]
+[ext_resource type="Texture2D" uid="uid://b4jbhtbcjgcv" path="res://Assets/Sprites/Cosmetic/Hat/Bat Wings.png" id="2_xi0rm"]
+
+[resource]
+script = ExtResource("1_xi0rm")
+offset = Vector2(0, -21)
+texture = ExtResource("2_xi0rm")
+name = "Dweller's Hat"
+desc = "It's grey!"
+metadata/_custom_type_script = "uid://oksvaahqx7ou"

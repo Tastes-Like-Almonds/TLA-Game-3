@@ -1,17 +1,17 @@
-[gd_scene load_steps=19 format=3 uid="uid://cmhd0yb0ku5vd"]
+[gd_scene load_steps=16 format=3 uid="uid://cmhd0yb0ku5vd"]
 
 [ext_resource type="Script" uid="uid://bytykcs62pxn5" path="res://Scripts/Environments/gutter_2.gd" id="1_00xhq"]
 
 [sub_resource type="Gradient" id="Gradient_bn6cp"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1.015258e-07, 0.09616593, 0.024670655, 1)
+colors = PackedColorArray(0.1, 0.061666667, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_fleyr"]
 gradient = SubResource("Gradient_bn6cp")
 
 [sub_resource type="Gradient" id="Gradient_1jjb1"]
 offsets = PackedFloat32Array(0, 0.18139535, 0.26976743, 0.41395348, 0.627907, 0.7953488, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.0040000007, 0.08, 0.016666654, 1, 0.018199999, 0.14, 0.04662, 1, 0.00067574374, 0.17885765, 0.26637086, 1, 0.2922, 0.14400001, 0.3, 1, 0.1813, 0.22533005, 0.37, 1, 0, 0, 0, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0040000007, 0.08, 0.016666654, 1, 0.14, 0.066920005, 0.018199999, 1, 0.00067574374, 0.17885765, 0.26637086, 1, 0.3, 0.25840002, 0.14400001, 1, 0.1813, 0.22533005, 0.37, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3hcw5"]
 gradient = SubResource("Gradient_1jjb1")
@@ -48,33 +48,11 @@ scale_min = 0.5
 scale_max = 1.5
 alpha_curve = SubResource("CurveTexture_bywm7")
 
-[sub_resource type="Gradient" id="Gradient_00xhq"]
-colors = PackedColorArray(0.06, 0.06, 0.06, 1, 0.93, 1, 0.93583333, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_vxgnn"]
-gradient = SubResource("Gradient_00xhq")
-
-[sub_resource type="Environment" id="Environment_k85jp"]
-background_mode = 3
-tonemap_exposure = 0.62
-glow_enabled = true
-glow_normalized = true
-glow_intensity = 5.6
-glow_strength = 1.49
-glow_bloom = 0.8
-glow_map_strength = 1.0
-adjustment_enabled = true
-adjustment_brightness = 0.94
-adjustment_contrast = 1.13
-adjustment_saturation = 0.55
-adjustment_color_correction = SubResource("GradientTexture2D_vxgnn")
-
 [sub_resource type="Gradient" id="Gradient_p84su"]
-colors = PackedColorArray(1, 0.54999995, 0.39999998, 0, 0, 0.65, 0.18416664, 1)
+colors = PackedColorArray(0.39999998, 0.4799999, 1, 0, 0.28144997, 0.24049999, 0.65, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vbji5"]
-noise_type = 0
-frequency = 0.0036
+frequency = 0.0172
 fractal_octaves = 2
 fractal_lacunarity = 1.5
 fractal_weighted_strength = 0.21
@@ -89,7 +67,7 @@ seamless = true
 
 [sub_resource type="Gradient" id="Gradient_jl21p"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.02833333, 0.05, 0, 1)
+colors = PackedColorArray(0, 0, 0, 0.27450982)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_rrqrp"]
 gradient = SubResource("Gradient_jl21p")
@@ -126,11 +104,8 @@ speed_scale = 0.2
 visibility_rect = Rect2(0, -5000, 10000, 10000)
 process_material = SubResource("ParticleProcessMaterial_hywip")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_k85jp")
-
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.62856215, 0.7361342, 0.6613292, 1)
+color = Color(0.74, 0.66008, 0.6068, 1)
 
 [node name="Fog" type="Node2D" parent="."]
 
@@ -140,7 +115,8 @@ repeat_size = Vector2(3072, 1024)
 autoscroll = Vector2(120, -5)
 
 [node name="Sprite2D" type="Sprite2D" parent="Fog/Parallax2D"]
-self_modulate = Color(1, 1, 1, 0.05490196)
+self_modulate = Color(1, 1, 1, 0.10980392)
+z_index = 10
 scale = Vector2(3, 1)
 texture = SubResource("NoiseTexture2D_vwpxu")
 

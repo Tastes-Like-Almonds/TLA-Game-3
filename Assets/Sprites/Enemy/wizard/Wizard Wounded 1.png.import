@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2kgot1stw5us"
-path="res://.godot/imported/Wizard 4.png-c6ca6413d388325e4e05e97b98dea776.ctex"
+uid="uid://b370tqdbsftns"
+path="res://.godot/imported/Wizard Wounded 1.png-d4a00ac0c11608645b64626e1be2046b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Enemy/wizard/Wizard 4.png"
-dest_files=["res://.godot/imported/Wizard 4.png-c6ca6413d388325e4e05e97b98dea776.ctex"]
+source_file="res://Assets/Sprites/Enemy/wizard/Wizard Wounded 1.png"
+dest_files=["res://.godot/imported/Wizard Wounded 1.png-d4a00ac0c11608645b64626e1be2046b.ctex"]
 
 [params]
 

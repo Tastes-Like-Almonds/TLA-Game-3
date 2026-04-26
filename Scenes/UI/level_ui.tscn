@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://caj0mx5twqcfe"]
+[gd_scene load_steps=26 format=3 uid="uid://caj0mx5twqcfe"]
 
 [ext_resource type="Script" uid="uid://l7uxjyga8ie7" path="res://Scripts/UI/level_ui.gd" id="1_xjiw8"]
 [ext_resource type="Texture2D" uid="uid://dr3fx4as1q5if" path="res://Assets/Sprites/Placeholder/Heart Placeholder.png" id="2_haw25"]
@@ -6,6 +6,18 @@
 [ext_resource type="Script" uid="uid://dvoymdlu627u5" path="res://Scripts/UI/hotbar.gd" id="4_m0wgp"]
 [ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Sprites/Placeholder/sword.png" id="4_tk1ol"]
 [ext_resource type="Script" uid="uid://wvajojoabnsk" path="res://Scripts/UI/pause.gd" id="6_haw25"]
+
+[sub_resource type="Gradient" id="Gradient_haw25"]
+offsets = PackedFloat32Array(0.74922603, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_307ub"]
+gradient = SubResource("Gradient_haw25")
+width = 90
+height = 160
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
 [sub_resource type="Theme" id="Theme_haw25"]
 Button/colors/font_hover_color = Color(0.69, 0.69, 0.69, 1)
@@ -65,8 +77,85 @@ _data = {
 &"cosmetic_unlocked": SubResource("Animation_haw25")
 }
 
+[sub_resource type="Animation" id="Animation_46n82"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vignette:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.09019608)]
+}
+
+[sub_resource type="Animation" id="Animation_fc7jj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vignette:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_urbh0"]
+resource_name = "hurt"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vignette:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0.101960786)]
+}
+
+[sub_resource type="Animation" id="Animation_3e4nl"]
+resource_name = "critical"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vignette:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0.21568628)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_urbh0"]
+_data = {
+&"RESET": SubResource("Animation_fc7jj"),
+&"critical": SubResource("Animation_3e4nl"),
+&"default": SubResource("Animation_46n82"),
+&"hurt": SubResource("Animation_urbh0")
+}
+
 [node name="LevelUI" type="CanvasLayer"]
 script = ExtResource("1_xjiw8")
+
+[node name="Vignette" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_307ub")
 
 [node name="Control" type="Control" parent="."]
 modulate = Color(1, 1, 1, 0.627451)
@@ -386,8 +475,14 @@ theme_override_fonts/font = ExtResource("3_vk2nj")
 theme_override_font_sizes/font_size = 44
 text = "0:00"
 
+[node name="VignetteAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_urbh0")
+}
+playback_default_blend_time = 0.2
+
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitLevel" to="Pause" method="_on_exit_level_pressed"]
-[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_game_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_level_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_game_pressed"]

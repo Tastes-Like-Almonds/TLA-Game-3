@@ -5,6 +5,7 @@ class_name LevelUI extends CanvasLayer
 @onready var health_label : Label = $Control/Health/HealthBar/Label
 @onready var hotbar : Hotbar = $Control/Hotbar
 @onready var timer  : Label = $MarginContainer/Timer
+@onready var vignette_animator : AnimationPlayer = $VignetteAnimator
 
 @export_group("Health Bar")
 
@@ -31,7 +32,7 @@ func set_timer_value(val : float) -> void:
 	timer.text = Helper.format_time(val)
 #endregion
 
-
+#region Player stuff
 ## Returns true if the UI as a player associated.
 func has_player() -> bool:
 	return is_instance_valid(player)
@@ -55,6 +56,16 @@ func register_player(p : Player) -> void:
 	player.loadout_changed.connect(on_loadout_update)
 	
 	on_loadout_update()
+#endregion
+
+func _update_vignette(health:float) -> void:
+	if not player: return
+	if health < player.get_max_health()/5:
+		vignette_animator.play("critical")
+	elif health < player.get_max_health()/2:
+		vignette_animator.play("hurt")
+	else:
+		vignette_animator.play("default")
 
 func on_loadout_update() -> void:
 	if not is_instance_valid(player): return
@@ -69,6 +80,7 @@ func on_loadout_update() -> void:
 func on_health_update(new : float) -> void:
 	health_bar.value = clampf(new/player.get_max_health(), 0.0, 1.0)
 	health_label.text = str(roundf(new*10)/10)
+	_update_vignette(new)
 
 func _process(delta: float) -> void:
 	
@@ -84,3 +96,4 @@ func _process(delta: float) -> void:
 func _ready() -> void:
 	health_bar.pivot_offset = health_bar.size/2
 	on_loadout_update()
+	_update_vignette(10)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2kgot1stw5us"
-path="res://.godot/imported/Wizard 4.png-c6ca6413d388325e4e05e97b98dea776.ctex"
+uid="uid://bsvoerr2h5glh"
+path="res://.godot/imported/Statue (no ribbon).png-9d4d3dc2db3ae11019694e9e82a168ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Enemy/wizard/Wizard 4.png"
-dest_files=["res://.godot/imported/Wizard 4.png-c6ca6413d388325e4e05e97b98dea776.ctex"]
+source_file="res://Assets/Sprites/Tilemap/Statue/Statue (no ribbon).png"
+dest_files=["res://.godot/imported/Statue (no ribbon).png-9d4d3dc2db3ae11019694e9e82a168ee.ctex"]
 
 [params]
 

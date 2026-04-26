@@ -21,6 +21,8 @@ func update_visual(delta : float) -> void:
 	var origin := player.get_player_position()
 	var dest := player.get_player_sword().get_tip_global_position()
 	
+	$Sprite2D/Drag.emitting = _is_dragging(0)
+	
 	if is_instance_valid(line2D):
 		
 		line2D.modulate.a = max(line2D.modulate.a-delta, pow(player.get_blade_damage_perc(),2)*0.4)
