@@ -7,6 +7,6 @@
 script = ExtResource("1_xi0rm")
 offset = Vector2(0, -21)
 texture = ExtResource("2_xi0rm")
-name = "Dweller's Hat"
-desc = "It's grey!"
+name = "Bat Wings"
+desc = "That's not how you wear them..."
 metadata/_custom_type_script = "uid://oksvaahqx7ou"

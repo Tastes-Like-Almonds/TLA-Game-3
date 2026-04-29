@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cmhd0yb0ku5vd"]
+[gd_scene load_steps=19 format=3 uid="uid://cmhd0yb0ku5vd"]
 
 [ext_resource type="Script" uid="uid://bytykcs62pxn5" path="res://Scripts/Environments/gutter_2.gd" id="1_00xhq"]
 
@@ -71,6 +71,27 @@ colors = PackedColorArray(0, 0, 0, 0.27450982)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_rrqrp"]
 gradient = SubResource("Gradient_jl21p")
+
+[sub_resource type="Gradient" id="Gradient_00xhq"]
+colors = PackedColorArray(0.06, 0.06, 0.06, 1, 1, 0.9533333, 0.93, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vxgnn"]
+gradient = SubResource("Gradient_00xhq")
+
+[sub_resource type="Environment" id="Environment_vxgnn"]
+background_mode = 3
+tonemap_exposure = 0.62
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 1.33
+glow_strength = 1.77
+glow_mix = 0.195
+glow_bloom = 1.0
+glow_map_strength = 1.0
+adjustment_enabled = true
+adjustment_brightness = 0.94
+adjustment_contrast = 1.2
+adjustment_color_correction = SubResource("GradientTexture2D_vxgnn")
 
 [node name="MenuEnv" type="Node2D"]
 script = ExtResource("1_00xhq")
@@ -225,3 +246,6 @@ position = Vector2(-846.75006, -37.000008)
 rotation = 4.9741883
 scale = Vector2(-0.7225662, 106.09949)
 texture = SubResource("GradientTexture2D_rrqrp")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vxgnn")

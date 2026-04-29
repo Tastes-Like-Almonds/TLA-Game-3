@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://51rjllq0cxd7"]
+[gd_scene load_steps=46 format=3 uid="uid://51rjllq0cxd7"]
 
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="1_41t8j"]
 [ext_resource type="Script" uid="uid://bvwefjhtywxdb" path="res://Scenes/UI/Graph/graph_select.gd" id="2_m12fl"]
@@ -12,13 +12,17 @@
 [ext_resource type="AudioStream" uid="uid://ccwiuovt03cbw" path="res://Assets/Sound/SFX/UI/UI Hover 1.wav" id="8_qotok"]
 [ext_resource type="AudioStream" uid="uid://d3px4b7kvg5td" path="res://Assets/Sound/SFX/UI/UI Click 1.wav" id="9_mvclr"]
 [ext_resource type="Script" uid="uid://dj1hrla3y6xpi" path="res://Scripts/UI/level_display.gd" id="9_qotok"]
+[ext_resource type="Texture2D" uid="uid://br5gohrjgiv5j" path="res://Assets/Sprites/Enemy/Bat/Flying Bat 3.png" id="13_ungnr"]
+[ext_resource type="Texture2D" uid="uid://cf8wtk1dpaj4h" path="res://Assets/Sprites/Enemy/wizard/Wizard 2.png" id="14_hhvrl"]
+[ext_resource type="Texture2D" uid="uid://4ftncmxjekax" path="res://Assets/Sprites/Enemy/Rat/Rat3.png" id="15_u8psi"]
+[ext_resource type="Texture2D" uid="uid://cdqm6chx3jwjn" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 2.png" id="16_3i8ok"]
 
 [sub_resource type="Theme" id="Theme_8h3cm"]
 default_font = ExtResource("1_41t8j")
 default_font_size = 33
 
 [sub_resource type="Gradient" id="Gradient_m12fl"]
-colors = PackedColorArray(0.020666666, 0.04, 0, 1, 0.022799999, 0.12, 0.063300006, 1)
+colors = PackedColorArray(0.53, 0.53, 0.53, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_xn7jd"]
 gradient = SubResource("Gradient_m12fl")
@@ -125,6 +129,130 @@ bg_color = Color(0, 0, 0, 0.24313726)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mvclr"]
 
+[sub_resource type="Animation" id="Animation_ungnr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.6500179, 0.054843403, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.023529412, 0.12156863, 0.0627451, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GutterStuff:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hhvrl"]
+resource_name = "Extras"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.31390002, 0.49421003, 0.73, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.6642, 0.68497336, 0.82, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GutterStuff:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dat7w"]
+resource_name = "gutter"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.6500179, 0.054843403, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.023529412, 0.12156863, 0.0627451, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GutterStuff:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.28235295)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hhvrl"]
+_data = {
+&"RESET": SubResource("Animation_ungnr"),
+&"extras": SubResource("Animation_hhvrl"),
+&"gutter": SubResource("Animation_dat7w")
+}
+
 [node name="GraphLevelSelect" type="Control"]
 process_mode = 3
 layout_mode = 3
@@ -139,6 +267,7 @@ script = ExtResource("2_v7ump")
 worlds = Array[ExtResource("3_si5c8")]([ExtResource("4_si5c8"), ExtResource("5_dgc3b")])
 
 [node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.023529412, 0.12156863, 0.0627451, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -147,6 +276,37 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_xn7jd")
+
+[node name="GutterStuff" type="Node2D" parent="."]
+
+[node name="FlyingBat3" type="Sprite2D" parent="GutterStuff"]
+position = Vector2(1733.9999, 842)
+rotation = -0.2617994
+scale = Vector2(15.999999, 15.999999)
+texture = ExtResource("13_ungnr")
+
+[node name="FlyingBat4" type="Sprite2D" parent="GutterStuff"]
+position = Vector2(1731.9999, 331)
+rotation = 0.2617994
+scale = Vector2(15.999999, 15.999999)
+texture = ExtResource("13_ungnr")
+
+[node name="Wizard2" type="Sprite2D" parent="GutterStuff"]
+position = Vector2(271, 922)
+scale = Vector2(16, 16)
+texture = ExtResource("14_hhvrl")
+
+[node name="Rat3" type="Sprite2D" parent="GutterStuff"]
+position = Vector2(1478, 1020)
+scale = Vector2(16, 16)
+texture = ExtResource("15_u8psi")
+
+[node name="LightningStrike2" type="Sprite2D" parent="GutterStuff"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(774, 407.99997)
+rotation = -0.5235988
+scale = Vector2(16, 16)
+texture = ExtResource("16_3i8ok")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 modulate = Color(0, 0.6500179, 0.054843403, 1)
@@ -538,6 +698,12 @@ theme_override_colors/font_color = Color(0.72882265, 0.7288217, 0.728822, 1)
 theme_override_styles/focus = SubResource("StyleBoxEmpty_mvclr")
 text = "Exit to Hub"
 flat = true
+
+[node name="Animator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hhvrl")
+}
+playback_default_blend_time = 0.5
 
 [connection signal="mouse_entered" from="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/Left" to="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" method="_button_hover"]
 [connection signal="pressed" from="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/Left" to="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" method="_previous_world"]

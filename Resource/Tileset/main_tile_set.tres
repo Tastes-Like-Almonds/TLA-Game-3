@@ -999,6 +999,7 @@ texture = ExtResource("2_opqfb")
 10:10/0 = 0
 10:10/0/custom_data_2 = 0.6
 11:10/0 = 0
+11:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 11:10/0/custom_data_0 = 0.96
 11:10/0/custom_data_1 = 3
 11:10/0/custom_data_2 = 0.6

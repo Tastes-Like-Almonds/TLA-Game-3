@@ -114,6 +114,7 @@ func initialize(config : LevelConfig = null) -> void:
 	level_config = config
 	
 	var player := _setup_player()
+	player.CompletionEvent.connect(_handle_completion_event)
 	_setup_camera()
 	
 	_setup_ui()

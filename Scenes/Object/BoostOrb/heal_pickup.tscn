@@ -1,7 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://dyx7ajqlx3xu3"]
+[gd_scene load_steps=21 format=3 uid="uid://dyx7ajqlx3xu3"]
 
 [ext_resource type="Script" uid="uid://djw3bhjl7ui7a" path="res://Scripts/Object/BoostOrb/heal_pickup.gd" id="1_cr0b3"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_2f7tf"]
 [ext_resource type="Texture2D" uid="uid://un1og2lj3udk" path="res://Assets/Sprites/Pickup/Health.png" id="2_cr0b3"]
+
+[sub_resource type="Resource" id="Resource_mo64u"]
+script = ExtResource("2_2f7tf")
+sound_string = "res://Assets/Sound/SFX/Orb/Health Orb.wav"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Curve" id="Curve_1dkb7"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.20812182, 0.6516854), 0.0, 0.0, 0, 0, Vector2(0.99999, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -88,6 +95,7 @@ radius = 40.04997
 [node name="HealPickup" type="StaticBody2D" groups=["BladeHitable"]]
 collision_layer = 8
 script = ExtResource("1_cr0b3")
+sound = SubResource("Resource_mo64u")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false

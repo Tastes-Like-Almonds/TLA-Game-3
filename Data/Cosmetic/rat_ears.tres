@@ -7,6 +7,6 @@
 script = ExtResource("1_tnsps")
 offset = Vector2(0, -42)
 texture_behind = ExtResource("2_tnsps")
-name = "Dweller's Hat"
-desc = "It's grey!"
+name = "Rat Ears"
+desc = "rats. rats. weere the rats."
 metadata/_custom_type_script = "uid://oksvaahqx7ou"

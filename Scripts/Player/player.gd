@@ -483,6 +483,7 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 			ability_charge = current_weapon.MAX_CHARGE
 			current_weapon.use(ability_charge)
 			dash_animator.play("used_dash")
+			CompletionEvent.emit(Level.CompletionEvent.PLAYER_DASHED, null)
 			
 			# Reset trail
 			if sprite_trail.modulate.a <= 0:
@@ -623,6 +624,7 @@ func _respawn() -> void:
 ## Handle the death of the player.
 func _death() -> void:
 	if dead: return
+	CompletionEvent.emit(Level.CompletionEvent.PLAYER_DEATH, null)
 	killed.emit()
 	get_player_sword().on_cable = null
 	Sfx.play_sound_2d(death_sound, get_player_position(), false)
@@ -651,6 +653,8 @@ func deal_damage(amt : float) -> bool:
 	
 	# TODO Set parent to something better
 	TextDisplay.damage_display(get_parent(), get_player_position(),str(amt), Vector2.from_angle(-PI/2+randf_range(-PI/4,PI/4)))
+	
+	CompletionEvent.emit(Level.CompletionEvent.PLAYER_TAKEN_DAMAGE, amt)
 	
 	last_hit_time = 0.0
 	last_hit_amount = amt

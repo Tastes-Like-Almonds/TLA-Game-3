@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cc5grfrdgcgs0"
+path="res://.godot/imported/Health Orb.wav-9d66331c377a0a5eacf1673453f7bed2.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Orb/Health Orb.wav"
+dest_files=["res://.godot/imported/Health Orb.wav-9d66331c377a0a5eacf1673453f7bed2.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

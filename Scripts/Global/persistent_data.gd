@@ -51,6 +51,12 @@ func _typeify(target:Variant) -> Variant:
 			dict[key] = _typeify(target[key])
 		return dict
 	
+	elif target is Cosmetic:
+		return {
+			"_type": "cosmetic",
+			"_val": target.resource_path
+		}
+	
 	# This error could be removed along with the checks for float and string, but it is kept
 	# to ensure future data types are properly stored.
 	push_error("No typeify handling for target: " + str(target))
@@ -68,7 +74,16 @@ func _untypeify(target:Variant) -> Variant:
 			if target["_type"] == "int":
 				return int(target["_val"])
 			
-			push_error("No handling for _type of '" + target + "'.")
+			elif target["_type"] == "cosmetic":
+				if FileAccess.file_exists(target["_val"]):
+					var res := load(target["_val"])
+					return res;
+				else:
+					push_warning("Attempt to load nonexistent path '" + target["_val"] + "' from savedata!")
+					return null
+				
+			
+			push_error("No handling for _type of '" + target["_type"] + "'.")
 		
 		var dict := {}
 		for key : Variant in target.keys():
@@ -128,7 +143,7 @@ func save_game(path:String=SAVE_PATH) -> void:
 	print("Saving game...")
 	print(loaded_data)
 	
-	loaded_data["equipped"] = {} # FIXME
+	#loaded_data["equipped"] = {} # FIXME
 	
 	if (!loaded_data):
 		load_game() # Will create base data if needed

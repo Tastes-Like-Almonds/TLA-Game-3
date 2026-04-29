@@ -3,9 +3,10 @@ class_name GraphLevelSelect extends Control
 ## The worlds to be loaded into the selector.
 @export var worlds : Array[WorldData]
 
-@onready var world_display : WorldDisplay = %WorldDisplay
-@onready var graph_select  : GraphSelect  = %GraphSelect
-@onready var level_display : LevelDisplay = %LevelDisplay
+@onready var world_display : WorldDisplay    = %WorldDisplay
+@onready var graph_select  : GraphSelect     = %GraphSelect
+@onready var level_display : LevelDisplay    = %LevelDisplay
+@onready var animator      : AnimationPlayer = $Animator
 
 @onready var exit_button : Button = $Exit
 
@@ -23,6 +24,8 @@ func _load_world(world:WorldData) -> void:
 	if loading_level: return
 	current_world = world
 	graph_select.load_world(world)
+	if world.selector_animation:
+		animator.play(world.selector_animation)
 
 func _level_selected(level_node : LevelNodeData) -> void:
 	if loading_level: return
