@@ -1,6 +1,7 @@
-[gd_scene load_steps=77 format=4 uid="uid://bom207eoe00gn"]
+[gd_scene load_steps=97 format=4 uid="uid://bom207eoe00gn"]
 
 [ext_resource type="Script" uid="uid://dspsw8d2frwe8" path="res://Scripts/Level/gutter_boss.gd" id="1_41ujw"]
+[ext_resource type="Resource" uid="uid://biec8c3hvnxmv" path="res://Resource/SongData/gutter_song.tres" id="2_j13eh"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_2l1rg"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="4_phb8p"]
 [ext_resource type="PackedScene" uid="uid://dyc1y7waemn5m" path="res://Scenes/Object/BoostOrb/warp_orb.tscn" id="6_7au3u"]
@@ -9,6 +10,8 @@
 [ext_resource type="Shader" uid="uid://b3w52kvg34c4c" path="res://Resource/Shader/bat.gdshader" id="9_3cxce"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="9_iis5v"]
 [ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="9_xerla"]
+[ext_resource type="Texture2D" uid="uid://dh4t0o73thnon" path="res://Assets/Sprites/Enemy/wizard/Angered.png" id="10_0g85x"]
+[ext_resource type="Texture2D" uid="uid://bl1nt5cya3yec" path="res://Assets/Sprites/Enemy/wizard/Casual.png" id="10_l3ipi"]
 [ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="10_n35ia"]
 [ext_resource type="Script" uid="uid://b6h82msp0laej" path="res://Scripts/Resource/Sound/song_data.gd" id="11_41ujw"]
 [ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="11_vprxk"]
@@ -19,6 +22,54 @@
 [ext_resource type="Texture2D" uid="uid://oee4dgw5j7su" path="res://Assets/Sprites/Tilemap/Moldy Sign.png" id="16_2l1rg"]
 [ext_resource type="PackedScene" uid="uid://lmdaa6dfai2i" path="res://Scenes/Object/Enemy/possessed_sword.tscn" id="17_2l1rg"]
 [ext_resource type="PackedScene" uid="uid://byaojnvcyv5ng" path="res://Scenes/Object/Dialog/dialog_prompt.tscn" id="17_phb8p"]
+
+[sub_resource type="Gradient" id="Gradient_krtai"]
+colors = PackedColorArray(0.98550004, 1, 0.13, 0, 0.989, 1, 0.33999997, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pj625"]
+gradient = SubResource("Gradient_krtai")
+width = 128
+
+[sub_resource type="Gradient" id="Gradient_41ujw"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0g85x"]
+gradient = SubResource("Gradient_41ujw")
+
+[sub_resource type="Gradient" id="Gradient_0g85x"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l3ipi"]
+gradient = SubResource("Gradient_0g85x")
+
+[sub_resource type="Curve" id="Curve_j13eh"]
+_data = [Vector2(0.009836063, 0), 0.0, 0.0, 0, 0, Vector2(0.10819673, 1), 0.0, 0.0, 0, 0, Vector2(0.72786885, 0.58620685), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_iis5v"]
+curve = SubResource("Curve_j13eh")
+
+[sub_resource type="Curve" id="Curve_d1lfc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7836066, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_gsjcu"]
+curve = SubResource("Curve_d1lfc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hbkia"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 100.0
+emission_ring_radius = 2500.0
+emission_ring_inner_radius = 2500.0
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -3000.0
+radial_accel_max = -3000.0
+scale_curve = SubResource("CurveTexture_gsjcu")
+alpha_curve = SubResource("CurveTexture_iis5v")
 
 [sub_resource type="Animation" id="Animation_l3ipi"]
 length = 0.001
@@ -129,6 +180,54 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [2.91]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Level/Tiles:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.33, 0, 0, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Whiteout:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Spotlight:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("GPUParticles2D:modulate")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_d1lfc"]
@@ -353,6 +452,54 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [2.91]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Level/Tiles:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Whiteout:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("GPUParticles2D:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Spotlight:modulate")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_j13eh"]
@@ -691,14 +838,449 @@ tracks/8/keys = {
 "values": [2.91]
 }
 
+[sub_resource type="Animation" id="Animation_hbkia"]
+resource_name = "panic"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0.96533334, 0.74, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.34019995, 0.21599999, 0.54, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GoldSnow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.9441667, 1, 0.32999998, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WorldEnvironment:environment:adjustment_saturation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.27]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Rain:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.3333335, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WorldEnvironment:environment:adjustment_contrast")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.7]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("WorldEnvironment:environment:adjustment_brightness")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.97]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("WorldEnvironment:environment:glow_bloom")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.09]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("WorldEnvironment:environment:glow_intensity")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.8]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Level/Tiles:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Whiteout:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gpv5u"]
+resource_name = "panic"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.34019995, 0.21599999, 0.54, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GoldSnow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.9441667, 1, 0.32999998, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WorldEnvironment:environment:adjustment_saturation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1.3660403),
+"update": 0,
+"values": [1.07]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Rain:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.3333335, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WorldEnvironment:environment:adjustment_contrast")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.05]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("WorldEnvironment:environment:adjustment_brightness")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.8499999999999999]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("WorldEnvironment:environment:glow_bloom")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.09]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("WorldEnvironment:environment:glow_intensity")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.8]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Level/Tiles:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.33, 0, 0, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Whiteout:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(2.5491211, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mlaub"]
+resource_name = "final_attack"
+length = 9.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasModulate:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.34019995, 0.21599999, 0.54, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GoldSnow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.9441667, 1, 0.32999998, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WorldEnvironment:environment:adjustment_saturation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 8.00606, 9),
+"transitions": PackedFloat32Array(1.3660403, 1.3660403, 1.3660403),
+"update": 0,
+"values": [0.01, 0.01, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Rain:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.3333335, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WorldEnvironment:environment:adjustment_contrast")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.09]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("WorldEnvironment:environment:adjustment_brightness")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.8499999999999999]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("WorldEnvironment:environment:glow_bloom")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.09]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("WorldEnvironment:environment:glow_intensity")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.8]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Level/Tiles:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.11, 0.11, 0.11, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Whiteout:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 8, 9),
+"transitions": PackedFloat32Array(2.5491211, 0.49999997, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Spotlight:modulate")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 8.0068035),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("GPUParticles2D:modulate")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(-0.033333335, 4, 6.85, 7.033334),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j13eh"]
 _data = {
 &"RESET": SubResource("Animation_l3ipi"),
 &"dark": SubResource("Animation_d1lfc"),
 &"default": SubResource("Animation_iis5v"),
+&"final_attack": SubResource("Animation_mlaub"),
 &"fire": SubResource("Animation_j13eh"),
 &"gutter": SubResource("Animation_gsjcu"),
-&"lightning": SubResource("Animation_0g85x")
+&"lightning": SubResource("Animation_0g85x"),
+&"panic": SubResource("Animation_hbkia"),
+&"prep_panic": SubResource("Animation_gpv5u")
 }
 
 [sub_resource type="Gradient" id="Gradient_7au3u"]
@@ -793,12 +1375,6 @@ colors = PackedColorArray(0, 0, 0, 1, 0.7003401, 0.5869282, 5.7756904e-07, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_krtai"]
 gradient = SubResource("Gradient_d3xlu")
 
-[sub_resource type="Gradient" id="Gradient_krtai"]
-colors = PackedColorArray(0.98550004, 1, 0.13, 0, 0.989, 1, 0.33999997, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_pj625"]
-gradient = SubResource("Gradient_krtai")
-
 [sub_resource type="Gradient" id="Gradient_phb8p"]
 offsets = PackedFloat32Array(0, 0.24229075)
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
@@ -811,21 +1387,49 @@ fill_to = Vector2(0.47975078, 1)
 [sub_resource type="Resource" id="Resource_iens1"]
 script = ExtResource("10_n35ia")
 text = "Is this death that I smell? Oh what horrors must have come to pass..."
+icon = ExtResource("10_l3ipi")
+icon_flip_h = true
 metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
 [sub_resource type="Resource" id="Resource_nyun1"]
 script = ExtResource("10_n35ia")
 text = "*looks up* Ah... a knight of old... how disgraced must have you become...."
+icon_flip_h = true
 metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
 [sub_resource type="Resource" id="Resource_3a5mw"]
 script = ExtResource("10_n35ia")
 text = "Your presence smells of sin... Thus... In Tīw's name... [color=red][shake] YOU SHALL BURN, OH KNIGHT!"
+icon = ExtResource("10_0g85x")
+icon_flip_h = true
 metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
 [sub_resource type="Resource" id="Resource_hn2ev"]
 script = ExtResource("9_xerla")
 lines = Array[ExtResource("10_n35ia")]([SubResource("Resource_iens1"), SubResource("Resource_nyun1"), SubResource("Resource_3a5mw")])
+metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
+
+[sub_resource type="Resource" id="Resource_kllam"]
+script = ExtResource("10_n35ia")
+text = "You... [shake][color=red]Monster[color=white]..."
+name = "The Wizard"
+icon = ExtResource("10_0g85x")
+icon_flip_h = true
+speed = 0.1
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_cjjjo"]
+script = ExtResource("10_n35ia")
+text = "May [shake]you[/shake] never... [color=grey]know... peace..."
+name = "The Wizard"
+icon = ExtResource("10_0g85x")
+icon_flip_h = true
+speed = 0.1
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_e4k75"]
+script = ExtResource("9_xerla")
+lines = Array[ExtResource("10_n35ia")]([SubResource("Resource_kllam"), SubResource("Resource_cjjjo")])
 metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
 
 [sub_resource type="Resource" id="Resource_41ujw"]
@@ -856,6 +1460,20 @@ volume_linear = 0.7
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
+[sub_resource type="Resource" id="Resource_wlql1"]
+script = ExtResource("11_vprxk")
+sound_string = "res://Assets/Sound/SFX/Enemy/Priest/PANIC Transition.wav"
+volume_linear = 0.35
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_ris3j"]
+script = ExtResource("11_vprxk")
+sound_string = "res://Assets/Sound/SFX/Enemy/Priest/Final Attack.wav"
+volume_linear = 0.9
+bus = &"Sfx"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
 [sub_resource type="Resource" id="Resource_hbkia"]
 script = ExtResource("11_41ujw")
 path = &"res://Assets/Sound/Music/GutterBoss/intro dialouge.wav"
@@ -869,11 +1487,13 @@ metadata/_custom_type_script = "uid://b6h82msp0laej"
 [sub_resource type="Resource" id="Resource_mlaub"]
 script = ExtResource("11_41ujw")
 path = &"res://Assets/Sound/Music/GutterBoss/loop 2.wav"
+vol_linear = 0.8
 metadata/_custom_type_script = "uid://b6h82msp0laej"
 
 [sub_resource type="Resource" id="Resource_qei7m"]
 script = ExtResource("11_41ujw")
 path = &"res://Assets/Sound/Music/GutterBoss/loop 3.wav"
+vol_linear = 1.0
 metadata/_custom_type_script = "uid://b6h82msp0laej"
 
 [sub_resource type="Resource" id="Resource_phb8p"]
@@ -1128,6 +1748,35 @@ gradient = SubResource("Gradient_xerla")
 
 [node name="GutterBoss" type="Node2D"]
 script = ExtResource("1_41ujw")
+starting_track = ExtResource("2_j13eh")
+
+[node name="Spotlight" type="Node2D" parent="."]
+
+[node name="Sprite2D2" type="Sprite2D" parent="Spotlight"]
+modulate = Color(1, 1, 1, 0.12941177)
+position = Vector2(125.99994, -1424)
+rotation = 4.4505897
+scale = Vector2(50.558, 3)
+texture = SubResource("GradientTexture2D_pj625")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Spotlight"]
+modulate = Color(1, 1, 1, 0.12941177)
+position = Vector2(990, -1479.0001)
+rotation = 4.9741883
+scale = Vector2(50.558, 3)
+texture = SubResource("GradientTexture2D_pj625")
+
+[node name="Whiteout" type="Sprite2D" parent="."]
+z_index = 10
+scale = Vector2(200, 200)
+texture = SubResource("GradientTexture2D_0g85x")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(527, 34)
+amount = 20
+texture = SubResource("GradientTexture2D_l3ipi")
+lifetime = 1.3
+process_material = SubResource("ParticleProcessMaterial_hbkia")
 
 [node name="WorldTransitions" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1175,6 +1824,7 @@ position = Vector2(-766, 4177)
 [node name="Level" type="Node2D" parent="."]
 
 [node name="Tiles" type="Node2D" parent="Level"]
+modulate = Color(0.33, 0, 0, 1)
 
 [node name="Sprite2D4" type="Sprite2D" parent="Level/Tiles"]
 z_index = -8
@@ -1271,17 +1921,17 @@ energy = 1.39
 texture = SubResource("GradientTexture2D_krtai")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.22352941)
-position = Vector2(125.99994, -1424)
+modulate = Color(1, 1, 1, 0.1882353)
+position = Vector2(-84.19089, -2208.4434)
 rotation = 4.4505897
-scale = Vector2(54.31568, 3.2230275)
+scale = Vector2(37.8687, 3.0000021)
 texture = SubResource("GradientTexture2D_pj625")
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.22352941)
-position = Vector2(990, -1479.0001)
+modulate = Color(1, 1, 1, 0.1882353)
+position = Vector2(1188.9767, -2221.5916)
 rotation = 4.9741883
-scale = Vector2(54.31568, 3.2230275)
+scale = Vector2(38.5457, 2.9999993)
 texture = SubResource("GradientTexture2D_pj625")
 
 [node name="WarpOrb" parent="." node_paths=PackedStringArray("dest") instance=ExtResource("6_7au3u")]
@@ -1314,11 +1964,14 @@ lance_pos = NodePath("../LancePos")
 target_start_pos = NodePath("../StartPos")
 hurt_pos_node = NodePath("../HurtPos")
 dialog = SubResource("Resource_hn2ev")
+death_dialog = SubResource("Resource_e4k75")
 orb_trigger = NodePath("../../WarpOrb")
 shield_damage_sound = SubResource("Resource_41ujw")
 shield_break_sound = SubResource("Resource_0g85x")
 shield_deflect_sound = SubResource("Resource_l3ipi")
 shield_restore_sound = SubResource("Resource_j13eh")
+panic_transition = SubResource("Resource_wlql1")
+final_attack = SubResource("Resource_ris3j")
 intro_song = SubResource("Resource_hbkia")
 loop_1 = SubResource("Resource_gpv5u")
 loop_2 = SubResource("Resource_mlaub")

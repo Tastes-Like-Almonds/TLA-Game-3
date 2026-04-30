@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://e43vka32iwlk"]
+[gd_scene load_steps=36 format=4 uid="uid://e43vka32iwlk"]
 
 [ext_resource type="Script" uid="uid://c0ybm38r5ducb" path="res://Scripts/Level/hub.gd" id="1_hd7fa"]
 [ext_resource type="Script" uid="uid://b6h82msp0laej" path="res://Scripts/Resource/Sound/song_data.gd" id="2_313n8"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://dyx7ajqlx3xu3" path="res://Scenes/Object/BoostOrb/heal_pickup.tscn" id="16_k17a6"]
 [ext_resource type="PackedScene" uid="uid://cu4yyuh5l83yq" path="res://Scenes/Object/cosmetic_pickup.tscn" id="17_n0j5p"]
 [ext_resource type="Resource" uid="uid://bpxubikvn1rxp" path="res://Data/Cosmetic/tricorn_hat.tres" id="18_lo6yr"]
+[ext_resource type="Resource" uid="uid://bnpmpbtv3aoi" path="res://Data/Cosmetic/sunglasses.tres" id="18_xqj25"]
 [ext_resource type="PackedScene" uid="uid://ddmblbvhfi1td" path="res://Scenes/Object/cosmetic_prompt.tscn" id="19_rbsew"]
 [ext_resource type="Resource" uid="uid://cloxode7lbpse" path="res://Data/Cosmetic/rat_ears.tres" id="21_nptu1"]
 [ext_resource type="Resource" uid="uid://bntt41wq10usx" path="res://Data/Cosmetic/purple_ribbon.tres" id="22_4eqq8"]
@@ -288,7 +289,7 @@ movement = Vector2(-150, 150)
 
 [node name="CosmeticPickup" parent="Level/Tiles" instance=ExtResource("17_n0j5p")]
 position = Vector2(-1167, 60)
-cosmetic = ExtResource("24_lo6yr")
+cosmetic = ExtResource("18_xqj25")
 
 [node name="Decor" type="Node2D" parent="Level"]
 
@@ -403,13 +404,13 @@ target_node = NodePath(".")
 target_zoom = Vector2(2, 2)
 
 [node name="CameraSetter2" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("6_53b1f")]
-position = Vector2(-2881, -225)
+position = Vector2(-2836, -227.99998)
 scale = Vector2(2.1284447, 14.141582)
 target_node = NodePath(".")
 track_player = true
 
 [node name="CameraSetter3" parent="." node_paths=PackedStringArray("target_node") instance=ExtResource("6_53b1f")]
-position = Vector2(-3184, -224.99998)
+position = Vector2(-3234, -232.99998)
 scale = Vector2(2.1284447, 14.141582)
 target_node = NodePath(".")
 track_player = true

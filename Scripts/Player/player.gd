@@ -639,6 +639,10 @@ func kill() -> void:
 func iframes_active() -> bool:
 	return last_hit_time < get_invincibility_time()
 
+## Heals the player by amt, not exceeding max health.
+func heal(amt : float) -> void:
+	health = clampf(health+amt, 0.0, get_max_health())
+
 ## Deal amt of damage to the player, killing them if reaching zero. Returns true if the damage was
 ## successfully dealt.
 func deal_damage(amt : float) -> bool:

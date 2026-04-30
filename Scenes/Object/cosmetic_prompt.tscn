@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ddmblbvhfi1td"]
+[gd_scene load_steps=16 format=3 uid="uid://ddmblbvhfi1td"]
 
 [ext_resource type="Script" uid="uid://bc1lav63wcbbk" path="res://Scripts/Object/cosmetic_prompt.gd" id="1_xc4xc"]
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="2_y3qeu"]
@@ -148,6 +148,16 @@ _data = {
 &"unlocked": SubResource("Animation_bck7d")
 }
 
+[sub_resource type="Gradient" id="Gradient_2xrhl"]
+offsets = PackedFloat32Array(0, 0.04024768, 0.2488889, 0.51111114, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.627451, 0.82, 0.82, 0.82, 0.34509805, 0.83, 0.83, 0.83, 0.105882354, 0.79800004, 0.84, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6vjsy"]
+gradient = SubResource("Gradient_2xrhl")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [node name="CosmeticPrompt" type="Node2D"]
 script = ExtResource("1_xc4xc")
 
@@ -208,6 +218,11 @@ script = ExtResource("5_vcewk")
 libraries = {
 &"": SubResource("AnimationLibrary_v513f")
 }
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, 2.0980835e-05)
+texture = SubResource("GradientTexture2D_6vjsy")
+texture_scale = 4.88
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

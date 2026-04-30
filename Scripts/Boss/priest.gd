@@ -9,6 +9,9 @@ enum Phase {
 	SWORD,
 	FIGHT,
 	HURT,
+	PANIC_TRANSITION,
+	PANIC,
+	FINAL_ATTACK,
 	DEATH
 }
 
@@ -16,13 +19,20 @@ enum Attack {
 	LIGHTNING,
 	FIREBALL,
 	LANCE,
-	SUN
+	SUN,
+	HEALTH_PICKUP,
+	HEALTH_PICKUP_FAST,
+	LIGHTNING_BASIC,
+	LANCE_BASIC,
+	WHOLE_MAP_LIGHTNING,
+	FIREBALL_CIRCLE
 }
 
 @onready var scn_lightning : PackedScene = preload("res://Scenes/Projectile/lightning.tscn")
 @onready var scn_fireball  : PackedScene = preload("res://Scenes/Projectile/fireball.tscn")
 @onready var scn_lance     : PackedScene = preload("res://Scenes/Projectile/lance.tscn")
 @onready var scn_sun       : PackedScene = preload("res://Scenes/Projectile/sun.tscn")
+@onready var scn_health    : PackedScene = preload("res://Scenes/Object/BoostOrb/heal_pickup.tscn")
 
 @onready var shield_sprite   := $Shield
 @onready var shield_animator := $ShieldAnimator
@@ -46,6 +56,7 @@ enum Attack {
 @export var target_start_pos : Node2D
 @export var hurt_pos_node    : Node2D
 @export var dialog           : DialogTree
+@export var death_dialog     : DialogTree
 
 @export var orb_trigger      : BoostOrb
 
@@ -53,6 +64,9 @@ enum Attack {
 @export var shield_break_sound   : SoundData
 @export var shield_deflect_sound : SoundData
 @export var shield_restore_sound : SoundData
+@export var panic_transition     : SoundData
+@export var final_attack         : SoundData
+
 
 @export_group("Music")
 @export var intro_song : SongData
@@ -63,6 +77,7 @@ enum Attack {
 var phase       : Phase
 var phase_ended : bool = false
 
+var start_max_health  : float = 0.0
 var phase_timer       : float = 0.0
 var attack_cooldown   : float = 0.0
 var hurt_damage_taken : float = 0.0
@@ -171,6 +186,10 @@ func _damage_shield() -> void:
 #region Helper
 func _reset() -> void:
 	Music.stop_track(Music.TrackLayer.MUSIC)
+	invincible = false
+	start_health = start_max_health
+	max_hit_kb = 1000
+	knockback_coef = 1.5
 	environment_anim.play("default")
 	shield_animator.play("shield_break")
 	shield_wall.disabled = true
@@ -242,9 +261,90 @@ func _attack(attack:Attack) -> void:
 			sun.global_position = global_position
 			sun.global_position.y -= 100
 			get_parent().get_parent().add_child(sun)
+		
+		Attack.HEALTH_PICKUP:
+			var pickup : HealthPickup = scn_health.instantiate()
+			pickup.movement = Vector2(-260,260)
+			pickup.amt = 2.0
+			pickup.free_on_hit = true
+			pickup.global_position = _get_random_player().get_player_position()
+			pickup.global_position += Vector2(1000+randf_range(-100,100), -1000)
+			get_parent().get_parent().add_child(pickup)
+		
+		Attack.HEALTH_PICKUP_FAST:
+			var pickup : HealthPickup = scn_health.instantiate()
+			var direction : Vector2 = Vector2.from_angle(randf_range(0,PI))
+			pickup.movement = direction*1000
+			pickup.amt = 2.0
+			pickup.free_on_hit = true
+			pickup.global_position = _get_random_player().get_player_position()
+			pickup.global_position += direction*-1500
+			get_parent().get_parent().add_child(pickup)
+		
+		Attack.LIGHTNING_BASIC:
+			var player := _get_random_player()
+			var pos := player.get_player_position()
+			pos.y -= 2000
+			
+			var space_state := get_world_2d().direct_space_state
+			var query := PhysicsRayQueryParameters2D.create(
+				pos,
+				pos+Vector2.DOWN*4000,
+				1
+			)
+			var result := space_state.intersect_ray(query)
+			
+			if result:
+				pos = result.position
+				_strike_lightning(pos)
+		
+		Attack.LANCE_BASIC:
+			var lance : Lance = scn_lance.instantiate()
+			var direction : Vector2 = Vector2.ONE
+			lance.direction = direction.normalized()
+			lance.global_position = _get_random_player().get_player_position()-direction*4000
+			get_parent().get_parent().add_child(lance)
+		
+		Attack.WHOLE_MAP_LIGHTNING:
+			
+			for x in range(30):
+				get_tree().create_timer(0.05*x).timeout.connect(func()-> void:
+					var pos := Vector2(
+						global_position.x+100*x*pow(-1,x),
+						global_position.y
+					)
+					pos.y -= 2000
+					
+					var space_state := get_world_2d().direct_space_state
+					var query := PhysicsRayQueryParameters2D.create(
+						pos,
+						pos+Vector2.DOWN*4000,
+						1
+					)
+					var result := space_state.intersect_ray(query)
+					
+					if result:
+						pos = result.position
+						_strike_lightning(pos, 1.5)
+				)
+		
+		Attack.FIREBALL_CIRCLE:
+			for x in range(8):
+				get_tree().create_timer(0.02*x).timeout.connect(func()-> void:
+					var fireball  : Fireball = scn_fireball.instantiate()
+					var direction := Vector2.from_angle((PI/4)*x)
+					fireball.global_position = global_position+direction*_get_shield_width()*1.2
+					get_parent().get_parent().add_child(fireball)
+					fireball.fire(
+						self, 
+						global_position+direction*_get_shield_width()*10,
+						100
+					)
+				)
 
-func _strike_lightning(pos:Vector2) -> void:
+func _strike_lightning(pos:Vector2, warn_time:float = 0.5) -> void:
 	var lightning : Lightning = scn_lightning.instantiate()
+	lightning.warn_time = warn_time
 	get_parent().add_child(lightning)
 	lightning.global_position = pos
 #endregion
@@ -278,6 +378,17 @@ func _sword_movement(delta:float) -> void:
 	dest = global_position.lerp(dest, 1-pow(0.2,delta))
 	move_and_collide(dest-global_position)
 
+func _sword_movement_fast(delta:float) -> void:
+	
+	var player := _get_target_player()
+	var dest : Vector2 = player.get_player_position()
+	dest.y -= 300
+	dest.y -= 150*sin(2*phase_timer)
+	dest.x += 200*sin(2*phase_timer)
+	
+	dest = global_position.lerp(dest, 1-pow(0.04,delta))
+	move_and_collide(dest-global_position)
+
 func _move_to_center(delta:float) -> void:
 	var dest := global_position.lerp(target_start_pos.global_position, 1-pow(0.2,delta))
 	dest.y += 2*sin(phase_timer)
@@ -287,6 +398,14 @@ func _move_to_hurt(delta:float) -> void:
 	var dest := global_position.lerp(hurt_pos_node.global_position, 1-pow(0.1,delta))
 	dest.y += sin(phase_timer/2)
 	move_and_collide(dest-global_position)
+
+func _push_away_players(power:float) -> void:
+	for player in Helper.get_all_players():
+		player.apply_velocity(
+			global_position.direction_to(
+				player.get_player_position()
+			)*power
+		)
 
 func _movement(delta : float) -> void:
 	
@@ -303,7 +422,7 @@ func _movement(delta : float) -> void:
 			_intro(delta)
 			if !DialogLoader.is_playing_dialog() and phase_ended:
 				FightStarted.emit()
-				change_phase(Phase.SWORD)
+				change_phase(Phase.PANIC_TRANSITION)
 		
 		Phase.SWORD:
 			_sword_movement(delta)
@@ -350,6 +469,89 @@ func _movement(delta : float) -> void:
 				attack_cooldown = -1
 				change_phase(Phase.FIGHT)
 		
+		Phase.PANIC_TRANSITION:
+			_move_to_hurt(delta)
+			GameCamera.set_current_camera_shake(get_viewport(),0.5*(phase_timer/4.0))
+			if phase_timer < 2.0:
+				if attack_cooldown > 0.2:
+					_attack(Attack.HEALTH_PICKUP_FAST)
+					attack_cooldown = 0
+			if phase_timer > 4.0:
+				change_phase(Phase.PANIC)
+				attack_cooldown = -0.5
+		
+		Phase.PANIC:
+			
+			if phase_timer < phase_time/3:
+				_sword_movement(delta)
+				GameCamera.set_current_camera_shake(get_viewport(), 0.1)
+				_push_away_players(1800*delta)
+				if attack_cooldown > 0.5:
+					_attack(Attack.LIGHTNING_BASIC)
+					attack_cooldown = 0.0
+			
+			elif phase_timer < phase_time*2/3:
+				_move_to_center(delta)
+				_push_away_players(1800*delta)
+				# Spawn sun if phase changed
+				if attack_cooldown > 0.1:
+					_attack(Attack.LANCE_BASIC)
+					attack_cooldown = 0.0
+			
+			elif phase_timer < phase_time:
+				_sword_movement_fast(delta)
+				GameCamera.set_current_camera_shake(get_viewport(), 0.2)
+				if attack_cooldown > 0.5:
+					_attack(Attack.FIREBALL)
+					attack_cooldown = 0.0
+			
+			elif phase_timer < phase_time*4.5/3:
+				_move_to_center(delta)
+				if attack_cooldown > 2:
+					_attack(Attack.HEALTH_PICKUP)
+					_attack(Attack.WHOLE_MAP_LIGHTNING)
+					attack_cooldown = 0.0 # No cooldown on the first attack
+			
+			elif phase_timer < phase_time*5/3:
+				if attack_cooldown > 0.2:
+					_attack(Attack.LIGHTNING_BASIC)
+					_attack(Attack.LANCE_BASIC)
+					attack_cooldown = 0.0
+			
+			elif phase_timer < phase_time*2:
+				if attack_cooldown > 0.2:
+					_attack(Attack.LIGHTNING_BASIC)
+					attack_cooldown = 0.0
+			
+			elif phase_timer < phase_time*7/3:
+				if attack_cooldown > 0.8:
+					_attack(Attack.FIREBALL_CIRCLE)
+					attack_cooldown = 0.0
+			
+			elif phase_timer < phase_time*8/3:
+				if attack_cooldown > 0.8:
+					_attack(Attack.LIGHTNING_BASIC)
+					_attack(Attack.FIREBALL_CIRCLE)
+					attack_cooldown = 0.0
+			
+			elif phase_timer < phase_time*3:
+				if attack_cooldown > 1.5:
+					_attack(Attack.WHOLE_MAP_LIGHTNING)
+					_attack(Attack.FIREBALL_CIRCLE)
+					_attack(Attack.LANCE_BASIC)
+					attack_cooldown = 0.0
+			else:
+				change_phase(Phase.FINAL_ATTACK)
+				Music.set_track_volume(Music.TrackLayer.MUSIC, 0.6, 8.0)
+				_push_away_players(4000)
+				
+		Phase.FINAL_ATTACK:
+			_push_away_players(-1800*delta)
+			
+			if phase_timer > 8.0:
+				Music.stop_track(Music.TrackLayer.MUSIC)
+				change_phase(Phase.DEATH)
+		
 		Phase.DEATH: 
 			return
 	
@@ -380,6 +582,7 @@ func change_phase(p:Phase) -> void:
 			DialogLoader.play_dialog_tree(dialog)
 		
 		Phase.SWORD:
+			_attack(Attack.HEALTH_PICKUP)
 			Music.start_track(Music.TrackLayer.MUSIC, loop_1)
 			for player in get_tree().get_nodes_in_group("Player"):
 				cam.set_target_node(player.get_player_body())
@@ -403,8 +606,33 @@ func change_phase(p:Phase) -> void:
 			
 			if swords_left == 0:
 				change_phase(Phase.FIGHT)
+		
 		Phase.HURT:
 			Music.start_track(Music.TrackLayer.MUSIC, loop_1, true)
+		
+		Phase.PANIC_TRANSITION:
+			FightEnded.emit()
+			GameCamera.set_current_camera_shake(get_viewport(), 0.3)
+			for player in get_tree().get_nodes_in_group("Player"):
+				cam.set_target_node(player.get_player_body())
+				cam.set_target_zoom(Vector2(0.8,0.8))
+			Sfx.play_sound(panic_transition)
+			environment_anim.play("prep_panic")
+			Music.stop_track(Music.TrackLayer.MUSIC, 0.5)
+			sprite.z_index = 5
+			invincible = true
+		
+		Phase.PANIC:
+			phase_timer = phase_time*7/3
+			GameCamera.set_current_camera_shake(get_viewport(), 1)
+			environment_anim.play("panic")
+			sprite.z_index = 5
+			max_hit_kb = 4000
+			knockback_coef = -4.0
+			Music.start_track(Music.TrackLayer.MUSIC, loop_3, true)
+			for player in get_tree().get_nodes_in_group("Player"):
+				cam.set_target_node(player.get_player_body())
+				cam.set_target_zoom(Vector2(0.8,0.8))
 		
 		Phase.FIGHT:
 			Music.start_track(Music.TrackLayer.MUSIC, loop_2, true)
@@ -413,8 +641,16 @@ func change_phase(p:Phase) -> void:
 			sprite.z_index = 5
 			shield_sprite.z_index = 5
 		
+		Phase.FINAL_ATTACK:
+			environment_anim.play("final_attack")
+			Sfx.play_sound(final_attack)
+			if phase_timer > 8.0:
+				change_phase(Phase.DEATH)
+		
 		Phase.DEATH: 
-			return
+			if cam:
+				cam.set_target_node(self)
+			DialogLoader.play_dialog_tree(death_dialog)
 
 func _physics_process(delta: float) -> void:
 	super(delta)
@@ -422,6 +658,7 @@ func _physics_process(delta: float) -> void:
 
 func _ready() -> void:
 	super()
+	start_max_health = start_health
 	environment_anim.play("default")
 	for sword in swords:
 		sword.Killed.connect(func() -> void:

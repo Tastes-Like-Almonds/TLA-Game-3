@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://caj0mx5twqcfe"]
+[gd_scene load_steps=58 format=3 uid="uid://caj0mx5twqcfe"]
 
 [ext_resource type="Script" uid="uid://l7uxjyga8ie7" path="res://Scripts/UI/level_ui.gd" id="1_xjiw8"]
 [ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_307ub"]
@@ -6,8 +6,24 @@
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="3_vk2nj"]
 [ext_resource type="Script" uid="uid://dvoymdlu627u5" path="res://Scripts/UI/hotbar.gd" id="4_m0wgp"]
 [ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Sprites/Placeholder/sword.png" id="4_tk1ol"]
+[ext_resource type="Texture2D" uid="uid://dhxafngdi4xwf" path="res://Assets/Sprites/UI/Health Bar/Health Idle/Health Idle 1.png" id="4_uikdm"]
+[ext_resource type="Texture2D" uid="uid://qqb261n7oke1" path="res://Assets/Sprites/UI/Health Bar/Health Idle/Health Idle 2.png" id="5_rlymg"]
+[ext_resource type="Texture2D" uid="uid://bhkri8rsdaxuf" path="res://Assets/Sprites/UI/Health Bar/Health Idle/Health Idle 3.png" id="6_gb78x"]
 [ext_resource type="Script" uid="uid://wvajojoabnsk" path="res://Scripts/UI/pause.gd" id="6_haw25"]
+[ext_resource type="Texture2D" uid="uid://boboeo3nabppv" path="res://Assets/Sprites/UI/Health Bar/Losing Health/First Hit/First Hit 1.png" id="7_rk7po"]
+[ext_resource type="Texture2D" uid="uid://bt7cjbbcohvs6" path="res://Assets/Sprites/UI/Health Bar/Losing Health/First Hit/First Hit 2.png" id="8_fbepf"]
+[ext_resource type="Texture2D" uid="uid://ww383ljf04n5" path="res://Assets/Sprites/UI/Health Bar/Losing Health/First Hit/First Hit 3.png" id="9_pyc8e"]
+[ext_resource type="Texture2D" uid="uid://clm45h3ikpgsb" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Second Hit/Second Hit 1.png" id="10_ff4kw"]
+[ext_resource type="Texture2D" uid="uid://dftr6lo6bfm0x" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Second Hit/Second Hit 2.png" id="11_ye262"]
+[ext_resource type="Texture2D" uid="uid://bhluo5kuef6tj" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Second Hit/Second Hit 3.png" id="12_htusf"]
 [ext_resource type="Texture2D" uid="uid://bpyrmqhdlc1g6" path="res://Assets/Sprites/UI/Losing Health 3.png" id="13_8hdtp"]
+[ext_resource type="Texture2D" uid="uid://cni7japmkjrgj" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Third Hit/Third Hit 1.png" id="13_hiqw5"]
+[ext_resource type="Texture2D" uid="uid://dl3ebgkekxulp" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Third Hit/Third Hit 2.png" id="14_5qgwh"]
+[ext_resource type="Texture2D" uid="uid://dbdt8wrag5e6o" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Third Hit/Third Hit 3.png" id="15_pukwh"]
+[ext_resource type="Texture2D" uid="uid://c1lmuwd6lh0x1" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 1.png" id="16_fbepf"]
+[ext_resource type="Texture2D" uid="uid://b01vcg38h3my0" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 2.png" id="17_pyc8e"]
+[ext_resource type="Texture2D" uid="uid://chgwedvtgsf85" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 3.png" id="18_ff4kw"]
+[ext_resource type="Texture2D" uid="uid://dbl4hhtbsv6cn" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 4.png" id="19_ye262"]
 
 [sub_resource type="Resource" id="Resource_46n82"]
 script = ExtResource("2_307ub")
@@ -26,6 +42,115 @@ height = 160
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Animation" id="Animation_rv7rl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("13_8hdtp")]
+}
+
+[sub_resource type="Animation" id="Animation_42p83"]
+resource_name = "Full"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_uikdm"), ExtResource("5_rlymg"), ExtResource("6_gb78x")]
+}
+
+[sub_resource type="Animation" id="Animation_cvr1l"]
+resource_name = "first_hit"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("7_rk7po"), ExtResource("8_fbepf"), ExtResource("9_pyc8e")]
+}
+
+[sub_resource type="Animation" id="Animation_nfaa3"]
+resource_name = "second_hit"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("10_ff4kw"), ExtResource("11_ye262"), ExtResource("12_htusf")]
+}
+
+[sub_resource type="Animation" id="Animation_0wcmh"]
+resource_name = "third_hit"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("13_hiqw5"), ExtResource("14_5qgwh"), ExtResource("15_pukwh")]
+}
+
+[sub_resource type="Animation" id="Animation_htusf"]
+resource_name = "explode"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("16_fbepf"), ExtResource("17_pyc8e"), ExtResource("18_ff4kw"), ExtResource("19_ye262"), null]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hp0cw"]
+_data = {
+&"RESET": SubResource("Animation_rv7rl"),
+&"explode": SubResource("Animation_htusf"),
+&"first_hit": SubResource("Animation_cvr1l"),
+&"full": SubResource("Animation_42p83"),
+&"second_hit": SubResource("Animation_nfaa3"),
+&"third_hit": SubResource("Animation_0wcmh")
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_haw25"]
 bg_color = Color(0.07, 0.07, 0.07, 0.70980394)
@@ -376,6 +501,11 @@ mouse_filter = 2
 texture = ExtResource("13_8hdtp")
 expand_mode = 3
 stretch_mode = 4
+
+[node name="HealthbarAnimator" type="AnimationPlayer" parent="Health2/HBoxContainer"]
+libraries = {
+&"": SubResource("AnimationLibrary_hp0cw")
+}
 
 [node name="Control" type="Control" parent="."]
 modulate = Color(1, 1, 1, 0.627451)

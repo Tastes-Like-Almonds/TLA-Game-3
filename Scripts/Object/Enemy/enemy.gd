@@ -3,6 +3,7 @@
 
 signal Killed
 signal Hit(damage:float)
+signal HealthChanged
 
 @onready var alert_pos : Node2D = null
 
@@ -31,7 +32,10 @@ signal Hit(damage:float)
 @export var hit_time : float = 0.2
 
 ## The max health of the bat. Does not regen.
-@export var health : float = 5.0
+@export var health : float = 5.0 :
+	set(new):
+		HealthChanged.emit(new)
+		health = new
 
 ## If false, the enemy will use its physics body as a damage hitbox.
 @export var disable_physics_hitbox : bool = false

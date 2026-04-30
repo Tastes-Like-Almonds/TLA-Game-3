@@ -8,9 +8,10 @@ class_name LevelUI extends CanvasLayer
 @onready var boss_prog    : ProgressBar        = $BossBar/MarginContainer/VBoxContainer/ProgressBar
 @onready var health_bar   : TextureProgressBar = $Control/Health/HealthBar
 
-@onready var vignette_animator : AnimationPlayer = $VignetteAnimator
-@onready var boss_bar_animator : AnimationPlayer = $BossBar/BossBarAnimator
-@onready var cosmetic_animator : AnimationPlayer = $MarginContainer/CosmeticAnimator
+@onready var vignette_animator  : AnimationPlayer = $VignetteAnimator
+@onready var boss_bar_animator  : AnimationPlayer = $BossBar/BossBarAnimator
+@onready var cosmetic_animator  : AnimationPlayer = $MarginContainer/CosmeticAnimator
+@onready var healthbar_animator : AnimationPlayer = $Health2/HBoxContainer/HealthbarAnimator
 
 @export_group("Health Bar")
 
@@ -86,6 +87,31 @@ func _update_vignette(health:float) -> void:
 	else:
 		vignette_animator.play("default")
 
+func _update_healthbar_anim(anim:StringName) -> void:
+	if healthbar_animator.current_animation != anim:
+		healthbar_animator.play(anim)
+
+func _update_healthbar(health:float) -> void:
+	
+	if not player: return
+	var health_perc : float = health / player.get_max_health()
+	
+	if health_perc > 0.8:
+		_update_healthbar_anim("full")
+	
+	elif health_perc > 0.6:
+		_update_healthbar_anim("first_hit")
+	
+	elif health_perc > 0.4:
+		_update_healthbar_anim("second_hit")
+	
+	elif health_perc > 0.2:
+		_update_healthbar_anim("third_hit")
+	
+	elif health_perc <= 0:
+		if healthbar_animator.current_animation != "explode" and healthbar_animator.is_playing():
+			healthbar_animator.play("explode")
+
 func on_loadout_update() -> void:
 	if not is_instance_valid(player): return
 	if is_instance_valid(hotbar):
@@ -99,6 +125,7 @@ func on_health_update(new : float) -> void:
 	health_bar.value = clampf(new/player.get_max_health(), 0.0, 1.0)
 	health_label.text = str(roundf(new*10)/10)
 	_update_vignette(new)
+	_update_healthbar(new)
 
 func _process(delta: float) -> void:
 	
@@ -119,6 +146,7 @@ func _ready() -> void:
 	health_bar.pivot_offset = health_bar.size/2
 	on_loadout_update()
 	_update_vignette(10)
+	_update_healthbar(10)
 	boss_bar.modulate = Color.TRANSPARENT
 	
 	SignalBus.CosmeticUnlocked.connect(_cosmetic_unlocked)

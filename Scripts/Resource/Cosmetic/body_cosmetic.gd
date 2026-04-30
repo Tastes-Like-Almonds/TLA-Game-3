@@ -15,6 +15,7 @@ enum SpriteType {
 @export var texture        : Texture2D    = null
 @export var texture_behind : Texture2D    = null
 @export var sprite_frames  : SpriteFrames = null
+@export var glow_texture   : Texture2D    = null
 
 func _init() -> void:
 	
@@ -51,11 +52,15 @@ func get_node() -> Node2D:
 				below.z_index -= 1
 				below.texture = texture_behind
 				new_cosmetic.add_child(below)
-			
 		
 		BodyCosmetic.SpriteType.ANIMATED:
 			new_cosmetic = AnimatedSprite2D.new()
 			new_cosmetic.sprite_frames = sprite_frames
+	
+	if glow_texture:
+		var glow := PointLight2D.new()
+		glow.texture = glow_texture
+		new_cosmetic.add_child(glow)
 	
 	new_cosmetic.scale = Vector2(3,3)
 	new_cosmetic.set_meta("cosmetic_data", self)

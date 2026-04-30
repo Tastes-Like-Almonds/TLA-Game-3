@@ -148,6 +148,8 @@ func _next_line() -> void:
 	if line.icon:
 		icon_node.texture = line.icon
 	
+	icon_node.flip_h = line.icon_flip_h
+	
 	name_node.text = speaker_name
 	
 	text_node.text = line.text

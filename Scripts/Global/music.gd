@@ -63,6 +63,20 @@ func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
 		
 		fade_tween.play()
 
+func set_track_volume(track:TrackLayer, volume:float, time:float=0.5) -> void:
+	var fade_tween := create_tween()
+	if !tracks.has(track): return
+	var song := tracks[track]
+	
+	if not song: return
+	# Fade to zero volume
+	fade_tween.tween_property(
+		song.node_ref,
+		"volume_linear",
+		volume,
+		time
+	)
+
 func _ready() -> void:
 	for track:int in TrackLayer.values():
 		tracks[track] = null

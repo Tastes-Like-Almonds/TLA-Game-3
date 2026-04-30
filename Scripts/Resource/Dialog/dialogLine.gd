@@ -20,6 +20,9 @@ enum SoundType {
 ## Icon to be displayed. If not set, nothing is shown.
 @export var icon: Texture2D
 
+## If true, the icon will be horizontally flipped.
+@export var icon_flip_h: bool = false
+
 ## Delay between each character
 @export var speed:float
 
