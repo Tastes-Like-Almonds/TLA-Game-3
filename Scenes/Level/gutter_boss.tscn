@@ -1,6 +1,6 @@
 [gd_scene load_steps=77 format=4 uid="uid://bom207eoe00gn"]
 
-[ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_ra547"]
+[ext_resource type="Script" uid="uid://dspsw8d2frwe8" path="res://Scripts/Level/gutter_boss.gd" id="1_41ujw"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="3_2l1rg"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="4_phb8p"]
 [ext_resource type="PackedScene" uid="uid://dyc1y7waemn5m" path="res://Scenes/Object/BoostOrb/warp_orb.tscn" id="6_7au3u"]
@@ -808,27 +808,24 @@ gradient = SubResource("Gradient_phb8p")
 fill_from = Vector2(0.47435898, 0.115384616)
 fill_to = Vector2(0.47975078, 1)
 
-[sub_resource type="Resource" id="Resource_ln7dv"]
+[sub_resource type="Resource" id="Resource_iens1"]
 script = ExtResource("10_n35ia")
-text = "PLACEHOLDER DIALOG"
-name = "???"
+text = "Is this death that I smell? Oh what horrors must have come to pass..."
 metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
-[sub_resource type="Resource" id="Resource_ra547"]
+[sub_resource type="Resource" id="Resource_nyun1"]
 script = ExtResource("10_n35ia")
-text = "DIALOG LINE 2"
-name = "The Wizard"
+text = "*looks up* Ah... a knight of old... how disgraced must have you become...."
 metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
-[sub_resource type="Resource" id="Resource_vprxk"]
+[sub_resource type="Resource" id="Resource_3a5mw"]
 script = ExtResource("10_n35ia")
-text = "[color=red][shake]FINAL DIALOG"
-speed = 0.15
+text = "Your presence smells of sin... Thus... In Tīw's name... [color=red][shake] YOU SHALL BURN, OH KNIGHT!"
 metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
-[sub_resource type="Resource" id="Resource_2l1rg"]
+[sub_resource type="Resource" id="Resource_hn2ev"]
 script = ExtResource("9_xerla")
-lines = Array[ExtResource("10_n35ia")]([SubResource("Resource_ln7dv"), SubResource("Resource_ra547"), SubResource("Resource_vprxk")])
+lines = Array[ExtResource("10_n35ia")]([SubResource("Resource_iens1"), SubResource("Resource_nyun1"), SubResource("Resource_3a5mw")])
 metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
 
 [sub_resource type="Resource" id="Resource_41ujw"]
@@ -1130,7 +1127,7 @@ colors = PackedColorArray(0.022666663, 0, 0.08, 1)
 gradient = SubResource("Gradient_xerla")
 
 [node name="GutterBoss" type="Node2D"]
-script = ExtResource("1_ra547")
+script = ExtResource("1_41ujw")
 
 [node name="WorldTransitions" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1302,10 +1299,10 @@ rotation = 1.5707964
 scale = Vector2(26.705183, 31.537762)
 texture = SubResource("GradientTexture2D_7au3u")
 
-[node name="Priest" type="Node2D" parent="."]
+[node name="Wizard" type="Node2D" parent="."]
 position = Vector2(529, 0)
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="Priest" node_paths=PackedStringArray("swords", "environment_anim", "lance_pos", "target_start_pos", "hurt_pos_node", "orb_trigger", "sprite")]
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="Wizard" node_paths=PackedStringArray("swords", "environment_anim", "lance_pos", "target_start_pos", "hurt_pos_node", "orb_trigger", "sprite")]
 position = Vector2(0, 34)
 collision_layer = 72
 collision_mask = 64
@@ -1316,7 +1313,7 @@ environment_anim = NodePath("../../WorldTransitions")
 lance_pos = NodePath("../LancePos")
 target_start_pos = NodePath("../StartPos")
 hurt_pos_node = NodePath("../HurtPos")
-dialog = SubResource("Resource_2l1rg")
+dialog = SubResource("Resource_hn2ev")
 orb_trigger = NodePath("../../WarpOrb")
 shield_damage_sound = SubResource("Resource_41ujw")
 shield_break_sound = SubResource("Resource_0g85x")
@@ -1336,59 +1333,59 @@ respawn = false
 only_respawn_on_screen = false
 spawn_dead = false
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Priest/AnimatableBody2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Wizard/AnimatableBody2D"]
 z_index = -10
 material = SubResource("ShaderMaterial_3cxce")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_3cxce")
 frame_progress = 0.6130273
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Priest/AnimatableBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wizard/AnimatableBody2D"]
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_d3xlu")
 
-[node name="Shield" type="Sprite2D" parent="Priest/AnimatableBody2D"]
+[node name="Shield" type="Sprite2D" parent="Wizard/AnimatableBody2D"]
 modulate = Color(1, 1, 1, 0)
 z_index = -10
 scale = Vector2(3, 3)
 texture = SubResource("GradientTexture2D_vprxk")
 
-[node name="Shield2" type="Sprite2D" parent="Priest/AnimatableBody2D"]
+[node name="Shield2" type="Sprite2D" parent="Wizard/AnimatableBody2D"]
 modulate = Color(1, 1, 1, 0)
 z_index = -10
 scale = Vector2(3, 3)
 texture = SubResource("GradientTexture2D_vprxk")
 
-[node name="ShieldAnimator" type="AnimationPlayer" parent="Priest/AnimatableBody2D"]
+[node name="ShieldAnimator" type="AnimationPlayer" parent="Wizard/AnimatableBody2D"]
 libraries = {
 &"": SubResource("AnimationLibrary_phb8p")
 }
 speed_scale = 3.0
 
-[node name="ShieldWall" type="Area2D" parent="Priest/AnimatableBody2D"]
+[node name="ShieldWall" type="Area2D" parent="Wizard/AnimatableBody2D"]
 collision_layer = 0
 collision_mask = 130
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Priest/AnimatableBody2D/ShieldWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wizard/AnimatableBody2D/ShieldWall"]
 shape = SubResource("CircleShape2D_vprxk")
 disabled = true
 
-[node name="StartPos" type="Node2D" parent="Priest"]
+[node name="StartPos" type="Node2D" parent="Wizard"]
 position = Vector2(2, -317)
 
-[node name="HurtPos" type="Node2D" parent="Priest"]
+[node name="HurtPos" type="Node2D" parent="Wizard"]
 position = Vector2(2, -55)
 
-[node name="LancePos" type="Node2D" parent="Priest"]
+[node name="LancePos" type="Node2D" parent="Wizard"]
 top_level = true
 position = Vector2(-4129, -864)
 
-[node name="MoldySign" type="Sprite2D" parent="Priest"]
+[node name="MoldySign" type="Sprite2D" parent="Wizard"]
 position = Vector2(-708, 4230)
 scale = Vector2(3, 3)
 texture = ExtResource("16_2l1rg")
 
-[node name="DialogPrompt" parent="Priest/MoldySign" instance=ExtResource("17_phb8p")]
+[node name="DialogPrompt" parent="Wizard/MoldySign" instance=ExtResource("17_phb8p")]
 position = Vector2(0, -29.333332)
 scale = Vector2(0.3, 0.3)
 dialog = SubResource("Resource_gsjcu")

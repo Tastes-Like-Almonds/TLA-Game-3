@@ -1,4 +1,7 @@
-extends Enemy
+class_name WizardBoss extends Enemy
+
+signal FightStarted
+signal FightEnded
 
 enum Phase {
 	NONE,
@@ -177,6 +180,7 @@ func _reset() -> void:
 	sprite.z_index = -10
 	shield_sprite.z_index = -10
 	change_phase(Phase.NONE)
+	FightEnded.emit()
 
 func _get_random_player() -> Player:
 	return Helper.get_all_players().pick_random()
@@ -298,6 +302,7 @@ func _movement(delta : float) -> void:
 		Phase.INTRO:
 			_intro(delta)
 			if !DialogLoader.is_playing_dialog() and phase_ended:
+				FightStarted.emit()
 				change_phase(Phase.SWORD)
 		
 		Phase.SWORD:

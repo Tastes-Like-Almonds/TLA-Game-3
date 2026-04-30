@@ -11,5 +11,6 @@ offset = Vector2(0, -43)
 texture = ExtResource("2_q5ldg")
 texture_behind = ExtResource("3_2f6te")
 name = "Wizard Hat"
+hint = "Defeat him."
 desc = "I CAST FIREBALL"
 metadata/_custom_type_script = "uid://oksvaahqx7ou"

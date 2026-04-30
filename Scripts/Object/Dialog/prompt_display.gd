@@ -1,7 +1,9 @@
 extends Sprite2D
 
+@onready var animator:AnimationPlayer = $Animator
+
 func open() -> void:
-	show()
+	animator.play("show")
 
 func close() -> void:
-	hide()
+	animator.play("hide")

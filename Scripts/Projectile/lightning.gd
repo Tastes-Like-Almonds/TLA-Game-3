@@ -29,6 +29,8 @@ func _strike() -> void:
 	strike_sprite.play("strike")
 	Sfx.play_sound_2d(strike_sound, global_position)
 	
+	GameCamera.set_current_camera_shake(get_viewport(), 0.2)
+	
 	for body in area.get_overlapping_bodies():
 		
 		if body is not PlayerBody: continue

@@ -5,21 +5,32 @@ extends Node2D
 @onready var prompt       : CosmeticDialogPrompt = $DialogPrompt
 @onready var display_area : Area2D               = $Area2D
 @onready var animator     : AnimationPlayer      = $AnimationPlayer
+@onready var toggle_anim  : AnimationPlayer      = $Toggler
 
 @export var cosmetic: Cosmetic
 
 func _equip() -> void:
-	print("EQUIPING")
 	CosmeticLoader.equip_cosmetic(cosmetic)
 	SignalBus.ReloadCosmetics.emit()
+
+func _update_unlocked() -> void:
+	if cosmetic.is_unlocked():
+		toggle_anim.play("unlocked")
+		name_label.text = cosmetic.name
+		desc_label.text = cosmetic.desc
+	else:
+		toggle_anim.play("locked")
+		name_label.text = "???"
+		desc_label.text = cosmetic.hint
 
 func _ready() -> void:
 	
 	if not cosmetic: return
 	
-	if cosmetic.is_unlocked():
-		name_label.text = cosmetic.name
-		desc_label.text = cosmetic.desc
+	animator.play("hide")
+	
+	_update_unlocked()
+	SignalBus.CosmeticUnlocked.connect(_update_unlocked)
 	
 	if cosmetic is BodyCosmetic:
 		var node_cosmetic : Node2D = cosmetic.get_node()

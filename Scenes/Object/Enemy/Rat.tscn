@@ -141,12 +141,8 @@ collision_mask = 0
 script = ExtResource("5_ia02j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-<<<<<<< HEAD
 position = Vector2(-2, 0.71091247)
 scale = Vector2(1, 1.0000001)
-=======
-position = Vector2(-1.5, -26)
->>>>>>> anton-dev
 shape = SubResource("RectangleShape2D_upkqw")
 debug_color = Color(0.98, 0.08819997, 0.31115, 0.39607844)
 

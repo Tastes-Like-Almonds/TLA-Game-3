@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ddmblbvhfi1td"]
+[gd_scene load_steps=14 format=3 uid="uid://ddmblbvhfi1td"]
 
 [ext_resource type="Script" uid="uid://bc1lav63wcbbk" path="res://Scripts/Object/cosmetic_prompt.gd" id="1_xc4xc"]
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="2_y3qeu"]
@@ -60,6 +60,94 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_xc4xc"]
 radius = 214.00233
 
+[sub_resource type="Animation" id="Animation_ud085"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.8392157)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogPrompt:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_wc23j"]
+resource_name = "locked"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.8392157)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogPrompt:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_bck7d"]
+resource_name = "unlocked"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogPrompt:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v513f"]
+_data = {
+&"RESET": SubResource("Animation_ud085"),
+&"locked": SubResource("Animation_wc23j"),
+&"unlocked": SubResource("Animation_bck7d")
+}
+
 [node name="CosmeticPrompt" type="Node2D"]
 script = ExtResource("1_xc4xc")
 
@@ -70,6 +158,7 @@ libraries = {
 playback_default_blend_time = 0.5
 
 [node name="Visual" type="Node2D" parent="."]
+modulate = Color(0, 0, 0, 0.8392157)
 
 [node name="Node2D" type="Node2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -114,6 +203,11 @@ shape = SubResource("CircleShape2D_xc4xc")
 [node name="DialogPrompt" parent="." instance=ExtResource("4_6vjsy")]
 position = Vector2(0, 55)
 script = ExtResource("5_vcewk")
+
+[node name="Toggler" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_v513f")
+}
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

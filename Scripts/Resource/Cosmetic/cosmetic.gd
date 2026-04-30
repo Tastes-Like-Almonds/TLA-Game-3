@@ -20,4 +20,4 @@ func get_slot_name() -> StringName:
 	return Cosmetic.get_equip_slot_name(equip_slot)
 
 func is_unlocked() -> bool:
-	return true
+	return CosmeticLoader.has_cosmetic(self)

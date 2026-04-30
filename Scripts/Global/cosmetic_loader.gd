@@ -49,12 +49,11 @@ func get_body_cosmetics() -> Array[BodyCosmetic]:
 
 func equip_cosmetic(cosmetic:Cosmetic) -> void:
 	var data := _get_cosmetic_data()
-	# TODO Make persistent
 	data["equipped"][cosmetic.get_slot_name()] = cosmetic
 
 func has_cosmetic(cosmetic : Cosmetic) -> bool:
 	var data := _get_cosmetic_data()
-	for c : Dictionary in data["owned"]:
+	for c : Dictionary in data["owned"].values():
 		if c["value"] == cosmetic.resource_path:
 			return true
 	return false
@@ -76,3 +75,4 @@ func give_cosmetic(cosmetic_path:String) -> void:
 	dict.value = cosmetic_path
 
 	data["owned"][cosmetic_path] = dict
+	SignalBus.CosmeticUnlocked.emit()

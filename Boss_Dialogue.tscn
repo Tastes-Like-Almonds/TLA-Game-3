@@ -31,7 +31,7 @@ metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
 
 [sub_resource type="Resource" id="Resource_y4b23"]
 script = ExtResource("2_ndf7u")
-lines = Array[ExtResource("3_46b8r")]([SubResource("Resource_aw57f")])
+lines = Array[ExtResource("3_46b8r")]([SubResource("Resource_aw57f"), SubResource("Resource_46b8r"), SubResource("Resource_7a4fj")])
 metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
 
 [node name="Node2D" type="Node2D"]

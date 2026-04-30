@@ -3,13 +3,13 @@ extends Node
 
 signal DataLoaded
 
-const SAVE_PATH : String = "user://tla-3.save"
+const SAVE_PATH      : String = "user://tla-3.save"
 const TEMP_SAVE_PATH : String = "user://tla-3.save.tmp"
 
 @onready var version : String = ProjectSettings.get_setting("application/config/version")
 
 var loaded_data : Dictionary
-var is_loaded : bool = false
+var is_loaded   : bool = false
 
 #region Helper
 ## Returns the default template for save data.
