@@ -45,6 +45,7 @@ func start_track(track:TrackLayer, song:SongData, fade_time:float=0.0, keep_time
 
 	print("NODE  CREATED")
 	add_child(song.node_ref)
+	start_time = clampf(start_time, 0.0, song.node_ref.stream.get_length())
 	song.node_ref.play(start_time)
 
 func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
@@ -56,8 +57,8 @@ func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
 		if is_instance_valid(song.node_ref):
 			song.node_ref.queue_free()
 	else:
+		if not song.node_ref: return
 		var fade_tween := create_tween()
-		
 		# Fade to zero volume
 		fade_tween.tween_property(
 			song.node_ref,
@@ -96,7 +97,7 @@ func _process(delta: float) -> void:
 	var effect : AudioEffectLowPassFilter = AudioServer.get_bus_effect(bus_idx, 0)
 	if muffle_music:
 		effect.resonance = lerpf(effect.resonance, 0.65, 1-pow(0.005,delta))
-		effect.cutoff_hz = lerpf(effect.cutoff_hz, 1500, 1-pow(0.005,delta))
+		effect.cutoff_hz = lerpf(effect.cutoff_hz, 1000, 1-pow(0.005,delta))
 	else:
 		effect.resonance = lerpf(effect.resonance, 0.5,   1-pow(0.02,delta))
 		effect.cutoff_hz = lerpf(effect.cutoff_hz, 20500, 1-pow(0.02,delta))

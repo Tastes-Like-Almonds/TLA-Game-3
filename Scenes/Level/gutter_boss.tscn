@@ -2018,7 +2018,7 @@ z_index = -10
 material = SubResource("ShaderMaterial_3cxce")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_3cxce")
-frame_progress = 0.8854343
+frame_progress = 0.817798
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wizard/AnimatableBody2D"]
 scale = Vector2(3, 3)
