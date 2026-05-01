@@ -4,11 +4,11 @@ extends Node
 signal SettingChanged(key:String, value:Variant)
 
 const DEFAULTS = {
-	"music_volume_perc" = 0.5,
-	"sfx_volume_perc" = 0.5,
+	"music_volume_perc" = 2,
+	"sfx_volume_perc" = 2,
 	"brightness" = 0.5,
 	"mouse_sens" = 1.0,
-	"disable_crt" = false,
+	"disable_crt" = true,
 	"fullscreen" = false
 }
 

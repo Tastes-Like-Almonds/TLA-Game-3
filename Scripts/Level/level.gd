@@ -144,9 +144,9 @@ func _ready() -> void:
 	
 	# Start tracks if set
 	if starting_ambience:
-		Music.start_track(Music.TrackLayer.AMBIENT, starting_ambience)
+		Music.start_track(Music.TrackLayer.AMBIENT, starting_ambience, 1.0)
 	if starting_track:
-		Music.start_track(Music.TrackLayer.MUSIC, starting_track)
+		Music.start_track(Music.TrackLayer.MUSIC, starting_track, 1.0)
 
 func _process(delta: float) -> void:
 	completion_data.time_sec += delta

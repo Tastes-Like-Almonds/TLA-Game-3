@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://51rjllq0cxd7"]
+[gd_scene load_steps=48 format=3 uid="uid://51rjllq0cxd7"]
 
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="1_41t8j"]
 [ext_resource type="Script" uid="uid://bvwefjhtywxdb" path="res://Scenes/UI/Graph/graph_select.gd" id="2_m12fl"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://b2agbg1ytt17w" path="res://Scripts/Resource/Level/world_data.gd" id="3_si5c8"]
 [ext_resource type="Resource" uid="uid://bymv74j5nth1r" path="res://Resource/World/gutter.tres" id="4_si5c8"]
 [ext_resource type="Resource" uid="uid://7f8r0bxcu40k" path="res://Resource/World/extras.tres" id="5_dgc3b"]
+[ext_resource type="Script" uid="uid://b6h82msp0laej" path="res://Scripts/Resource/Sound/song_data.gd" id="6_jer1o"]
 [ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="7_dat7w"]
 [ext_resource type="AudioStream" uid="uid://ccwiuovt03cbw" path="res://Assets/Sound/SFX/UI/UI Hover 1.wav" id="8_qotok"]
 [ext_resource type="AudioStream" uid="uid://d3px4b7kvg5td" path="res://Assets/Sound/SFX/UI/UI Click 1.wav" id="9_mvclr"]
@@ -20,6 +21,12 @@
 [sub_resource type="Theme" id="Theme_8h3cm"]
 default_font = ExtResource("1_41t8j")
 default_font_size = 33
+
+[sub_resource type="Resource" id="Resource_403dh"]
+script = ExtResource("6_jer1o")
+path = &"res://Assets/Sound/Music/Through the Grates.wav"
+vol_linear = 0.4
+metadata/_custom_type_script = "uid://b6h82msp0laej"
 
 [sub_resource type="Gradient" id="Gradient_m12fl"]
 colors = PackedColorArray(0.53, 0.53, 0.53, 1, 1, 1, 1, 1)
@@ -265,6 +272,7 @@ mouse_filter = 2
 theme = SubResource("Theme_8h3cm")
 script = ExtResource("2_v7ump")
 worlds = Array[ExtResource("3_si5c8")]([ExtResource("4_si5c8"), ExtResource("5_dgc3b")])
+music = SubResource("Resource_403dh")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 modulate = Color(0.023529412, 0.12156863, 0.0627451, 1)
@@ -688,6 +696,22 @@ flat = true
 [node name="Control2" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="CompleteLevel" type="Button" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -245.0
+offset_top = -42.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.88, 0, 0, 1)
+text = "[DEBUG] Complete Level"
+flat = true
 
 [node name="Exit" type="Button" parent="."]
 z_index = 5

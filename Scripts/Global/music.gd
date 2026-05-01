@@ -6,6 +6,7 @@ enum TrackLayer {
 	MUSIC,
 }
 
+var muffle_music : bool = false
 var tracks : Dictionary[TrackLayer, SongData]
 
 func start_track(track:TrackLayer, song:SongData, fade_time:float=0.0, keep_time:bool=false) -> void:
@@ -26,8 +27,21 @@ func start_track(track:TrackLayer, song:SongData, fade_time:float=0.0, keep_time
 	song.node_ref.stream = load(song.path)
 	song.node_ref.bus = &"Music"
 	song.node_ref.volume_linear = song.vol_linear
+	song.node_ref.process_mode = Node.PROCESS_MODE_ALWAYS
 
-	# TODO Add fading + Stop track implementation
+	if fade_time > 0.0:
+		song.node_ref.volume_linear = 0
+		var fade_tween := create_tween()
+			
+		# Fade to target volume
+		fade_tween.tween_property(
+			song.node_ref,
+			"volume_linear",
+			song.vol_linear,
+			fade_time
+		)
+		
+		fade_tween.play()
 
 	print("NODE  CREATED")
 	add_child(song.node_ref)
@@ -58,7 +72,7 @@ func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
 				print(song.path)
 				print(song.node_ref)
 				print(song.node_ref.get_parent())
-				#song.node_ref.queue_free()
+				song.node_ref.queue_free()
 		)
 		
 		fade_tween.play()
@@ -77,6 +91,17 @@ func set_track_volume(track:TrackLayer, volume:float, time:float=0.5) -> void:
 		time
 	)
 
+func _process(delta: float) -> void:
+	var bus_idx := AudioServer.get_bus_index("Music")
+	var effect : AudioEffectLowPassFilter = AudioServer.get_bus_effect(bus_idx, 0)
+	if muffle_music:
+		effect.resonance = lerpf(effect.resonance, 0.65, 1-pow(0.005,delta))
+		effect.cutoff_hz = lerpf(effect.cutoff_hz, 1500, 1-pow(0.005,delta))
+	else:
+		effect.resonance = lerpf(effect.resonance, 0.5,   1-pow(0.02,delta))
+		effect.cutoff_hz = lerpf(effect.cutoff_hz, 20500, 1-pow(0.02,delta))
+
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	for track:int in TrackLayer.values():
 		tracks[track] = null
