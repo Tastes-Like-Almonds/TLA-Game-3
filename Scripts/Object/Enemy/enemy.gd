@@ -190,9 +190,12 @@ func _respawn() -> void:
 
 func _check_respawn() -> void:
 	if respawn_cooldown >= respawn_time and respawning:
-		respawn_cooldown = 0
-		respawning = false
-		_respawn()
+		if respawn:
+			respawn_cooldown = 0
+			respawning = false
+			_respawn()
+		else:
+			queue_free()
 
 ## Called with the *player* is hit by the enemy. Returns true if fatal.
 func on_hit(collider : PhysicsBody2D, damage_val : float = -1) -> bool:

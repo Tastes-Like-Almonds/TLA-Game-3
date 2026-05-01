@@ -58,10 +58,9 @@ tracks/0/keys = {
 "values": [ExtResource("13_8hdtp")]
 }
 
-[sub_resource type="Animation" id="Animation_42p83"]
-resource_name = "Full"
+[sub_resource type="Animation" id="Animation_htusf"]
+resource_name = "explode"
 length = 0.4
-loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -69,10 +68,10 @@ tracks/0/path = NodePath("TextureRect:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("4_uikdm"), ExtResource("5_rlymg"), ExtResource("6_gb78x")]
+"values": [ExtResource("16_fbepf"), ExtResource("17_pyc8e"), ExtResource("18_ff4kw"), ExtResource("19_ye262"), null]
 }
 
 [sub_resource type="Animation" id="Animation_cvr1l"]
@@ -90,6 +89,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [ExtResource("7_rk7po"), ExtResource("8_fbepf"), ExtResource("9_pyc8e")]
+}
+
+[sub_resource type="Animation" id="Animation_42p83"]
+resource_name = "Full"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_uikdm"), ExtResource("5_rlymg"), ExtResource("6_gb78x")]
 }
 
 [sub_resource type="Animation" id="Animation_nfaa3"]
@@ -124,22 +140,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [ExtResource("13_hiqw5"), ExtResource("14_5qgwh"), ExtResource("15_pukwh")]
-}
-
-[sub_resource type="Animation" id="Animation_htusf"]
-resource_name = "explode"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TextureRect:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("16_fbepf"), ExtResource("17_pyc8e"), ExtResource("18_ff4kw"), ExtResource("19_ye262"), null]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hp0cw"]
@@ -857,5 +857,5 @@ playback_default_blend_time = 0.2
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitLevel" to="Pause" method="_on_exit_level_pressed"]
-[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_game_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_level_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_game_pressed"]

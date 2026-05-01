@@ -12,7 +12,8 @@ enum Phase {
 	PANIC_TRANSITION,
 	PANIC,
 	FINAL_ATTACK,
-	DEATH
+	DEATH,
+	DEATH_2
 }
 
 enum Attack {
@@ -120,13 +121,18 @@ func on_shield_collision(object:Node2D) -> void:
 func deal_damage(amt: float) -> bool:
 	if phase == Phase.HURT:
 		if hurt_damage_taken + amt >= max_hurt_damage:
-			hurt_damage_taken = 0.0
 			amt = max_hurt_damage-hurt_damage_taken
+			hurt_damage_taken = 0.0
 			_restore_shield()
 			attack_cooldown = -1
 			change_phase(Phase.FIGHT)
 		else:
 			hurt_damage_taken += amt
+	
+		if health-amt < 0:
+			change_phase(Phase.PANIC_TRANSITION)
+			health = 2
+			amt = 1
 	
 	var killed := super(amt)
 	return killed
@@ -553,7 +559,8 @@ func _movement(delta : float) -> void:
 				change_phase(Phase.DEATH)
 		
 		Phase.DEATH: 
-			return
+			if !DialogLoader.is_playing_dialog():
+				change_phase(Phase.DEATH_2)
 	
 	last_movement = global_position - last_pos
 
@@ -576,6 +583,7 @@ func change_phase(p:Phase) -> void:
 			return
 		
 		Phase.INTRO:
+			sprite.play("default")
 			if cam:
 				cam.set_target_node(self)
 			Music.start_track(Music.TrackLayer.MUSIC, intro_song)
@@ -608,6 +616,7 @@ func change_phase(p:Phase) -> void:
 				change_phase(Phase.FIGHT)
 		
 		Phase.HURT:
+			sprite.play("hurt_idle")
 			Music.start_track(Music.TrackLayer.MUSIC, loop_1, true)
 		
 		Phase.PANIC_TRANSITION:
@@ -635,6 +644,7 @@ func change_phase(p:Phase) -> void:
 				cam.set_target_zoom(Vector2(0.8,0.8))
 		
 		Phase.FIGHT:
+			sprite.play("default")
 			Music.start_track(Music.TrackLayer.MUSIC, loop_2, true)
 			_restore_shield()
 			attack_cooldown = -1
@@ -648,9 +658,18 @@ func change_phase(p:Phase) -> void:
 				change_phase(Phase.DEATH)
 		
 		Phase.DEATH: 
+			sprite.play("hurt_idle")
 			if cam:
 				cam.set_target_node(self)
 			DialogLoader.play_dialog_tree(death_dialog)
+		
+		Phase.DEATH_2:
+			health = 1
+			FightStarted.emit()
+			for player in get_tree().get_nodes_in_group("Player"):
+				cam.set_target_node(player.get_player_body())
+				cam.set_target_zoom(Vector2(1,1))
+			invincible = false
 
 func _physics_process(delta: float) -> void:
 	super(delta)

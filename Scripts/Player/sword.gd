@@ -51,6 +51,7 @@ func _input(event: InputEvent) -> void:
 	if not player: return
 	if event is InputEventMouse:
 		if event is InputEventMouseMotion:
+			if DialogLoader.is_playing_dialog(): return
 			var new_mouse : Vector2 = virtual_mouse + event.relative*player.get_size_scale()*mouse_sens
 			mouse_speed = (new_mouse - virtual_mouse).length()
 			virtual_mouse = new_mouse 

@@ -7,6 +7,14 @@ func initialize(config : LevelConfig = null) -> void:
 	current_ui.set_boss_bar_value(1)
 	wizard.FightStarted.connect(current_ui.set_boss_bar_enabled.bind(true))
 	wizard.FightEnded.connect(current_ui.set_boss_bar_enabled.bind(false))
-	wizard.HealthChanged.connect(func() -> void:
-		current_ui.set_boss_bar_value(wizard.health/wizard.start_health)
+	wizard.HealthChanged.connect(func(new:float) -> void:
+		current_ui.set_boss_bar_value(new/wizard.start_health)
+	)
+	wizard.Killed.connect(func() -> void:
+		$Whiteout.modulate = Color.BLACK
+		for player : Player in Helper.get_all_players():
+			player.heal(10)
+		current_ui.set_boss_bar_enabled(false)
+		CosmeticLoader.give_cosmetic("res://Data/Cosmetic/wizard_hat.tres")
+		get_tree().create_timer(2).timeout.connect(complete)
 	)
