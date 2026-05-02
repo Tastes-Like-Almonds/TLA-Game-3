@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://br2h8su7hsuaf"
+path="res://.godot/imported/Sword Enemy Spin Edit 1 Export 1(1).mp3-81cdee18988a65f0e1b5d213563424f7.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Enemy/Sword/Sword Enemy Spin Edit 1 Export 1(1).mp3"
+dest_files=["res://.godot/imported/Sword Enemy Spin Edit 1 Export 1(1).mp3-81cdee18988a65f0e1b5d213563424f7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

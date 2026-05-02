@@ -8,5 +8,6 @@ script = ExtResource("1_ei8e2")
 offset = Vector2(-4, -42)
 texture = ExtResource("2_pttqo")
 name = "Dweller's Hat"
+hint = "Inside that strange tunnel."
 desc = "It's grey!"
 metadata/_custom_type_script = "uid://oksvaahqx7ou"

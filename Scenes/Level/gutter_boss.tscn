@@ -90,7 +90,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(0, 0, 0, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -210,7 +210,7 @@ tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
@@ -1791,6 +1791,7 @@ scale = Vector2(50.558, 3)
 texture = SubResource("GradientTexture2D_pj625")
 
 [node name="Whiteout" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
 z_index = 10
 scale = Vector2(200, 200)
 texture = SubResource("GradientTexture2D_0g85x")
@@ -1810,6 +1811,7 @@ libraries = {
 playback_default_blend_time = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
 z_index = -100
 position = Vector2(420.06177, 660.89465)
 rotation = -1.5707964
@@ -1984,6 +1986,7 @@ collision_layer = 72
 collision_mask = 64
 sync_to_physics = false
 script = ExtResource("8_krtai")
+max_hurt_damage = 34.0
 swords = [NodePath("../../PossessedSword"), NodePath("../../PossessedSword2")]
 environment_anim = NodePath("../../WorldTransitions")
 lance_pos = NodePath("../LancePos")

@@ -117,6 +117,7 @@ alert_sound = SubResource("Resource_22w8g")
 health = 6.0
 max_hit_kb = 1000.0
 respawn = false
+spawn_dead = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_o6sep")

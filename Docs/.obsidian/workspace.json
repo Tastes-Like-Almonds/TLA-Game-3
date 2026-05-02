@@ -11,14 +11,17 @@
             "id": "c5189ac6e154e344",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "Meetings/Meeting Notes/Meeting Notes - 11.2.25.md",
-                "mode": "source",
-                "source": false
+                "file": "Planning/Programming/Level Selector/V2 Level selector diagram.canvas",
+                "viewState": {
+                  "x": 0,
+                  "y": -234.5,
+                  "zoom": -0.374968608888826
+                }
               },
-              "icon": "lucide-file",
-              "title": "Meeting Notes - 11.2.25"
+              "icon": "lucide-layout-dashboard",
+              "title": "V2 Level selector diagram"
             }
           }
         ]
@@ -171,13 +174,15 @@
   },
   "active": "c5189ac6e154e344",
   "lastOpenFiles": [
+    "Planning/Programming/Level Selector/Class Structure Overview.canvas",
+    "Planning/Programming/Level Selector/V2 Level selector diagram.canvas",
+    "Meetings/Meeting Notes/Meeting Notes - 11.2.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 11.14.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 11.20.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 12.5.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 12.11.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 9.18.25 1.md",
     "Meetings/Meeting Notes/Meeting Notes - 9.16.25.md",
-    "Planning/Programming/Level Selector/V2 Level selector diagram.canvas",
     "Meetings/Meeting Notes/Meeting Notes 2 - 3.19.26.md",
     "Meetings/Meeting Notes/Meeting Notes 2 - 1.9.26.md",
     "Meetings/Meeting Notes/Meeting Notes - 12.19.25.md",
@@ -185,8 +190,6 @@
     "Planning/Story/Overview - Story.md",
     "Planning/Research/Overview - Research.md",
     "Planning/Art/Overview - Art.md",
-    "Planning/Programming/Level Selector/Class Structure Overview.canvas",
-    "Meetings/Meeting Notes/Meeting Notes - 11.2.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 10.13.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 10.10.25.md",
     "Members/Evan Gould.md",

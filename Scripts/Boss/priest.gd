@@ -75,8 +75,9 @@ enum Attack {
 @export var loop_2     : SongData
 @export var loop_3     : SongData
 
-var phase       : Phase
-var phase_ended : bool = false
+var phase         : Phase
+var phase_ended   : bool = false
+var panic_reached : bool = false
 
 var start_max_health  : float = 0.0
 var phase_timer       : float = 0.0
@@ -428,7 +429,10 @@ func _movement(delta : float) -> void:
 			_intro(delta)
 			if !DialogLoader.is_playing_dialog() and phase_ended:
 				FightStarted.emit()
-				change_phase(Phase.PANIC_TRANSITION)
+				if panic_reached:
+					change_phase(Phase.PANIC_TRANSITION)
+				else:
+					change_phase(Phase.SWORD)
 		
 		Phase.SWORD:
 			_sword_movement(delta)
@@ -476,6 +480,9 @@ func _movement(delta : float) -> void:
 				change_phase(Phase.FIGHT)
 		
 		Phase.PANIC_TRANSITION:
+			shield_wall.disabled = true
+			shield_animator.play("shield_break")
+			shield_dur = 0
 			_move_to_hurt(delta)
 			GameCamera.set_current_camera_shake(get_viewport(),0.5*(phase_timer/4.0))
 			if phase_timer < 2.0:
@@ -521,7 +528,6 @@ func _movement(delta : float) -> void:
 			elif phase_timer < phase_time*5/3:
 				if attack_cooldown > 0.2:
 					_attack(Attack.LIGHTNING_BASIC)
-					_attack(Attack.LANCE_BASIC)
 					attack_cooldown = 0.0
 			
 			elif phase_timer < phase_time*2:
@@ -541,7 +547,7 @@ func _movement(delta : float) -> void:
 					attack_cooldown = 0.0
 			
 			elif phase_timer < phase_time*3:
-				if attack_cooldown > 1.5:
+				if attack_cooldown > 2:
 					_attack(Attack.WHOLE_MAP_LIGHTNING)
 					_attack(Attack.FIREBALL_CIRCLE)
 					_attack(Attack.LANCE_BASIC)
@@ -559,8 +565,11 @@ func _movement(delta : float) -> void:
 				change_phase(Phase.DEATH)
 		
 		Phase.DEATH: 
+			_move_to_hurt(delta)
 			if !DialogLoader.is_playing_dialog():
 				change_phase(Phase.DEATH_2)
+		Phase.DEATH_2:
+			_move_to_hurt(delta)
 	
 	last_movement = global_position - last_pos
 
@@ -590,7 +599,6 @@ func change_phase(p:Phase) -> void:
 			DialogLoader.play_dialog_tree(dialog)
 		
 		Phase.SWORD:
-			_attack(Attack.HEALTH_PICKUP)
 			Music.start_track(Music.TrackLayer.MUSIC, loop_1)
 			for player in get_tree().get_nodes_in_group("Player"):
 				cam.set_target_node(player.get_player_body())
@@ -616,10 +624,15 @@ func change_phase(p:Phase) -> void:
 				change_phase(Phase.FIGHT)
 		
 		Phase.HURT:
+			for x in range(4):
+				get_tree().create_timer(1*x).timeout.connect(func() -> void:
+					_attack(Attack.HEALTH_PICKUP)
+				)
 			sprite.play("hurt_idle")
 			Music.start_track(Music.TrackLayer.MUSIC, loop_1, true)
 		
 		Phase.PANIC_TRANSITION:
+			panic_reached = true
 			FightEnded.emit()
 			GameCamera.set_current_camera_shake(get_viewport(), 0.3)
 			for player in get_tree().get_nodes_in_group("Player"):
@@ -632,9 +645,9 @@ func change_phase(p:Phase) -> void:
 			invincible = true
 		
 		Phase.PANIC:
-			phase_timer = phase_time*7/3
 			GameCamera.set_current_camera_shake(get_viewport(), 1)
 			environment_anim.play("panic")
+			sprite.play("default")
 			sprite.z_index = 5
 			max_hit_kb = 4000
 			knockback_coef = -4.0

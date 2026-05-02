@@ -119,6 +119,7 @@ max_hit_kb = 1000.0
 knockback = 500.0
 max_kb = 2500.0
 aggro_range = 800.0
+spawn_dead = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 49)

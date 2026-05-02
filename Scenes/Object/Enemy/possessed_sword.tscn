@@ -29,7 +29,8 @@ metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 
 [sub_resource type="Resource" id="Resource_gtmdc"]
 script = ExtResource("2_toqun")
-sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Hit 1.wav"
+sound_string = "res://Assets/Sound/SFX/Enemy/Sword/Sword Enemy Hit Edit 1 Export 1(2).mp3"
+volume_linear = 0.15
 bus = &"SFX"
 metadata/_custom_type_script = "uid://bcklhvo1tcaki"
 

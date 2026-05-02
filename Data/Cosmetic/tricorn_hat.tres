@@ -9,5 +9,6 @@ default_flip_h = true
 offset = Vector2(0, -45)
 texture = ExtResource("2_w1v4v")
 name = "Tricorn Hat"
+hint = "Across the void, and quite above."
 desc = "But where's the bow?"
 metadata/_custom_type_script = "uid://oksvaahqx7ou"
