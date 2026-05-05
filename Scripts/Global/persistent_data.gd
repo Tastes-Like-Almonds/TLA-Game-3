@@ -161,7 +161,7 @@ func save_game(path:String=SAVE_PATH) -> void:
 	print("Saving save string of length " + str(save_string.length()))
 	
 	assert(save_file != null, "Error opening save file. Error code: " + str(FileAccess.get_open_error()))
-	assert(save_file.store_pascal_string(save_string), "Error writing save data to file.")
+	save_file.store_pascal_string(save_string)
 	
 	save_file.close()
 

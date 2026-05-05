@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="TLA-Game-3"
-config/version="1.2.0-prealpha"
+config/version="1.2.1-prealpha"
 config/tags=PackedStringArray("ogpc", "platformer")
 run/main_scene="uid://birc57pmi5hwh"
 config/features=PackedStringArray("4.5", "Forward Plus")
