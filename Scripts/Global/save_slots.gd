@@ -101,6 +101,8 @@ func add_level_completion(world:String, sid:String, data:CompletionData) -> void
 	
 	if data.exit_type not in level_dict["exits"]:
 		level_dict["exits"].append(data.exit_type)
+	
+	PersistentData.save_game()
 
 ## Creates a new save slot and returns its index.
 func create_slot() -> int:
@@ -131,5 +133,5 @@ func _ready() -> void:
 	
 	set_slot(0)
 	#add_level_completion("MyWorld", "1.1", CompletionData.new())
-	Helper.print_dict_as_json(get_current_slot())
+	#Helper.print_dict_as_json(get_current_slot())
 #endregion

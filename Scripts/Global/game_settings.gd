@@ -56,5 +56,5 @@ func _ready() -> void:
 	if !PersistentData.is_loaded:
 		await PersistentData.DataLoaded
 	PersistentData.DataLoaded.connect(_signal_settings)
-	print(get_settings_data())
+	#print(get_settings_data())
 	_signal_settings()

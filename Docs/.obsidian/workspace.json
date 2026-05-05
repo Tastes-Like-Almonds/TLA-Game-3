@@ -13,15 +13,15 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "Planning/Programming/Level Selector/V2 Level selector diagram.canvas",
+                "file": "Planning/Programming/Level Selector/Class Structure Overview.canvas",
                 "viewState": {
-                  "x": 0,
-                  "y": -234.5,
-                  "zoom": -0.374968608888826
+                  "x": 142,
+                  "y": 223.5,
+                  "zoom": -0.8007446239367777
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "V2 Level selector diagram"
+              "title": "Class Structure Overview"
             }
           }
         ]
@@ -174,8 +174,8 @@
   },
   "active": "c5189ac6e154e344",
   "lastOpenFiles": [
-    "Planning/Programming/Level Selector/Class Structure Overview.canvas",
     "Planning/Programming/Level Selector/V2 Level selector diagram.canvas",
+    "Planning/Programming/Level Selector/Class Structure Overview.canvas",
     "Meetings/Meeting Notes/Meeting Notes - 11.2.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 11.14.25.md",
     "Meetings/Meeting Notes/Meeting Notes - 11.20.25.md",

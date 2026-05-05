@@ -109,7 +109,6 @@ func _complete_current_level() -> void:
 			_add_completion(link.exit_requirement)
 
 func _ready() -> void:
-	PersistentData.save_game()
 	world_display.world_changed.connect(_load_world)
 	graph_select.level_selected.connect(_level_selected)
 	graph_select.level_played.connect(_play_level)

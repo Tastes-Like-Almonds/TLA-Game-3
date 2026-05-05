@@ -16,7 +16,7 @@ var can_use : bool = true
 var MAX_CHARGE: float = 1.0
 
 func get_can_use() -> bool:
-	if !_valid(): print("E"); return false
+	if !_valid(): return false
 	if _wielder.get_player_body().is_on_floor(): return false
 	return can_use
 

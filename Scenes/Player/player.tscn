@@ -516,6 +516,6 @@ speed_scale = 4.0
 
 [node name="Heartbeat" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("24_rqdc0")
-volume_db = 3.733
+volume_db = -10.0
 pitch_scale = 1.3
 bus = &"SFX"
