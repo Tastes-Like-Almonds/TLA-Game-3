@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dibaui8fb83w8"
+path="res://.godot/imported/Fireball Passive.wav-035d40c5fb0d30f625d7f0c34aee6a69.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Projectile/Fireball/Fireball Passive.wav"
+dest_files=["res://.godot/imported/Fireball Passive.wav-035d40c5fb0d30f625d7f0c34aee6a69.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

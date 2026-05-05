@@ -8,6 +8,10 @@ var sound_parent : Node
 ## Gets an audiostream from the given SoundData. Returns null if not a stream or invalid.
 func get_stream_from_sound(sound : SoundData) -> AudioStream:
 	
+	if not sound:
+		push_warning("Attempt to get stream from null sound!")
+		return null
+	
 	var stream := load(sound.sound_string)
 	
 	if not stream or (stream is not AudioStream): return null

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c3bctbky0b0el"
+path="res://.godot/imported/Cockroach Walk Edit 1 Export 1(1).mp3-a86f7eb845c33ace1237aa4dcf49919b.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Walk Edit 1 Export 1(1).mp3"
+dest_files=["res://.godot/imported/Cockroach Walk Edit 1 Export 1(1).mp3-a86f7eb845c33ace1237aa4dcf49919b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

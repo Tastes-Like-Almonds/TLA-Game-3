@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://c2gf3o0yw438h"]
+
+[ext_resource type="Script" uid="uid://dx50qcajncenm" path="res://Scripts/Object/saw.gd" id="1_1tjf8"]
+[ext_resource type="Texture2D" uid="uid://bwcnd3pog7qa0" path="res://Assets/Sprites/Tilemap/Animated/Saw/Large/Bigsaw 1.png" id="2_dqda4"]
+[ext_resource type="Texture2D" uid="uid://dc8p6ricdeptb" path="res://Assets/Sprites/Tilemap/Animated/Saw/Large/Bigsaw 2.png" id="3_1tjf8"]
+[ext_resource type="Texture2D" uid="uid://brmmouiejt3x8" path="res://Assets/Sprites/Tilemap/Animated/Saw/Large/Bigsaw 3.png" id="4_6ldwo"]
+[ext_resource type="Texture2D" uid="uid://doge13k3po6v3" path="res://Assets/Sprites/Tilemap/Animated/Saw/Large/Bigsaw 4.png" id="5_sxbss"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nysmg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dqda4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1tjf8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6ldwo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sxbss")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w01ju"]
+
+[node name="Saw" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_1tjf8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nysmg")
+animation = &"spin"
+frame_progress = 0.3765194
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w01ju")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

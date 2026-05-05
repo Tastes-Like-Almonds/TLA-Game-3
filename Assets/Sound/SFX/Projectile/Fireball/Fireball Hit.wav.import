@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b5lrr0d8ja7cd"
+path="res://.godot/imported/Fireball Hit.wav-9f54866767dc547b4918cf278a777c97.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Projectile/Fireball/Fireball Hit.wav"
+dest_files=["res://.godot/imported/Fireball Hit.wav-9f54866767dc547b4918cf278a777c97.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

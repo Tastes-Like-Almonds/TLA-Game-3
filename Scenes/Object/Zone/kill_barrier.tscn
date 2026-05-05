@@ -1,0 +1,115 @@
+[gd_scene load_steps=10 format=3 uid="uid://c32ukwj524sxi"]
+
+[ext_resource type="Script" uid="uid://cbwdgec53e6li" path="res://Scripts/Object/Zone/kill_barrier.gd" id="1_piast"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4binb"]
+size = Vector2(16, 16)
+
+[sub_resource type="Gradient" id="Gradient_1jjb1"]
+colors = PackedColorArray(1, 1, 1, 0, 0.53999996, 1, 0.54766667, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3hcw5"]
+noise_type = 4
+frequency = 0.07
+fractal_octaves = 2
+domain_warp_enabled = true
+domain_warp_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xvm5e"]
+width = 16
+height = 16
+noise = SubResource("FastNoiseLite_3hcw5")
+color_ramp = SubResource("Gradient_1jjb1")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_piast"]
+resource_local_to_scene = true
+width = 16
+height = 16
+noise = SubResource("FastNoiseLite_3hcw5")
+color_ramp = SubResource("Gradient_1jjb1")
+
+[sub_resource type="Animation" id="Animation_qiu41"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:texture:noise:frequency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.07]
+}
+
+[sub_resource type="Animation" id="Animation_piast"]
+resource_name = "clear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:texture:noise:frequency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.07, 0.41]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xvm5e"]
+_data = {
+&"RESET": SubResource("Animation_qiu41"),
+&"clear": SubResource("Animation_piast")
+}
+
+[node name="KillBarrier" type="StaticBody2D"]
+script = ExtResource("1_piast")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_4binb")
+debug_color = Color(9.62615e-07, 0.6223008, 0.5499151, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(3, 3)
+texture = SubResource("NoiseTexture2D_xvm5e")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+top_level = true
+offset_right = 200.0
+offset_bottom = 320.0
+scale = Vector2(3, 3)
+texture = SubResource("NoiseTexture2D_piast")
+stretch_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_xvm5e")
+}

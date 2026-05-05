@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://ryavy613ragg"]
+
+[ext_resource type="Script" uid="uid://dx50qcajncenm" path="res://Scripts/Object/saw.gd" id="1_bcqbw"]
+[ext_resource type="Texture2D" uid="uid://chupi0heeu2x3" path="res://Assets/Sprites/Tilemap/Animated/Saw/Buzzsaw 1.png" id="1_w01ju"]
+[ext_resource type="Texture2D" uid="uid://w807gmrv7kob" path="res://Assets/Sprites/Tilemap/Animated/Saw/Buzzsaw 2.png" id="2_bcqbw"]
+[ext_resource type="Texture2D" uid="uid://ck2hoyfbenkff" path="res://Assets/Sprites/Tilemap/Animated/Saw/Buzzsaw 3.png" id="3_psceu"]
+[ext_resource type="Texture2D" uid="uid://stwgyb36t205" path="res://Assets/Sprites/Tilemap/Animated/Saw/Buzzsaw 4.png" id="4_f2uvm"]
+[ext_resource type="Texture2D" uid="uid://b5q28wk0yxw08" path="res://Assets/Sprites/Tilemap/Animated/Saw/Buzzsaw 5.png" id="5_vpnmw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nysmg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_w01ju")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_bcqbw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_psceu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_f2uvm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vpnmw")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 30.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w01ju"]
+size = Vector2(8, 8)
+
+[node name="Saw" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_bcqbw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nysmg")
+animation = &"spin"
+frame = 1
+frame_progress = 0.36964163
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w01ju")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,97 @@
+[gd_scene load_steps=11 format=3 uid="uid://cipi6kc6rwuyb"]
+
+[ext_resource type="Script" uid="uid://dmu8tqg3q7d7f" path="res://Scenes/UI/Graph/level_node.gd" id="1_v2sta"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m12fl"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0.11, 0.11, 0.11, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhfec"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0.08468998, 0.08468991, 0.08468992, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_486st"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0.18717614, 0.18717614, 0.18717614, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v2sta"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0.10980392, 0.10980392, 0.10980392, 0.6431373)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0.6431373)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wcnr1"]
+
+[sub_resource type="Animation" id="Animation_v2sta"]
+resource_name = "default"
+
+[sub_resource type="Animation" id="Animation_bhfec"]
+resource_name = "flicker"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.53, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.71, 0.71, 0.71, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_486st"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wcnr1"]
+_data = {
+&"RESET": SubResource("Animation_486st"),
+&"default": SubResource("Animation_v2sta"),
+&"flicker": SubResource("Animation_bhfec")
+}
+
+[node name="LevelNode2" type="Button"]
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_bhfec")
+theme_override_styles/hover = SubResource("StyleBoxFlat_486st")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_v2sta")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wcnr1")
+text = "1.1"
+script = ExtResource("1_v2sta")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wcnr1")
+}

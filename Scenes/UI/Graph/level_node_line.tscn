@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cy44wscpifgrs"]
+
+[node name="LevelNodeLine" type="Line2D"]
+visible = false
+points = PackedVector2Array(86, 146, 108, 146, 108, 209, 131, 209)
+width = 8.0

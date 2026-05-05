@@ -1,7 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://bx05lwlejhqqc"]
+[gd_scene load_steps=17 format=3 uid="uid://bx05lwlejhqqc"]
 
 [ext_resource type="Script" uid="uid://dxnf3hgwxytok" path="res://Scripts/Visual/Weapons/Sword/sword_basic_visual.gd" id="1_wwsnl"]
-[ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Sprites/Placeholder/sword.png" id="2_47q6j"]
+[ext_resource type="Texture2D" uid="uid://be5d4l178k1d6" path="res://Assets/Sprites/Player/Sword Icon.png" id="2_47q6j"]
 
 [sub_resource type="Gradient" id="Gradient_47q6j"]
 offsets = PackedFloat32Array(0, 0.33043477, 0.5826087, 0.67826086, 1)
@@ -37,6 +37,27 @@ scale_max = 12.0
 scale_curve = SubResource("CurveTexture_l3mnx")
 alpha_curve = SubResource("CurveTexture_sdpqg")
 
+[sub_resource type="Gradient" id="Gradient_58q71"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.07, 0.07, 0.07, 0.8156863)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sdpqg"]
+gradient = SubResource("Gradient_58q71")
+width = 8
+height = 8
+
+[sub_resource type="Curve" id="Curve_dod1f"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9245902, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.051724076), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_58q71"]
+curve = SubResource("Curve_dod1f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cpx17"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_58q71")
+
 [sub_resource type="Curve" id="Curve_47q6j"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -44,31 +65,38 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_dod1f"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
 
-[sub_resource type="Gradient" id="Gradient_58q71"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_sdpqg"]
-gradient = SubResource("Gradient_58q71")
-
 [node name="SwordBasicVisual" type="Node2D"]
 show_behind_parent = true
 script = ExtResource("1_wwsnl")
+sword_length = 80.0
+spark_threshold = 200.0
+spark_divisor = 4000.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 show_behind_parent = true
 z_index = 1
-scale = Vector2(4, 4)
+scale = Vector2(3, 3)
 texture = ExtResource("2_47q6j")
 centered = false
-offset = Vector2(-15, -1)
+offset = Vector2(-31, -1)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D"]
 show_behind_parent = true
+position = Vector2(-11, 11)
 scale = Vector2(0.25, 0.25)
 amount = 4
 texture = SubResource("GradientTexture2D_dod1f")
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_32eie")
+
+[node name="Drag" type="GPUParticles2D" parent="Sprite2D"]
+show_behind_parent = true
+position = Vector2(1, -1)
+scale = Vector2(0.25, 0.25)
+amount = 2000
+texture = SubResource("GradientTexture2D_sdpqg")
+lifetime = 8.0
+process_material = SubResource("ParticleProcessMaterial_cpx17")
 
 [node name="Line2D" type="Line2D" parent="."]
 modulate = Color(1, 1, 1, 0.44705883)
@@ -79,4 +107,3 @@ points = PackedVector2Array(0, 0, 51, 29, 78, 78, 90, 103, 141, 74, 124, 41, 169
 width = 60.0
 width_curve = SubResource("Curve_47q6j")
 gradient = SubResource("Gradient_dod1f")
-texture = SubResource("GradientTexture1D_sdpqg")

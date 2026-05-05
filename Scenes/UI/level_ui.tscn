@@ -1,13 +1,511 @@
-[gd_scene load_steps=6 format=3 uid="uid://caj0mx5twqcfe"]
+[gd_scene load_steps=58 format=3 uid="uid://caj0mx5twqcfe"]
 
 [ext_resource type="Script" uid="uid://l7uxjyga8ie7" path="res://Scripts/UI/level_ui.gd" id="1_xjiw8"]
-[ext_resource type="Texture2D" uid="uid://dr3fx4as1q5if" path="res://Assets/Sprites/Placeholder/Heart Placeholder.png" id="2_pkx18"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_307ub"]
+[ext_resource type="Texture2D" uid="uid://dr3fx4as1q5if" path="res://Assets/Sprites/Placeholder/Heart Placeholder.png" id="2_haw25"]
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="3_vk2nj"]
 [ext_resource type="Script" uid="uid://dvoymdlu627u5" path="res://Scripts/UI/hotbar.gd" id="4_m0wgp"]
 [ext_resource type="Texture2D" uid="uid://dacn673yvsjar" path="res://Assets/Sprites/Placeholder/sword.png" id="4_tk1ol"]
+[ext_resource type="Texture2D" uid="uid://dhxafngdi4xwf" path="res://Assets/Sprites/UI/Health Bar/Health Idle/Health Idle 1.png" id="4_uikdm"]
+[ext_resource type="Texture2D" uid="uid://qqb261n7oke1" path="res://Assets/Sprites/UI/Health Bar/Health Idle/Health Idle 2.png" id="5_rlymg"]
+[ext_resource type="Texture2D" uid="uid://bhkri8rsdaxuf" path="res://Assets/Sprites/UI/Health Bar/Health Idle/Health Idle 3.png" id="6_gb78x"]
+[ext_resource type="Script" uid="uid://wvajojoabnsk" path="res://Scripts/UI/pause.gd" id="6_haw25"]
+[ext_resource type="Texture2D" uid="uid://boboeo3nabppv" path="res://Assets/Sprites/UI/Health Bar/Losing Health/First Hit/First Hit 1.png" id="7_rk7po"]
+[ext_resource type="Texture2D" uid="uid://bt7cjbbcohvs6" path="res://Assets/Sprites/UI/Health Bar/Losing Health/First Hit/First Hit 2.png" id="8_fbepf"]
+[ext_resource type="Texture2D" uid="uid://ww383ljf04n5" path="res://Assets/Sprites/UI/Health Bar/Losing Health/First Hit/First Hit 3.png" id="9_pyc8e"]
+[ext_resource type="Texture2D" uid="uid://clm45h3ikpgsb" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Second Hit/Second Hit 1.png" id="10_ff4kw"]
+[ext_resource type="Texture2D" uid="uid://dftr6lo6bfm0x" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Second Hit/Second Hit 2.png" id="11_ye262"]
+[ext_resource type="Texture2D" uid="uid://bhluo5kuef6tj" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Second Hit/Second Hit 3.png" id="12_htusf"]
+[ext_resource type="Texture2D" uid="uid://bpyrmqhdlc1g6" path="res://Assets/Sprites/UI/Losing Health 3.png" id="13_8hdtp"]
+[ext_resource type="Texture2D" uid="uid://cni7japmkjrgj" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Third Hit/Third Hit 1.png" id="13_hiqw5"]
+[ext_resource type="Texture2D" uid="uid://dl3ebgkekxulp" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Third Hit/Third Hit 2.png" id="14_5qgwh"]
+[ext_resource type="Texture2D" uid="uid://dbdt8wrag5e6o" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Third Hit/Third Hit 3.png" id="15_pukwh"]
+[ext_resource type="Texture2D" uid="uid://c1lmuwd6lh0x1" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 1.png" id="16_fbepf"]
+[ext_resource type="Texture2D" uid="uid://b01vcg38h3my0" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 2.png" id="17_pyc8e"]
+[ext_resource type="Texture2D" uid="uid://chgwedvtgsf85" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 3.png" id="18_ff4kw"]
+[ext_resource type="Texture2D" uid="uid://dbl4hhtbsv6cn" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 4.png" id="19_ye262"]
+
+[sub_resource type="Resource" id="Resource_46n82"]
+script = ExtResource("2_307ub")
+sound_string = "res://Assets/Sound/SFX/Cosmetic Unlock 1.wav"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Gradient" id="Gradient_haw25"]
+offsets = PackedFloat32Array(0.74922603, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_307ub"]
+gradient = SubResource("Gradient_haw25")
+width = 90
+height = 160
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Animation" id="Animation_rv7rl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("13_8hdtp")]
+}
+
+[sub_resource type="Animation" id="Animation_htusf"]
+resource_name = "explode"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("16_fbepf"), ExtResource("17_pyc8e"), ExtResource("18_ff4kw"), ExtResource("19_ye262"), null]
+}
+
+[sub_resource type="Animation" id="Animation_cvr1l"]
+resource_name = "first_hit"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("7_rk7po"), ExtResource("8_fbepf"), ExtResource("9_pyc8e")]
+}
+
+[sub_resource type="Animation" id="Animation_42p83"]
+resource_name = "Full"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("4_uikdm"), ExtResource("5_rlymg"), ExtResource("6_gb78x")]
+}
+
+[sub_resource type="Animation" id="Animation_nfaa3"]
+resource_name = "second_hit"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("10_ff4kw"), ExtResource("11_ye262"), ExtResource("12_htusf")]
+}
+
+[sub_resource type="Animation" id="Animation_0wcmh"]
+resource_name = "third_hit"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("13_hiqw5"), ExtResource("14_5qgwh"), ExtResource("15_pukwh")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hp0cw"]
+_data = {
+&"RESET": SubResource("Animation_rv7rl"),
+&"explode": SubResource("Animation_htusf"),
+&"first_hit": SubResource("Animation_cvr1l"),
+&"full": SubResource("Animation_42p83"),
+&"second_hit": SubResource("Animation_nfaa3"),
+&"third_hit": SubResource("Animation_0wcmh")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_haw25"]
+bg_color = Color(0.07, 0.07, 0.07, 0.70980394)
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_307ub"]
+bg_color = Color(0.76, 0.1444, 0.1444, 0.627451)
+
+[sub_resource type="Animation" id="Animation_jsnme"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer:theme_override_constants/margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [150]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer:theme_override_constants/margin_right")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [150]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MarginContainer:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MarginContainer/VBoxContainer/Label:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MarginContainer/VBoxContainer/ProgressBar:max_value")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [100.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_uq21l"]
+resource_name = "close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.7578577, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_s2css"]
+resource_name = "open"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MarginContainer:theme_override_constants/margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer:theme_override_constants/margin_right")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MarginContainer:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.35355315, 1),
+"update": 0,
+"values": [Vector2(0, -100), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MarginContainer/VBoxContainer/Label:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MarginContainer/VBoxContainer/ProgressBar:max_value")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uq21l"]
+_data = {
+&"RESET": SubResource("Animation_jsnme"),
+&"close": SubResource("Animation_uq21l"),
+&"open": SubResource("Animation_s2css")
+}
+
+[sub_resource type="Theme" id="Theme_haw25"]
+Button/colors/font_hover_color = Color(0.69, 0.69, 0.69, 1)
+
+[sub_resource type="Gradient" id="Gradient_m0wgp"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0, 0, 0.8)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_haw25"]
+gradient = SubResource("Gradient_m0wgp")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_haw25"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_307ub"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_46n82"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fc7jj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_urbh0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3e4nl"]
+
+[sub_resource type="Animation" id="Animation_307ub"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CosmeticUnlockedDisplay:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_haw25"]
+resource_name = "cosmetic_unlocked"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CosmeticUnlockedDisplay:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_307ub"]
+_data = {
+&"RESET": SubResource("Animation_307ub"),
+&"cosmetic_unlocked": SubResource("Animation_haw25")
+}
+
+[sub_resource type="Animation" id="Animation_fc7jj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vignette:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3e4nl"]
+resource_name = "critical"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vignette:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0.21568628)]
+}
+
+[sub_resource type="Animation" id="Animation_46n82"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vignette:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.09019608)]
+}
+
+[sub_resource type="Animation" id="Animation_urbh0"]
+resource_name = "hurt"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vignette:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0.101960786)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_urbh0"]
+_data = {
+&"RESET": SubResource("Animation_fc7jj"),
+&"critical": SubResource("Animation_3e4nl"),
+&"default": SubResource("Animation_46n82"),
+&"hurt": SubResource("Animation_urbh0")
+}
 
 [node name="LevelUI" type="CanvasLayer"]
 script = ExtResource("1_xjiw8")
+cosmetic_unlock_sound = SubResource("Resource_46n82")
+
+[node name="Vignette" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_307ub")
+
+[node name="Health2" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0.5176471)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Health2"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+offset_right = 16.0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Health2/HBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("13_8hdtp")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="HealthbarAnimator" type="AnimationPlayer" parent="Health2/HBoxContainer"]
+libraries = {
+&"": SubResource("AnimationLibrary_hp0cw")
+}
 
 [node name="Control" type="Control" parent="."]
 modulate = Color(1, 1, 1, 0.627451)
@@ -31,6 +529,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="HealthBar" type="TextureProgressBar" parent="Control/Health"]
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -46,11 +545,13 @@ step = 0.01
 value = 0.6
 fill_mode = 4
 nine_patch_stretch = true
-texture_under = ExtResource("2_pkx18")
-texture_progress = ExtResource("2_pkx18")
-tint_under = Color(1, 1, 1, 0.2901961)
+texture_under = ExtResource("2_haw25")
+texture_progress = ExtResource("2_haw25")
+tint_under = Color(1, 1, 1, 0.16470589)
+tint_progress = Color(1, 1, 1, 0.8117647)
 
 [node name="Label" type="Label" parent="Control/Health/HealthBar"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -137,3 +638,224 @@ size_flags_vertical = 8
 texture = ExtResource("4_tk1ol")
 expand_mode = 3
 stretch_mode = 4
+
+[node name="BossBar" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="BossBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BossBar/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="BossBar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 44
+text = "Boss Name"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="BossBar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 0)
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/background = SubResource("StyleBoxFlat_haw25")
+theme_override_styles/fill = SubResource("StyleBoxFlat_307ub")
+value = 50.0
+
+[node name="BossBarAnimator" type="AnimationPlayer" parent="BossBar"]
+libraries = {
+&"": SubResource("AnimationLibrary_uq21l")
+}
+
+[node name="Pause" type="Control" parent="."]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_haw25")
+script = ExtResource("6_haw25")
+
+[node name="TextureRect" type="TextureRect" parent="Pause"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_haw25")
+
+[node name="MarginContainer" type="MarginContainer" parent="Pause"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="title" type="Label" parent="Pause/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 160
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="version" type="Label" parent="Pause/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 30
+text = "v1.01-alpha"
+vertical_alignment = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Pause/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause/MarginContainer/CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Continue" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
+text = "Continue"
+
+[node name="Settings" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
+text = "Settings"
+
+[node name="Cosmetics" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
+text = "Cosmetics"
+
+[node name="ExitLevel" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
+text = "Exit Level"
+
+[node name="ExitGame" type="Button" parent="Pause/MarginContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_haw25")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_307ub")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_46n82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fc7jj")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_urbh0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3e4nl")
+text = "Quit Game"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="CosmeticUnlockedDisplay" type="Label" parent="MarginContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 44
+text = "Cosmetic Unlocked!"
+
+[node name="CosmeticAnimator" type="AnimationPlayer" parent="MarginContainer"]
+libraries = {
+&"": SubResource("AnimationLibrary_307ub")
+}
+
+[node name="Timer" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 44
+text = "0:00"
+
+[node name="VignetteAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_urbh0")
+}
+playback_default_blend_time = 0.2
+
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitLevel" to="Pause" method="_on_exit_level_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_level_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_game_pressed"]

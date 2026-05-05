@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cw7l8lthmtexr" path="res://Scripts/Object/BoostOrb/push_orb.gd" id="1_do7bd"]
 [ext_resource type="Resource" uid="uid://p0quv5g1b7ch" path="res://Resource/Sound/Orb/push_orb.tres" id="2_1dkb7"]
-[ext_resource type="Texture2D" uid="uid://34husopxgdkv" path="res://Assets/Sprites/Placeholder/push_orb.png" id="2_do7bd"]
+[ext_resource type="Texture2D" uid="uid://dc1pcnc3ietn7" path="res://Assets/Sprites/Orbs/GreenOrb_Finalized.png" id="3_1dkb7"]
 
 [sub_resource type="Gradient" id="Gradient_do7bd"]
 offsets = PackedFloat32Array(1)
@@ -102,7 +102,8 @@ texture = SubResource("GradientTexture2D_41md6")
 
 [node name="Sprite" type="Sprite2D" parent="Visual"]
 scale = Vector2(4, 4)
-texture = ExtResource("2_do7bd")
+texture = ExtResource("3_1dkb7")
+offset = Vector2(0.5, 0.5)
 
 [node name="Particles" type="GPUParticles2D" parent="Visual"]
 self_modulate = Color(0.13999999, 1, 0.29766673, 1)
@@ -114,4 +115,5 @@ one_shot = true
 process_material = SubResource("ParticleProcessMaterial_s5biv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_41md6")

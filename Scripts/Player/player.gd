@@ -5,6 +5,8 @@ class_name Player extends Node2D
 @warning_ignore("unused_signal")
 signal sword_collision(collision : KinematicCollision2D)
 
+signal CompletionEvent(type:Level.CompletionEvent, value:Variant)
+
 ## Fired when the player's repsawn point is updated to a **different** value.
 signal respawn_point_changed(new : Vector2)
 
@@ -15,7 +17,10 @@ signal loadout_changed
 ## Fires when the player's health is set to a different value through any means.
 signal health_changed(new : float)
 
+signal killed
+
 var last_collision : KinematicCollision2D = null
+var last_ground_position : Vector2
 
 enum MovementMode {
 	SWORD_ORBIT, # The sword orbits the player
@@ -25,7 +30,11 @@ enum MovementMode {
 
 # TODO Cache sword and body ref until child structure is altered
 
-@onready var sprite : Sprite2D = $playerBody/Sprite2D
+@onready var sprite           : AnimatedSprite2D       = $playerBody/Sprite2D
+@onready var sprite_trail     : CPUParticles2D         = $playerBody/CPUParticles2D
+@onready var dash_animator    : AnimationPlayer        = $AnimationPlayer
+@onready var modifier_display : ModifierDisplayManager = $playerBody/ModifierDisplayManager
+@onready var heartbeat       : AudioStreamPlayer      = $Sounds/Heartbeat
 
 #region Exports
 
@@ -33,12 +42,40 @@ enum MovementMode {
 
 var property_modifiers : Dictionary[String, Array]
 
-@export var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0)
-@export var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0)
+# Cache modified properties for perfomance. Not doing so costs about 5ms frame time (on my machine)
+var property_modifier_cache : Dictionary[String, Variant]
+
+# Dirtied properties have not yet had their values cached
+var dirty_properties : Dictionary[String, bool]
+
+@export var hit_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Impact Sound (1).wav", 0.7, 1.0, &"SFX")
+@export var death_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Player Death.wav", 0.7, 1.0, &"SFX")
+@export var refresh_sound : SoundData = SoundData.new("res://Assets/Sound/SFX/Player/Refresh Short.wav", 0.0, 1.0, &"SFX")
 
 #endregion
 
+func dirty_all_properties() -> void:
+	dirty_properties.clear()
+
+func dirty_property(property: String) -> void:
+	dirty_properties[property] = true
+	
+	# size_scale screws with other properties, so erase everything if it changes.
+	if property == "size_scale":
+		dirty_all_properties()
+
+## Gets a player's stat with respect to all modifiers.
 func get_modified_property(property: String) -> Variant:
+	
+	# NOTE: If at any point a property changes, ensure that dirty_properties[property] is set to
+	# true afterward.
+	
+	# Get value from the cache if it hasn't been changed.
+	if property not in dirty_properties: dirty_properties[property] = true
+	if !dirty_properties[property]:
+		return property_modifier_cache[property]
+	
+	#...Otherwise, recalculate.
 	
 	var arr : Array[PropertyModifier] = []
 	if property in property_modifiers:
@@ -53,7 +90,17 @@ func get_modified_property(property: String) -> Variant:
 				if item is PropertyModifier:
 					arr.append(item)
 
-	return properties.get_modified(property, arr)
+	# Prevent infinite recursion (size_scale doesn't need it to be passed)
+	var size_scale : float = 1
+	if property != "size_scale":
+		size_scale = get_size_scale()
+	
+	var modified : Variant = properties.get_modified(property, arr, size_scale)
+	
+	dirty_properties[property] = false
+	property_modifier_cache[property] = modified
+	
+	return modified
 
 #region Properties
 ## The amount of time the player has triggered their M1 ability
@@ -79,6 +126,14 @@ var health : float = properties.max_health:
 	set(new):
 		if new != health:
 			health_changed.emit(new)
+		
+		heartbeat.playing = new < (properties.max_health*0.67)
+		heartbeat.pitch_scale = clampf(
+			0.5+(1-(new/properties.max_health))*0.6,
+			0.7,
+			1.3
+		)
+		
 		health = new
 
 ## The amount of time since damage was last taken.
@@ -183,6 +238,10 @@ func is_charging_ability() -> bool:
 func get_last_collision() -> KinematicCollision2D:
 	return last_collision
 
+## Returns the player's knockback strength
+func get_knockback() -> float:
+	return get_modified_property("knockback")
+
 ## Returns the damage of the player's sword. Should not be called directly, instead
 ## use get_blade_damage().
 func get_sword_damage() -> float:
@@ -192,9 +251,22 @@ func get_sword_damage() -> float:
 func get_sword_speed() -> float:
 	return get_modified_property("sword_speed")
 
+## Gets the speed at which the mouse must be moving (px/s) to produce maximum movement.
+func get_mouse_max_speed() -> float:
+	return get_modified_property("mouse_max_speed")
+
+## Returns true if the player can propel themselves horizontally from the ceiling
+## with respect to gravity. This value shouldn't change throughout gameplay,
+## but might if a weapon's functionality requires it.
+func can_push_off_ceiling() -> bool:
+	return false
+
 ## Returns the speed the sword must travel to deal maximum damage.
-func get_sword_speed_damage() -> float:
-	return get_modified_property("sword_speed_damage")
+#func get_sword_speed_damage() -> float:
+	#return get_modified_property("sword_speed_damage")
+
+func get_max_damage_time() -> float:
+	return get_modified_property("max_damage_time")
 
 ## Returns the max health of the player.
 func get_max_health() -> float:
@@ -235,16 +307,19 @@ func get_sword_speed_perc() -> float:
 	var sword : Sword = get_player_sword()
 	return sword.get_last_sword_velocity().length() / get_sword_speed()
 
+## Returns the coefficient that would be applied to the player's damage
+## upon a hit.
+func get_blade_damage_perc() -> float:
+	var sword : Sword = get_player_sword()
+	var perc : float = sword.speed_value
+	perc = min(perc, 1.0)
+	return perc
+
 ## Gets the current damage of the blade (Value changes based on speed, charge, etc.)
 func get_blade_damage() -> float:
 	var damage := 0.0
-	var sword : Sword = get_player_sword()
-	
-	var perc : float = max(0.0, sword.get_last_sword_velocity().length()/get_sword_speed_damage())
-	perc = min(perc, 1.0)
-	
+	var perc := get_blade_damage_perc()
 	damage += get_sword_damage()*perc
-	
 	return damage
 
 ## Gets the multiplier of knockback applied to the player when they are dealt it.
@@ -300,8 +375,10 @@ func _visual_process(delta : float) -> void:
 	# Update player rotation
 	var body : PlayerBody = get_player_body()
 	if body:
-		body.get_sprite().flip_h = get_player_sword().get_tip_global_position().x < get_player_position().x
-		body.get_sprite().flip_v = (get_gravity() <= 0)
+		var do_flip_h : bool = !get_player_sword().get_tip_global_position().x < get_player_position().x
+		var do_flip_v : bool = (get_gravity() <= 0)
+		body.get_sprite().flip_h = do_flip_h
+		body.get_sprite().flip_v = do_flip_v
 
 	# Update player damage
 	if sprite:
@@ -323,11 +400,17 @@ func _visual_process(delta : float) -> void:
 func get_current_weapon_index() -> int:
 	return held_weapons.find(current_weapon)
 
+## Replace the player's currently held weapon with another.
+func replace_weapon(weapon : Weapon) -> void:
+	var idx := get_current_weapon_index()
+	held_weapons[idx] = weapon
+	equip_weapon_slot(idx)
+
 ## Equip the passed weapon
 func equip_weapon(weapon : Weapon) -> void:
 	
 	if not weapon: return
-	if not weapon.can_use: weapon.init_weapon(self)
+	if not weapon.get_can_use(): weapon.init_weapon(self)
 	weapon.reset()
 	weapon.on_equip()
 	
@@ -336,10 +419,11 @@ func equip_weapon(weapon : Weapon) -> void:
 	
 	_clear_visuals()
 	loadout_changed.emit()
+	dirty_all_properties()
 	
-	var scn : PackedScene = CosmeticLoader.get_weapon_visual(weapon)
+	var scn : WeaponVisual = CosmeticLoader.get_weapon_visual(weapon)
 	if scn:
-		weapon_visual = scn.instantiate()
+		weapon_visual = scn
 		weapon_visual.set_player(self)
 		add_child(weapon_visual)
 
@@ -392,16 +476,33 @@ func pickup_weapon(weapon : Weapon) -> Weapon:
 func _input(event: InputEvent) -> void: # TODO Replace this with an input manager class.
 	
 	if event.is_action_pressed("use"):
-		if current_weapon and current_weapon.can_use:
+		if current_weapon and current_weapon.get_can_use():
+			
+			# Do the using
 			Sfx.play_sound_2d(current_weapon.use_end_sound, get_player_position())
 			ability_charge = current_weapon.MAX_CHARGE
 			current_weapon.use(ability_charge)
+			dash_animator.play("used_dash")
+			CompletionEvent.emit(Level.CompletionEvent.PLAYER_DASHED, null)
+			
+			# Reset trail
+			if sprite_trail.modulate.a <= 0:
+				
+				sprite_trail.restart()
+				
+			var size_scale : float = get_size_scale()*3
+			sprite_trail.scale_amount_min = size_scale
+			sprite_trail.scale_amount_max = size_scale
+			
+			if sprite.flip_v:
+				sprite_trail.rotation = PI
+			else:
+				sprite_trail.rotation = 0
+				
+			sprite_trail.modulate.a = 1
 	
 	#elif event.is_action_released("use"):
 		#stop_charging()
-	
-	elif event.is_action_pressed("quit"):
-		get_tree().quit()
 	
 	elif event.is_action_pressed("next_weapon"):
 		var idx : int = get_current_weapon_index()
@@ -414,11 +515,14 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 		equip_weapon_slot(idx)
 	
 	elif event.is_action_pressed("noclip"):
-		if get_movement_mode() == MovementMode.NOCLIP:
-			set_movement_mode(MovementMode.SWORD_ORBIT)
-		else:
-			get_player_sword().on_cable = null       
-			set_movement_mode(MovementMode.NOCLIP)
+		if OS.has_feature("debug"):
+			if get_movement_mode() == MovementMode.NOCLIP:
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+				set_movement_mode(MovementMode.SWORD_ORBIT)
+			else:
+				get_player_sword().on_cable = null
+				Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+				set_movement_mode(MovementMode.NOCLIP)
 	
 	elif event is InputEventKey:
 		if event.pressed:
@@ -462,6 +566,8 @@ func set_movement_mode(mode : MovementMode) -> void:
 ## use their weapon's ability again
 func reset_weapon_use() -> void:
 	if current_weapon:
+		if !current_weapon.get_can_use():
+			Sfx.play_sound(refresh_sound)
 		current_weapon.can_use = true
 
 ## Teleport the player and sword to the target location.
@@ -499,30 +605,44 @@ func clear_respawn_modifiers() -> void:
 		for modifier:PropertyModifier in property_modifiers[stat]:
 			if modifier.reset_on_respawn:
 				property_modifiers[stat].erase(modifier)
+	dirty_all_properties()
 
 func _respawn() -> void:
 	
-	teleport_to(respawn_pos)
+	
 	get_player_sword().on_cable = null
 	
 	clear_respawn_modifiers()
+	teleport_to(respawn_pos)
 	
 	time_respawning = 0
 	last_hit_time = get_invincibility_time()*-2
 	lives -= 1
 	health = get_modified_property("max_health")
 	dead = false
+	$Animator.play_spawn()
 
 ## Handle the death of the player.
 func _death() -> void:
 	if dead: return
+	CompletionEvent.emit(Level.CompletionEvent.PLAYER_DEATH, null)
+	killed.emit()
 	get_player_sword().on_cable = null
 	Sfx.play_sound_2d(death_sound, get_player_position(), false)
 	dead = true
+	SignalBus.PlayerKilled.emit(self)
 
 ## Kill the player.
 func kill() -> void:
 	_death()
+
+## Returns true if the player is currently invincible, i.e. has just been hit.
+func iframes_active() -> bool:
+	return last_hit_time < get_invincibility_time()
+
+## Heals the player by amt, not exceeding max health.
+func heal(amt : float) -> void:
+	health = clampf(health+amt, 0.0, get_max_health())
 
 ## Deal amt of damage to the player, killing them if reaching zero. Returns true if the damage was
 ## successfully dealt.
@@ -538,6 +658,8 @@ func deal_damage(amt : float) -> bool:
 	
 	# TODO Set parent to something better
 	TextDisplay.damage_display(get_parent(), get_player_position(),str(amt), Vector2.from_angle(-PI/2+randf_range(-PI/4,PI/4)))
+	
+	CompletionEvent.emit(Level.CompletionEvent.PLAYER_TAKEN_DAMAGE, amt)
 	
 	last_hit_time = 0.0
 	last_hit_amount = amt
@@ -564,10 +686,34 @@ func get_modifier_ids(stat:String) -> Array[String]:
 
 ## Add a property modifier to one of the player's stats.
 func add_modifier(mod : PropertyModifier, stat:String) -> void:
+	
+	var last_size : float = get_size_scale()
+	
 	if stat not in property_modifiers:
-		property_modifiers[stat] = [mod] ; return
-	if mod.id not in get_modifier_ids(stat):
+		property_modifiers[stat] = [mod]
+	
+	elif mod.id not in get_modifier_ids(stat): # Add modifier if the id isn't present
 		property_modifiers.get(stat).append(mod)
+	
+	else: # Modifier with id already present; override it
+		for current_mod:Variant in property_modifiers.get(stat):
+			if current_mod.id == mod.id:
+				property_modifiers[stat].erase(current_mod)
+		property_modifiers.get(stat).append(mod)
+	
+	dirty_property(stat)
+	
+	# Make modifier display for timed modifications
+	if mod.timer > 0:
+		var color : Color = Color.WHITE
+		match mod.id: # Hardcoded color. Yes, its not great, but its a niche use.
+			"gravity_orb":
+				color = Color.PURPLE
+		
+		modifier_display.create_display(mod.id, mod.timer, color)
+	
+	if stat == "size_scale":
+		teleport_to(get_player_body().global_position/(get_size_scale()/last_size))
 
 ## Remove a target modifier by its id.
 func remove_modifier_by_id(id : String, stat:String) -> void:
@@ -575,6 +721,7 @@ func remove_modifier_by_id(id : String, stat:String) -> void:
 	for mod : PropertyModifier in property_modifiers[stat]:
 		if mod.id == id:
 			property_modifiers[stat].erase(mod)
+			dirty_property(stat)
 
 ## Update all of the player's property modifiers.
 func _update_modifiers(delta : float) -> void:
@@ -582,13 +729,25 @@ func _update_modifiers(delta : float) -> void:
 		for value : PropertyModifier in property_modifiers[key]:
 			value.update(delta)
 			if not value.is_active():
+				var last_size : float = get_size_scale()
 				property_modifiers[key].erase(value)
+				dirty_property(key)
+				if key == "size_scale":
+					teleport_to(get_player_body().global_position/(get_size_scale()/last_size))
 
 #endregion
 
 func _process(delta: float) -> void:
-	
 	last_hit_time += delta
+	sprite_trail.modulate.a -= 3*delta
+	
+	if get_player_body().is_on_floor():
+		if dash_animator.current_animation != "cant_dash":
+			dash_animator.play("cant_dash")
+	elif current_weapon.get_can_use():
+		if dash_animator.current_animation != "has_dash":
+			dash_animator.play("has_dash")
+		
 	
 	if current_weapon:
 		current_weapon.process_weapon(delta)
@@ -596,7 +755,7 @@ func _process(delta: float) -> void:
 	charging_ability = (ability_charge > 0.0)
 	
 	if charging_ability and is_instance_valid(current_weapon):
-		if current_weapon.can_use:
+		if current_weapon.get_can_use():
 			ability_charge -= delta
 		else:
 			ability_charge = 0
@@ -620,12 +779,13 @@ func _ready() -> void:
 	lives = get_modified_property("max_lives")
 	add_weapon(get_modified_property("starting_weapon"))
 	equip_weapon_slot(0)
-	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED # TODO Move to a better spot when level loading is better
 
 ## Set the last kinematic collision of the sword tip. Should be done each physics process.
 func set_last_collision(collision:KinematicCollision2D) -> void:
 	sword_collision.emit(collision)
 	last_collision = collision
+	if collision:
+		last_ground_position = collision.get_position()
 
 ## Returns the global position of the player.
 func get_player_position() -> Vector2:

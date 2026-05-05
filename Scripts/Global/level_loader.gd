@@ -18,9 +18,26 @@ func clear_levels(parent : Node) -> void:
 		if child is Level:
 			child.queue_free()
 
-## Loads a level and parents it to `parent`. 
-func load_level(path : String, parent: Node, config : LevelConfig = null) -> LoadLevelStatus: # TODO Dynamically test levels as they are added.
+## Loads the level selector. By default, parents it to Globals.main.
+func load_selector(parent : Node = null) -> void:
 	
+	if not parent:
+		if not Globals.has_main():
+			return
+		parent = Globals.main
+	
+	for child in parent.get_children():
+		if child is GraphLevelSelect:
+			push_warning("Duplicate level selector found! Deleting original...")
+			child.queue_free()
+	
+	clear_levels(parent)
+	var selector : Node = load("res://Scenes/UI/graph_level_select.tscn").instantiate()
+	selector.ready.connect(SignalBus.SelectorLoaded.emit)
+	parent.add_child(selector)
+
+## Loads a level and parents it to `parent`. 
+func load_level(path : String, parent: Node, config : LevelConfig = null, clear_others:bool = true) -> LoadLevelStatus: # TODO Dynamically test levels as they are added.
 	if not is_instance_valid(parent): return LoadLevelStatus.INVALID_PARENT
 	if not path: return LoadLevelStatus.INVALID_LEVEL
 	
@@ -29,6 +46,9 @@ func load_level(path : String, parent: Node, config : LevelConfig = null) -> Loa
 	
 	var loaded := scn.instantiate()
 	if loaded is not Level: loaded.free() ; return LoadLevelStatus.LEVEL_IS_NOT_LEVEL
+	
+	if clear_others:
+		clear_levels(parent)
 	
 	parent.add_child(loaded)
 	loaded.initialize(config)

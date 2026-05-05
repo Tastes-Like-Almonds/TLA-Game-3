@@ -110,6 +110,7 @@ func _update_sparks() -> void:
 	var sparks : GPUParticles2D = _get_spark_particles()
 	sparks.emitting = _is_dragging(spark_threshold)
 	
+	if !sparks.emitting: return
 	var vel := player.get_player_sword().get_last_sword_velocity()
 	var speed := vel.length()
 	if player.get_player_sword().is_on_cable():
@@ -124,7 +125,8 @@ func update_audio(_delta : float) -> void:
 	
 	var sword := player.get_player_sword()
 	
-	# Drag sound
+	# Drag sound. Yeah I know its ugly, but if I don't look at it the problem is solved!
+	# ...I'll do better next time.
 	if is_instance_valid(drag_sound_node):
 		
 		if sword.on_cable:
@@ -137,7 +139,7 @@ func update_audio(_delta : float) -> void:
 				
 			var speed := absf(sword.cable_speed)
 			
-			cable_sound_node.volume_linear = clampf(speed/cable_speed_max, 0.0, 1.0)
+			cable_sound_node.volume_db = linear_to_db(clampf(speed/cable_speed_max, 0.0, 1.0))
 			cable_sound_node.pitch_scale = clampf(speed/cable_speed_max, 4, 6)/4
 				
 		elif _is_dragging(0):
@@ -146,12 +148,13 @@ func update_audio(_delta : float) -> void:
 			cable_sound_node.playing = false
 			
 			if drag_sound_node.playing == false:
-				var vel := sword.get_last_sword_velocity()
-				var speed := vel.length()
-				
 				drag_sound_node.play()
-				drag_sound_node.volume_linear = clampf(speed/drag_speed_max, 0.0, 1.0)
-				drag_sound_node.pitch_scale = clampf(speed/drag_speed_max, 4, 8)/4
+			
+			var vel := sword.get_last_sword_velocity()
+			var speed := vel.length()
+				
+			drag_sound_node.volume_db = linear_to_db(clampf(speed/drag_speed_max, 0.0, 1.0)*2.5)
+			drag_sound_node.pitch_scale = clampf(speed/drag_speed_max, 4, 8)/4
 				
 		else:
 			
@@ -189,6 +192,7 @@ func _ready() -> void:
 		drag_sound_node = AudioStreamPlayer2D.new()
 		drag_sound_node.stream = load(drag_sound)
 		drag_sound_node.autoplay = false
+		drag_sound_node.bus = &"SFX"
 		_get_sprite().add_child(drag_sound_node)
 	
 	# Create swinging sound
@@ -196,6 +200,7 @@ func _ready() -> void:
 		swing_sound_node = AudioStreamPlayer2D.new()
 		swing_sound_node.stream = load(swing_sound)
 		swing_sound_node.autoplay = false
+		swing_sound_node.bus = &"SFX"
 		_get_sprite().add_child(swing_sound_node)
 	
 	# Create swinging sound
@@ -203,6 +208,7 @@ func _ready() -> void:
 		cable_sound_node = AudioStreamPlayer2D.new()
 		cable_sound_node.stream = load(cable_sound)
 		cable_sound_node.autoplay = false
+		swing_sound_node.bus = &"SFX"
 		_get_sprite().add_child(cable_sound_node)
 
 @abstract func get_hotbar_sprite() -> Texture2D

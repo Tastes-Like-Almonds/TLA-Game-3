@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BodyCosmetic" load_steps=3 format=3 uid="uid://bpxubikvn1rxp"]
+
+[ext_resource type="Script" uid="uid://oksvaahqx7ou" path="res://Scripts/Resource/Cosmetic/body_cosmetic.gd" id="1_jrpxb"]
+[ext_resource type="Texture2D" uid="uid://dpcxsu7nurdap" path="res://Assets/Sprites/Cosmetic/Hat/Tricorn Hat.png" id="2_w1v4v"]
+
+[resource]
+script = ExtResource("1_jrpxb")
+default_flip_h = true
+offset = Vector2(0, -45)
+texture = ExtResource("2_w1v4v")
+name = "Tricorn Hat"
+hint = "Across the void, and quite above."
+desc = "But where's the bow?"
+metadata/_custom_type_script = "uid://oksvaahqx7ou"

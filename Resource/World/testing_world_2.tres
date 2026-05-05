@@ -1,0 +1,141 @@
+[gd_resource type="Resource" script_class="WorldData" load_steps=27 format=3 uid="uid://bs5p1lov34mi7"]
+
+[ext_resource type="Script" uid="uid://b2agbg1ytt17w" path="res://Scripts/Resource/Level/world_data.gd" id="1_k5otn"]
+[ext_resource type="Script" uid="uid://cgg14ym78f0wv" path="res://Scripts/Resource/Level/world_segment_data.gd" id="2_ird7p"]
+[ext_resource type="Script" uid="uid://c1gvipoj6cyhl" path="res://Scripts/Resource/Level/level_node_data.gd" id="3_52u8i"]
+[ext_resource type="Script" uid="uid://3mlju2v7jhxa" path="res://Scripts/Resource/Level/level_data.gd" id="4_tquxh"]
+[ext_resource type="Script" uid="uid://dtwm1t1xxqa6m" path="res://Scripts/Resource/Level/level_link_data.gd" id="5_36o25"]
+
+[sub_resource type="Resource" id="Resource_j7cvt"]
+script = ExtResource("4_tquxh")
+title = "Level Title"
+description = "Desc"
+level_path = "res://Scenes/Level/easier.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_s4hcf"]
+script = ExtResource("5_36o25")
+sid = "1.3"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
+[sub_resource type="Resource" id="Resource_n7rej"]
+script = ExtResource("3_52u8i")
+sid = "1.1"
+level_data = SubResource("Resource_j7cvt")
+links = Array[ExtResource("5_36o25")]([SubResource("Resource_s4hcf")])
+always_playable = true
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_a5slf"]
+script = ExtResource("2_ird7p")
+levels = Array[ExtResource("3_52u8i")]([SubResource("Resource_n7rej")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
+[sub_resource type="Resource" id="Resource_mvwjb"]
+script = ExtResource("4_tquxh")
+title = "Second level"
+description = "My Second level description"
+difficulty = 1
+level_path = "res://Scenes/Level/snake_tutor.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_8mfui"]
+script = ExtResource("3_52u8i")
+sid = "1.2"
+level_data = SubResource("Resource_mvwjb")
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_t85tn"]
+script = ExtResource("4_tquxh")
+title = "Secret Level 2"
+description = "HEHEHEHHEH"
+difficulty = 3
+level_path = "res://Scenes/Level/dev_level_5.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_qtkc6"]
+script = ExtResource("3_52u8i")
+sid = "1.2-B"
+level_data = SubResource("Resource_t85tn")
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_o366t"]
+script = ExtResource("4_tquxh")
+title = "CCCC"
+description = "AEAEAEA"
+difficulty = 1
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_h33xm"]
+script = ExtResource("5_36o25")
+sid = "1.3"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
+[sub_resource type="Resource" id="Resource_7ym1t"]
+script = ExtResource("3_52u8i")
+sid = "1.2-C"
+level_data = SubResource("Resource_o366t")
+links = Array[ExtResource("5_36o25")]([SubResource("Resource_h33xm")])
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_e8nbq"]
+script = ExtResource("2_ird7p")
+levels = Array[ExtResource("3_52u8i")]([SubResource("Resource_8mfui"), SubResource("Resource_qtkc6"), SubResource("Resource_7ym1t")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
+[sub_resource type="Resource" id="Resource_658pt"]
+script = ExtResource("4_tquxh")
+title = "Duh third"
+description = "The third level!"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_2fl4i"]
+script = ExtResource("5_36o25")
+sid = "1.4"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
+[sub_resource type="Resource" id="Resource_htug3"]
+script = ExtResource("3_52u8i")
+sid = "1.3"
+level_data = SubResource("Resource_658pt")
+links = Array[ExtResource("5_36o25")]([SubResource("Resource_2fl4i")])
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_gljry"]
+script = ExtResource("2_ird7p")
+levels = Array[ExtResource("3_52u8i")]([SubResource("Resource_htug3")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
+[sub_resource type="Resource" id="Resource_6bpj5"]
+script = ExtResource("3_52u8i")
+sid = "1.4"
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_o7sk2"]
+script = ExtResource("2_ird7p")
+levels = Array[ExtResource("3_52u8i")]([SubResource("Resource_6bpj5")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
+[sub_resource type="Resource" id="Resource_k5otn"]
+script = ExtResource("3_52u8i")
+sid = "2.4"
+always_playable = true
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_ird7p"]
+script = ExtResource("3_52u8i")
+sid = "2.4-A"
+always_playable = true
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_52u8i"]
+script = ExtResource("2_ird7p")
+levels = Array[ExtResource("3_52u8i")]([SubResource("Resource_k5otn"), SubResource("Resource_ird7p")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
+[resource]
+script = ExtResource("1_k5otn")
+name = "The Second World"
+segments = Array[ExtResource("2_ird7p")]([SubResource("Resource_a5slf"), SubResource("Resource_e8nbq"), SubResource("Resource_gljry"), SubResource("Resource_o7sk2"), SubResource("Resource_52u8i")])
+line_locked_color = Color(1, 1, 1, 0.45490196)
+metadata/_custom_type_script = "uid://b2agbg1ytt17w"

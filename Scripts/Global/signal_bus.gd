@@ -1,7 +1,7 @@
 extends Node
 ## A script for managing signals within the project.
-##
-## Not required to use, but should be done to reduce coupling.
+## The warning ignores are due to the fact this class merely holds the signals,
+## and does not work with them.
 
 ## Fired when main is fully loaded.
 @warning_ignore("unused_signal")
@@ -21,12 +21,69 @@ signal PlayerAdded(player : Player)
 @warning_ignore("unused_signal")
 signal PlayerRemoved()
 
+## Fired when a player unlocks a cosmetic.
+@warning_ignore("unused_signal")
+signal CosmeticUnlocked()
+
+## When fired, players will reload cosmetics.
+@warning_ignore("unused_signal")
+signal ReloadCosmetics()
+
 #endregion
 
 #region level
 ## Fired when a level is loaded via LevelLoader.gd. Passes the string path of the level.
 @warning_ignore("unused_signal")
 signal LevelPathLoaded(level: Level)
+
+## Fires when a level is fully loaded.
+@warning_ignore("unused_signal")
+signal LevelLoaded()
+
+## Fires when the level selector is loaded.
+@warning_ignore("unused_signal")
+signal SelectorLoaded()
+
+## Firest when the game is paused/unpaused.
+@warning_ignore("unused_signal")
+signal PauseToggled()
+
+## Request the game to be paused. Called from the pause menu to pause_manager.gd to avoid coupling.
+@warning_ignore("unused_signal")
+signal RequestUnpause()
+
+## Called when the camera changes.
+@warning_ignore("unused_signal")
+signal CameraChanged(camera:Camera2D)
+
+## Called when the level is fully loaded and any transition animations complete.
+@warning_ignore("unused_signal")
+signal TransitionFinished()
+
+## Called when any player dies.
+@warning_ignore("unused_signal")
+signal PlayerKilled(player : Player)
+#endregion
+
+#region UI Requests
+
+## Opens the settings menu.
+@warning_ignore("unused_signal")
+signal OpenSettings()
+
+## Fires when the dialog queue ends.
+@warning_ignore("unused_signal")
+signal DialogStart
+
+## Fires when the dialog queue is no longer empty.
+@warning_ignore("unused_signal")
+signal DialogEnd
+
+## Fires when a dialog prompt enters the player's range.
+## Used to determine the closest prompt as to ensure
+## only one gets clicked.
+@warning_ignore("unused_signal")
+signal DialogPromptEntered(prompt:DialogPrompt)
 #endregion
 
 func _ready() -> void:

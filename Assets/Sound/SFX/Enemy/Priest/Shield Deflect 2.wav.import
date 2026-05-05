@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://clrgactc80uw0"
+path="res://.godot/imported/Shield Deflect 2.wav-2fb2d2617e156911fa3e1300ea40f276.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Enemy/Priest/Shield Deflect 2.wav"
+dest_files=["res://.godot/imported/Shield Deflect 2.wav-2fb2d2617e156911fa3e1300ea40f276.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

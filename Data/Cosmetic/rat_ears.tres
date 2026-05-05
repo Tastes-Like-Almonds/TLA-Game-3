@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BodyCosmetic" load_steps=3 format=3 uid="uid://cloxode7lbpse"]
+
+[ext_resource type="Script" uid="uid://oksvaahqx7ou" path="res://Scripts/Resource/Cosmetic/body_cosmetic.gd" id="1_tnsps"]
+[ext_resource type="Texture2D" uid="uid://k6hbdcug8rek" path="res://Assets/Sprites/Cosmetic/Hat/Rat Ears.png" id="2_tnsps"]
+
+[resource]
+script = ExtResource("1_tnsps")
+offset = Vector2(0, -42)
+texture_behind = ExtResource("2_tnsps")
+name = "Rat Ears"
+hint = "They love small tunnels."
+desc = "rats. rats. weere the rats."
+metadata/_custom_type_script = "uid://oksvaahqx7ou"

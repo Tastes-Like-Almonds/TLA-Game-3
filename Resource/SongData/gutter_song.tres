@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SongData" load_steps=2 format=3 uid="uid://biec8c3hvnxmv"]
+
+[ext_resource type="Script" uid="uid://b6h82msp0laej" path="res://Scripts/Resource/Sound/song_data.gd" id="1_q7tl2"]
+
+[resource]
+script = ExtResource("1_q7tl2")
+path = &"res://Assets/Sound/Music/maybe this perchance.wav"
+vol_linear = 0.45
+metadata/_custom_type_script = "uid://b6h82msp0laej"

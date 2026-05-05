@@ -1,0 +1,104 @@
+[gd_scene load_steps=6 format=3 uid="uid://tu5stt8xu3fx"]
+
+[ext_resource type="Theme" uid="uid://clav6fao2ppmo" path="res://Resource/Theme/levelselect.tres" id="1_xqnso"]
+[ext_resource type="Script" uid="uid://cxinmb8vl2cmd" path="res://Scripts/UI/level_select.gd" id="2_1ixn2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ixn2"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xptg4"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.12591082, 0.12591085, 0.12591076, 1)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2wnai"]
+
+[node name="LevelSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_xqnso")
+script = ExtResource("2_1ixn2")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Select" type="ScrollContainer" parent="PanelContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 0
+theme_override_styles/focus = SubResource("StyleBoxFlat_1ixn2")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/HSplitContainer/Select"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HSplitContainer/Select/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 20
+
+[node name="Leaderboard" type="PanelContainer" parent="PanelContainer/HSplitContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xptg4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HSplitContainer/Leaderboard"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="PanelContainer/HSplitContainer/Leaderboard/VBoxContainer"]
+layout_mode = 2
+text = "Leaderboard"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/HSplitContainer/Leaderboard/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/HSplitContainer/Leaderboard/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/HSplitContainer/Leaderboard/VBoxContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/HSplitContainer/Leaderboard/VBoxContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("PlaceholderTexture2D_2wnai")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="PanelContainer/HSplitContainer/Leaderboard/VBoxContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "JohnDoe - 20.0s"

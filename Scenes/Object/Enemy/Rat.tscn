@@ -1,0 +1,168 @@
+[gd_scene load_steps=21 format=3 uid="uid://qragv60k75mq"]
+
+[ext_resource type="Script" uid="uid://dtskrov7aykbb" path="res://Scripts/Object/Enemy/rat.gd" id="1_fhywy"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="2_8yn6y"]
+[ext_resource type="Texture2D" uid="uid://xj4l38qshhql" path="res://Assets/Sprites/Enemy/Rat/Rat_Finalized.png" id="3_04dn8"]
+[ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="3_qvd2m"]
+[ext_resource type="Texture2D" uid="uid://bac1anm7wxbnu" path="res://Assets/Sprites/Enemy/Rat/Rat1.png" id="4_8x0ty"]
+[ext_resource type="Texture2D" uid="uid://ci7ekbtxb3w06" path="res://Assets/Sprites/Enemy/Rat/Rat2.png" id="5_1f4xf"]
+[ext_resource type="Script" uid="uid://bt4s0eko6axeb" path="res://Scripts/Object/Enemy/Component/hitbox.gd" id="5_ia02j"]
+[ext_resource type="Script" uid="uid://c8qvuoapglubu" path="res://Scripts/Object/Enemy/Component/damage_area.gd" id="6_1f4xf"]
+[ext_resource type="Texture2D" uid="uid://4ftncmxjekax" path="res://Assets/Sprites/Enemy/Rat/Rat3.png" id="6_llv1r"]
+[ext_resource type="AudioStream" uid="uid://do1lx75avuihy" path="res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Walk Edit 1 Export 1(3).mp3" id="7_llv1r"]
+
+[sub_resource type="Resource" id="Resource_8x0ty"]
+script = ExtResource("2_8yn6y")
+sound_string = "res://Assets/Sound/SFX/Enemy/Rat/Rat Hit Edit 1 Export 1.mp3"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_ia02j"]
+script = ExtResource("2_8yn6y")
+sound_string = "res://Assets/Sound/SFX/Enemy/Rat/Rat Death Edit 1 Export 1.mp3"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_1f4xf"]
+script = ExtResource("2_8yn6y")
+sound_string = "res://Assets/Sound/SFX/Enemy/Cockroach/Cockroach Alert.wav"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6sep"]
+size = Vector2(11.666667, 6.666667)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i7r4a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_8x0ty")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1f4xf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_llv1r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_8x0ty")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_llv1r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_04dn8")
+}],
+"loop": false,
+"name": &"spawn",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_6un6e"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.5686275, 0.5686275, 0.24705882, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gnly0"]
+gradient = SubResource("Gradient_6un6e")
+width = 8
+height = 8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tuwcp"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+gravity = Vector3(0, 2000, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upkqw"]
+size = Vector2(28.73722, 8.865932)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qvd2m"]
+size = Vector2(21.731962, 2.9271922)
+
+[node name="Rat" type="AnimatableBody2D" node_paths=PackedStringArray("sprite", "notifier") groups=["EnemyBody"]]
+scale = Vector2(3, 3)
+collision_layer = 0
+collision_mask = 17
+sync_to_physics = false
+script = ExtResource("1_fhywy")
+sprite = NodePath("AnimatedSprite2D")
+notifier = NodePath("VisibleOnScreenNotifier2D")
+hit_sound = SubResource("Resource_8x0ty")
+death_sound = SubResource("Resource_ia02j")
+alert_sound = SubResource("Resource_1f4xf")
+damage = 1.0
+max_hit_kb = 500.0
+metadata/_edit_vertical_guides_ = [-61.0]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.16666603, 0.6666667)
+shape = SubResource("RectangleShape2D_o6sep")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("3_qvd2m")
+sprite_frames = SubResource("SpriteFrames_i7r4a")
+animation = &"idle"
+frame_progress = 0.8223883
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+texture = SubResource("GradientTexture2D_gnly0")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("ParticleProcessMaterial_tuwcp")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+top_level = true
+position = Vector2(0, 26)
+scale = Vector2(1.5180994, 1.7843573)
+rect = Rect2(-21, -24, 36, 19)
+
+[node name="Hitbox" type="Area2D" parent="." groups=["BladeHitable"]]
+position = Vector2(0, -1.1920929e-07)
+scale = Vector2(0.59607404, 1.2075148)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("5_ia02j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(-2, 0.71091247)
+scale = Vector2(1, 1.0000001)
+shape = SubResource("RectangleShape2D_upkqw")
+debug_color = Color(0.98, 0.08819997, 0.31115, 0.39607844)
+
+[node name="DamageArea" type="Area2D" parent="." groups=["BladeHitable"]]
+position = Vector2(0, 2)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_1f4xf")
+call_on_hit = false
+check_on_process = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+position = Vector2(-1.3333337, -1.3333333)
+scale = Vector2(0.85128087, 3.3593059)
+shape = SubResource("RectangleShape2D_qvd2m")
+debug_color = Color(0.98, 0.08819997, 0.31115, 0.39607844)
+
+[node name="Walking" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(2, 2)
+stream = ExtResource("7_llv1r")
+volume_db = 5.579
+
+[connection signal="body_entered" from="DamageArea" to="DamageArea" method="_on_body_entered"]

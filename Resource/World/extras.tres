@@ -1,0 +1,127 @@
+[gd_resource type="Resource" script_class="WorldData" load_steps=23 format=3 uid="uid://7f8r0bxcu40k"]
+
+[ext_resource type="Script" uid="uid://b2agbg1ytt17w" path="res://Scripts/Resource/Level/world_data.gd" id="1_wuret"]
+[ext_resource type="Script" uid="uid://cgg14ym78f0wv" path="res://Scripts/Resource/Level/world_segment_data.gd" id="2_rsgaf"]
+[ext_resource type="Script" uid="uid://c1gvipoj6cyhl" path="res://Scripts/Resource/Level/level_node_data.gd" id="3_axg8v"]
+[ext_resource type="Script" uid="uid://3mlju2v7jhxa" path="res://Scripts/Resource/Level/level_data.gd" id="4_qpy1n"]
+[ext_resource type="Script" uid="uid://dtwm1t1xxqa6m" path="res://Scripts/Resource/Level/level_link_data.gd" id="5_uenf6"]
+
+[sub_resource type="Resource" id="Resource_wuret"]
+script = ExtResource("4_qpy1n")
+title = "Development 1"
+description = "The first level created in the game. Movement was different back then, but it still works!"
+level_path = "res://Scenes/Level/dev_level_1.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_axg8v"]
+script = ExtResource("5_uenf6")
+sid = "D-2"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
+[sub_resource type="Resource" id="Resource_rsgaf"]
+script = ExtResource("3_axg8v")
+sid = "D-1"
+level_data = SubResource("Resource_wuret")
+links = Array[ExtResource("5_uenf6")]([SubResource("Resource_axg8v")])
+always_playable = true
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_c8x28"]
+script = ExtResource("4_qpy1n")
+title = "Kill It With Hammers"
+description = "Yeah I have no idea what happened here. You probably shouldn't play this one."
+difficulty = 2
+level_path = "res://Scenes/Level/killitwithhammers.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_dlim1"]
+script = ExtResource("3_axg8v")
+sid = "KWH"
+level_data = SubResource("Resource_c8x28")
+always_playable = true
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_ed28e"]
+script = ExtResource("2_rsgaf")
+levels = Array[ExtResource("3_axg8v")]([SubResource("Resource_rsgaf"), SubResource("Resource_dlim1")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
+[sub_resource type="Resource" id="Resource_qpy1n"]
+script = ExtResource("4_qpy1n")
+title = "Development 2"
+description = "The second development level. This one is a bit more complete, but still used a bunch of placeholders."
+level_path = "res://Scenes/Level/dev_level_2.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_o154s"]
+script = ExtResource("5_uenf6")
+sid = "D-3"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
+[sub_resource type="Resource" id="Resource_uenf6"]
+script = ExtResource("3_axg8v")
+sid = "D-2"
+level_data = SubResource("Resource_qpy1n")
+links = Array[ExtResource("5_uenf6")]([SubResource("Resource_o154s")])
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_4pu2u"]
+script = ExtResource("2_rsgaf")
+levels = Array[ExtResource("3_axg8v")]([SubResource("Resource_uenf6")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
+[sub_resource type="Resource" id="Resource_gxnx1"]
+script = ExtResource("4_qpy1n")
+title = "Development 3"
+description = "The third development level. This was the first one we playtested, and is far more completed than the others. There's also a buncha orbs."
+difficulty = 3
+level_path = "res://Scenes/Level/dev_level_3.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_e1cdb"]
+script = ExtResource("5_uenf6")
+sid = "D-4"
+metadata/_custom_type_script = "uid://dtwm1t1xxqa6m"
+
+[sub_resource type="Resource" id="Resource_ppafs"]
+script = ExtResource("3_axg8v")
+sid = "D-3"
+level_data = SubResource("Resource_gxnx1")
+links = Array[ExtResource("5_uenf6")]([SubResource("Resource_e1cdb")])
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_hycch"]
+script = ExtResource("2_rsgaf")
+levels = Array[ExtResource("3_axg8v")]([SubResource("Resource_ppafs")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
+[sub_resource type="Resource" id="Resource_buqh5"]
+script = ExtResource("4_qpy1n")
+title = "Development 4"
+description = "The fourth and final development level. Not too much new here, but it set the standard for design and environment for the following levels."
+difficulty = 1
+level_path = "res://Scenes/Level/dev_level_5.tscn"
+metadata/_custom_type_script = "uid://3mlju2v7jhxa"
+
+[sub_resource type="Resource" id="Resource_r6qcd"]
+script = ExtResource("3_axg8v")
+sid = "D-4"
+level_data = SubResource("Resource_buqh5")
+metadata/_custom_type_script = "uid://c1gvipoj6cyhl"
+
+[sub_resource type="Resource" id="Resource_avde4"]
+script = ExtResource("2_rsgaf")
+levels = Array[ExtResource("3_axg8v")]([SubResource("Resource_r6qcd")])
+metadata/_custom_type_script = "uid://cgg14ym78f0wv"
+
+[resource]
+script = ExtResource("1_wuret")
+name = "extras"
+display_name = "Extras"
+segments = Array[ExtResource("2_rsgaf")]([SubResource("Resource_ed28e"), SubResource("Resource_4pu2u"), SubResource("Resource_hycch"), SubResource("Resource_avde4")])
+selector_animation = &"extras"
+line_unlocked_color = Color(0.77, 0.96933335, 1, 1)
+line_locked_color = Color(0.043881178, 0.13380113, 0.35145867, 0.45490196)
+level_color = Color(0.279, 0.77810013, 0.93, 1)
+level_boss_color = Color(0.7990656, 0.7511441, 0.2819856, 1)
+metadata/_custom_type_script = "uid://b2agbg1ytt17w"

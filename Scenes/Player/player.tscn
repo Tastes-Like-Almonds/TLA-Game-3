@@ -1,11 +1,29 @@
-[gd_scene load_steps=14 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene load_steps=49 format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
+[ext_resource type="Script" uid="uid://cyvbimmue3s1g" path="res://Scripts/Player/modifier_display_manager.gd" id="2_06tpx"]
 [ext_resource type="Script" uid="uid://bu2b4pqlln3ot" path="res://Scripts/Player/sword.gd" id="3_htcer"]
-[ext_resource type="Texture2D" uid="uid://ootw7g72v0ku" path="res://Assets/Sprites/Placeholder/knight.png" id="3_mtuoh"]
 [ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="4_0u5uq"]
+[ext_resource type="Texture2D" uid="uid://ddw28q8ijph6" path="res://Assets/Sprites/Player/Damaged Sewer Guy 1.png" id="4_oikmp"]
+[ext_resource type="Texture2D" uid="uid://o26vj04fkner" path="res://Assets/Sprites/Player/Damaged Sewer Guy 2.png" id="5_06tpx"]
 [ext_resource type="Script" uid="uid://bmumt3flg26d4" path="res://Scripts/Player/blade_area.gd" id="5_htcer"]
+[ext_resource type="Texture2D" uid="uid://dij003d72gesl" path="res://Assets/Sprites/Player/Damaged Sewer Guy 3.png" id="6_7g0yx"]
+[ext_resource type="Texture2D" uid="uid://cur61nr4s23an" path="res://Assets/Sprites/Player/Airborne/Airborne 3.png" id="6_h8ma5"]
+[ext_resource type="Texture2D" uid="uid://dcexp3babhhst" path="res://Assets/Sprites/Player/Sewer Guy Idle 1.png" id="7_dey5f"]
+[ext_resource type="Texture2D" uid="uid://jiqmppshf1p5" path="res://Assets/Sprites/Player/Airborne/Airborne 4.png" id="7_eksi1"]
+[ext_resource type="Texture2D" uid="uid://bn06luk01jrej" path="res://Assets/Sprites/Player/Airborne/Airborne 5.png" id="8_jincj"]
+[ext_resource type="Texture2D" uid="uid://ccl8lr7w157yu" path="res://Assets/Sprites/Player/Sewer Guy Idle 2.png" id="8_r5xpd"]
+[ext_resource type="Texture2D" uid="uid://c4g75rwy1qnv3" path="res://Assets/Sprites/Player/Sewer Guy Idle 3.png" id="9_ks1b7"]
+[ext_resource type="Texture2D" uid="uid://bnto80x30sd76" path="res://Assets/Sprites/Player/Sewer Guy Idle 4.png" id="10_hnuln"]
+[ext_resource type="Script" uid="uid://4383yqbiu0iv" path="res://Scripts/Player/animator.gd" id="14_7g0yx"]
+[ext_resource type="Texture2D" uid="uid://qraff530dmne" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141432.png" id="14_rqdc0"]
+[ext_resource type="Script" uid="uid://h2etf8462ck0" path="res://Scripts/Player/cosmetic_container.gd" id="15_h8ma5"]
+[ext_resource type="Texture2D" uid="uid://svvl12nvhtae" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141435.png" id="15_qr1w5"]
+[ext_resource type="Texture2D" uid="uid://di542m153ro1b" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141436.png" id="16_ythyg"]
+[ext_resource type="Texture2D" uid="uid://dai2n7ghbhlah" path="res://Assets/Sprites/Player/Spawn/Untitled341_20260212141437.png" id="17_bmb2s"]
+[ext_resource type="Shader" uid="uid://l26fmkrk1hqb" path="res://Resource/Shader/black.gdshader" id="20_rqdc0"]
+[ext_resource type="AudioStream" uid="uid://qxvruooknuhy" path="res://Assets/Sound/SFX/Player/Fast Heart Edit 1 Export 1.mp3" id="24_rqdc0"]
 
 [sub_resource type="GDScript" id="GDScript_dd0ac"]
 script/source = "extends Resource
@@ -112,7 +130,131 @@ script = SubResource("GDScript_dd0ac")
 metadata/_custom_type_script = "uid://dmgnx53wqfhui"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tugb3"]
-size = Vector2(48, 48)
+size = Vector2(32, 56)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aqm4k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_h8ma5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_eksi1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jincj")
+}],
+"loop": true,
+"name": &"airborne",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_oikmp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_06tpx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7g0yx")
+}],
+"loop": false,
+"name": &"damaged",
+"speed": 16.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_dey5f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_r5xpd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ks1b7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_hnuln")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_rqdc0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_qr1w5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ythyg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_bmb2s")
+}],
+"loop": false,
+"name": &"spawn",
+"speed": 6.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_06tpx"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0.015686275, 0.2509804, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7g0yx"]
+gradient = SubResource("Gradient_06tpx")
+width = 48
+height = 8
+
+[sub_resource type="Curve" id="Curve_dey5f"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.029508196, 1), 0.0, 0.0, 0, 0, Vector2(0.7442623, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_r5xpd"]
+curve = SubResource("Curve_dey5f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ks1b7"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(16, 0.5, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_r5xpd")
+
+[sub_resource type="Gradient" id="Gradient_7g0yx"]
+colors = PackedColorArray(0.20794782, 0.36018124, 9.62615e-08, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dey5f"]
+gradient = SubResource("Gradient_7g0yx")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_eksi1"]
+offsets = PackedFloat32Array(0, 0.90712076, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jincj"]
+gradient = SubResource("Gradient_eksi1")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qr1w5"]
+shader = ExtResource("20_rqdc0")
+
+[sub_resource type="Gradient" id="Gradient_rqdc0"]
+offsets = PackedFloat32Array(0, 0.17554858, 1)
+colors = PackedColorArray(0.028213143, 0.028213143, 0.028213143, 0.012723565, 1, 1, 1, 1, 0, 0, 0, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uvnfx"]
 size = Vector2(4, 4)
@@ -129,26 +271,215 @@ height = 8
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
 size = Vector2(102, 20)
 
+[sub_resource type="Animation" id="Animation_jincj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("playerBody/DashIndicator:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.7058824)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("playerBody/DashIndicator2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 3)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("playerBody/DashIndicator2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qr1w5"]
+resource_name = "cant_dash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("playerBody/DashIndicator:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.51, 0.51, 0.51, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("playerBody/DashIndicator2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_eksi1"]
+resource_name = "has_dash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("playerBody/DashIndicator:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.4117647)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("playerBody/DashIndicator2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_rqdc0"]
+resource_name = "used_dash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("playerBody/DashIndicator:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.51, 0.51, 0.51, 0.25882354)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("playerBody/DashIndicator2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(3, 3), Vector2(6, 6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("playerBody/DashIndicator2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.4117647), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qr1w5"]
+_data = {
+&"RESET": SubResource("Animation_jincj"),
+&"cant_dash": SubResource("Animation_qr1w5"),
+&"has_dash": SubResource("Animation_eksi1"),
+&"used_dash": SubResource("Animation_rqdc0")
+}
+
 [node name="Player" type="Node2D" groups=["Player"]]
 script = ExtResource("1_xpcdj")
 properties = SubResource("Resource_jlvik")
 
 [node name="playerBody" type="CharacterBody2D" parent="." groups=["PlayerBody"]]
-collision_layer = 2
+collision_layer = 130
 platform_wall_layers = 256
 script = ExtResource("1_uvnfx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="playerBody"]
+position = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_tugb3")
 
-[node name="Sprite2D" type="Sprite2D" parent="playerBody"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="playerBody"]
 material = ExtResource("4_0u5uq")
 scale = Vector2(3, 3)
-texture = ExtResource("3_mtuoh")
+sprite_frames = SubResource("SpriteFrames_aqm4k")
+animation = &"spawn"
+frame = 3
+frame_progress = 1.0
+
+[node name="ModifierDisplayManager" type="Node2D" parent="playerBody"]
+script = ExtResource("2_06tpx")
+
+[node name="GroundParticles" type="GPUParticles2D" parent="playerBody"]
+position = Vector2(0, 37)
+amount = 360
+texture = SubResource("GradientTexture2D_7g0yx")
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_ks1b7")
+
+[node name="PointLight2D" type="PointLight2D" parent="playerBody"]
+visible = false
+scale = Vector2(3, 3)
+energy = 0.6
+texture = SubResource("GradientTexture2D_dey5f")
+
+[node name="Cosmetics" type="Node2D" parent="playerBody"]
+script = ExtResource("15_h8ma5")
+
+[node name="DashIndicator" type="Sprite2D" parent="playerBody"]
+modulate = Color(1, 1, 1, 0.7058824)
+z_index = 1
+position = Vector2(0, -76)
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture2D_jincj")
+
+[node name="DashIndicator2" type="Sprite2D" parent="playerBody"]
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+position = Vector2(0, -76)
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture2D_jincj")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="playerBody"]
+z_index = 1
+material = SubResource("ShaderMaterial_qr1w5")
+position = Vector2(0, -10)
+texture = ExtResource("7_eksi1")
+lifetime = 0.1
+particle_flag_align_y = true
+gravity = Vector2(0, 0)
+scale_amount_min = 3.0
+scale_amount_max = 3.0
+color_ramp = SubResource("Gradient_rqdc0")
 
 [node name="Sword" type="Node2D" parent="."]
 script = ExtResource("3_htcer")
-control_mode = 1
+control_mode = 2
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="Sword"]
 position = Vector2(0, 50)
@@ -170,3 +501,21 @@ script = ExtResource("5_htcer")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Area2D"]
 shape = SubResource("RectangleShape2D_mtuoh")
 debug_color = Color(0.94, 0, 0.28200018, 0.5019608)
+
+[node name="Animator" type="Node" parent="."]
+script = ExtResource("14_7g0yx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qr1w5")
+}
+playback_default_blend_time = 1.0
+speed_scale = 4.0
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Heartbeat" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("24_rqdc0")
+volume_db = -10.0
+pitch_scale = 1.3
+bus = &"SFX"

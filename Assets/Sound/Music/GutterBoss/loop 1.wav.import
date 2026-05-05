@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bsrb4w7u2ekvm"
+path="res://.godot/imported/loop 1.wav-66c5802ae9dc469307ceb377ef7d4649.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/Music/GutterBoss/loop 1.wav"
+dest_files=["res://.godot/imported/loop 1.wav-66c5802ae9dc469307ceb377ef7d4649.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

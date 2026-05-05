@@ -1,0 +1,272 @@
+[gd_scene load_steps=16 format=3 uid="uid://bqv2ug6vkhqxt"]
+
+[ext_resource type="Texture2D" uid="uid://ccm4j87xw2myj" path="res://Assets/Sprites/Projectile/fireball.png" id="1_1aeel"]
+[ext_resource type="Script" uid="uid://biaeaoqwa1i4v" path="res://Scripts/Projectile/fireball.gd" id="1_v5368"]
+[ext_resource type="AudioStream" uid="uid://dibaui8fb83w8" path="res://Assets/Sound/SFX/Projectile/Fireball/Fireball Passive.wav" id="3_qo74q"]
+
+[sub_resource type="Gradient" id="Gradient_2l1rg"]
+offsets = PackedFloat32Array(0, 0.7647059, 1)
+colors = PackedColorArray(1, 0.5946667, 0.24000001, 1, 1, 0.356, 0.07999998, 1, 1, 0.4666667, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_phb8p"]
+gradient = SubResource("Gradient_2l1rg")
+width = 24
+height = 24
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1aeel"]
+radius = 24.0
+
+[sub_resource type="Animation" id="Animation_qo74q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cover:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Cover:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 3)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GPUParticles2D:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_blb8j"]
+resource_name = "spawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cover:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1.9318725, 0.8122524, 1.2311444),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.43333334, 0.46666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.43333334, 0.46666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Cover:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(4, 4)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GPUParticles2D:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_v5368"]
+resource_name = "spawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cover:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1.9318725, 0.8122524, 1.2311444),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.46666667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.46666667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Cover:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(4, 4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_blb8j"]
+_data = {
+&"RESET": SubResource("Animation_qo74q"),
+&"death": SubResource("Animation_blb8j"),
+&"spawn": SubResource("Animation_v5368")
+}
+
+[sub_resource type="Gradient" id="Gradient_qo74q"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 0.482, 0.16000003, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_blb8j"]
+gradient = SubResource("Gradient_qo74q")
+width = 12
+height = 12
+
+[sub_resource type="Curve" id="Curve_qo74q"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.042622946, 1), 0.0, 0.0, 0, 0, Vector2(0.8360656, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_blb8j"]
+curve = SubResource("Curve_qo74q")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lpkg6"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(24, 24, 1)
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+direction = Vector3(0, 1, 0)
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_blb8j")
+
+[node name="Fireball" type="AnimatableBody2D" groups=["BladeHitable"]]
+scale = Vector2(2, 2)
+collision_layer = 8
+collision_mask = 192
+sync_to_physics = false
+script = ExtResource("1_v5368")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(3, 3)
+texture = ExtResource("1_1aeel")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.40392157)
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture2D_phb8p")
+
+[node name="Cover" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture2D_phb8p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1aeel")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_blb8j")
+}
+speed_scale = 3.3
+
+[node name="Passive" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_qo74q")
+autoplay = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 32
+texture = SubResource("GradientTexture2D_blb8j")
+visibility_rect = Rect2(-10000, -10000, 20000, 20000)
+process_material = SubResource("ParticleProcessMaterial_lpkg6")

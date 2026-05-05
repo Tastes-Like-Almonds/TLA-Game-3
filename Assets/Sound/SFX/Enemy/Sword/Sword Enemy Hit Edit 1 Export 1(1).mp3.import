@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cofsj4hfokeob"
+path="res://.godot/imported/Sword Enemy Hit Edit 1 Export 1(1).mp3-3472ad9cda81b6d505070c9c967c7bf8.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/SFX/Enemy/Sword/Sword Enemy Hit Edit 1 Export 1(1).mp3"
+dest_files=["res://.godot/imported/Sword Enemy Hit Edit 1 Export 1(1).mp3-3472ad9cda81b6d505070c9c967c7bf8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

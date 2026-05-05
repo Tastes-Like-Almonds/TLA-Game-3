@@ -16,6 +16,7 @@ func test_player_signals() -> void:
 func test_main_signal() -> void:
 	
 	var main : Main = load("res://Scenes/main.tscn").instantiate()
+	main.autoload_level = ""
 	
 	add_child_autoqfree(main)
 	assert_signal_emitted(SignalBus.MainLoaded, "Loading main did not fire SignalBus.MainLoaded")

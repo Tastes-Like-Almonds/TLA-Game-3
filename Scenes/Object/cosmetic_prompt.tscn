@@ -1,0 +1,228 @@
+[gd_scene load_steps=16 format=3 uid="uid://ddmblbvhfi1td"]
+
+[ext_resource type="Script" uid="uid://bc1lav63wcbbk" path="res://Scripts/Object/cosmetic_prompt.gd" id="1_xc4xc"]
+[ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="2_y3qeu"]
+[ext_resource type="PackedScene" uid="uid://byaojnvcyv5ng" path="res://Scenes/Object/Dialog/dialog_prompt.tscn" id="4_6vjsy"]
+[ext_resource type="Script" uid="uid://con2g2e5usaky" path="res://Scripts/Object/Dialog/cosmetic_dialog_prompt.gd" id="5_vcewk"]
+
+[sub_resource type="Animation" id="Animation_6vjsy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_vcewk"]
+resource_name = "hide"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xc4xc"]
+resource_name = "show"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6vjsy"]
+_data = {
+&"RESET": SubResource("Animation_6vjsy"),
+&"hide": SubResource("Animation_vcewk"),
+&"show": SubResource("Animation_xc4xc")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xc4xc"]
+radius = 214.00233
+
+[sub_resource type="Animation" id="Animation_ud085"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.8392157)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogPrompt:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_wc23j"]
+resource_name = "locked"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.8392157)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogPrompt:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_bck7d"]
+resource_name = "unlocked"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DialogPrompt:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v513f"]
+_data = {
+&"RESET": SubResource("Animation_ud085"),
+&"locked": SubResource("Animation_wc23j"),
+&"unlocked": SubResource("Animation_bck7d")
+}
+
+[sub_resource type="Gradient" id="Gradient_2xrhl"]
+offsets = PackedFloat32Array(0, 0.04024768, 0.2488889, 0.51111114, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.627451, 0.82, 0.82, 0.82, 0.34509805, 0.83, 0.83, 0.83, 0.105882354, 0.79800004, 0.84, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6vjsy"]
+gradient = SubResource("Gradient_2xrhl")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="CosmeticPrompt" type="Node2D"]
+script = ExtResource("1_xc4xc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_6vjsy")
+}
+playback_default_blend_time = 0.5
+
+[node name="Visual" type="Node2D" parent="."]
+modulate = Color(0, 0, 0, 0.8392157)
+
+[node name="Node2D" type="Node2D" parent="."]
+scale = Vector2(1.5, 1.5)
+
+[node name="NameLabel" type="Label" parent="Node2D"]
+offset_left = -116.0
+offset_top = -36.666668
+offset_right = 119.0
+offset_bottom = -13.666668
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_y3qeu")
+theme_override_font_sizes/font_size = 22
+text = "Tricorn Hat "
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 2
+
+[node name="DescLabel" type="Label" parent="Node2D"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -74.0
+offset_top = -96.0
+offset_right = 75.66667
+offset_bottom = -36.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1)
+theme_override_fonts/font = ExtResource("2_y3qeu")
+theme_override_font_sizes/font_size = 22
+text = "It's cap sized!"
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 2
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_xc4xc")
+
+[node name="DialogPrompt" parent="." instance=ExtResource("4_6vjsy")]
+position = Vector2(0, 55)
+script = ExtResource("5_vcewk")
+
+[node name="Toggler" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_v513f")
+}
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, 2.0980835e-05)
+texture = SubResource("GradientTexture2D_6vjsy")
+texture_scale = 4.88
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

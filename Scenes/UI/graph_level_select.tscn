@@ -1,0 +1,736 @@
+[gd_scene load_steps=48 format=3 uid="uid://51rjllq0cxd7"]
+
+[ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="1_41t8j"]
+[ext_resource type="Script" uid="uid://bvwefjhtywxdb" path="res://Scenes/UI/Graph/graph_select.gd" id="2_m12fl"]
+[ext_resource type="Script" uid="uid://cudl6x6t5ew4e" path="res://Scripts/UI/graph_level_select.gd" id="2_v7ump"]
+[ext_resource type="Script" uid="uid://co1xqltsed07e" path="res://Scripts/UI/world_display.gd" id="2_xn7jd"]
+[ext_resource type="PackedScene" uid="uid://1k3qhyt5fg0k" path="res://Scenes/UI/Graph/world_segment.tscn" id="3_m12fl"]
+[ext_resource type="Script" uid="uid://b2agbg1ytt17w" path="res://Scripts/Resource/Level/world_data.gd" id="3_si5c8"]
+[ext_resource type="Resource" uid="uid://bymv74j5nth1r" path="res://Resource/World/gutter.tres" id="4_si5c8"]
+[ext_resource type="Resource" uid="uid://7f8r0bxcu40k" path="res://Resource/World/extras.tres" id="5_dgc3b"]
+[ext_resource type="Script" uid="uid://b6h82msp0laej" path="res://Scripts/Resource/Sound/song_data.gd" id="6_jer1o"]
+[ext_resource type="Script" uid="uid://bcklhvo1tcaki" path="res://Scripts/Resource/Sound/sound_data.gd" id="7_dat7w"]
+[ext_resource type="AudioStream" uid="uid://ccwiuovt03cbw" path="res://Assets/Sound/SFX/UI/UI Hover 1.wav" id="8_qotok"]
+[ext_resource type="AudioStream" uid="uid://d3px4b7kvg5td" path="res://Assets/Sound/SFX/UI/UI Click 1.wav" id="9_mvclr"]
+[ext_resource type="Script" uid="uid://dj1hrla3y6xpi" path="res://Scripts/UI/level_display.gd" id="9_qotok"]
+[ext_resource type="Texture2D" uid="uid://br5gohrjgiv5j" path="res://Assets/Sprites/Enemy/Bat/Flying Bat 3.png" id="13_ungnr"]
+[ext_resource type="Texture2D" uid="uid://cf8wtk1dpaj4h" path="res://Assets/Sprites/Enemy/wizard/Wizard 2.png" id="14_hhvrl"]
+[ext_resource type="Texture2D" uid="uid://4ftncmxjekax" path="res://Assets/Sprites/Enemy/Rat/Rat3.png" id="15_u8psi"]
+[ext_resource type="Texture2D" uid="uid://cdqm6chx3jwjn" path="res://Assets/Sprites/Projectile/Lightning/Lightning Strike 2.png" id="16_3i8ok"]
+
+[sub_resource type="Theme" id="Theme_8h3cm"]
+default_font = ExtResource("1_41t8j")
+default_font_size = 33
+
+[sub_resource type="Resource" id="Resource_403dh"]
+script = ExtResource("6_jer1o")
+path = &"res://Assets/Sound/Music/Through the Grates.wav"
+vol_linear = 0.4
+metadata/_custom_type_script = "uid://b6h82msp0laej"
+
+[sub_resource type="Gradient" id="Gradient_m12fl"]
+colors = PackedColorArray(0.53, 0.53, 0.53, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xn7jd"]
+gradient = SubResource("Gradient_m12fl")
+width = 256
+height = 256
+fill_to = Vector2(0.5710594, 1)
+
+[sub_resource type="Gradient" id="Gradient_si5c8"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 0.21568628)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qotok"]
+gradient = SubResource("Gradient_si5c8")
+width = 32
+height = 32
+
+[sub_resource type="Curve" id="Curve_mvclr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9540984, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_dgc3b"]
+curve = SubResource("Curve_mvclr")
+
+[sub_resource type="Curve" id="Curve_si5c8"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.1120689), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_qotok"]
+curve = SubResource("Curve_si5c8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mvclr"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1500, 1, 1)
+angle_min = 1.0728835e-05
+angle_max = 360.00003
+direction = Vector3(0, -1, 0)
+spread = 5.0
+initial_velocity_min = 80.0
+initial_velocity_max = 150.0
+angular_velocity_min = -405.91
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 0, 0)
+scale_over_velocity_min = 373.16998
+scale_over_velocity_max = 633.52997
+scale_over_velocity_curve = SubResource("CurveTexture_qotok")
+alpha_curve = SubResource("CurveTexture_dgc3b")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xn7jd"]
+bg_color = Color(0.18000486, 0.1800049, 0.18000478, 1)
+
+[sub_resource type="Resource" id="Resource_dat7w"]
+script = ExtResource("7_dat7w")
+sound_string = "res://Assets/Sound/SFX/UI/UI Hover 1.wav"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="Resource" id="Resource_ungnr"]
+script = ExtResource("7_dat7w")
+sound_string = "res://Assets/Sound/SFX/UI/World Change 1.wav"
+bus = &"SFX"
+metadata/_custom_type_script = "uid://bcklhvo1tcaki"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xn7jd"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_si5c8"]
+action = &"ui_left"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_qotok"]
+events = [SubResource("InputEventAction_si5c8")]
+
+[sub_resource type="Gradient" id="Gradient_xn7jd"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.585062, 0.585062, 0.5850621, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_v7ump"]
+gradient = SubResource("Gradient_xn7jd")
+height = 4
+
+[sub_resource type="InputEventAction" id="InputEventAction_qotok"]
+action = &"ui_right"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_mvclr"]
+events = [SubResource("InputEventAction_qotok")]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m12fl"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0.11, 0.11, 0.11, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v7ump"]
+bg_color = Color(0, 0, 0, 0.24313726)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dat7w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m12fl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mvclr"]
+
+[sub_resource type="Animation" id="Animation_ungnr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.6500179, 0.054843403, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.023529412, 0.12156863, 0.0627451, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GutterStuff:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hhvrl"]
+resource_name = "Extras"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.31390002, 0.49421003, 0.73, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.6642, 0.68497336, 0.82, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GutterStuff:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dat7w"]
+resource_name = "gutter"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.6500179, 0.054843403, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.023529412, 0.12156863, 0.0627451, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GutterStuff:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.28235295)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hhvrl"]
+_data = {
+&"RESET": SubResource("Animation_ungnr"),
+&"extras": SubResource("Animation_hhvrl"),
+&"gutter": SubResource("Animation_dat7w")
+}
+
+[node name="GraphLevelSelect" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_8h3cm")
+script = ExtResource("2_v7ump")
+worlds = Array[ExtResource("3_si5c8")]([ExtResource("4_si5c8"), ExtResource("5_dgc3b")])
+music = SubResource("Resource_403dh")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.023529412, 0.12156863, 0.0627451, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_xn7jd")
+
+[node name="GutterStuff" type="Node2D" parent="."]
+
+[node name="FlyingBat3" type="Sprite2D" parent="GutterStuff"]
+position = Vector2(1733.9999, 842)
+rotation = -0.2617994
+scale = Vector2(15.999999, 15.999999)
+texture = ExtResource("13_ungnr")
+
+[node name="FlyingBat4" type="Sprite2D" parent="GutterStuff"]
+position = Vector2(1731.9999, 331)
+rotation = 0.2617994
+scale = Vector2(15.999999, 15.999999)
+texture = ExtResource("13_ungnr")
+
+[node name="Wizard2" type="Sprite2D" parent="GutterStuff"]
+position = Vector2(271, 922)
+scale = Vector2(16, 16)
+texture = ExtResource("14_hhvrl")
+
+[node name="Rat3" type="Sprite2D" parent="GutterStuff"]
+position = Vector2(1478, 1020)
+scale = Vector2(16, 16)
+texture = ExtResource("15_u8psi")
+
+[node name="LightningStrike2" type="Sprite2D" parent="GutterStuff"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(774, 407.99997)
+rotation = -0.5235988
+scale = Vector2(16, 16)
+texture = ExtResource("16_3i8ok")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(0, 0.6500179, 0.054843403, 1)
+position = Vector2(927, 1232)
+amount = 100
+texture = SubResource("GradientTexture2D_qotok")
+lifetime = 12.0
+preprocess = 12.0
+speed_scale = 0.3
+fixed_fps = 60
+visibility_rect = Rect2(-500, -500, 1000, 1000)
+process_material = SubResource("ParticleProcessMaterial_mvclr")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 22
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Panel" type="PanelContainer" parent="HSplitContainer/MarginContainer"]
+self_modulate = Color(0, 0.026694844, 0.004057234, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xn7jd")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Control2" type="Control" parent="HSplitContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="HSplitContainer/HBoxContainer/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WorldDisplay" type="HBoxContainer" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 22
+script = ExtResource("2_xn7jd")
+hover_sound = SubResource("Resource_dat7w")
+world_change_sond = SubResource("Resource_ungnr")
+
+[node name="Left" type="Button" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 88
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xn7jd")
+shortcut = SubResource("Shortcut_qotok")
+text = "<"
+flat = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 66
+text = "World 1 - The Gutter"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_v7ump")
+
+[node name="LevelCompletion" type="Label" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.556953, 0.556953, 0.556953, 1)
+theme_override_font_sizes/font_size = 33
+text = "0/10 Levels completed"
+horizontal_alignment = 1
+
+[node name="Right" type="Button" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 88
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xn7jd")
+shortcut = SubResource("Shortcut_mvclr")
+text = ">"
+flat = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="GraphSelect" type="MarginContainer" parent="HSplitContainer/HBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 22
+script = ExtResource("2_m12fl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect"]
+clip_children = 1
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_constants/separation = 44
+
+[node name="WorldSegment" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="WorldSegment2" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment2"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment2"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="LevelNode3" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment2"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="WorldSegment3" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment3"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="WorldSegment4" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment4"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment4"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="WorldSegment5" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment5"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="WorldSegment6" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment6"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="LevelNode3" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment6"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="LevelNode4" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment6"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="WorldSegment7" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment7"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="LevelNode3" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment7"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="LevelNode4" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment7"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="HoverSound" type="AudioStreamPlayer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect"]
+stream = ExtResource("8_qotok")
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect"]
+stream = ExtResource("9_mvclr")
+
+[node name="Control3" type="Control" parent="HSplitContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="LevelDisplay" type="PanelContainer" parent="HSplitContainer/HBoxContainer/Control3"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v7ump")
+script = ExtResource("9_qotok")
+
+[node name="Control" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="History" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Completion History"
+horizontal_alignment = 1
+
+[node name="Tree" type="Tree" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_dat7w")
+
+[node name="NotCompleted" type="Label" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -127.5
+offset_right = 127.5
+offset_bottom = 34.0
+grow_horizontal = 2
+text = "Level not yet completed!"
+horizontal_alignment = 1
+
+[node name="Control3" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Title" type="RichTextLabel" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 55
+text = "1.1 - The Gutter"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Description" type="RichTextLabel" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.78775924, 0.78775924, 0.78775924, 1)
+theme_override_font_sizes/normal_font_size = 33
+text = "Enter thematic description here. It may be shorter or longer than this, but I'm filling this with a bunch of characters to see how it looks. Ok bye."
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Diffculty" type="RichTextLabel" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.78775924, 0.78775924, 0.78775924, 1)
+theme_override_font_sizes/normal_font_size = 33
+bbcode_enabled = true
+text = "[b]Difficulty:[/b] [color=light_green]Effortless"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Padding" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Play" type="Button" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 55
+theme_override_styles/focus = SubResource("StyleBoxEmpty_m12fl")
+text = "Play"
+flat = true
+
+[node name="Control2" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CompleteLevel" type="Button" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -245.0
+offset_top = -42.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.88, 0, 0, 1)
+text = "[DEBUG] Complete Level"
+flat = true
+
+[node name="Exit" type="Button" parent="."]
+z_index = 5
+layout_mode = 1
+offset_right = 140.0
+offset_bottom = 42.0
+theme_override_colors/font_color = Color(0.72882265, 0.7288217, 0.728822, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mvclr")
+text = "Exit to Hub"
+flat = true
+
+[node name="Animator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hhvrl")
+}
+playback_default_blend_time = 0.5
+
+[connection signal="mouse_entered" from="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/Left" to="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" method="_button_hover"]
+[connection signal="pressed" from="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/Left" to="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" method="_previous_world"]
+[connection signal="mouse_entered" from="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/Right" to="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" method="_button_hover"]
+[connection signal="pressed" from="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/Right" to="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" method="_next_world"]
+[connection signal="pressed" from="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer/Play" to="HSplitContainer/HBoxContainer/Control3/LevelDisplay" method="_play_level"]

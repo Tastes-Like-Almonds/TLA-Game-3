@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://1k3qhyt5fg0k"]
+
+[ext_resource type="Script" uid="uid://cgxp5cvlg1oke" path="res://Scripts/UI/world_segment.gd" id="1_crf6g"]
+
+[node name="WorldSegment" type="VBoxContainer"]
+custom_minimum_size = Vector2(65, 0)
+theme_override_constants/separation = 22
+alignment = 1
+script = ExtResource("1_crf6g")

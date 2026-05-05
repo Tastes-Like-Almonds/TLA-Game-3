@@ -11,26 +11,44 @@ func get_cooldown() -> float:
 	return 0.0
 
 func get_dir() -> Vector2:
+	
 	if not is_instance_valid(_wielder): return Vector2.ZERO
 	var sword := _wielder.get_player_sword()
 	var vec := Vector2.ZERO
+	
 	if sword.control_mode == sword.ControlMode.GLOBAL_MOUSE:
 		vec = _wielder.get_player_position().direction_to(get_pointer_pos())
+	
 	elif sword.control_mode == sword.ControlMode.LOCAL_MOUSE:
 		vec = Helper.get_mouse_vec_from_center()
+	
+	elif sword.control_mode == sword.ControlMode.VIRTUAL_MOUSE:
+		vec = sword.virtual_mouse
+	
 	return vec.normalized()
 
 func process_weapon(delta:float) -> void:
 	current_touch_cooldown = clampf(current_touch_cooldown+delta, 0.0, touch_ground_cooldown)
 	super(delta)
+	if !_wielder: return
 	if _wielder.get_player_body().is_on_floor() or _wielder.get_player_sword().is_on_ground():
 		if current_touch_cooldown >= touch_ground_cooldown:
 			can_use = true
 
-func on_use(charge_time : float) -> void:
+func use(charge_time : float) -> void:
+	if _wielder.get_player_body().is_on_floor(): return
+	super(charge_time)
+
+func on_use(_charge_time : float) -> void:
 	if not is_instance_valid(_wielder): return
 	GameCamera.set_current_camera_shake(_wielder.get_viewport(), 0.06)
-	_wielder.set_velocity(get_dir()*(min(MAX_CHARGE,charge_time)/MAX_CHARGE)*1800*_wielder.get_size_scale())
+	
+	var push_vec : Vector2 = get_dir()
+	#push_vec *= (min(MAX_CHARGE,charge_time)/MAX_CHARGE) # Account for sword charge (Deprecated)
+	push_vec *= 1800 # Sword dash speed
+	push_vec *= _wielder.get_size_scale() # Account for size
+	
+	_wielder.set_velocity(push_vec)
 	current_touch_cooldown = 0.0
 	can_use = false
 

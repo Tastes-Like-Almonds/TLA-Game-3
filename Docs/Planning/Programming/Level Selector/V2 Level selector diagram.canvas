@@ -1,0 +1,29 @@
+{
+	"nodes":[
+		{"id":"876d4926ecb65db8","x":-214,"y":-51,"width":250,"height":171,"type":"text","text":"Level\n- Has CompletionData property"},
+		{"id":"67570c34fa62efa0","type":"text","text":"Nodes with CompletionData() Signal","x":-214,"y":260,"width":250,"height":171},
+		{"id":"2cf66532f29448b9","x":160,"y":5,"width":250,"height":60,"type":"text","text":"Level is completed"},
+		{"id":"26fb5418a1cd7373","x":-660,"y":5,"width":250,"height":60,"type":"text","text":"Just one next level?"},
+		{"id":"d4f5611c49efffe3","x":-214,"y":-365,"width":250,"height":60,"type":"text","text":"Level Selector"},
+		{"id":"ae59945628de5aa2","x":410,"y":-415,"width":250,"height":50,"type":"text","text":"SaveSlot global"},
+		{"id":"e82d055345fff944","x":-640,"y":-600,"width":250,"height":60,"type":"text","text":"Cosmetic Selector"},
+		{"id":"f767bbd5703b06bf","x":-214,"y":-600,"width":250,"height":60,"type":"text","text":"Main Menu"},
+		{"id":"0770e265bc010081","x":-214,"y":-900,"width":250,"height":60,"type":"text","text":"Selection menu"},
+		{"id":"b4a49c4b28e25f85","x":-214,"y":-760,"width":250,"height":60,"type":"text","text":"Save slot selected"}
+	],
+	"edges":[
+		{"id":"0ca08e000ac5a9d0","fromNode":"876d4926ecb65db8","fromSide":"bottom","toNode":"67570c34fa62efa0","toSide":"top","label":"Listens to"},
+		{"id":"489ced5847c1fd43","fromNode":"876d4926ecb65db8","fromSide":"right","toNode":"2cf66532f29448b9","toSide":"left"},
+		{"id":"90fb737b28d81883","fromNode":"26fb5418a1cd7373","fromSide":"right","toNode":"876d4926ecb65db8","toSide":"left","label":"Yes"},
+		{"id":"ad9d8319b025414a","fromNode":"26fb5418a1cd7373","fromSide":"top","toNode":"d4f5611c49efffe3","toSide":"bottom","label":"No"},
+		{"id":"f5ad19d5a1263bb2","fromNode":"d4f5611c49efffe3","fromSide":"bottom","toNode":"876d4926ecb65db8","toSide":"top","label":"Level Selected"},
+		{"id":"e3f8b5177ccab5d5","fromNode":"2cf66532f29448b9","fromSide":"top","toNode":"d4f5611c49efffe3","toSide":"right","label":"Loads"},
+		{"id":"1dc844c466765157","fromNode":"2cf66532f29448b9","fromSide":"right","toNode":"ae59945628de5aa2","toSide":"bottom","label":"Pass completion data"},
+		{"id":"bedc8b2075a4974e","fromNode":"ae59945628de5aa2","fromSide":"left","toNode":"d4f5611c49efffe3","toSide":"top","label":"Used by"},
+		{"id":"19fdc9d3c77e1b42","fromNode":"0770e265bc010081","fromSide":"bottom","toNode":"b4a49c4b28e25f85","toSide":"top"},
+		{"id":"b12bc451ceb002d6","fromNode":"ae59945628de5aa2","fromSide":"top","toNode":"b4a49c4b28e25f85","toSide":"right","label":"Used by"},
+		{"id":"8e993f7288dfbdc9","fromNode":"f767bbd5703b06bf","fromSide":"bottom","toNode":"d4f5611c49efffe3","toSide":"top","label":"Loads"},
+		{"id":"976d6fe024222736","fromNode":"b4a49c4b28e25f85","fromSide":"bottom","toNode":"f767bbd5703b06bf","toSide":"top","label":"Loads"},
+		{"id":"4e0050dd4e49b5ee","fromNode":"f767bbd5703b06bf","fromSide":"left","toNode":"e82d055345fff944","toSide":"right"}
+	]
+}

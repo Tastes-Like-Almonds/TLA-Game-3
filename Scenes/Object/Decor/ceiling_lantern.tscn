@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://chqabge4gl3tl"]
+
+[ext_resource type="Texture2D" uid="uid://dh2sqypdgd61a" path="res://Assets/Sprites/Placeholder/Ceiling lantern placeholder.png" id="1_kg2gt"]
+[ext_resource type="Script" uid="uid://dbhceojg232bl" path="res://Scenes/Object/Decor/ceiling_lantern.gd" id="2_2vuos"]
+
+[sub_resource type="Gradient" id="Gradient_2vuos"]
+offsets = PackedFloat32Array(0, 0.044444446, 0.2488889, 0.51111114, 1)
+colors = PackedColorArray(0.6858397, 0.7708662, 0, 1, 0.72782683, 0.7967464, 0, 0.62565076, 0.75931716, 0.8161565, 0, 0.34488887, 0.78603625, 0.8326257, 0, 0.106666684, 0.79800004, 0.84, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ybt7e"]
+gradient = SubResource("Gradient_2vuos")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="CeilingLanternPlaceholder20" type="Sprite2D"]
+texture = ExtResource("1_kg2gt")
+script = ExtResource("2_2vuos")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, 2.0980835e-05)
+texture = SubResource("GradientTexture2D_ybt7e")
+texture_scale = 4.88
