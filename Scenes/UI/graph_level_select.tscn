@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://51rjllq0cxd7"]
+[gd_scene format=3 uid="uid://51rjllq0cxd7"]
 
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="1_41t8j"]
 [ext_resource type="Script" uid="uid://bvwefjhtywxdb" path="res://Scenes/UI/Graph/graph_select.gd" id="2_m12fl"]
@@ -260,7 +260,7 @@ _data = {
 &"gutter": SubResource("Animation_dat7w")
 }
 
-[node name="GraphLevelSelect" type="Control"]
+[node name="GraphLevelSelect" type="Control" unique_id=1744399811]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -274,7 +274,7 @@ script = ExtResource("2_v7ump")
 worlds = Array[ExtResource("3_si5c8")]([ExtResource("4_si5c8"), ExtResource("5_dgc3b")])
 music = SubResource("Resource_403dh")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1584103510]
 modulate = Color(0.023529412, 0.12156863, 0.0627451, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -285,38 +285,38 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_xn7jd")
 
-[node name="GutterStuff" type="Node2D" parent="."]
+[node name="GutterStuff" type="Node2D" parent="." unique_id=1703449975]
 
-[node name="FlyingBat3" type="Sprite2D" parent="GutterStuff"]
+[node name="FlyingBat3" type="Sprite2D" parent="GutterStuff" unique_id=687654357]
 position = Vector2(1733.9999, 842)
 rotation = -0.2617994
 scale = Vector2(15.999999, 15.999999)
 texture = ExtResource("13_ungnr")
 
-[node name="FlyingBat4" type="Sprite2D" parent="GutterStuff"]
+[node name="FlyingBat4" type="Sprite2D" parent="GutterStuff" unique_id=1531917456]
 position = Vector2(1731.9999, 331)
 rotation = 0.2617994
 scale = Vector2(15.999999, 15.999999)
 texture = ExtResource("13_ungnr")
 
-[node name="Wizard2" type="Sprite2D" parent="GutterStuff"]
+[node name="Wizard2" type="Sprite2D" parent="GutterStuff" unique_id=538380061]
 position = Vector2(271, 922)
 scale = Vector2(16, 16)
 texture = ExtResource("14_hhvrl")
 
-[node name="Rat3" type="Sprite2D" parent="GutterStuff"]
+[node name="Rat3" type="Sprite2D" parent="GutterStuff" unique_id=308633832]
 position = Vector2(1478, 1020)
 scale = Vector2(16, 16)
 texture = ExtResource("15_u8psi")
 
-[node name="LightningStrike2" type="Sprite2D" parent="GutterStuff"]
+[node name="LightningStrike2" type="Sprite2D" parent="GutterStuff" unique_id=1233226]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(774, 407.99997)
 rotation = -0.5235988
 scale = Vector2(16, 16)
 texture = ExtResource("16_3i8ok")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=894605653]
 modulate = Color(0, 0.6500179, 0.054843403, 1)
 position = Vector2(927, 1232)
 amount = 100
@@ -328,7 +328,7 @@ fixed_fps = 60
 visibility_rect = Rect2(-500, -500, 1000, 1000)
 process_material = SubResource("ParticleProcessMaterial_mvclr")
 
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
+[node name="HSplitContainer" type="HSplitContainer" parent="." unique_id=744517438]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -338,7 +338,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 22
 
-[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer" unique_id=911273460]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
@@ -348,25 +348,25 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="Panel" type="PanelContainer" parent="HSplitContainer/MarginContainer"]
+[node name="Panel" type="PanelContainer" parent="HSplitContainer/MarginContainer" unique_id=1465247702]
 self_modulate = Color(0, 0.026694844, 0.004057234, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xn7jd")
 
-[node name="HBoxContainer" type="VBoxContainer" parent="HSplitContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="HSplitContainer" unique_id=712747124]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Control2" type="Control" parent="HSplitContainer/HBoxContainer"]
+[node name="Control2" type="Control" parent="HSplitContainer/HBoxContainer" unique_id=398005543]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="HSplitContainer/HBoxContainer/Control2"]
+[node name="CenterContainer" type="CenterContainer" parent="HSplitContainer/HBoxContainer/Control2" unique_id=1622741382]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -375,7 +375,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="WorldDisplay" type="HBoxContainer" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer"]
+[node name="WorldDisplay" type="HBoxContainer" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer" unique_id=223727446]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
@@ -384,7 +384,7 @@ script = ExtResource("2_xn7jd")
 hover_sound = SubResource("Resource_dat7w")
 world_change_sond = SubResource("Resource_ungnr")
 
-[node name="Left" type="Button" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay"]
+[node name="Left" type="Button" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" unique_id=139671512]
 layout_mode = 2
 theme_override_font_sizes/font_size = 88
 theme_override_styles/focus = SubResource("StyleBoxEmpty_xn7jd")
@@ -392,29 +392,29 @@ shortcut = SubResource("Shortcut_qotok")
 text = "<"
 flat = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" unique_id=277799058]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Title" type="Label" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/VBoxContainer"]
+[node name="Title" type="Label" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/VBoxContainer" unique_id=334489415]
 layout_mode = 2
 theme_override_font_sizes/font_size = 66
 text = "World 1 - The Gutter"
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/VBoxContainer" unique_id=831258484]
 layout_mode = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_v7ump")
 
-[node name="LevelCompletion" type="Label" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/VBoxContainer"]
+[node name="LevelCompletion" type="Label" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/VBoxContainer" unique_id=582018985]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.556953, 0.556953, 0.556953, 1)
 theme_override_font_sizes/font_size = 33
 text = "0/10 Levels completed"
 horizontal_alignment = 1
 
-[node name="Right" type="Button" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay"]
+[node name="Right" type="Button" parent="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" unique_id=1040647071]
 layout_mode = 2
 theme_override_font_sizes/font_size = 88
 theme_override_styles/focus = SubResource("StyleBoxEmpty_xn7jd")
@@ -422,12 +422,12 @@ shortcut = SubResource("Shortcut_mvclr")
 text = ">"
 flat = true
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/HBoxContainer" unique_id=1425836412]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="GraphSelect" type="MarginContainer" parent="HSplitContainer/HBoxContainer/ScrollContainer"]
+[node name="GraphSelect" type="MarginContainer" parent="HSplitContainer/HBoxContainer/ScrollContainer" unique_id=2015513526]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
@@ -439,7 +439,7 @@ theme_override_constants/margin_right = 22
 theme_override_constants/margin_bottom = 22
 script = ExtResource("2_m12fl")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect" unique_id=1407088490]
 clip_children = 1
 clip_contents = true
 layout_mode = 2
@@ -447,131 +447,131 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_constants/separation = 44
 
-[node name="WorldSegment" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+[node name="WorldSegment" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" unique_id=1933334647 instance=ExtResource("3_m12fl")]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
-text = "1.1"
-
-[node name="WorldSegment2" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment2"]
+[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment" unique_id=391908239]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
-[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment2"]
+[node name="WorldSegment2" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" unique_id=1033827269 instance=ExtResource("3_m12fl")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment2" unique_id=842531272]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
-[node name="LevelNode3" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment2"]
+[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment2" unique_id=741281998]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
-[node name="WorldSegment3" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment3"]
+[node name="LevelNode3" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment2" unique_id=1718755183]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
-[node name="WorldSegment4" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+[node name="WorldSegment3" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" unique_id=2078497784 instance=ExtResource("3_m12fl")]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment4"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
-text = "1.1"
-
-[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment4"]
+[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment3" unique_id=2028495231]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
-[node name="WorldSegment5" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+[node name="WorldSegment4" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" unique_id=906435156 instance=ExtResource("3_m12fl")]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment5"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
-text = "1.1"
-
-[node name="WorldSegment6" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment6"]
+[node name="LevelNode" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment4" unique_id=461161253]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
-[node name="LevelNode3" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment6"]
+[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment4" unique_id=1417058618]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
-[node name="LevelNode4" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment6"]
+[node name="WorldSegment5" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" unique_id=1783391780 instance=ExtResource("3_m12fl")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment5" unique_id=882480612]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
-[node name="WorldSegment7" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" instance=ExtResource("3_m12fl")]
+[node name="WorldSegment6" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" unique_id=1470279289 instance=ExtResource("3_m12fl")]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment7"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
-text = "1.1"
-
-[node name="LevelNode3" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment7"]
+[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment6" unique_id=376766158]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
-[node name="LevelNode4" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment7"]
+[node name="LevelNode3" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment6" unique_id=1893806013]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
 text = "1.1"
 
-[node name="HoverSound" type="AudioStreamPlayer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect"]
+[node name="LevelNode4" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment6" unique_id=794120279]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="WorldSegment7" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer" unique_id=1268305155 instance=ExtResource("3_m12fl")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LevelNode2" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment7" unique_id=1478008249]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="LevelNode3" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment7" unique_id=910085944]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="LevelNode4" type="Button" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect/HBoxContainer/WorldSegment7" unique_id=76660788]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m12fl")
+text = "1.1"
+
+[node name="HoverSound" type="AudioStreamPlayer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect" unique_id=925228907]
 stream = ExtResource("8_qotok")
 
-[node name="ClickSound" type="AudioStreamPlayer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect"]
+[node name="ClickSound" type="AudioStreamPlayer" parent="HSplitContainer/HBoxContainer/ScrollContainer/GraphSelect" unique_id=385906477]
 stream = ExtResource("9_mvclr")
 
-[node name="Control3" type="Control" parent="HSplitContainer/HBoxContainer"]
+[node name="Control3" type="Control" parent="HSplitContainer/HBoxContainer" unique_id=1781795272]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="LevelDisplay" type="PanelContainer" parent="HSplitContainer/HBoxContainer/Control3"]
+[node name="LevelDisplay" type="PanelContainer" parent="HSplitContainer/HBoxContainer/Control3" unique_id=1811997051]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -583,11 +583,11 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_v7ump")
 script = ExtResource("9_qotok")
 
-[node name="Control" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay"]
+[node name="Control" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay" unique_id=2066979131]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control" unique_id=1229894321]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -596,12 +596,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="History" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer"]
+[node name="History" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer" unique_id=1153628899]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History" unique_id=922888482]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -609,23 +609,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History/ScrollContainer" unique_id=28342403]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History/ScrollContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History/ScrollContainer/VBoxContainer" unique_id=1848726405]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Completion History"
 horizontal_alignment = 1
 
-[node name="Tree" type="Tree" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History/ScrollContainer/VBoxContainer"]
+[node name="Tree" type="Tree" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History/ScrollContainer/VBoxContainer" unique_id=1393363652]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_dat7w")
 
-[node name="NotCompleted" type="Label" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History"]
+[node name="NotCompleted" type="Label" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/History" unique_id=555159168]
 visible = false
 layout_mode = 1
 anchors_preset = 5
@@ -638,12 +638,12 @@ grow_horizontal = 2
 text = "Level not yet completed!"
 horizontal_alignment = 1
 
-[node name="Control3" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer"]
+[node name="Control3" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer" unique_id=777566798]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3" unique_id=1152109799]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -652,7 +652,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Title" type="RichTextLabel" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer"]
+[node name="Title" type="RichTextLabel" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer" unique_id=1169412331]
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 55
@@ -660,7 +660,7 @@ text = "1.1 - The Gutter"
 fit_content = true
 horizontal_alignment = 1
 
-[node name="Description" type="RichTextLabel" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer"]
+[node name="Description" type="RichTextLabel" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer" unique_id=114375860]
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/default_color = Color(0.78775924, 0.78775924, 0.78775924, 1)
@@ -669,7 +669,7 @@ text = "Enter thematic description here. It may be shorter or longer than this, 
 fit_content = true
 horizontal_alignment = 1
 
-[node name="Diffculty" type="RichTextLabel" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer"]
+[node name="Diffculty" type="RichTextLabel" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer" unique_id=845371178]
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/default_color = Color(0.78775924, 0.78775924, 0.78775924, 1)
@@ -679,12 +679,12 @@ text = "[b]Difficulty:[/b] [color=light_green]Effortless"
 fit_content = true
 horizontal_alignment = 1
 
-[node name="Padding" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer"]
+[node name="Padding" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer" unique_id=581689712]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Play" type="Button" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer"]
+[node name="Play" type="Button" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer/Control3/VBoxContainer" unique_id=2065186429]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -693,11 +693,11 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_m12fl")
 text = "Play"
 flat = true
 
-[node name="Control2" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer"]
+[node name="Control2" type="Control" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control/HBoxContainer" unique_id=778264060]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CompleteLevel" type="Button" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control"]
+[node name="CompleteLevel" type="Button" parent="HSplitContainer/HBoxContainer/Control3/LevelDisplay/Control" unique_id=797049881]
 visible = false
 layout_mode = 1
 anchors_preset = 3
@@ -713,7 +713,7 @@ theme_override_colors/font_color = Color(0.88, 0, 0, 1)
 text = "[DEBUG] Complete Level"
 flat = true
 
-[node name="Exit" type="Button" parent="."]
+[node name="Exit" type="Button" parent="." unique_id=607307617]
 z_index = 5
 layout_mode = 1
 offset_right = 140.0
@@ -723,10 +723,8 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_mvclr")
 text = "Exit to Hub"
 flat = true
 
-[node name="Animator" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_hhvrl")
-}
+[node name="Animator" type="AnimationPlayer" parent="." unique_id=1297966877]
+libraries/ = SubResource("AnimationLibrary_hhvrl")
 playback_default_blend_time = 0.5
 
 [connection signal="mouse_entered" from="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay/Left" to="HSplitContainer/HBoxContainer/Control2/CenterContainer/WorldDisplay" method="_button_hover"]

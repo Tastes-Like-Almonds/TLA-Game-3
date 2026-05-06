@@ -149,8 +149,6 @@ func save_game(path:String=SAVE_PATH) -> void:
 	Helper.print_dict_as_json(loaded_data)
 	print("End save data")
 	
-	#loaded_data["equipped"] = {} # FIXME
-	
 	if (!loaded_data):
 		load_game() # Will create base data if needed
 	

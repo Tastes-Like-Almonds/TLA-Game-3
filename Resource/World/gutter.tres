@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WorldData" load_steps=48 format=3 uid="uid://bymv74j5nth1r"]
+[gd_resource type="Resource" script_class="WorldData" format=3 uid="uid://bymv74j5nth1r"]
 
 [ext_resource type="Script" uid="uid://b2agbg1ytt17w" path="res://Scripts/Resource/Level/world_data.gd" id="1_mtrh6"]
 [ext_resource type="Script" uid="uid://cgg14ym78f0wv" path="res://Scripts/Resource/Level/world_segment_data.gd" id="2_d7bqh"]

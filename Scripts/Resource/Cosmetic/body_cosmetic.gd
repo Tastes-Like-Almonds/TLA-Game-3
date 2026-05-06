@@ -22,7 +22,7 @@ func _init() -> void:
 	# Validate
 	match sprite_type:
 		SpriteType.TEXTURE:
-			if texture == null:
+			if (texture == null) and (texture_behind == null):
 				push_warning("No sprite set for BodyCosmetic resource!")
 		
 		SpriteType.ANIMATED:

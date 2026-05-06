@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cmhd0yb0ku5vd"]
+[gd_scene format=3 uid="uid://cmhd0yb0ku5vd"]
 
 [ext_resource type="Script" uid="uid://bytykcs62pxn5" path="res://Scripts/Environments/gutter_2.gd" id="1_00xhq"]
 
@@ -87,32 +87,33 @@ glow_intensity = 1.33
 glow_strength = 1.77
 glow_mix = 0.195
 glow_bloom = 1.0
+glow_blend_mode = 2
 glow_map_strength = 1.0
 adjustment_enabled = true
-adjustment_brightness = 0.94
-adjustment_contrast = 1.2
+adjustment_brightness = 1.21
+adjustment_contrast = 1.185
 adjustment_color_correction = SubResource("GradientTexture2D_vxgnn")
 
-[node name="MenuEnv" type="Node2D"]
+[node name="MenuEnv" type="Node2D" unique_id=1780566705]
 script = ExtResource("1_00xhq")
 
-[node name="Background" type="Node2D" parent="."]
+[node name="Background" type="Node2D" parent="." unique_id=1176454309]
 
-[node name="Sprite2D" type="Sprite2D" parent="Background"]
+[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=1719474197]
 z_index = -12
 position = Vector2(-18603.002, -3338.0002)
 scale = Vector2(2861.9429, 2163.58)
 texture = SubResource("GradientTexture2D_fleyr")
 offset = Vector2(1.845315, -10.547034)
 
-[node name="Sprite2D2" type="Sprite2D" parent="Background"]
+[node name="Sprite2D2" type="Sprite2D" parent="Background" unique_id=2066811976]
 modulate = Color(1, 1, 1, 0.40784314)
 z_index = -7
 position = Vector2(-1432.9999, -31.999998)
 scale = Vector2(50, 50)
 texture = SubResource("GradientTexture2D_3hcw5")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Background"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Background" unique_id=487849236]
 visible = false
 z_index = -7
 position = Vector2(-5344, 125)
@@ -125,23 +126,23 @@ speed_scale = 0.2
 visibility_rect = Rect2(0, -5000, 10000, 10000)
 process_material = SubResource("ParticleProcessMaterial_hywip")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1675950731]
 color = Color(0.74, 0.66008, 0.6068, 1)
 
-[node name="Fog" type="Node2D" parent="."]
+[node name="Fog" type="Node2D" parent="." unique_id=401328786]
 
-[node name="Parallax2D" type="Parallax2D" parent="Fog"]
+[node name="Parallax2D" type="Parallax2D" parent="Fog" unique_id=156187355]
 scale = Vector2(4, 4)
 repeat_size = Vector2(3072, 1024)
 autoscroll = Vector2(120, -5)
 
-[node name="Sprite2D" type="Sprite2D" parent="Fog/Parallax2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Fog/Parallax2D" unique_id=955076155]
 self_modulate = Color(1, 1, 1, 0.10980392)
 z_index = 10
 scale = Vector2(3, 1)
 texture = SubResource("NoiseTexture2D_vwpxu")
 
-[node name="Parallax2D2" type="Parallax2D" parent="Fog"]
+[node name="Parallax2D2" type="Parallax2D" parent="Fog" unique_id=537532412]
 modulate = Color(1, 1, 1, 0.33333334)
 scale = Vector2(4, 4)
 scroll_scale = Vector2(0.6, 0.7)
@@ -149,103 +150,103 @@ scroll_offset = Vector2(2400, 0)
 repeat_size = Vector2(6000, 8000)
 repeat_times = 2
 
-[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D2"]
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D2" unique_id=343664228]
 z_index = -10
 position = Vector2(-846.75006, -37.000008)
 rotation = 2.3561945
 scale = Vector2(-0.98262453, 104.02569)
 texture = SubResource("GradientTexture2D_rrqrp")
 
-[node name="Parallax2D8" type="Parallax2D" parent="Fog"]
+[node name="Parallax2D8" type="Parallax2D" parent="Fog" unique_id=1391517555]
 scale = Vector2(4, 4)
 scroll_scale = Vector2(0.6, 0.7)
 scroll_offset = Vector2(16000, 0)
 repeat_size = Vector2(6000, 8000)
 repeat_times = 2
 
-[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D8"]
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D8" unique_id=732892615]
 z_index = -10
 position = Vector2(-846.75006, -37.000008)
 rotation = 3.6651917
 scale = Vector2(-0.98262453, 104.02569)
 texture = SubResource("GradientTexture2D_rrqrp")
 
-[node name="Parallax2D3" type="Parallax2D" parent="Fog"]
+[node name="Parallax2D3" type="Parallax2D" parent="Fog" unique_id=540356213]
 scale = Vector2(4, 4)
 scroll_scale = Vector2(0.8, 0.7)
 scroll_offset = Vector2(6000, 0)
 repeat_size = Vector2(6000, 8000)
 repeat_times = 2
 
-[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D3"]
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D3" unique_id=1454270182]
 z_index = -10
 position = Vector2(-846.75006, -37.000008)
 rotation = 3.403392
 scale = Vector2(-0.29301253, 105.929886)
 texture = SubResource("GradientTexture2D_rrqrp")
 
-[node name="Sprite2D3" type="Sprite2D" parent="Fog/Parallax2D3"]
+[node name="Sprite2D3" type="Sprite2D" parent="Fog/Parallax2D3" unique_id=628045575]
 z_index = -10
 position = Vector2(-804.9999, -18.999983)
 rotation = 3.403392
 scale = Vector2(-0.29301253, 105.929886)
 texture = SubResource("GradientTexture2D_rrqrp")
 
-[node name="Parallax2D6" type="Parallax2D" parent="Fog"]
+[node name="Parallax2D6" type="Parallax2D" parent="Fog" unique_id=266092853]
 scale = Vector2(4, 4)
 scroll_scale = Vector2(0.7, 0.7)
 scroll_offset = Vector2(12000, 0)
 repeat_size = Vector2(5000, 8000)
 repeat_times = 2
 
-[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D6"]
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D6" unique_id=756266428]
 z_index = -10
 position = Vector2(-846.75006, -37.000008)
 rotation = 2.8797934
 scale = Vector2(-0.29301253, 105.929886)
 texture = SubResource("GradientTexture2D_rrqrp")
 
-[node name="Parallax2D4" type="Parallax2D" parent="Fog"]
+[node name="Parallax2D4" type="Parallax2D" parent="Fog" unique_id=417167258]
 scale = Vector2(4, 4)
 scroll_scale = Vector2(0.7, 0.7)
 scroll_offset = Vector2(2000, 0)
 repeat_size = Vector2(5000, 1024)
 repeat_times = 2
 
-[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D4"]
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D4" unique_id=108862718]
 z_index = -10
 position = Vector2(-846.75006, -37.000008)
 rotation = 2.8797934
 scale = Vector2(-0.7225662, 106.09949)
 texture = SubResource("GradientTexture2D_rrqrp")
 
-[node name="Parallax2D5" type="Parallax2D" parent="Fog"]
+[node name="Parallax2D5" type="Parallax2D" parent="Fog" unique_id=853533063]
 scale = Vector2(4, 4)
 scroll_scale = Vector2(0.7, 0.7)
 scroll_offset = Vector2(8000, 0)
 repeat_size = Vector2(8000, 1024)
 repeat_times = 2
 
-[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D5"]
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D5" unique_id=1459304558]
 z_index = -10
 position = Vector2(-846.75006, -37.000008)
 rotation = 4.4505897
 scale = Vector2(-0.7225662, 106.09949)
 texture = SubResource("GradientTexture2D_rrqrp")
 
-[node name="Parallax2D7" type="Parallax2D" parent="Fog"]
+[node name="Parallax2D7" type="Parallax2D" parent="Fog" unique_id=2100364137]
 scale = Vector2(4, 4)
 scroll_scale = Vector2(0.7, 0.7)
 scroll_offset = Vector2(8000, 3000)
 repeat_size = Vector2(4000, 3000)
 repeat_times = 2
 
-[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D7"]
+[node name="Sprite2D2" type="Sprite2D" parent="Fog/Parallax2D7" unique_id=172130249]
 z_index = -10
 position = Vector2(-846.75006, -37.000008)
 rotation = 4.9741883
 scale = Vector2(-0.7225662, 106.09949)
 texture = SubResource("GradientTexture2D_rrqrp")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1074672610]
 environment = SubResource("Environment_vxgnn")

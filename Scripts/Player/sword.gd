@@ -251,7 +251,6 @@ func get_push() -> Vector2:
 			vel *= 1
 	
 	#Helper.debug_dot(body,Vector2.ZERO+vel, "VEL")
-	
 	return vel
 
 ## Gets the global position of the sword's tip.

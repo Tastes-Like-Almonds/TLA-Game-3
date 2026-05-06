@@ -20,6 +20,7 @@ func get_all_players() -> Array[Player]:
 	
 	# Without this line, error triggers upon game closing
 	#if tree_exiting: return players
+	if not is_inside_tree(): return players
 	var tree := get_tree()
 	if tree == null: return players
 	for player in tree.get_nodes_in_group("Player"):
