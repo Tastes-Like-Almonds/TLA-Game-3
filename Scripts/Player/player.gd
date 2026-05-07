@@ -432,8 +432,35 @@ func equip_weapon(weapon : Weapon) -> void:
 
 ## Equip the passed weapon slot. Can only be called from the client
 ## who owns this player.
-@rpc("any_peer", "reliable", "call_local")
-func _rpc_equip_slot(slot : int) -> void:
+#@rpc("any_peer", "reliable", "call_local")
+#func _rpc_equip_slot(slot : int) -> void:
+	#var sender := multiplayer.get_remote_sender_id()
+	#if sender != id and sender != 0: return
+	#if slot >= held_weapons.size(): return
+	#var weapon : Weapon = held_weapons.get(slot)
+	#if weapon:
+		#equip_weapon(weapon)
+	#loadout_changed.emit()
+
+#func equip_weapon_slot(slot : int) -> void:
+	##if multiplayer.get_remote_sender_id() != id: return
+	#var status := multiplayer.multiplayer_peer.get_connection_status()
+	#match status:
+		#MultiplayerPeer.CONNECTION_CONNECTED:
+			#_rpc_equip_slot.rpc(slot)
+		#
+		#MultiplayerPeer.CONNECTION_DISCONNECTED:
+			#_rpc_equip_slot(slot)
+		#
+		#MultiplayerPeer.CONNECTION_CONNECTING: # Wait until loaded
+			#multiplayer.connected_to_server.connect(
+				#_rpc_equip_slot.rpc.bind(slot), 
+				#CONNECT_ONE_SHOT
+			#)
+
+## Equip the weapon in the passed slot.
+#@rpc("any_peer", "reliable", "call_local")
+func equip_weapon_slot(slot : int) -> void:
 	var sender := multiplayer.get_remote_sender_id()
 	if sender != id and sender != 0: return
 	if slot >= held_weapons.size(): return
@@ -441,20 +468,6 @@ func _rpc_equip_slot(slot : int) -> void:
 	if weapon:
 		equip_weapon(weapon)
 	loadout_changed.emit()
-
-## Equip the weapon in the passed slot.
-#@rpc("any_peer", "reliable", "call_local")
-func equip_weapon_slot(slot : int) -> void:
-	#if multiplayer.get_remote_sender_id() != id: return
-	var status := multiplayer.multiplayer_peer.get_connection_status()
-	match status:
-		MultiplayerPeer.CONNECTION_CONNECTED:
-			_rpc_equip_slot.rpc(slot)
-		MultiplayerPeer.CONNECTION_DISCONNECTED:
-			_rpc_equip_slot(slot)
-		MultiplayerPeer.CONNECTION_CONNECTING:
-			await multiplayer.connected_to_server
-			_rpc_equip_slot.rpc(slot)
 
 ## Add the passed weapon to held weapons. Returns the weapon that was dropped as a result, if any.
 func add_weapon(weapon : Weapon) -> Weapon:
@@ -521,8 +534,7 @@ func _use_weapon() -> void:
 func _input(event: InputEvent) -> void: # TODO Replace this with an input manager class.
 	
 	if event is InputEventMouseMotion: return
-	if multiplayer.get_remote_sender_id() != id: return
-	if id != multiplayer.get_unique_id(): return
+	if !Helper.is_this_client(self): return
 	
 	if event.is_action_pressed("use"):
 		if current_weapon and current_weapon.get_can_use():

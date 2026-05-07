@@ -169,4 +169,5 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		save_game()
 		get_tree().quit()
+		Log.info("Tree quit successfully.")
 #endregion

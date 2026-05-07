@@ -28,7 +28,7 @@ static var _event_strings: PackedStringArray = Event.keys()
 const _LOG_DIR := "user://"
 const _LOG_EXTENSION := "log"
 
-const _MAX_LOG_FILES: int = 5
+const _MAX_LOG_FILES: int = 10
 const _MAX_BUFFER_SIZE: int = 10
 
 static var _buffer_size: int
@@ -75,6 +75,7 @@ static func _create_log_file() -> FileAccess:
 	run_info += "Execution Time: " + Time.get_datetime_string_from_system() + "\n"
 	run_info += "Running on " + Engine.get_version_info()["string"] + "\n"
 	run_info += "Args: " + str(OS.get_cmdline_args()) + "\n"
+	run_info += "OS: " + OS.get_name() + "\n"
 	run_info += "-----------------------------"
 	file.store_line(run_info)
 	
@@ -133,6 +134,8 @@ func _log_error(
 		"line": line,
 		"function": function,
  	})
+	if event == Event.ERROR:
+		message += '\n' + _get_gdscript_backtrace(script_backtraces)
 	_add_message_to_file(message, event)
 
 func _log_message(message: String, is_error: bool) -> void:

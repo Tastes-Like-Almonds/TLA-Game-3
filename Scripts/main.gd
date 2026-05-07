@@ -30,7 +30,7 @@ func _ready() -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		elif arg.begins_with("--client"):
 			user_type = "client"
-			var error := Lobby.join_game("127.0.0.1")
+			Lobby.join_game("127.0.0.1")
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			get_window().title = "CLIENT"
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

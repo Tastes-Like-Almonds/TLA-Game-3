@@ -72,8 +72,11 @@ func join_game(address := "") -> Error:
 	return Error.OK
 
 func remove_multiplayer_peer() -> void:
-	multiplayer.multiplayer_peer = ENetMultiplayerPeer.new()
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	players.clear()
+
+func is_active() -> bool:
+	return multiplayer.multiplayer_peer.get_connection_status() == MultiplayerPeer.CONNECTION_CONNECTED
 #endregion
 
 #region Signal logic

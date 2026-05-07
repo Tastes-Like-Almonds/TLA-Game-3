@@ -59,7 +59,8 @@ func _input(event: InputEvent) -> void:
 		if event is InputEventMouseMotion:
 			
 			if DialogLoader.is_playing_dialog(): return
-			if player.id != multiplayer.get_unique_id(): return
+			if Lobby.is_active():
+				if player.id != multiplayer.get_unique_id(): return
 			
 			var new_mouse : Vector2 = virtual_mouse + event.relative*player.get_size_scale()*mouse_sens
 			var status := multiplayer.multiplayer_peer.get_connection_status()
@@ -244,10 +245,11 @@ func _physics_process(delta: float) -> void:
 		player.MovementMode.NOCLIP:
 			body.global_position = get_global_mouse_position()
 	
-	if multiplayer.is_server():
-		_sync_position.rpc(
-			body.global_position
-		)
+	if Lobby.is_active():
+		if multiplayer.is_server():
+			_sync_position.rpc(
+				body.global_position
+			)
 	
 	_update_blade(delta)
 

@@ -238,8 +238,9 @@ func _physics_process(delta: float) -> void:
 				velocity = body_pos.direction_to(get_global_mouse_position())*body_pos.distance_to(get_global_mouse_position())*10
 			move_and_slide()
 		#endregion
-		
-	if multiplayer.is_server():
-		_sync.rpc(global_position)
+	
+	if Lobby.is_active():
+		if multiplayer.is_server():
+			_sync.rpc(global_position)
 		
 #endregion

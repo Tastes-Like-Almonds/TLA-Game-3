@@ -29,9 +29,10 @@ signal on_load
 @export_group("Files")
 @export_file_path("*.tscn") var level_ui_path : String = "res://Scenes/UI/level_ui.tscn"
 
-var level_config : LevelConfig
 var loaded : bool = false
+var level_config    : LevelConfig
 var completion_data : CompletionData
+var pause_manager   : PauseManager
 
 var current_ui : LevelUI
 
@@ -136,6 +137,11 @@ func initialize(config : LevelConfig = null) -> void:
 	on_load.emit()
 	SignalBus.LevelLoaded.emit()
 	loaded = true
+	
+	if not get_tree().root.is_node_ready():
+		await get_tree().root.ready
+	
+	pause_manager._update_mouse()
 
 ## Ends the level and returns to the level selector.
 func complete() -> void:
@@ -151,7 +157,9 @@ func _ready() -> void:
 	
 	# Delegate pausing to separate node as to ensure level gets paused, as well.
 	var pause_man : Node = load("res://Scenes/Component/pause_manager.tscn").instantiate()
+	pause_manager = pause_man
 	add_child(pause_man)
+	
 	
 	completion_data = CompletionData.new()
 	
