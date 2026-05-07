@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://d3n0ld0lgrg4q"]
+[gd_scene format=3 uid="uid://d3n0ld0lgrg4q"]
 
 [ext_resource type="Script" uid="uid://ko4prto8gjvb" path="res://Scripts/Object/Enemy/bat.gd" id="1_t36nw"]
 [ext_resource type="Material" uid="uid://c1cysyloyyefa" path="res://Resource/Shader/Material/damage.tres" id="2_gnly0"]
@@ -104,7 +104,7 @@ gravity = Vector3(0, 2000, 0)
 linear_accel_min = -2.2351742e-06
 linear_accel_max = -2.2351742e-06
 
-[node name="Bat" type="AnimatableBody2D" node_paths=PackedStringArray("sprite", "notifier") groups=["BladeHitable", "EnemyBody"]]
+[node name="Bat" type="AnimatableBody2D" unique_id=528653503 node_paths=PackedStringArray("sprite", "notifier") groups=["BladeHitable", "EnemyBody"]]
 collision_layer = 8
 collision_mask = 27
 sync_to_physics = false
@@ -119,10 +119,10 @@ max_hit_kb = 1000.0
 respawn = false
 spawn_dead = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=639256935]
 shape = SubResource("RectangleShape2D_o6sep")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1770752650]
 material = ExtResource("2_gnly0")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_v4fcd")
@@ -130,7 +130,7 @@ animation = &"spawn"
 frame = 6
 frame_progress = 1.0
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1579741978]
 emitting = false
 amount = 16
 texture = SubResource("GradientTexture2D_gnly0")
@@ -139,9 +139,9 @@ one_shot = true
 explosiveness = 0.8
 process_material = SubResource("ParticleProcessMaterial_tuwcp")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=633196720]
 top_level = true
 rect = Rect2(-32, -32, 60, 60)
 
-[node name="AlertPos" type="Node2D" parent="."]
+[node name="AlertPos" type="Node2D" parent="." unique_id=1538567226]
 position = Vector2(-1, -30)

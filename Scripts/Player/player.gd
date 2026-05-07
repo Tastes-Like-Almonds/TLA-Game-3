@@ -553,11 +553,13 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 	elif event.is_action_pressed("noclip"):
 		if OS.has_feature("debug"):
 			if get_movement_mode() == MovementMode.NOCLIP:
-				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+				if !OS.get_cmdline_args().has("--no-grab"):
+					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 				set_movement_mode(MovementMode.SWORD_ORBIT)
 			else:
 				get_player_sword().on_cable = null
-				Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+				if !OS.get_cmdline_args().has("--no-grab"):
+					Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 				set_movement_mode(MovementMode.NOCLIP)
 	
 	elif event is InputEventKey:

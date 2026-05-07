@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_lwg71"]
 [ext_resource type="PackedScene" uid="uid://dbwojdsx50gkp" path="res://Scenes/Object/Zone/player_spawn.tscn" id="4_hqjdk"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="5_0eceh"]
+[ext_resource type="PackedScene" uid="uid://d3n0ld0lgrg4q" path="res://Scenes/Object/Enemy/bat.tscn" id="5_avng5"]
 [ext_resource type="PackedScene" uid="uid://msjwow0wl2j6" path="res://Scenes/Object/Zone/camera_setter.tscn" id="6_bttl8"]
 
 [node name="DevLevel2" type="Node2D" unique_id=1350220413]
@@ -52,3 +53,7 @@ tile_set = ExtResource("5_0eceh")
 position = Vector2(333.001, -146)
 scale = Vector2(5.6665125, 5.698169)
 track_player = true
+
+[node name="Bat" parent="." unique_id=1644761515 instance=ExtResource("5_avng5")]
+position = Vector2(729, -150)
+health = 20.0

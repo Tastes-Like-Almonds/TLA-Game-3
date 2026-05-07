@@ -54,7 +54,8 @@ func _play_level(level_data : LevelNodeData) -> void:
 		Globals.main.transiton_overlay_player.play("fade_to_black")
 		Globals.main.transiton_overlay_player.animation_finished.connect(func(_x:Variant) -> void:
 			SignalBus.LevelLoaded.connect(func() -> void:
-				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+				if !OS.get_cmdline_args().has("--no-grab"):
+					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 				Globals.main.transiton_overlay_player.play("fade_from_black")
 				queue_free()
 			,CONNECT_ONE_SHOT)
@@ -75,7 +76,8 @@ func _exit() -> void:
 	Globals.main.transiton_overlay_player.animation_finished.connect(func(_x:Variant) -> void:
 		
 		SignalBus.LevelLoaded.connect(func() -> void:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			if !OS.get_cmdline_args().has("--no-grab"):
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			Globals.main.transiton_overlay_player.play("fade_from_black")
 			queue_free()
 		
