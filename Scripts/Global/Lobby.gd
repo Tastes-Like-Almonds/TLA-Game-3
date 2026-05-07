@@ -57,6 +57,8 @@ func create_game() -> Error:
 	players[1] = player_info
 	player_connected.emit(player_info)
 	
+	Log.connection("Created lobby")
+	
 	return Error.OK
 
 func join_game(address := "") -> Error:
@@ -64,6 +66,9 @@ func join_game(address := "") -> Error:
 	var error := peer.create_client(address, PORT)
 	if error: return error
 	multiplayer.multiplayer_peer = peer
+	
+	Log.connection("Joined Lobby " + address + " as peer " + str(multiplayer.get_unique_id()))
+	
 	return Error.OK
 
 func remove_multiplayer_peer() -> void:
@@ -88,7 +93,6 @@ func _on_player_disconnected(id:int) -> void:
 	player_disconnected.emit(id)
 
 func _on_connected_ok() -> void:
-	print("CONNECT OK")
 	var peer_id := multiplayer.get_unique_id()
 	players[peer_id] = player_info
 	player_connected.emit(peer_id, player_info)

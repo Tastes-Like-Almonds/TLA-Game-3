@@ -100,8 +100,6 @@ func _untypeify(target:Variant) -> Variant:
 	return target
 
 func _load_from_json(json:String) -> Dictionary:
-	print("LOADING DICT")
-	print(json)
 	var data : Variant = JSON.parse_string(json)
 	if not data:
 		data = _get_base_data()
@@ -124,30 +122,23 @@ func load_game(path:String=SAVE_PATH) -> void:
 		var save_file := FileAccess.open(path, FileAccess.READ)
 		
 		if save_file == null:
-			push_error("Failure to load save data. Error code: " + str(FileAccess.get_open_error()))
+			Log.error("Failure to load save data. Error code: " + str(FileAccess.get_open_error()))
 			return
 		
 		current_loaded_data = _load_from_json(save_file.get_pascal_string())
 		save_file.close() # Not neccessary but it feels weird not writing it
 		
 	else:
-		print_debug("Save data not found, loading default...")
+		Log.info("Save data not found, loading default...")
 		current_loaded_data = _get_base_data()
 	
 	loaded_data = current_loaded_data
-	print("Loading...")
-	Helper.print_dict_as_json(loaded_data)
-	print("End loaded data")
 	loaded_data["equipped"] = {} # FIXME
 	DataLoaded.emit()
 	is_loaded = true
 
 ## Saves all game data to disk.
 func save_game(path:String=SAVE_PATH) -> void:
-	
-	print("Saving game...")
-	Helper.print_dict_as_json(loaded_data)
-	print("End save data")
 	
 	if (!loaded_data):
 		load_game() # Will create base data if needed
@@ -156,7 +147,7 @@ func save_game(path:String=SAVE_PATH) -> void:
 	var save_file := FileAccess.open(path, FileAccess.WRITE)
 	var save_string : String = _save_to_json(loaded_data)
 	
-	print("Saving save string of length " + str(save_string.length()))
+	Log.info("Saving save string of length " + str(save_string.length()))
 	
 	assert(save_file != null, "Error opening save file. Error code: " + str(FileAccess.get_open_error()))
 	save_file.store_pascal_string(save_string)

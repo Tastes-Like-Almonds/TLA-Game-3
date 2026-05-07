@@ -28,7 +28,7 @@ func load_selector(parent : Node = null) -> void:
 	
 	for child in parent.get_children():
 		if child is GraphLevelSelect:
-			push_warning("Duplicate level selector found! Deleting original...")
+			Log.warn("Duplicate level selector found! Deleting original...")
 			child.queue_free()
 	
 	clear_levels(parent)
@@ -53,7 +53,7 @@ func load_level(path : String, parent: Node, config : LevelConfig = null, clear_
 	parent.add_child(loaded)
 	loaded.initialize(config)
 	
-	print("Level '" + path + "' loaded!")
+	Log.info("Level '" + path + "' loaded!")
 	
 	SignalBus.LevelPathLoaded.emit(path)
 	return LoadLevelStatus.SUCCESS
@@ -74,6 +74,6 @@ func get_all_level_paths() -> Array[String]:
 			file_name = dir_access.get_next()
 		dir_access.list_dir_end()
 	else:
-		printerr("Could not open folder: " + LEVEL_DIR)
+		Log.error("Could not open folder: " + LEVEL_DIR)
 	
 	return files_list

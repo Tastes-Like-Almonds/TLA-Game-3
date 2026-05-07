@@ -21,6 +21,10 @@ run/main_scene="uid://birc57pmi5hwh"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://20ca71622682"
+
 [autoload]
 
 SignalBus="*res://Scripts/Global/signal_bus.gd"
@@ -41,6 +45,8 @@ SaveSlots="*res://Scripts/Global/save_slots.gd"
 
 [debug]
 
+settings/crash_handler/message="Please include this when reporting the bug to us!"
+settings/gdscript/always_track_call_stacks=true
 gdscript/warnings/untyped_declaration=2
 
 [display]

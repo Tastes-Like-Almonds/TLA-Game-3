@@ -43,7 +43,6 @@ func start_track(track:TrackLayer, song:SongData, fade_time:float=0.0, keep_time
 		
 		fade_tween.play()
 
-	print("NODE  CREATED")
 	add_child(song.node_ref)
 	start_time = clampf(start_time, 0.0, song.node_ref.stream.get_length())
 	song.node_ref.play(start_time)
@@ -70,9 +69,9 @@ func stop_track(track:TrackLayer, fade_time:float=0.5) -> void:
 		# Delete node reference upon fade completion
 		fade_tween.tween_callback(func() -> void:
 			if song.node_ref and song.node_ref.is_node_ready() and is_instance_valid(song.node_ref):
-				print(song.path)
-				print(song.node_ref)
-				print(song.node_ref.get_parent())
+				#print(song.path)
+				#print(song.node_ref)
+				#print(song.node_ref.get_parent())
 				song.node_ref.queue_free()
 		)
 		

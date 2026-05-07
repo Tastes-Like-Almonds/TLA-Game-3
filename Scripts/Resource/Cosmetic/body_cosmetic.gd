@@ -18,16 +18,19 @@ enum SpriteType {
 @export var glow_texture   : Texture2D    = null
 
 func _init() -> void:
-	
-	# Validate
-	match sprite_type:
-		SpriteType.TEXTURE:
-			if (texture == null) and (texture_behind == null):
-				push_warning("No sprite set for BodyCosmetic resource!")
-		
-		SpriteType.ANIMATED:
-			if sprite_frames == null:
-				push_warning("No sprite frames set for BodyCosmetic resource!")
+	pass
+	# Validate (Commented out due to strange behavior)
+	# Issue: First warning pushed likely due to the properties not yet
+	# loading for the resource. For some reason, the resource name and
+	# path are also not set, making it difficult to find the problem.
+	#match sprite_type:
+		#SpriteType.TEXTURE:
+			#if (texture == null) and (texture_behind == null):
+				#push_warning("No sprite set for BodyCosmetic resource! Path: ")
+		#
+		#SpriteType.ANIMATED:
+			#if sprite_frames == null:
+				#push_warning("No sprite frames set for BodyCosmetic resource!")
 
 ## Gets the node version of this cosmetic. Will be a CosmeticContainer,
 ## A Sprite2D, or an AnimatedSprite2D.

@@ -40,6 +40,9 @@ enum MovementMode {
 
 @export var properties : PlayerProperties = PlayerProperties.new()
 
+## Multiplayer Unique ID
+var id : int
+
 var property_modifiers : Dictionary[String, Array]
 
 # Cache modified properties for perfomance. Not doing so costs about 5ms frame time (on my machine)
@@ -427,13 +430,31 @@ func equip_weapon(weapon : Weapon) -> void:
 		weapon_visual.set_player(self)
 		add_child(weapon_visual)
 
-## Equip the weapon in the passed slot.
-func equip_weapon_slot(slot : int) -> void:
+## Equip the passed weapon slot. Can only be called from the client
+## who owns this player.
+@rpc("any_peer", "reliable", "call_local")
+func _rpc_equip_slot(slot : int) -> void:
+	var sender := multiplayer.get_remote_sender_id()
+	if sender != id and sender != 0: return
 	if slot >= held_weapons.size(): return
 	var weapon : Weapon = held_weapons.get(slot)
 	if weapon:
 		equip_weapon(weapon)
 	loadout_changed.emit()
+
+## Equip the weapon in the passed slot.
+#@rpc("any_peer", "reliable", "call_local")
+func equip_weapon_slot(slot : int) -> void:
+	#if multiplayer.get_remote_sender_id() != id: return
+	var status := multiplayer.multiplayer_peer.get_connection_status()
+	match status:
+		MultiplayerPeer.CONNECTION_CONNECTED:
+			_rpc_equip_slot.rpc(slot)
+		MultiplayerPeer.CONNECTION_DISCONNECTED:
+			_rpc_equip_slot(slot)
+		MultiplayerPeer.CONNECTION_CONNECTING:
+			await multiplayer.connected_to_server
+			_rpc_equip_slot.rpc(slot)
 
 ## Add the passed weapon to held weapons. Returns the weapon that was dropped as a result, if any.
 func add_weapon(weapon : Weapon) -> Weapon:
@@ -473,37 +494,40 @@ func pickup_weapon(weapon : Weapon) -> Weapon:
 
 #region Actions
 
+@rpc("any_peer", "reliable", "call_local")
+func _use_weapon() -> void:
+	Sfx.play_sound_2d(current_weapon.use_end_sound, get_player_position())
+	ability_charge = current_weapon.MAX_CHARGE
+	current_weapon.use(ability_charge)
+	dash_animator.play("used_dash")
+	CompletionEvent.emit(Level.CompletionEvent.PLAYER_DASHED, null)
+	
+	# Reset trail
+	if sprite_trail.modulate.a <= 0:
+		
+		sprite_trail.restart()
+		
+	var size_scale : float = get_size_scale()*3
+	sprite_trail.scale_amount_min = size_scale
+	sprite_trail.scale_amount_max = size_scale
+	
+	if sprite.flip_v:
+		sprite_trail.rotation = PI
+	else:
+		sprite_trail.rotation = 0
+		
+	sprite_trail.modulate.a = 1
+
 func _input(event: InputEvent) -> void: # TODO Replace this with an input manager class.
+	
+	if event is InputEventMouseMotion: return
+	if multiplayer.get_remote_sender_id() != id: return
+	if id != multiplayer.get_unique_id(): return
 	
 	if event.is_action_pressed("use"):
 		if current_weapon and current_weapon.get_can_use():
-			
-			# Do the using
-			Sfx.play_sound_2d(current_weapon.use_end_sound, get_player_position())
-			ability_charge = current_weapon.MAX_CHARGE
-			current_weapon.use(ability_charge)
-			dash_animator.play("used_dash")
-			CompletionEvent.emit(Level.CompletionEvent.PLAYER_DASHED, null)
-			
-			# Reset trail
-			if sprite_trail.modulate.a <= 0:
-				
-				sprite_trail.restart()
-				
-			var size_scale : float = get_size_scale()*3
-			sprite_trail.scale_amount_min = size_scale
-			sprite_trail.scale_amount_max = size_scale
-			
-			if sprite.flip_v:
-				sprite_trail.rotation = PI
-			else:
-				sprite_trail.rotation = 0
-				
-			sprite_trail.modulate.a = 1
-	
-	#elif event.is_action_released("use"):
-		#stop_charging()
-	
+			_use_weapon.rpc()
+
 	elif event.is_action_pressed("next_weapon"):
 		var idx : int = get_current_weapon_index()
 		idx = wrap(idx+1, 0, held_weapons.size())
@@ -716,10 +740,10 @@ func add_modifier(mod : PropertyModifier, stat:String) -> void:
 		teleport_to(get_player_body().global_position/(get_size_scale()/last_size))
 
 ## Remove a target modifier by its id.
-func remove_modifier_by_id(id : String, stat:String) -> void:
+func remove_modifier_by_id(mod_id : String, stat:String) -> void:
 	if stat not in property_modifiers : return
 	for mod : PropertyModifier in property_modifiers[stat]:
-		if mod.id == id:
+		if mod.id == mod_id:
 			property_modifiers[stat].erase(mod)
 			dirty_property(stat)
 
@@ -744,7 +768,7 @@ func _process(delta: float) -> void:
 	if get_player_body().is_on_floor():
 		if dash_animator.current_animation != "cant_dash":
 			dash_animator.play("cant_dash")
-	elif current_weapon.get_can_use():
+	elif current_weapon and current_weapon.get_can_use():
 		if dash_animator.current_animation != "has_dash":
 			dash_animator.play("has_dash")
 		

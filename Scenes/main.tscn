@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://birc57pmi5hwh"]
+[gd_scene format=3 uid="uid://birc57pmi5hwh"]
 
 [ext_resource type="Theme" uid="uid://1q4kixjfk3u0" path="res://Resource/Theme/dev_panel.tres" id="1_344ge"]
 [ext_resource type="Script" uid="uid://bt4l1nsa4vgma" path="res://Scripts/main.gd" id="1_d1ilt"]
@@ -25,7 +25,6 @@
 [ext_resource type="Script" uid="uid://cmdsxaysqgg3f" path="res://Scripts/UI/dialog.gd" id="18_hibaj"]
 [ext_resource type="Script" uid="uid://brl4aacjvmi05" path="res://Scripts/Resource/Dialog/Tags/play_sound.gd" id="19_pdsj5"]
 [ext_resource type="Script" uid="uid://d1ymyf6lkf00o" path="res://Scripts/Resource/Dialog/Tags/screen_shake.gd" id="20_ee4r6"]
-[ext_resource type="PackedScene" uid="uid://51rjllq0cxd7" path="res://Scenes/UI/graph_level_select.tscn" id="25_u50mg"]
 
 [sub_resource type="Gradient" id="Gradient_kry3j"]
 colors = PackedColorArray(0.7647408, 0.80606586, 0.87960994, 0.15294118, 1, 1, 1, 0)
@@ -250,15 +249,15 @@ metadata/_custom_type_script = "uid://brl4aacjvmi05"
 script = ExtResource("20_ee4r6")
 metadata/_custom_type_script = "uid://d1ymyf6lkf00o"
 
-[node name="main" type="Node"]
+[node name="main" type="Node" unique_id=1776290214]
 script = ExtResource("1_d1ilt")
-autoload_level = "res://Scenes/Level/dash_other.tscn"
+autoload_level = "res://Scenes/Level/multiplayer_testing.tscn"
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1455001151]
 unique_name_in_owner = true
 layer = 2
 
-[node name="DevPanel" type="Control" parent="UI"]
+[node name="DevPanel" type="Control" parent="UI" unique_id=931670935]
 unique_name_in_owner = true
 process_mode = 3
 visible = false
@@ -275,7 +274,7 @@ mouse_filter = 2
 theme = ExtResource("1_344ge")
 script = ExtResource("2_ynf5e")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/DevPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/DevPanel" unique_id=1209493695]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -288,20 +287,21 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="HSplitContainer" type="HSplitContainer" parent="UI/DevPanel/MarginContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="UI/DevPanel/MarginContainer" unique_id=57864664]
 layout_mode = 2
 mouse_filter = 2
+split_offsets = PackedInt32Array(1080)
 split_offset = 1080
 
-[node name="Control" type="Control" parent="UI/DevPanel/MarginContainer/HSplitContainer"]
+[node name="Control" type="Control" parent="UI/DevPanel/MarginContainer/HSplitContainer" unique_id=1840951279]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer" unique_id=1289750065]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer" unique_id=880961409]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 12
@@ -309,36 +309,36 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer" unique_id=172073223]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer" unique_id=2003105311]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2" unique_id=1310689402]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 32
 text = "Developer Panel"
 horizontal_alignment = 1
 
-[node name="Player" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2" instance=ExtResource("3_hptm8")]
+[node name="Player" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2" unique_id=615820913 instance=ExtResource("3_hptm8")]
 layout_mode = 2
 
-[node name="Level" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2" instance=ExtResource("5_6iyac")]
+[node name="Level" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer/MarginContainer/ScrollContainer/VBoxContainer2" unique_id=934869226 instance=ExtResource("5_6iyac")]
 layout_mode = 2
 size_flags_vertical = 1
 
-[node name="Panel" type="Panel" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer"]
+[node name="Panel" type="Panel" parent="UI/DevPanel/MarginContainer/HSplitContainer/PanelContainer" unique_id=808761061]
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_21xkr")
 
-[node name="TransitionOverlay" type="Control" parent="UI"]
+[node name="TransitionOverlay" type="Control" parent="UI" unique_id=1408581113]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -348,7 +348,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ColorRect" type="ColorRect" parent="UI/TransitionOverlay"]
+[node name="ColorRect" type="ColorRect" parent="UI/TransitionOverlay" unique_id=1385245499]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -359,12 +359,10 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/TransitionOverlay"]
-libraries = {
-&"": SubResource("AnimationLibrary_ynf5e")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/TransitionOverlay" unique_id=1232700126]
+libraries/ = SubResource("AnimationLibrary_ynf5e")
 
-[node name="Settings" type="Control" parent="UI"]
+[node name="Settings" type="Control" parent="UI" unique_id=1667630190]
 process_mode = 3
 visible = false
 z_index = 2
@@ -378,7 +376,7 @@ mouse_filter = 2
 theme = SubResource("Theme_344ge")
 script = ExtResource("7_hptm8")
 
-[node name="Panel" type="Panel" parent="UI/Settings"]
+[node name="Panel" type="Panel" parent="UI/Settings" unique_id=288388533]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -388,7 +386,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_344ge")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Settings"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Settings" unique_id=662217659]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -401,33 +399,33 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="title" type="Label" parent="UI/Settings/MarginContainer"]
+[node name="title" type="Label" parent="UI/Settings/MarginContainer" unique_id=1477395468]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Settings"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Settings/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Settings/MarginContainer" unique_id=456812166]
 layout_mode = 2
 
-[node name="Control2" type="Control" parent="UI/Settings/MarginContainer/HBoxContainer"]
+[node name="Control2" type="Control" parent="UI/Settings/MarginContainer/HBoxContainer" unique_id=1274278087]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer" unique_id=1572862493]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_constants/separation = 20
 
-[node name="Resolution" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Resolution" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer" unique_id=31218574]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="OptionButton" type="OptionButton" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Resolution"]
+[node name="OptionButton" type="OptionButton" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Resolution" unique_id=367918309]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 selected = 0
@@ -437,20 +435,20 @@ popup/item_0/id = 0
 popup/item_1/text = "1920x1080"
 popup/item_1/id = 1
 
-[node name="Button" type="Button" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Resolution"]
+[node name="Button" type="Button" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Resolution" unique_id=357295663]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Apply"
 
-[node name="Music" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Music" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer" unique_id=82049759]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music"]
+[node name="TextureRect" type="TextureRect" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music" unique_id=1883955281]
 custom_minimum_size = Vector2(60, 61)
 layout_mode = 2
 texture = ExtResource("8_k12tt")
 
-[node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music" node_paths=PackedStringArray("label")]
+[node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music" unique_id=2072125556 node_paths=PackedStringArray("label")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -460,20 +458,20 @@ value = 0.5
 script = ExtResource("9_gt3je")
 label = NodePath("../Label")
 
-[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music"]
+[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music" unique_id=2046109600]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = " 0.05"
 
-[node name="SFX" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="SFX" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer" unique_id=174259671]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX"]
+[node name="TextureRect" type="TextureRect" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX" unique_id=338357042]
 custom_minimum_size = Vector2(60, 61)
 layout_mode = 2
 texture = ExtResource("9_h1bgf")
 
-[node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX" node_paths=PackedStringArray("label")]
+[node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX" unique_id=181117401 node_paths=PackedStringArray("label")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -483,20 +481,20 @@ value = 1.0
 script = ExtResource("10_b3802")
 label = NodePath("../Label")
 
-[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX"]
+[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/SFX" unique_id=120083165]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "0.05"
 
-[node name="MouseSensitivity" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="MouseSensitivity" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer" unique_id=851248050]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/MouseSensitivity"]
+[node name="TextureRect" type="TextureRect" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/MouseSensitivity" unique_id=1873218262]
 custom_minimum_size = Vector2(60, 61)
 layout_mode = 2
 texture = ExtResource("12_cbgmd")
 
-[node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/MouseSensitivity" node_paths=PackedStringArray("label")]
+[node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/MouseSensitivity" unique_id=151726604 node_paths=PackedStringArray("label")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -507,22 +505,22 @@ value = 1.0
 script = ExtResource("12_3pmx8")
 label = NodePath("../Label")
 
-[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/MouseSensitivity"]
+[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/MouseSensitivity" unique_id=624448851]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = " 1.0x"
 
-[node name="Brightness" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Brightness" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1557831304]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Brightness"]
+[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Brightness" unique_id=581930335]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Brightness"
 
-[node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Brightness"]
+[node name="HSlider" type="HSlider" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Brightness" unique_id=1316190149]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -531,39 +529,39 @@ step = 0.05
 value = 1.0
 script = ExtResource("8_fdnlq")
 
-[node name="Fullscreen" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Fullscreen" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer" unique_id=151963399]
 layout_mode = 2
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Fullscreen"]
+[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Fullscreen" unique_id=16795585]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Fullscreen"
 
-[node name="CheckBox" type="CheckBox" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Fullscreen"]
+[node name="CheckBox" type="CheckBox" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Fullscreen" unique_id=1125953560]
 layout_mode = 2
 theme_override_icons/checked = SubResource("GradientTexture2D_ynf5e")
 theme_override_icons/unchecked = SubResource("GradientTexture2D_d1ilt")
 script = ExtResource("8_6iyac")
 
-[node name="CRT" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="CRT" type="HBoxContainer" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1285100146]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/CRT"]
+[node name="Label" type="Label" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/CRT" unique_id=1610502414]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Disable CRT"
 
-[node name="CheckBox" type="CheckBox" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/CRT"]
+[node name="CheckBox" type="CheckBox" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/CRT" unique_id=1099795806]
 layout_mode = 2
 theme_override_icons/checked = SubResource("GradientTexture2D_ynf5e")
 theme_override_icons/unchecked = SubResource("GradientTexture2D_d1ilt")
 script = ExtResource("8_d1ilt")
 
-[node name="Keybinds" type="Button" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Keybinds" type="Button" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1340023729]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
@@ -573,18 +571,18 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_hptm8")
 theme_override_styles/hover = SubResource("StyleBoxFlat_d1ilt")
 text = "Edit keybinds..."
 
-[node name="Apply" type="Button" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Apply" type="Button" parent="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1528970122]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 50
 text = "Apply"
 
-[node name="Control" type="Control" parent="UI/Settings/MarginContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="UI/Settings/MarginContainer/HBoxContainer" unique_id=1467811817]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="CRT" type="Control" parent="UI"]
+[node name="CRT" type="Control" parent="UI" unique_id=257200079]
 z_index = 5
 layout_mode = 3
 anchors_preset = 15
@@ -595,7 +593,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("8_hptm8")
 
-[node name="ColorRect" type="ColorRect" parent="UI/CRT"]
+[node name="ColorRect" type="ColorRect" parent="UI/CRT" unique_id=582697018]
 material = SubResource("ShaderMaterial_344ge")
 layout_mode = 1
 anchors_preset = 15
@@ -605,7 +603,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Brightness" type="ColorRect" parent="UI"]
+[node name="Brightness" type="ColorRect" parent="UI" unique_id=2116905495]
 material = SubResource("ShaderMaterial_wsu2k")
 anchors_preset = 15
 anchor_right = 1.0
@@ -615,7 +613,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("14_wsu2k")
 
-[node name="Dialog" type="Control" parent="UI"]
+[node name="Dialog" type="Control" parent="UI" unique_id=1127922081]
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
@@ -627,7 +625,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("18_hibaj")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Dialog"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Dialog" unique_id=1001663342]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -640,34 +638,34 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="TextDisplay" type="VBoxContainer" parent="UI/Dialog/MarginContainer"]
+[node name="TextDisplay" type="VBoxContainer" parent="UI/Dialog/MarginContainer" unique_id=832107498]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Control" type="Control" parent="UI/Dialog/MarginContainer/TextDisplay"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-
-[node name="Control2" type="Control" parent="UI/Dialog/MarginContainer/TextDisplay"]
+[node name="Control" type="Control" parent="UI/Dialog/MarginContainer/TextDisplay" unique_id=1031269868]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Dialog/MarginContainer/TextDisplay"]
+[node name="Control2" type="Control" parent="UI/Dialog/MarginContainer/TextDisplay" unique_id=1866354377]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Dialog/MarginContainer/TextDisplay" unique_id=2075191012]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="NamePanel" type="PanelContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer"]
+[node name="NamePanel" type="PanelContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer" unique_id=2123675074]
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_b3802")
 
-[node name="Name" type="RichTextLabel" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/NamePanel"]
+[node name="Name" type="RichTextLabel" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/NamePanel" unique_id=1268287183]
 layout_mode = 2
 mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("6_6bp64")
@@ -679,14 +677,14 @@ autowrap_mode = 0
 visible_characters = 29
 visible_ratio = 7.25
 
-[node name="DialogPanel" type="PanelContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer"]
+[node name="DialogPanel" type="PanelContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer" unique_id=1999611191]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_b3802")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel" unique_id=1235960876]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 8
@@ -694,10 +692,10 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer" unique_id=11688183]
 layout_mode = 2
 
-[node name="Text" type="RichTextLabel" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer/HBoxContainer"]
+[node name="Text" type="RichTextLabel" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer/HBoxContainer" unique_id=245798923]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -708,15 +706,13 @@ text = "[color=red]You fool! What have you [shake]done!"
 custom_effects = [SubResource("RichTextEffect_gt3je"), SubResource("RichTextEffect_3pmx8")]
 visible_characters = 29
 
-[node name="TextureRect" type="TextureRect" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="UI/Dialog/MarginContainer/TextDisplay/VBoxContainer/DialogPanel/MarginContainer/HBoxContainer" unique_id=632110226]
 layout_mode = 2
 texture = ExtResource("18_fevyy")
 expand_mode = 2
 
-[node name="LevelSelect" parent="." instance=ExtResource("6_21xkr")]
+[node name="LevelSelect" parent="." unique_id=1675706768 instance=ExtResource("6_21xkr")]
 visible = false
-
-[node name="GraphLevelSelect" parent="." instance=ExtResource("25_u50mg")]
 
 [connection signal="changed" from="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music/HSlider" to="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music/HSlider" method="_on_changed"]
 [connection signal="value_changed" from="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music/HSlider" to="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music/HSlider" method="_on_value_changed"]

@@ -189,6 +189,15 @@ func format_time(time_seconds: float) -> String:
 	var centiseconds := int((time_seconds - total_seconds) * 100)
 	return "%02d:%02d.%02d" % [minutes, seconds, centiseconds]
 
+## Returns true if the passed player belongs to this client.
+func is_this_client(player:Player) -> bool:
+	var status := player.multiplayer.multiplayer_peer.get_connection_status()
+	if status == MultiplayerPeer.CONNECTION_CONNECTED:
+		return player.id == player.multiplayer.get_unique_id()
+	elif status == MultiplayerPeer.CONNECTION_DISCONNECTED:
+		return true
+	return true
+
 ## Safely saves and closes the game.
 func close_game() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)

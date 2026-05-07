@@ -46,15 +46,31 @@ var speed_value : float = 0.0
 var virtual_mouse : Vector2
 var mouse_sens : float = 1.0
 
+@rpc("any_peer", "call_local", "unreliable_ordered")
+func _virtual_mouse_updated(new : Vector2) -> void:
+	virtual_mouse = new
+
 func _input(event: InputEvent) -> void:
+	
 	var player := _get_player()
 	if not player: return
+	
 	if event is InputEventMouse:
 		if event is InputEventMouseMotion:
+			
 			if DialogLoader.is_playing_dialog(): return
+			if player.id != multiplayer.get_unique_id(): return
+			
 			var new_mouse : Vector2 = virtual_mouse + event.relative*player.get_size_scale()*mouse_sens
+			var status := multiplayer.multiplayer_peer.get_connection_status()
+			
 			mouse_speed = (new_mouse - virtual_mouse).length()
-			virtual_mouse = new_mouse 
+			virtual_mouse = new_mouse
+			
+			# Pass to other clients if connected
+			if status == MultiplayerPeer.CONNECTION_CONNECTED:
+				_virtual_mouse_updated.rpc(new_mouse)
+			
 			var dist := player.get_max_distance()
 			if dist < virtual_mouse.length():
 				virtual_mouse = virtual_mouse.normalized()*dist
@@ -128,6 +144,12 @@ func _update_blade(_delta : float) -> void:
 			#Sfx.play_sound(normal_hit_sound)
 	
 	last_result = result
+
+@rpc("authority", "unreliable_ordered", "call_local")
+func _sync_position(
+	pos : Vector2
+) -> void:
+	body.global_position = pos
 
 func _physics_process(delta: float) -> void:
 	last_delta = delta
@@ -221,6 +243,11 @@ func _physics_process(delta: float) -> void:
 		
 		player.MovementMode.NOCLIP:
 			body.global_position = get_global_mouse_position()
+	
+	if multiplayer.is_server():
+		_sync_position.rpc(
+			body.global_position
+		)
 	
 	_update_blade(delta)
 

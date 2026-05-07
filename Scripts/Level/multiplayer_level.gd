@@ -1,59 +1,6 @@
-## A base class for levels. If anything looks abnormal, it's because this was designed to be more
-## adaptable to multiplayer should we do so later in development.
-@abstract class_name Level extends Node2D
-
-enum Difficulty {
-	EFFORTLESS,
-	EASY,
-	AVERAGE,
-	HARD,
-	TOUGH,
-	INSANE
-}
-
-## A type of event which influences the CompletionData for the level, such as damage taken,
-## Kills, etc.
-enum CompletionEvent {
-	PLAYER_TAKEN_DAMAGE, # Float
-	PLAYER_DEALT_DAMAGE, # Float
-	PLAYER_DEATH,        # None
-	PLAYER_KILL,         # None
-	PLAYER_DASHED        # None
-}
-
-signal on_load
-
-@export var starting_ambience:SongData = null
-@export var starting_track:SongData = null
-
-@export_group("Files")
-@export_file_path("*.tscn") var level_ui_path : String = "res://Scenes/UI/level_ui.tscn"
-
-var level_config : LevelConfig
-var loaded : bool = false
-var completion_data : CompletionData
-
-var current_ui : LevelUI
+class_name MultiplayerLevel extends Level
 
 #region Private
-## Gets the spawn which the player should.. well.. spawn at.
-func _get_first_spawn() -> Node2D:
-	for node in get_tree().get_nodes_in_group("PlayerSpawn"):
-		if is_ancestor_of(node): return node
-	return null
-
-## Return the camera to be used in the level. Override to set custom camera stats.
-func _make_camera() -> GameCamera:
-	var cam : GameCamera = load("res://Scenes/Player/game_camera.tscn").instantiate()
-	return cam
-
-## Return the player to be used in the level. Override to set custom player stats.
-func _make_player() -> Player:
-	return load("res://Scenes/Player/player.tscn").instantiate()
-
-func _get_default_player_weapon() -> Weapon:
-	return SwordWeapon.new()
-
 ## Setup the camera. Should only be overidden if specific functionality is needed. Otherwise,
 ## use _make_camera.
 func _setup_camera() -> void:
@@ -70,6 +17,8 @@ func _setup_player(id : int = 1) -> Player:
 	
 	player.id   = id
 	player.name = str(id)
+	
+	push_warning("Player " + str(id) + " created.")
 	
 	if is_instance_valid(spawn): 
 		player.get_player_body().global_position = _get_first_spawn().global_position

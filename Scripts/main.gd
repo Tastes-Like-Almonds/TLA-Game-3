@@ -14,26 +14,30 @@ func get_dev_panel() -> DevPanel:
 
 func _ready() -> void:
 	Globals.main = self
-	if autoload_level:
-		$GraphLevelSelect.queue_free()
-		$LevelSelect.hide()
-		
-		if OS.has_feature("debug"):
-			LevelLoader.load_level(autoload_level, self)
-		else:
-			LevelLoader.load_level("res://Scenes/Level/menu.tscn", self)
 	
 	# The below commented-out code is used for multiplayer testing, which will not be done for a while.
 	# It may never get added, but it's here in case it does.
 	
-	#var args := OS.get_cmdline_args()
-	#var user_type := ""
-	#for arg in args:
-		#if arg.begins_with("--host"):
-			#user_type = "host"
-			#Lobby.create_game()
-		#elif arg.begins_with("--client"):
-			#user_type = "client"
-			#Lobby.join_game("127.0.0.1")
-	#print("Prints for '" + user_type + "':")
-	#print(Lobby.players)
+	var args := OS.get_cmdline_args()
+	var user_type := ""
+	
+	for arg in args:
+		if arg.begins_with("--host"):
+			user_type = "host"
+			Lobby.create_game()
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+			get_window().title = "SERVER"
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		elif arg.begins_with("--client"):
+			user_type = "client"
+			var error := Lobby.join_game("127.0.0.1")
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+			get_window().title = "CLIENT"
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	Log.connection(user_type.capitalize() + " instance loaded")
+	
+	if OS.has_feature("debug") and autoload_level:
+		LevelLoader.load_level(autoload_level, self)
+	else:
+		LevelLoader.load_level("res://Scenes/Level/menu.tscn", self)

@@ -15,6 +15,7 @@ extends Area2D
 @export var track_player : bool = false
 
 func _update_camera(player : Player) -> void:
+	if !Helper.is_this_client(player): return
 	if track_player:
 		if player:
 			var cam := get_viewport().get_camera_2d()

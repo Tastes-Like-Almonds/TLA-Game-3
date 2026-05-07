@@ -47,6 +47,12 @@ func _ready() -> void:
 	initial_shape_pos = shape.position
 
 #region Physics
+@rpc("unreliable_ordered")
+func _sync(
+	pos : Vector2
+) -> void:
+	global_position = pos
+
 ## Apply drag to the passed velocity, as per the player's stats.
 ## Separated from _physics_process in case multiple movement methods need it.
 func _apply_drag(vel : Vector2, delta : float) -> Vector2:
@@ -232,4 +238,8 @@ func _physics_process(delta: float) -> void:
 				velocity = body_pos.direction_to(get_global_mouse_position())*body_pos.distance_to(get_global_mouse_position())*10
 			move_and_slide()
 		#endregion
+		
+	if multiplayer.is_server():
+		_sync.rpc(global_position)
+		
 #endregion
