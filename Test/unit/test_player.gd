@@ -23,7 +23,7 @@ func test_equip_weapon() -> void:
 
 func test_equip_weapon_slot() -> void:
 	player.add_weapon(weapon)
-	player.equip_weapon_slot.rpc(0)
+	player.equip_weapon_slot(0)
 	assert_true(player.current_weapon == weapon, "After adding a weapon, equip_weapon_slot should set the current weapon to the first weapon.")
 
 func test_add_weapon() -> void:

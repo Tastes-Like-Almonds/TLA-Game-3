@@ -412,6 +412,6 @@ scale = Vector2(0.3, 0.3)
 dialog = SubResource("Resource_cqvye")
 
 [connection signal="body_entered" from="Level/Tiles/Ground/Saw" to="Level/Tiles/Ground/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@39832" to="Level/Tiles/Ground/@Area2D@39832" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@39833" to="Level/Tiles/Ground/@Area2D@39833" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@39834" to="Level/Tiles/Ground/@Area2D@39834" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41676" to="Level/Tiles/Ground/@Area2D@41676" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41677" to="Level/Tiles/Ground/@Area2D@41677" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@41678" to="Level/Tiles/Ground/@Area2D@41678" method="_on_body_entered"]

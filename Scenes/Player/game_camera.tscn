@@ -4,5 +4,6 @@
 
 [node name="GameCamera" type="Camera2D" unique_id=583331373]
 physics_interpolation_mode = 1
+process_callback = 0
 script = ExtResource("1_2rkio")
 zoom_with_velocity = false
