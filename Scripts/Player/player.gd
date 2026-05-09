@@ -524,6 +524,9 @@ func _input(event: InputEvent) -> void: # TODO Replace this with an input manage
 				Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 				set_movement_mode(MovementMode.NOCLIP)
 	
+	elif event.is_action_pressed("reload_level"):
+		LevelLoader.reload_last_level()
+	
 	elif event is InputEventKey:
 		if event.pressed:
 			# Hotbar hotkeys 0-9
@@ -599,6 +602,10 @@ func teleport_toward(vec2 : Vector2) -> void:
 
 #region Damage/Death
 
+func _update_scale() -> void:
+	var size_scale := get_size_scale()
+	scale = Vector2(size_scale, size_scale)
+
 ## Clears all of the property modifiers attatched to the player which reset upon respawn (default)
 func clear_respawn_modifiers() -> void:
 	for stat:String in property_modifiers:
@@ -606,9 +613,9 @@ func clear_respawn_modifiers() -> void:
 			if modifier.reset_on_respawn:
 				property_modifiers[stat].erase(modifier)
 	dirty_all_properties()
+	_update_scale()
 
 func _respawn() -> void:
-	
 	
 	get_player_sword().on_cable = null
 	
@@ -713,6 +720,7 @@ func add_modifier(mod : PropertyModifier, stat:String) -> void:
 		modifier_display.create_display(mod.id, mod.timer, color)
 	
 	if stat == "size_scale":
+		_update_scale()
 		teleport_to(get_player_body().global_position/(get_size_scale()/last_size))
 
 ## Remove a target modifier by its id.
@@ -771,8 +779,7 @@ func _process(delta: float) -> void:
 	_update_modifiers(delta) # Modifiers for player properties
 
 func _physics_process(_delta: float) -> void:
-	var size_scale := get_size_scale()
-	scale = Vector2(size_scale, size_scale)
+	pass
 
 func _ready() -> void:
 	respawn_pos = get_player_body().global_position

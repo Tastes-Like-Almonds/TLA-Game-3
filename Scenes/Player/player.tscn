@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://bgq53i1bdpjo4"]
+[gd_scene format=3 uid="uid://bgq53i1bdpjo4"]
 
 [ext_resource type="Script" uid="uid://dhfku018dmgpg" path="res://Scripts/Player/player_body.gd" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://n3bb2inuibte" path="res://Scripts/Player/player.gd" id="1_xpcdj"]
@@ -411,20 +411,20 @@ _data = {
 &"used_dash": SubResource("Animation_rqdc0")
 }
 
-[node name="Player" type="Node2D" groups=["Player"]]
+[node name="Player" type="Node2D" unique_id=270530959 groups=["Player"]]
 script = ExtResource("1_xpcdj")
 properties = SubResource("Resource_jlvik")
 
-[node name="playerBody" type="CharacterBody2D" parent="." groups=["PlayerBody"]]
+[node name="playerBody" type="CharacterBody2D" parent="." unique_id=2063750583 groups=["PlayerBody"]]
 collision_layer = 130
 platform_wall_layers = 256
 script = ExtResource("1_uvnfx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="playerBody"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="playerBody" unique_id=527494380]
 position = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_tugb3")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="playerBody"]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="playerBody" unique_id=540128702]
 material = ExtResource("4_0u5uq")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_aqm4k")
@@ -432,40 +432,40 @@ animation = &"spawn"
 frame = 3
 frame_progress = 1.0
 
-[node name="ModifierDisplayManager" type="Node2D" parent="playerBody"]
+[node name="ModifierDisplayManager" type="Node2D" parent="playerBody" unique_id=1776771964]
 script = ExtResource("2_06tpx")
 
-[node name="GroundParticles" type="GPUParticles2D" parent="playerBody"]
+[node name="GroundParticles" type="GPUParticles2D" parent="playerBody" unique_id=1254992232]
 position = Vector2(0, 37)
 amount = 360
 texture = SubResource("GradientTexture2D_7g0yx")
 lifetime = 5.0
 process_material = SubResource("ParticleProcessMaterial_ks1b7")
 
-[node name="PointLight2D" type="PointLight2D" parent="playerBody"]
+[node name="PointLight2D" type="PointLight2D" parent="playerBody" unique_id=1590744529]
 visible = false
 scale = Vector2(3, 3)
 energy = 0.6
 texture = SubResource("GradientTexture2D_dey5f")
 
-[node name="Cosmetics" type="Node2D" parent="playerBody"]
+[node name="Cosmetics" type="Node2D" parent="playerBody" unique_id=1637894380]
 script = ExtResource("15_h8ma5")
 
-[node name="DashIndicator" type="Sprite2D" parent="playerBody"]
+[node name="DashIndicator" type="Sprite2D" parent="playerBody" unique_id=1401621726]
 modulate = Color(1, 1, 1, 0.7058824)
 z_index = 1
 position = Vector2(0, -76)
 scale = Vector2(3, 3)
 texture = SubResource("GradientTexture2D_jincj")
 
-[node name="DashIndicator2" type="Sprite2D" parent="playerBody"]
+[node name="DashIndicator2" type="Sprite2D" parent="playerBody" unique_id=100338416]
 modulate = Color(1, 1, 1, 0)
 z_index = 1
 position = Vector2(0, -76)
 scale = Vector2(3, 3)
 texture = SubResource("GradientTexture2D_jincj")
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="playerBody"]
+[node name="CPUParticles2D" type="CPUParticles2D" parent="playerBody" unique_id=51939170]
 z_index = 1
 material = SubResource("ShaderMaterial_qr1w5")
 position = Vector2(0, -10)
@@ -477,44 +477,42 @@ scale_amount_min = 3.0
 scale_amount_max = 3.0
 color_ramp = SubResource("Gradient_rqdc0")
 
-[node name="Sword" type="Node2D" parent="."]
+[node name="Sword" type="Node2D" parent="." unique_id=396324618]
 script = ExtResource("3_htcer")
 control_mode = 2
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="Sword"]
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="Sword" unique_id=210336290]
 position = Vector2(0, 50)
 collision_layer = 2
 sync_to_physics = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/AnimatableBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/AnimatableBody2D" unique_id=1305164983]
 shape = SubResource("RectangleShape2D_uvnfx")
 
-[node name="Sprite2D" type="Sprite2D" parent="Sword/AnimatableBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Sword/AnimatableBody2D" unique_id=1395822303]
 visible = false
 texture = SubResource("GradientTexture2D_dd0ac")
 
-[node name="Area2D" type="Area2D" parent="Sword"]
+[node name="Area2D" type="Area2D" parent="Sword" unique_id=172553214]
 collision_layer = 0
 collision_mask = 8
 script = ExtResource("5_htcer")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Area2D" unique_id=639386249]
 shape = SubResource("RectangleShape2D_mtuoh")
 debug_color = Color(0.94, 0, 0.28200018, 0.5019608)
 
-[node name="Animator" type="Node" parent="."]
+[node name="Animator" type="Node" parent="." unique_id=521184036]
 script = ExtResource("14_7g0yx")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_qr1w5")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=175333043]
+libraries/ = SubResource("AnimationLibrary_qr1w5")
 playback_default_blend_time = 1.0
 speed_scale = 4.0
 
-[node name="Sounds" type="Node" parent="."]
+[node name="Sounds" type="Node" parent="." unique_id=1583419377]
 
-[node name="Heartbeat" type="AudioStreamPlayer" parent="Sounds"]
+[node name="Heartbeat" type="AudioStreamPlayer" parent="Sounds" unique_id=1081493547]
 stream = ExtResource("24_rqdc0")
 volume_db = -10.0
 pitch_scale = 1.3
