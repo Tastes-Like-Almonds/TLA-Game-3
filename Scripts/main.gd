@@ -14,14 +14,10 @@ func get_dev_panel() -> DevPanel:
 
 func _ready() -> void:
 	Globals.main = self
-	if autoload_level:
-		$GraphLevelSelect.queue_free()
-		$LevelSelect.hide()
-		
-		if OS.has_feature("debug"):
-			LevelLoader.load_level(autoload_level, self)
-		else:
-			LevelLoader.load_level("res://Scenes/Level/menu.tscn", self)
+	if autoload_level and OS.has_feature("debug"):
+		LevelLoader.load_level(autoload_level, self)
+	else:
+		LevelLoader.load_level("res://Scenes/Level/menu.tscn", self)
 	
 	# The below commented-out code is used for multiplayer testing, which will not be done for a while.
 	# It may never get added, but it's here in case it does.

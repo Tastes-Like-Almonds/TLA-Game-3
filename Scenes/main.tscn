@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://dcwd3n7bnqbg8" path="res://Scenes/Debug/DevPanel/Player/player_dev_category.tscn" id="3_hptm8"]
 [ext_resource type="PackedScene" uid="uid://cduiqyk45vxko" path="res://Scenes/Debug/DevPanel/Level/level_dev_category.tscn" id="5_6iyac"]
 [ext_resource type="FontFile" uid="uid://dt20jqpf5r4r4" path="res://Resource/Font/Micro5-Regular.ttf" id="6_6bp64"]
-[ext_resource type="PackedScene" uid="uid://tu5stt8xu3fx" path="res://Scenes/UI/level_select.tscn" id="6_21xkr"]
 [ext_resource type="Script" uid="uid://5wfsq48wet5m" path="res://Scripts/settings.gd" id="7_hptm8"]
 [ext_resource type="Shader" uid="uid://c4528t06wn63w" path="res://Resource/testing.gdshader" id="7_ynf5e"]
 [ext_resource type="Script" uid="uid://562e2ilbpowh" path="res://Scripts/UI/Settings/fullscreen_toggle.gd" id="8_6iyac"]
@@ -25,7 +24,6 @@
 [ext_resource type="Script" uid="uid://cmdsxaysqgg3f" path="res://Scripts/UI/dialog.gd" id="18_hibaj"]
 [ext_resource type="Script" uid="uid://brl4aacjvmi05" path="res://Scripts/Resource/Dialog/Tags/play_sound.gd" id="19_pdsj5"]
 [ext_resource type="Script" uid="uid://d1ymyf6lkf00o" path="res://Scripts/Resource/Dialog/Tags/screen_shake.gd" id="20_ee4r6"]
-[ext_resource type="PackedScene" uid="uid://51rjllq0cxd7" path="res://Scenes/UI/graph_level_select.tscn" id="25_u50mg"]
 
 [sub_resource type="Gradient" id="Gradient_kry3j"]
 colors = PackedColorArray(0.7647408, 0.80606586, 0.87960994, 0.15294118, 1, 1, 1, 0)
@@ -252,7 +250,6 @@ metadata/_custom_type_script = "uid://d1ymyf6lkf00o"
 
 [node name="main" type="Node" unique_id=1473145699]
 script = ExtResource("1_d1ilt")
-autoload_level = "res://Scenes/Level/cable_gutter.tscn"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=47049347]
 unique_name_in_owner = true
@@ -711,11 +708,6 @@ visible_characters = 29
 layout_mode = 2
 texture = ExtResource("18_fevyy")
 expand_mode = 2
-
-[node name="LevelSelect" parent="." unique_id=1755928401 instance=ExtResource("6_21xkr")]
-visible = false
-
-[node name="GraphLevelSelect" parent="." unique_id=1829046946 instance=ExtResource("25_u50mg")]
 
 [connection signal="changed" from="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music/HSlider" to="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music/HSlider" method="_on_changed"]
 [connection signal="value_changed" from="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music/HSlider" to="UI/Settings/MarginContainer/HBoxContainer/VBoxContainer/Music/HSlider" method="_on_value_changed"]
