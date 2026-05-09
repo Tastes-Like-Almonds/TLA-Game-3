@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://b01vcg38h3my0" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 2.png" id="17_pyc8e"]
 [ext_resource type="Texture2D" uid="uid://chgwedvtgsf85" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 3.png" id="18_ff4kw"]
 [ext_resource type="Texture2D" uid="uid://dbl4hhtbsv6cn" path="res://Assets/Sprites/UI/Health Bar/Losing Health/Health Bar Explodes/Health Bar Explodes 4.png" id="19_ye262"]
+[ext_resource type="Script" uid="uid://pegecfvsv7qn" path="res://Scripts/UI/messages.gd" id="25_pyc8e"]
 
 [sub_resource type="Resource" id="Resource_46n82"]
 script = ExtResource("2_307ub")
@@ -405,7 +406,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_3e4nl"]
@@ -461,11 +462,65 @@ _data = {
 &"hurt": SubResource("Animation_urbh0")
 }
 
+[sub_resource type="Animation" id="Animation_pyc8e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ff4kw"]
+resource_name = "close"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ye262"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_htusf"]
+_data = {
+&"RESET": SubResource("Animation_pyc8e"),
+&"close": SubResource("Animation_ff4kw"),
+&"open": SubResource("Animation_ye262")
+}
+
 [node name="LevelUI" type="CanvasLayer" unique_id=805412162]
 script = ExtResource("1_xjiw8")
 cosmetic_unlock_sound = SubResource("Resource_46n82")
 
 [node name="Vignette" type="TextureRect" parent="." unique_id=1357193697]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -486,11 +541,14 @@ mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Health2" unique_id=2127650757]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -26.0
-offset_right = 16.0
+offset_left = -123.0
+offset_top = -200.0
+grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
 
@@ -846,8 +904,64 @@ text = "0:00"
 libraries/ = SubResource("AnimationLibrary_urbh0")
 playback_default_blend_time = 0.2
 
+[node name="Messages" type="HBoxContainer" parent="." unique_id=92181610]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("25_pyc8e")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Messages" unique_id=1885536409]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Messages/ScrollContainer" unique_id=354188094]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Messages/ScrollContainer/VBoxContainer" unique_id=812411812]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_vk2nj")
+theme_override_font_sizes/normal_font_size = 33
+bbcode_enabled = true
+text = "[color=green][User]:[/color] Hello there!
+[color=green][User]:[/color] Hello there!
+[color=green][User]:[/color] Hello there!
+[color=green][User]:[/color] Hello there!
+[color=green][User]:[/color] Hello there!
+[color=green][User]:[/color] Hello there!
+[color=green][User]:[/color] Hello there!"
+vertical_alignment = 2
+
+[node name="LineEdit" type="LineEdit" parent="Messages/ScrollContainer/VBoxContainer" unique_id=858257309]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_vk2nj")
+theme_override_font_sizes/font_size = 33
+placeholder_text = "Type to enter message..."
+caret_blink = true
+
+[node name="Spacer" type="Control" parent="Messages" unique_id=800118736]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Spacer2" type="Control" parent="Messages" unique_id=459671244]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Messages" unique_id=1142934303]
+libraries/ = SubResource("AnimationLibrary_htusf")
+
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Continue" to="Pause" method="_on_continue_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitLevel" to="Pause" method="_on_exit_level_pressed"]
-[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_game_pressed"]
 [connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_level_pressed"]
+[connection signal="pressed" from="Pause/MarginContainer/CenterContainer/VBoxContainer/ExitGame" to="Pause" method="_on_exit_game_pressed"]

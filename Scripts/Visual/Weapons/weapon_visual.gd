@@ -113,11 +113,13 @@ func _update_sparks() -> void:
 	if !sparks.emitting: return
 	var vel := player.get_player_sword().get_last_sword_velocity()
 	var speed := vel.length()
+	var sprite : Variant = _get_sprite()
 	if player.get_player_sword().is_on_cable():
 		speed *= spark_cable_multi
 	sparks.amount_ratio = (speed-spark_threshold) / spark_divisor
 
 	sparks.process_material.direction = Vector3(vel.x, vel.y, 0)
+	sparks.global_position = sprite.global_position
 
 ## Update the audio part of the weapon.
 func update_audio(_delta : float) -> void:

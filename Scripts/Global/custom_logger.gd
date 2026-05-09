@@ -1,6 +1,7 @@
 class_name Log extends Logger
 
 enum Event {
+	CLIENT,
 	CONNECTION,
 	INFO,
 	WARN,
@@ -9,6 +10,7 @@ enum Event {
 }
 
 const EVENT_COLORS: Dictionary[Event, String] = {
+	Event.CLIENT: "#9F9F9F",
 	Event.CONNECTION: "grey",
 	Event.INFO: "lime_green",
 	Event.WARN: "gold",
@@ -144,6 +146,14 @@ func _log_message(message: String, is_error: bool) -> void:
 	var event := Event.ERROR if is_error else Event.INFO
 	message = _format_log_message(message.trim_suffix('\n'), event)
 	_add_message_to_file(message, event)
+
+static func client(message: String) -> void:
+	if not _is_valid:
+		return
+	var event := Event.CLIENT
+	message = _format_log_message(message, event)
+	_add_message_to_file(message, event)
+	_print_event(message, event)
 
 static func connection(message: String) -> void:
 	if not _is_valid:

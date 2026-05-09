@@ -4,6 +4,8 @@ signal player_connected(peer_id:int, player_info:Dictionary)
 signal player_disconnected(peer_id:int)
 signal server_disconnected
 
+signal message_sent(id : int, msg : String)
+
 const PORT := 7000
 const DEFAULT_SERVER_IP := "127.0.0.1"
 const MAX_CONNECTIONS := 10
@@ -44,6 +46,34 @@ func get_local_player() -> Player:
 @rpc("any_peer", "reliable")
 func set_local_player(player : Player) -> void:
 	player_info[multiplayer.get_remote_sender_id()]["player_id"] = player.get_instance_id()
+
+## Replicated the passed property to all connected clients.
+## Should only be called via RPC; it is useless otherwise. 
+@rpc("authority", "call_remote", "unreliable_ordered")
+func sync_property(path : NodePath, value : Variant, smoothing : float = 1.0) -> void:
+	# If the client(s) and server desynv, the path to the
+	# node will probably be invalid. sync_property() allows
+	# us to work around that log-flooding and offload all
+	# the RPC stuff to a global node.
+	if get_node_or_null(path) != null:
+		if smoothing >= 1.0:
+			var target := get_node_and_resource(path)
+			target[0].set_indexed(target[2], value)
+		else:
+			var target := get_node_and_resource(path)
+			var old    : Variant = target[0].get_indexed(target[2])
+			
+			if old is Vector2:
+				value = old.lerp(value, smoothing)
+			elif old is float:
+				value = lerpf(old, value, smoothing)
+			
+			target[0].set_indexed(target[2], value)
+
+@rpc("any_peer", "call_local", "reliable")
+func send_message(msg : String) -> void:
+	Log.client("[" + players[multiplayer.get_remote_sender_id()]["name"] + "] " + msg)
+	message_sent.emit(multiplayer.get_remote_sender_id(), msg)
 
 #endregion
 

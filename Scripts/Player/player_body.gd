@@ -118,18 +118,10 @@ func ray_is_on_floor(length:float = 3) -> Dictionary:
 	
 	return result
 
-func _physics_process(delta: float) -> void:
+func _sword_based_movement(delta : float) -> void:
 	var player : Player = get_player()
 	var sword := player.get_player_sword()
 	var gravity_direction := get_player().get_gravity_direction()
-	
-	# Adjust for gravity
-	up_direction = -gravity_direction
-	shape.position = initial_shape_pos * gravity_direction
-	
-	# Reset velocity to prevent it staying and colliding after respawn.
-	if not player.is_alive(): velocity = Vector2.ZERO ; return
-	
 	match player.get_movement_mode():
 		
 		#region Sword Orbit
@@ -239,8 +231,24 @@ func _physics_process(delta: float) -> void:
 			move_and_slide()
 		#endregion
 	
+
+func _physics_process(delta: float) -> void:
+	var player : Player = get_player()
+	var gravity_direction := get_player().get_gravity_direction()
+	
+	if player.id == multiplayer.get_unique_id() or multiplayer.is_server():
+		_sword_based_movement(delta)
+	
+	# Adjust for gravity
+	up_direction = -gravity_direction
+	shape.position = initial_shape_pos * gravity_direction
+	
+	# Reset velocity to prevent it staying and colliding after respawn.
+	if not player.is_alive(): velocity = Vector2.ZERO ; return
+	
 	if Lobby.is_active():
 		if multiplayer.is_server():
-			_sync.rpc(global_position)
+			Lobby.sync_property.rpc(Helper.get_property_path(self, "global_position"), global_position)
+			Lobby.sync_property.rpc(Helper.get_property_path(self, "velocity"), velocity)
 		
 #endregion

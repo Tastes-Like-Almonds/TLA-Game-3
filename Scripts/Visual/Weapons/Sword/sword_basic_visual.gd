@@ -42,7 +42,8 @@ func update_visual(delta : float) -> void:
 			line2D.remove_point(line2D.get_point_count()-1)
 			line2D.add_point(dest + (dest.direction_to(origin)*line2D.width/2))
 		
-		
+	
+	$Sprite2D/Drag.global_position = _get_sprite().global_position
 	$Sprite2D/GPUParticles2D.modulate.a = lerpf($Sprite2D/GPUParticles2D.modulate.a, player.get_blade_damage_perc(), 0.2)
 
 func _ready() -> void:

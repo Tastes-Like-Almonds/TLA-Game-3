@@ -374,7 +374,6 @@ func _clear_visuals() -> void:
 func _visual_process(delta : float) -> void:
 	
 	visible = not dead
-
 	# Update player rotation
 	var body : PlayerBody = get_player_body()
 	if body:

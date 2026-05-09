@@ -80,8 +80,6 @@ signal HealthChanged
 ## The time it takes to respawn if enabled, in seconds.
 @export var respawn_time : float = 3.0
 
-var synchronizer : MultiplayerSynchronizer
-
 var do_flip : bool = true
 
 var movement_delay : float = 1.0
@@ -173,9 +171,6 @@ func on_sword_hit(player : Player) -> void:
 
 func _kill() -> void:
 	
-	if not respawn:
-		synchronizer.queue_free()
-	
 	if death_sound:
 		Sfx.play_sound(death_sound)
 	velocity = Vector2.ZERO
@@ -238,6 +233,9 @@ func alert() -> void:
 func _physics_process(delta: float) -> void:
 	if not respawning:
 		_movement(delta)
+	if multiplayer.is_server():
+		Lobby.sync_property.rpc(Helper.get_property_path(self, "global_position"), global_position)
+
 
 func _process(delta: float) -> void:
 	
@@ -255,16 +253,9 @@ func _process(delta: float) -> void:
 			_check_respawn()
 		return
 
-func _setup_sync() -> void:
-	synchronizer = MultiplayerSynchronizer.new()
-	synchronizer.replication_config = SceneReplicationConfig.new()
-	synchronizer.replication_config.add_property(^":global_position")
-	synchronizer.replication_config.add_property(^":health")
-	add_child(synchronizer)
-
 func _ready() -> void:
 	
-	_setup_sync()
+	#_setup_sync()
 	
 	if notifier:
 		notifier.screen_entered.connect(_check_respawn)

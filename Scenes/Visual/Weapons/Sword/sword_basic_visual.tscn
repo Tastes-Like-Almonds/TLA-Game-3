@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bx05lwlejhqqc"]
+[gd_scene format=3 uid="uid://bx05lwlejhqqc"]
 
 [ext_resource type="Script" uid="uid://dxnf3hgwxytok" path="res://Scripts/Visual/Weapons/Sword/sword_basic_visual.gd" id="1_wwsnl"]
 [ext_resource type="Texture2D" uid="uid://be5d4l178k1d6" path="res://Assets/Sprites/Player/Sword Icon.png" id="2_47q6j"]
@@ -65,14 +65,14 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_dod1f"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
 
-[node name="SwordBasicVisual" type="Node2D"]
+[node name="SwordBasicVisual" type="Node2D" unique_id=98217908]
 show_behind_parent = true
 script = ExtResource("1_wwsnl")
 sword_length = 80.0
 spark_threshold = 200.0
 spark_divisor = 4000.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=526055216]
 show_behind_parent = true
 z_index = 1
 scale = Vector2(3, 3)
@@ -80,7 +80,8 @@ texture = ExtResource("2_47q6j")
 centered = false
 offset = Vector2(-31, -1)
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Sprite2D" unique_id=1673288422]
+physics_interpolation_mode = 2
 show_behind_parent = true
 position = Vector2(-11, 11)
 scale = Vector2(0.25, 0.25)
@@ -89,8 +90,10 @@ texture = SubResource("GradientTexture2D_dod1f")
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_32eie")
 
-[node name="Drag" type="GPUParticles2D" parent="Sprite2D"]
+[node name="Drag" type="GPUParticles2D" parent="Sprite2D" unique_id=2141726843]
+physics_interpolation_mode = 2
 show_behind_parent = true
+top_level = true
 position = Vector2(1, -1)
 scale = Vector2(0.25, 0.25)
 amount = 2000
@@ -98,7 +101,7 @@ texture = SubResource("GradientTexture2D_sdpqg")
 lifetime = 8.0
 process_material = SubResource("ParticleProcessMaterial_cpx17")
 
-[node name="Line2D" type="Line2D" parent="."]
+[node name="Line2D" type="Line2D" parent="." unique_id=1378412839]
 modulate = Color(1, 1, 1, 0.44705883)
 show_behind_parent = true
 top_level = true

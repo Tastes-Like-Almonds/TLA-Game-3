@@ -34,6 +34,9 @@ func _ready() -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			get_window().title = "CLIENT"
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		elif arg.begins_with("--silent"):
+			Log.info("Game run with --silent flag!")
+			AudioServer.set_bus_mute(0, true)
 	
 	Log.connection(user_type.capitalize() + " instance loaded")
 	

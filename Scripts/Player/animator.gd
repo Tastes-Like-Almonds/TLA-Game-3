@@ -46,7 +46,7 @@ func _process(_delta: float) -> void:
 	if body_particles:
 		var size_scale : float = player.get_size_scale()
 		body_particles.process_material.scale = Vector2(size_scale, size_scale)
-		body_particles.position = body_particles_offset*player.get_gravity_direction()
+		body_particles.global_position = player.get_player_position() + body_particles_offset*player.get_gravity_direction()
 		body_particles.emitting = player_body.is_on_floor()
 		body_particles.amount_ratio = max(0, abs(player_body.velocity.x) / player.get_sword_speed())
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bedkik5dpe5c7"]
+[gd_scene format=3 uid="uid://bedkik5dpe5c7"]
 
 [sub_resource type="Gradient" id="Gradient_dod1f"]
 offsets = PackedFloat32Array(0)
@@ -25,8 +25,10 @@ initial_velocity_max = 489.71
 gravity = Vector3(0, 200, 0)
 alpha_curve = SubResource("CurveTexture_cpx17")
 
-[node name="Sparks" type="GPUParticles2D"]
+[node name="Sparks" type="GPUParticles2D" unique_id=109478965]
+physics_interpolation_mode = 2
 show_behind_parent = true
+top_level = true
 scale = Vector2(0.25, 0.25)
 emitting = false
 amount = 30

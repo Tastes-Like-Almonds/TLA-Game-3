@@ -198,6 +198,9 @@ func is_this_client(player:Player) -> bool:
 		return true
 	return true
 
+func get_property_path(target:Node, property:String) -> NodePath:
+	return NodePath(str(target.get_path()) + ":" + property)
+
 ## Safely saves and closes the game.
 func close_game() -> void:
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
