@@ -43,7 +43,7 @@ func _send_current_message(new_text : String) -> void:
 		edit.text = ""
 
 func _open_chat() -> void:
-	animator.play("open")
+	animator.play("open") 
 	message_time = 0.0
 	$ScrollContainer/VBoxContainer/LineEdit.grab_focus()
 	$ScrollContainer/VBoxContainer/LineEdit.edit()
