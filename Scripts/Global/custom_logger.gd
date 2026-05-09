@@ -59,7 +59,7 @@ static func _remove_old_log_files() -> void:
 			info("Cleaned up old log: %s" % path)
 
 static func _create_log_file() -> FileAccess:
-	var file_name := "%s.%s" % [Time.get_datetime_string_from_system(), _LOG_EXTENSION]
+	var file_name := "%s.%s" % [Time.get_datetime_string_from_system().replace(":","-"), _LOG_EXTENSION]
 	var file_path := _LOG_DIR.path_join(file_name)
 	var file := FileAccess.open(file_path, FileAccess.WRITE)
 	
