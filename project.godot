@@ -15,9 +15,10 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="TLA-Game-3"
-config/version="1.2.1-prealpha"
+config/version="1.2.2-prealpha"
 config/tags=PackedStringArray("ogpc", "platformer")
 run/main_scene="uid://birc57pmi5hwh"
+run/print_header=false
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 
@@ -45,6 +46,8 @@ SaveSlots="*res://Scripts/Global/save_slots.gd"
 
 [debug]
 
+settings/crash_handler/message="Please include this when reporting the bug to us!"
+settings/gdscript/always_track_call_stacks=true
 gdscript/warnings/untyped_declaration=2
 
 [display]
@@ -53,6 +56,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=2
 window/stretch/mode="canvas_items"
+
+[editor]
+
+run/main_run_args="--no-grab"
 
 [editor_plugins]
 
@@ -126,6 +133,11 @@ reload_level={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":75,"key_label":0,"unicode":107,"location":0,"echo":false,"script":null)
 ]
 }
+open_chat={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":84,"key_label":0,"unicode":116,"location":0,"echo":false,"script":null)
+]
+}
 
 [layer_names]
 
@@ -136,6 +148,10 @@ reload_level={
 2d_physics/layer_5="EnemyWall"
 2d_physics/layer_7="ProjectileHitable"
 2d_physics/layer_8="PlayerBody"
+
+[physics]
+
+common/physics_jitter_fix=0.2
 
 [rendering]
 

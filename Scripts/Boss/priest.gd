@@ -84,11 +84,9 @@ var phase_timer       : float = 0.0
 var attack_cooldown   : float = 0.0
 var hurt_damage_taken : float = 0.0
 
-var swords_left : int = 0
-
+var swords_left   : int = 0
 var last_movement : Vector2 = Vector2.ZERO
-
-var shield_dur : int = 0
+var shield_dur    : int = 0
 
 #region Inherited from Enemy
 func is_invincible() -> bool:
@@ -477,6 +475,7 @@ func _movement(delta : float) -> void:
 			if phase_timer > hurt_time:
 				_restore_shield()
 				attack_cooldown = -1
+				hurt_damage_taken = 0
 				change_phase(Phase.FIGHT)
 		
 		Phase.PANIC_TRANSITION:
