@@ -11,12 +11,18 @@ enum LoadLevelStatus {
 ## The target directory to find level files.
 const LEVEL_DIR : String = "res://Scenes/Level/"
 
+var last_level_args : Dictionary
+
 ## Deletes all level nodes in the passed parent.
 func clear_levels(parent : Node) -> void:
 	if not is_instance_valid(parent): return
 	for child in parent.get_children():
 		if child is Level:
 			child.queue_free()
+
+func reload_last_level() -> void:
+	if last_level_args:
+		load_level(last_level_args["path"],last_level_args["parent"],last_level_args["config"])
 
 ## Loads the level selector. By default, parents it to Globals.main.
 func load_selector(parent : Node = null) -> void:
@@ -37,7 +43,12 @@ func load_selector(parent : Node = null) -> void:
 	parent.add_child(selector)
 
 ## Loads a level and parents it to `parent`. 
-func load_level(path : String, parent: Node, config : LevelConfig = null, clear_others:bool = true) -> LoadLevelStatus: # TODO Dynamically test levels as they are added.
+func load_level(
+	path : String, 
+	parent: Node, 
+	config : LevelConfig = null, 
+	clear_others:bool = true
+) -> LoadLevelStatus: # TODO Dynamically test levels as they are added.
 	if not is_instance_valid(parent): return LoadLevelStatus.INVALID_PARENT
 	if not path: return LoadLevelStatus.INVALID_LEVEL
 	
@@ -54,6 +65,13 @@ func load_level(path : String, parent: Node, config : LevelConfig = null, clear_
 	loaded.initialize(config)
 	
 	Log.info("Level '" + path + "' loaded!")
+	
+	last_level_args = {
+		"path" = path,
+		"parent" = parent,
+		"config" = config,
+	}
+
 	
 	SignalBus.LevelPathLoaded.emit(path)
 	return LoadLevelStatus.SUCCESS

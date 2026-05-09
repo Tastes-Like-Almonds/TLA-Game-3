@@ -27,7 +27,14 @@ func push_message(msg : String) -> void:
 func _player_messaged(id: int, msg : String) -> void:
 	
 	# Get player info
-	var user_dict : Dictionary = Lobby.players.get(id)
+	var user_dict : Dictionary
+	if id in Lobby.players:
+		user_dict = Lobby.players.get(id)
+	else:
+		user_dict = {
+			"name" = "SELF"
+		}
+	
 	var username  : String     = "Unknown"
 	if user_dict: username = user_dict["name"]
 	

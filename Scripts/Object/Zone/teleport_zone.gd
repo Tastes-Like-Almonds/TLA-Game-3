@@ -26,10 +26,9 @@ func _on_body_entered(body: Node2D) -> void:
 			player.deal_damage(damage)
 			if player.dead:
 				return # Respawn normally if the player dies.
-				
 		
 		if teleport_to_spawn:
-			player.teleport_to(player.respawn_pos)
+			player.teleport_to(player.respawn_pos*player.get_size_scale())
 		else:
 			if not is_instance_valid(target_node): return
 			player.teleport_to(target_node.global_position)

@@ -76,6 +76,9 @@ func set_boss_bar_value(value:float) -> void:
 	value = clampf(value, 0.0, 1.0)
 	boss_prog.value = value*boss_prog.max_value
 
+func set_boss_bar_name(n : String) -> void:
+	$BossBar/MarginContainer/VBoxContainer/Label.text = n
+
 #endregion
 
 func _update_vignette(health:float) -> void:

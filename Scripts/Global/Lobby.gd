@@ -51,7 +51,7 @@ func set_local_player(player : Player) -> void:
 ## Should only be called via RPC; it is useless otherwise. 
 @rpc("authority", "call_remote", "unreliable_ordered")
 func sync_property(path : NodePath, value : Variant, smoothing : float = 1.0) -> void:
-	# If the client(s) and server desynv, the path to the
+	# If the client(s) and server desync, the path to the
 	# node will probably be invalid. sync_property() allows
 	# us to work around that log-flooding and offload all
 	# the RPC stuff to a global node.
@@ -72,8 +72,16 @@ func sync_property(path : NodePath, value : Variant, smoothing : float = 1.0) ->
 
 @rpc("any_peer", "call_local", "reliable")
 func send_message(msg : String) -> void:
-	Log.client("[" + players[multiplayer.get_remote_sender_id()]["name"] + "] " + msg)
-	message_sent.emit(multiplayer.get_remote_sender_id(), msg)
+	var id := multiplayer.get_remote_sender_id()
+	
+	if players.has(id):
+		Log.client("[" + players[id]["name"] + "] " + msg)
+		message_sent.emit(id, msg)
+	
+	else:
+		Log.client("[SELF] " + msg)
+		message_sent.emit(id, msg)
+	
 
 #endregion
 

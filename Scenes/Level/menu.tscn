@@ -17,7 +17,6 @@
 [ext_resource type="Script" uid="uid://celouequ1flw" path="res://Scripts/Visual/main_prox_text.gd" id="13_u5pgb"]
 [ext_resource type="PackedScene" uid="uid://ciumwj1vwabti" path="res://Scenes/Object/BoostOrb/size_orb.tscn" id="14_sqagp"]
 [ext_resource type="PackedScene" uid="uid://chqabge4gl3tl" path="res://Scenes/Object/Decor/ceiling_lantern.tscn" id="15_q2hmw"]
-[ext_resource type="PackedScene" uid="uid://dyx7ajqlx3xu3" path="res://Scenes/Object/BoostOrb/heal_pickup.tscn" id="16_k17a6"]
 [ext_resource type="PackedScene" uid="uid://cu4yyuh5l83yq" path="res://Scenes/Object/cosmetic_pickup.tscn" id="17_n0j5p"]
 [ext_resource type="Resource" uid="uid://bpxubikvn1rxp" path="res://Data/Cosmetic/tricorn_hat.tres" id="18_lo6yr"]
 [ext_resource type="PackedScene" uid="uid://ddmblbvhfi1td" path="res://Scenes/Object/cosmetic_prompt.tscn" id="19_rbsew"]
@@ -273,34 +272,6 @@ position = Vector2(-3831, -354)
 scale = Vector2(3, 3)
 float_height = 5.0
 
-[node name="HealPickup" parent="Level/Tiles" unique_id=84665244 instance=ExtResource("16_k17a6")]
-position = Vector2(3244, -602)
-respawn_time = 100000.0
-reset_on_death = true
-free_on_hit = true
-movement = Vector2(-150, 150)
-
-[node name="HealPickup2" parent="Level/Tiles" unique_id=2091337384 instance=ExtResource("16_k17a6")]
-position = Vector2(3223, -883)
-respawn_time = 100000.0
-reset_on_death = true
-free_on_hit = true
-movement = Vector2(-150, 150)
-
-[node name="HealPickup3" parent="Level/Tiles" unique_id=785073907 instance=ExtResource("16_k17a6")]
-position = Vector2(2762, -720)
-respawn_time = 100000.0
-reset_on_death = true
-free_on_hit = true
-movement = Vector2(-150, 150)
-
-[node name="HealPickup4" parent="Level/Tiles" unique_id=848166291 instance=ExtResource("16_k17a6")]
-position = Vector2(2482, -1190)
-respawn_time = 100000.0
-reset_on_death = true
-free_on_hit = true
-movement = Vector2(-150, 150)
-
 [node name="CosmeticPickup" parent="Level/Tiles" unique_id=1211227067 instance=ExtResource("17_n0j5p")]
 z_index = 7
 position = Vector2(7160, -2063)
@@ -441,6 +412,6 @@ scale = Vector2(0.3, 0.3)
 dialog = SubResource("Resource_cqvye")
 
 [connection signal="body_entered" from="Level/Tiles/Ground/Saw" to="Level/Tiles/Ground/Saw" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@57382" to="Level/Tiles/Ground/@Area2D@57382" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@57383" to="Level/Tiles/Ground/@Area2D@57383" method="_on_body_entered"]
-[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@57384" to="Level/Tiles/Ground/@Area2D@57384" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@39832" to="Level/Tiles/Ground/@Area2D@39832" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@39833" to="Level/Tiles/Ground/@Area2D@39833" method="_on_body_entered"]
+[connection signal="body_entered" from="Level/Tiles/Ground/@Area2D@39834" to="Level/Tiles/Ground/@Area2D@39834" method="_on_body_entered"]
