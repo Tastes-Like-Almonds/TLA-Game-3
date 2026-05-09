@@ -10,6 +10,7 @@ func initialize(config : LevelConfig = null) -> void:
 	wizard.HealthChanged.connect(func(new:float) -> void:
 		current_ui.set_boss_bar_value(new/wizard.start_health)
 	)
+	current_ui.set_boss_bar_name("The Wizard")
 	wizard.Killed.connect(func() -> void:
 		$Whiteout.modulate = Color.BLACK
 		for player : Player in Helper.get_all_players():
