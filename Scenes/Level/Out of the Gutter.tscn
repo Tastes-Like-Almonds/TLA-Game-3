@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://0rteah7m342b"]
+[gd_scene load_steps=23 format=4 uid="uid://0rteah7m342b"]
 
 [ext_resource type="Script" uid="uid://dn1knan31f68k" path="res://Scripts/Level/dev_level_2.gd" id="1_q52lv"]
 [ext_resource type="TileSet" uid="uid://cn7nyyyrdxx1" path="res://Resource/Tileset/main_tile_set.tres" id="2_6w88s"]
@@ -12,7 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://qragv60k75mq" path="res://Scenes/Object/Enemy/Rat.tscn" id="9_6w88s"]
 [ext_resource type="PackedScene" uid="uid://bw4oxah3cpd40" path="res://Scenes/Object/Enemy/Roach.tscn" id="10_nfhax"]
 [ext_resource type="PackedScene" uid="uid://c6cqn4qbed04l" path="res://Scenes/Object/checkpoint.tscn" id="12_nkocp"]
+[ext_resource type="Texture2D" uid="uid://dby48xjdosbuv" path="res://Assets/Sprites/Gorge_Finalized.png" id="14_hcuqx"]
+[ext_resource type="PackedScene" uid="uid://byaojnvcyv5ng" path="res://Scenes/Object/Dialog/dialog_prompt.tscn" id="15_ngkwf"]
 [ext_resource type="PackedScene" uid="uid://chqabge4gl3tl" path="res://Scenes/Object/Decor/ceiling_lantern.tscn" id="15_xanqd"]
+[ext_resource type="Script" uid="uid://dj5qjnk7vxan4" path="res://Scripts/Resource/Dialog/dialog_tree.gd" id="16_5vfbv"]
+[ext_resource type="Script" uid="uid://dxbtl7v3nf6h2" path="res://Scripts/Resource/Dialog/dialogLine.gd" id="17_2urbn"]
 
 [sub_resource type="Gradient" id="Gradient_bo1nx"]
 offsets = PackedFloat32Array(1)
@@ -20,6 +24,21 @@ colors = PackedColorArray(0.0873481, 0.11979169, 0.11979169, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0t62c"]
 gradient = SubResource("Gradient_bo1nx")
+
+[sub_resource type="Resource" id="Resource_5vfbv"]
+script = ExtResource("17_2urbn")
+text = "I have no mouth"
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_2urbn"]
+script = ExtResource("17_2urbn")
+text = "and I must scream!"
+metadata/_custom_type_script = "uid://dxbtl7v3nf6h2"
+
+[sub_resource type="Resource" id="Resource_ngkwf"]
+script = ExtResource("16_5vfbv")
+lines = Array[ExtResource("17_2urbn")]([SubResource("Resource_5vfbv"), SubResource("Resource_2urbn")])
+metadata/_custom_type_script = "uid://dj5qjnk7vxan4"
 
 [node name="OutoftheGutter" type="Node2D"]
 script = ExtResource("1_q52lv")
@@ -199,3 +218,12 @@ position = Vector2(-1907, 2684)
 
 [node name="Checkpoint" parent="." instance=ExtResource("12_nkocp")]
 position = Vector2(-3876, 2690)
+
+[node name="GorgeFinalized" type="Sprite2D" parent="."]
+position = Vector2(-3775, 2683.0002)
+scale = Vector2(3, 3)
+texture = ExtResource("14_hcuqx")
+
+[node name="DialogPrompt" parent="." instance=ExtResource("15_ngkwf")]
+position = Vector2(-3745, 2671)
+dialog = SubResource("Resource_ngkwf")
